@@ -1,0 +1,25 @@
+CIFilter.io/CIFilter.io.xcodeproj/project.xcworkspace
+CIFilter.io/CIFilter.io.xcodeproj/xcuserdata
+CIFilter.io/CIFilter.io.xcworkspace/xcuserdata
+xcuserdata
+*.xccheckout
+*.xcscmblueprint
+*.pbxuser
+.DS_Store
+
+.buckd/
+buck-out/
+
+# Generated files for CocoaPods
+.bundle
+vendor
+Pods
+
+# Fastlane output
+*.ipa
+*.dSYM.zip
+fastlane/report.xml
+fastlane/README.md
+
+# Python
+venv/
