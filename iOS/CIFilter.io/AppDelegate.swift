@@ -13,9 +13,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        let filter = CIFilter(name: "CIBoxBlur")!
+        print(CIFilter.localizedName(forFilterName: "CIBoxBlur"))
+        print(CIFilter.localizedDescription(forFilterName: "CIBoxBlur"))
+        print(CIFilter.localizedReferenceDocumentation(forFilterName: "CIBoxBlur"))
+        print(filter.inputKeys)
+        print(filter.outputKeys)
+        print(filter.attributes)
+
+        window = UIWindow()
+        let splitViewController = UISplitViewController()
+        let filterListViewController = FilterListViewController()
+        let filterDetailViewController = FilterDetailViewController()
+        splitViewController.viewControllers = [filterListViewController, filterDetailViewController]
+        window?.rootViewController = splitViewController
+        window?.makeKeyAndVisible()
         return true
     }
 

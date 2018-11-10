@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+
+# TODO: update these to the latest versions
+gem 'cocoapods', '~> 1.5.3'
+gem 'fastlane', '~> 2.62.0'
+
