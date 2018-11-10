@@ -1,6 +1,6 @@
 platform :ios, '11.0'
 workspace 'CIFilter.io'
-project 'CIFilter.io/CIFilter.io.xcodeproj'
+project 'CIFilter.io.xcodeproj'
 
 source 'https://github.com/CocoaPods/Specs'
 
@@ -9,9 +9,5 @@ def shared_pods
 end
 
 target 'CIFilter.io' do
-  shared_pods
-end
-
-target 'CIFilter.ioTests' do
   shared_pods
 end
