@@ -14,13 +14,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let filter = CIFilter(name: "CIBoxBlur")!
-        print(CIFilter.localizedName(forFilterName: "CIBoxBlur"))
-        print(CIFilter.localizedDescription(forFilterName: "CIBoxBlur"))
-        print(CIFilter.localizedReferenceDocumentation(forFilterName: "CIBoxBlur"))
-        print(filter.inputKeys)
-        print(filter.outputKeys)
-        print(filter.attributes)
+//        let filter = CIFilter(name: "CIBoxBlur")!
+//        print(CIFilter.localizedName(forFilterName: "CIBoxBlur"))
+//        print(CIFilter.localizedDescription(forFilterName: "CIBoxBlur"))
+//        print(CIFilter.localizedReferenceDocumentation(forFilterName: "CIBoxBlur"))
+//        print(filter.inputKeys)
+//        print(filter.outputKeys)
+//        print(filter.attributes)
+//        print(JSONEncoder().encode(filter.attributes as! [String: Codable]))
+
+        let filterNames = CIFilter.filterNames(inCategory: nil)
+        let _ = filterNames.map {
+            let filter = CIFilter(name: $0)!
+            do {
+                let filterInfo = try FilterInfo(filterAttributeDict: filter.attributes)
+                print(filterInfo)
+            } catch let error {
+                print(error)
+            }
+        }
 
         window = UIWindow()
         let splitViewController = UISplitViewController()

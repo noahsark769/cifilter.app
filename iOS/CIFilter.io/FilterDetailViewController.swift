@@ -19,6 +19,6 @@ final class FilterDetailViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.view.backgroundColor = .blue
+        self.view.backgroundColor = .white
     }
 }

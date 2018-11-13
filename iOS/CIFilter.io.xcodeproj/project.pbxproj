@@ -10,6 +10,7 @@
 		5F31BFC0D3D97B3DB60EB532 /* libPods-CIFilter.io.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8DF7E2364B4EB94F6C83712 /* libPods-CIFilter.io.a */; };
 		A11C522521968BB000045F2E /* FilterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11C522421968BB000045F2E /* FilterListViewController.swift */; };
 		A11C522721968C8900045F2E /* FilterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11C522621968C8900045F2E /* FilterDetailViewController.swift */; };
+		A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1707F65219A1A0A0010E007 /* FilterInfo.swift */; };
 		A1C6621D2196818100826A2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C6621C2196818100826A2B /* AppDelegate.swift */; };
 		A1C662242196818300826A2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1C662232196818300826A2B /* Assets.xcassets */; };
 		A1C662272196818300826A2B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1C662252196818300826A2B /* LaunchScreen.storyboard */; };
@@ -19,6 +20,7 @@
 		08FBAE88B5103E03654DA7F2 /* Pods-CIFilter.io.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.io.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io.debug.xcconfig"; sourceTree = "<group>"; };
 		A11C522421968BB000045F2E /* FilterListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListViewController.swift; sourceTree = "<group>"; };
 		A11C522621968C8900045F2E /* FilterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailViewController.swift; sourceTree = "<group>"; };
+		A1707F65219A1A0A0010E007 /* FilterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInfo.swift; sourceTree = "<group>"; };
 		A1C662192196818100826A2B /* CIFilter.io.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CIFilter.io.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1C6621C2196818100826A2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1C662232196818300826A2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				A1C6621C2196818100826A2B /* AppDelegate.swift */,
 				A1C662232196818300826A2B /* Assets.xcassets */,
 				A11C522621968C8900045F2E /* FilterDetailViewController.swift */,
+				A1707F65219A1A0A0010E007 /* FilterInfo.swift */,
 				A11C522421968BB000045F2E /* FilterListViewController.swift */,
 				A1C662282196818300826A2B /* Info.plist */,
 				A1C662252196818300826A2B /* LaunchScreen.storyboard */,
@@ -186,6 +189,7 @@
 			files = (
 				A1C6621D2196818100826A2B /* AppDelegate.swift in Sources */,
 				A11C522721968C8900045F2E /* FilterDetailViewController.swift in Sources */,
+				A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */,
 				A11C522521968BB000045F2E /* FilterListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
