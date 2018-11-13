@@ -44,7 +44,7 @@ extension Dictionary {
     }
 }
 
-struct FilterTransformParameterInfo {
+struct FilterTransformParameterInfo: Codable {
     let defaultValue: CGAffineTransform
     let identity: CGAffineTransform
 
@@ -58,26 +58,67 @@ struct FilterTransformParameterInfo {
     }
 }
 
-struct FilterVectorParameterInfo {
-    let defaultValue: CIVector
-    let identity: CIVector?
+struct CIVectorCodableWrapper: Codable {
+    let vector: CIVector
+
+    public init(from decoder: Decoder) throws {
+        var container = try decoder.unkeyedContainer()
+        var floats: [CGFloat] = []
+        while !container.isAtEnd {
+            floats.append(try container.decode(CGFloat.self))
+        }
+        var unsafePointer: UnsafePointer<CGFloat>
+        floats.withUnsafeBufferPointer { unsafeBufferPointer in
+            unsafePointer = unsafeBufferPointer.baseAddress!
+        }
+        vector = CIVector(values: unsafePointer, count: container.count!)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.unkeyedContainer()
+        for i in 0..<vector.count {
+            try container.encode(vector.value(at: i))
+        }
+    }
+}
+
+struct FilterVectorParameterInfo: Codable {
+    let defaultValue: CIVectorCodableWrapper?
+    let identity: CIVectorCodableWrapper?
 
     init(filterAttributeDict: [String: Any]) throws {
-        defaultValue = try filterAttributeDict.validatedValue(key: kCIAttributeDefault)
+        defaultValue = filterAttributeDict.optionalValue(key: kCIAttributeDefault)
         identity = filterAttributeDict.optionalValue(key: kCIAttributeIdentity)
 
         if filterAttributeDict.count > 2 {
             throw FilterInfoConstructionError.allKeysNotParsed
         }
     }
+
+    enum CodingKeys: String, CodingKey {
+        case defaultValue
+        case identity
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        defaultValue = try container.decodeIfPresent(CIVectorCodableWrapper.self, forKey: .defaultValue)
+        identity = try container.decodeIfPresent(CIVectorCodableWrapper.self, forKey: .identity)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(defaultValue, forKey: .defaultValue)
+        try container.encode(identity, forKey: .identity)
+    }
 }
 
-struct FilterDataParameterInfo {
+struct FilterDataParameterInfo: Codable {
     let defaultValue: Data?
     let identity: Data?
 
     init(filterAttributeDict: [String: Any]) throws {
-        defaultValue = try filterAttributeDict.optionalValue(key: kCIAttributeDefault)
+        defaultValue = filterAttributeDict.optionalValue(key: kCIAttributeDefault)
         identity = filterAttributeDict.optionalValue(key: kCIAttributeIdentity)
 
         if filterAttributeDict.count > 2 {
@@ -86,11 +127,25 @@ struct FilterDataParameterInfo {
     }
 }
 
-struct FilterColorParameterInfo {
+struct FilterColorParameterInfo: Codable {
     let defaultValue: CIColor
+    let identity: CIColor?
 
     init(filterAttributeDict: [String: Any]) throws {
         defaultValue = try filterAttributeDict.validatedValue(key: kCIAttributeDefault)
+        identity = filterAttributeDict.optionalValue(key: kCIAttributeIdentity)
+
+        if filterAttributeDict.count > 2 {
+            throw FilterInfoConstructionError.allKeysNotParsed
+        }
+    }
+}
+
+struct FilterUnspecifiedObjectParameterInfo: Codable {
+    let defaultValue: NSObject?
+
+    init(filterAttributeDict: [String: Any]) throws {
+        defaultValue = filterAttributeDict.optionalValue(key: kCIAttributeDefault)
 
         if filterAttributeDict.count > 1 {
             throw FilterInfoConstructionError.allKeysNotParsed
@@ -98,7 +153,19 @@ struct FilterColorParameterInfo {
     }
 }
 
-struct FilterNumberParameterInfo<T> {
+struct FilterStringParameterInfo: Codable {
+    let defaultValue: String?
+
+    init(filterAttributeDict: [String: Any]) throws {
+        defaultValue = filterAttributeDict.optionalValue(key: kCIAttributeDefault)
+
+        if filterAttributeDict.count > 1 {
+            throw FilterInfoConstructionError.allKeysNotParsed
+        }
+    }
+}
+
+struct FilterNumberParameterInfo<T: Codable>: Codable {
     let minValue: T?
     let maxValue: T?
     let defaultValue: T?
@@ -120,7 +187,7 @@ struct FilterNumberParameterInfo<T> {
     }
 }
 
-struct FilterTimeParameterInfo {
+struct FilterTimeParameterInfo: Codable {
     let numberInfo: FilterNumberParameterInfo<Float>
     let identity: Float
 
@@ -161,18 +228,33 @@ private func filterParameterType(forAttributesDict dict: [String: Any], classNam
         if className == "NSObject" {
             return "CIFilter.io_UnspecifiedObjectType"
         }
+        if className == "MLModel" {
+            return "CIFilter.io_MLModelType"
+        }
+        if className == "NSString" {
+            return "CIFilter.io_StringType"
+        }
+        if className == "CIImage" {
+            return "CIFilter.io_UnkeyedImageType"
+        }
+        if className == "CGImageMetadataRef" {
+            return "CIFilter.io_CGImageMetadataRefType"
+        }
+        if className == "NSArray" {
+            return "CIFilter.io_ArrayType"
+        }
         throw FilterInfoConstructionError.noParameterType
     }
 }
 
-enum FilterParameterType {
+enum FilterParameterType: Codable {
     case time(info: FilterTimeParameterInfo)
     case scalar(info: FilterNumberParameterInfo<Float>)
     case distance(info: FilterNumberParameterInfo<Float>)
     case unspecifiedNumber(info: FilterNumberParameterInfo<Float>)
     case unspecifiedVector(info: FilterVectorParameterInfo)
     case angle(info: FilterNumberParameterInfo<Float>)
-    case boolean
+    case boolean(info: FilterNumberParameterInfo<Int>)
     case integer
     case count(info: FilterNumberParameterInfo<Int>)
     case image
@@ -182,10 +264,17 @@ enum FilterParameterType {
     case barcode
     case cameraCalibrationData
     case color(info: FilterColorParameterInfo)
+    case opaqueColor(info: FilterColorParameterInfo)
     case position(info: FilterVectorParameterInfo)
+    case position3(info: FilterVectorParameterInfo)
     case transform(info: FilterTransformParameterInfo)
     case rectangle(info: FilterVectorParameterInfo)
-    case unspecifiedObject
+    case unspecifiedObject(info: FilterUnspecifiedObjectParameterInfo)
+    case mlModel
+    case string(info: FilterStringParameterInfo)
+    case cgImageMetadata
+    case offset(info: FilterVectorParameterInfo)
+    case array
 
     init(filterAttributeDict: [String: Any], className: String) throws {
         let parameterTypeString = try filterParameterType(forAttributesDict: filterAttributeDict, className: className)
@@ -201,11 +290,13 @@ enum FilterParameterType {
         case kCIAttributeTypeAngle:
             self = .angle(info: try FilterNumberParameterInfo(filterAttributeDict: specificDict))
         case kCIAttributeTypeBoolean:
-            throw FilterInfoConstructionError.invalidParameterType
+            self = .boolean(info: try FilterNumberParameterInfo(filterAttributeDict: specificDict))
         case kCIAttributeTypeInteger:
             throw FilterInfoConstructionError.invalidParameterType
         case kCIAttributeTypeCount:
             self = .count(info: try FilterNumberParameterInfo(filterAttributeDict: specificDict))
+        case "CIFilter.io_UnkeyedImageType":
+            fallthrough
         case kCIAttributeTypeImage:
             self = .image
             if filterAttributeDict.count > 1 {
@@ -221,6 +312,10 @@ enum FilterParameterType {
             self = .rectangle(info: try FilterVectorParameterInfo(filterAttributeDict: specificDict))
         case kCIAttributeTypePosition:
             self = .position(info: try FilterVectorParameterInfo(filterAttributeDict: specificDict))
+        case kCIAttributeTypePosition3:
+            self = .position3(info: try FilterVectorParameterInfo(filterAttributeDict: specificDict))
+        case kCIAttributeTypeOffset:
+            self = .offset(info: try FilterVectorParameterInfo(filterAttributeDict: specificDict))
         case kCIAttributeTypeGradient:
             self = .gradientImage
             if filterAttributeDict.count > 1 {
@@ -245,12 +340,28 @@ enum FilterParameterType {
             }
         case "CIFilter.io_ColorType":
             fallthrough
-        case kCIAttributeTypeOpaqueColor:
+        case kCIAttributeTypeColor:
             self = .color(info: try FilterColorParameterInfo(filterAttributeDict: specificDict))
+        case kCIAttributeTypeOpaqueColor:
+            self = .opaqueColor(info: try FilterColorParameterInfo(filterAttributeDict: specificDict))
         case "CIFilter.io_UnspecifiedVectorType":
             self = .unspecifiedVector(info: try FilterVectorParameterInfo(filterAttributeDict: specificDict))
         case "CIFilter.io_UnspecifiedObjectType":
-            self = .unspecifiedObject
+            self = .unspecifiedObject(info: try FilterUnspecifiedObjectParameterInfo(filterAttributeDict: specificDict))
+        case "CIFilter.io_MLModelType":
+            self = .mlModel
+            if filterAttributeDict.count > 0 {
+                throw FilterInfoConstructionError.allKeysNotParsed
+            }
+        case "CIFilter.io_StringType":
+            self = .string(info: try FilterStringParameterInfo(filterAttributeDict: specificDict))
+        case "CIFilter.io_CGImageMetadataRefType":
+            self = .cgImageMetadata
+            if filterAttributeDict.count > 0 {
+                throw FilterInfoConstructionError.allKeysNotParsed
+            }
+        case "CIFilter.io_ArrayType":
+            self = .array
             if filterAttributeDict.count > 0 {
                 throw FilterInfoConstructionError.allKeysNotParsed
             }
@@ -260,7 +371,7 @@ enum FilterParameterType {
     }
 }
 
-struct FilterParameterInfo {
+struct FilterParameterInfo: Codable {
     let classType: String
     let description: String?
     let displayName: String
@@ -313,7 +424,7 @@ extension FilterParameterInfo {
     ]
 }
 
-struct FilterInfo {
+struct FilterInfo: Codable {
     let categories: [String]
     let availableMac: String
     let availableIOS: String

@@ -24,15 +24,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        print(JSONEncoder().encode(filter.attributes as! [String: Codable]))
 
         let filterNames = CIFilter.filterNames(inCategory: nil)
-        let _ = filterNames.map {
-            let filter = CIFilter(name: $0)!
-            do {
-                let filterInfo = try FilterInfo(filterAttributeDict: filter.attributes)
-                print(filterInfo)
-            } catch let error {
-                print(error)
-            }
+        let data: [FilterInfo] = filterNames.compactMap { filterName in
+            let filter = CIFilter(name: filterName)!
+            return try? FilterInfo(filterAttributeDict: filter.attributes)
         }
+        print(try? JSONEncoder().encode(data))
 
         window = UIWindow()
         let splitViewController = UISplitViewController()
