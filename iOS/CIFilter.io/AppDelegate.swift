@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let filter = CIFilter(name: filterName)!
             return try? FilterInfo(filterAttributeDict: filter.attributes)
         }
-        print(try? JSONEncoder().encode(data))
+        print(String(data: try! JSONEncoder().encode(data), encoding: .utf8)!)
 
         window = UIWindow()
         let splitViewController = UISplitViewController()

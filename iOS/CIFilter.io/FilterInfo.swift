@@ -67,11 +67,11 @@ struct CIVectorCodableWrapper: Codable {
         while !container.isAtEnd {
             floats.append(try container.decode(CGFloat.self))
         }
-        var unsafePointer: UnsafePointer<CGFloat>
+        var unsafePointer: UnsafePointer<CGFloat>? = nil
         floats.withUnsafeBufferPointer { unsafeBufferPointer in
             unsafePointer = unsafeBufferPointer.baseAddress!
         }
-        vector = CIVector(values: unsafePointer, count: container.count!)
+        vector = CIVector(values: unsafePointer!, count: container.count!)
     }
 
     func encode(to encoder: Encoder) throws {
@@ -127,9 +127,9 @@ struct FilterDataParameterInfo: Codable {
     }
 }
 
-struct FilterColorParameterInfo: Codable {
-    let defaultValue: CIColor
-    let identity: CIColor?
+struct FilterColorParameterInfo: Encodable {
+    let defaultValue: CGColorSpace
+    let identity: CGColorSpace?
 
     init(filterAttributeDict: [String: Any]) throws {
         defaultValue = try filterAttributeDict.validatedValue(key: kCIAttributeDefault)
@@ -139,9 +139,13 @@ struct FilterColorParameterInfo: Codable {
             throw FilterInfoConstructionError.allKeysNotParsed
         }
     }
+
+    func encode(to encoder: Encoder) throws {
+
+    }
 }
 
-struct FilterUnspecifiedObjectParameterInfo: Codable {
+struct FilterUnspecifiedObjectParameterInfo: Encodable {
     let defaultValue: NSObject?
 
     init(filterAttributeDict: [String: Any]) throws {
@@ -150,6 +154,10 @@ struct FilterUnspecifiedObjectParameterInfo: Codable {
         if filterAttributeDict.count > 1 {
             throw FilterInfoConstructionError.allKeysNotParsed
         }
+    }
+
+    func encode(to encoder: Encoder) throws {
+
     }
 }
 
@@ -247,7 +255,12 @@ private func filterParameterType(forAttributesDict dict: [String: Any], classNam
     }
 }
 
-enum FilterParameterType: Codable {
+enum FilterParameterType: Encodable  {
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawType)
+    }
+
     case time(info: FilterTimeParameterInfo)
     case scalar(info: FilterNumberParameterInfo<Float>)
     case distance(info: FilterNumberParameterInfo<Float>)
@@ -275,6 +288,68 @@ enum FilterParameterType: Codable {
     case cgImageMetadata
     case offset(info: FilterVectorParameterInfo)
     case array
+
+    enum RawType: String, Encodable {
+        case time
+        case scalar
+        case distance
+        case unspecifiedNumber
+        case unspecifiedVector
+        case angle
+        case boolean
+        case integer
+        case count
+        case image
+        case gradientImage
+        case attributedString
+        case data
+        case barcode
+        case cameraCalibrationData
+        case color
+        case opaqueColor
+        case position
+        case position3
+        case transform
+        case rectangle
+        case unspecifiedObject
+        case mlModel
+        case string
+        case cgImageMetadata
+        case offset
+        case array
+    }
+
+    var rawType: RawType {
+        switch self {
+        case .time: return .time
+        case .scalar: return .scalar
+        case .distance: return .distance
+        case .unspecifiedNumber: return .unspecifiedNumber
+        case .unspecifiedVector: return .unspecifiedVector
+        case .angle: return .angle
+        case .boolean: return .boolean
+        case .integer: return .integer
+        case .count: return .count
+        case .image: return .image
+        case .gradientImage: return .gradientImage
+        case .attributedString: return .attributedString
+        case .data: return .data
+        case .barcode: return .barcode
+        case .cameraCalibrationData: return .cameraCalibrationData
+        case .color: return .color
+        case .opaqueColor: return .opaqueColor
+        case .position: return .position
+        case .position3: return .position3
+        case .transform: return .transform
+        case .rectangle: return .rectangle
+        case .unspecifiedObject: return .unspecifiedObject
+        case .mlModel: return .mlModel
+        case .string: return .string
+        case .cgImageMetadata: return .cgImageMetadata
+        case .offset: return .offset
+        case .array: return .array
+        }
+    }
 
     init(filterAttributeDict: [String: Any], className: String) throws {
         let parameterTypeString = try filterParameterType(forAttributesDict: filterAttributeDict, className: className)
@@ -371,7 +446,7 @@ enum FilterParameterType: Codable {
     }
 }
 
-struct FilterParameterInfo: Codable {
+struct FilterParameterInfo: Encodable {
     let classType: String
     let description: String?
     let displayName: String
@@ -424,7 +499,7 @@ extension FilterParameterInfo {
     ]
 }
 
-struct FilterInfo: Codable {
+struct FilterInfo: Encodable {
     let categories: [String]
     let availableMac: String
     let availableIOS: String
