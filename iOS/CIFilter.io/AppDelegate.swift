@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let filterNames = CIFilter.filterNames(inCategory: nil)
         let data: [FilterInfo] = filterNames.compactMap { filterName in
             let filter = CIFilter(name: filterName)!
-            return try? FilterInfo(filterAttributeDict: filter.attributes)
+            return try? FilterInfo(filter: filter)
         }
         print(String(data: try! JSONEncoder().encode(data), encoding: .utf8)!)
 
