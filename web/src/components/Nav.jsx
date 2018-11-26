@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Logo from './Logo';
+import { IoLogoGithub, IoIosAppstore } from "react-icons/io";
 
 const LogoWrapper = styled.div`
     display: inline-block;
@@ -58,7 +59,9 @@ const Nav = (props) => {
             </LogoAndTitle>
             <Other>
                 <NavLink className="margin-right--md">ABOUT</NavLink>
-                <NavLink>SUPPORT</NavLink>
+                <NavLink className="margin-right--md">SUPPORT</NavLink>
+                <NavLink className="margin-right--md"><IoLogoGithub size="24" /></NavLink>
+                <NavLink><IoIosAppstore size="24" /></NavLink>
             </Other>
         </StyledNav>
     )
