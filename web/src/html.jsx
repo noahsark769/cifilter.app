@@ -12,6 +12,7 @@ export default class HTML extends React.Component {
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
           />
+          <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" />
           {this.props.headComponents}
         </head>
         <body {...this.props.bodyAttributes}>
