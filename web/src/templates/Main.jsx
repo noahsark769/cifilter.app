@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Nav from '../components/Nav';
 import FilterSelect from '../components/FilterSelect';
+import FilterDetail from '../components/FilterDetail';
 
 const OuterWrapper = styled.div`
     display: flex;
@@ -13,18 +14,34 @@ const OuterWrapper = styled.div`
 const Container = styled.div`
     margin: 48px auto 0 auto;
     flex-grow: 1;
-    overflow-y: scroll;
+
+    display: flex;
+    flex-direction: row;
+    height: 100%;
 `;
 
-const Main = (props) => {
-    console.log(props);
-    return (
-        <OuterWrapper>
-            <Nav />
-            <Container>
-                <FilterSelect filters={props.pageContext.filters} />
-            </Container>
-        </OuterWrapper>
-    )
+class Main extends React.Component {
+    state = { selectedFilter: null }
+
+    handleFilterSelected(filterName) {
+        // TODO: this iterates over 200 filters, make it a map up front :/
+        let newFilter = this.props.pageContext.filters.filter((filter) => filter.name == filterName)[0];
+        this.setState({ selectedFilter: newFilter });
+    }
+
+    render() {
+        return (
+            <OuterWrapper>
+                <Nav />
+                <Container>
+                    <FilterSelect
+                        filters={this.props.pageContext.filters}
+                        onSelectFilter={this.handleFilterSelected.bind(this)}
+                        className="margin-right--md" />
+                    <FilterDetail filter={this.state.selectedFilter} />
+                </Container>
+            </OuterWrapper>
+        );
+    }
 };
 export default Main;

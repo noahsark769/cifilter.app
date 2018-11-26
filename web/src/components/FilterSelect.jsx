@@ -63,10 +63,10 @@ const mapMap = (map, transform) => {
 };
 
 const Container = styled.div`
-    width: 300px;
+    width: 350px;
     height: 100%;
     overflow-y: scroll;
-    margin-bottom: 48px;
+    padding-bottom: 48px;
 `;
 
 const FilterName = styled.div`
@@ -97,6 +97,13 @@ const Category = styled.div`
     font-size: 18px;
 `;
 
+const EntryContainer = styled.div`
+    margin: 24px;
+    &:first-child {
+        margin-top: 0;
+    }
+`;
+
 class FilterSelect extends React.Component {
     state = {
         groupedFilters: groupFilters(this.props.filters, SELECT_CATEGORY_NAMES),
@@ -104,6 +111,7 @@ class FilterSelect extends React.Component {
     };
 
     handleFilterClick(filterName) {
+        this.props.onSelectFilter(filterName);
         this.setState({
             selectedFilterName: filterName
         });
@@ -126,10 +134,10 @@ class FilterSelect extends React.Component {
 
     renderEntry(categoryName, filterNames) {
         return (
-            <div key={categoryName} className="margin-top--md">
+            <EntryContainer key={categoryName}>
                 <Category className="margin-bottom--sm">{categoryName}</Category>
                 {this.renderFilterNames(filterNames)}
-            </div>
+            </EntryContainer>
         );
     }
 
@@ -137,7 +145,7 @@ class FilterSelect extends React.Component {
         let _this = this;
         console.log(this.state.groupedFilters);
         return (
-            <Container className="HERE">
+            <Container>
                 {mapMap(this.state.groupedFilters, function(value, key, map) {
                     return _this.renderEntry(key, value);
                 })}
