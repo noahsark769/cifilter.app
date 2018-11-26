@@ -5,6 +5,7 @@ const Container = styled.div`
     width: 700px;
     height: 100%;
     overflow-y: scroll;
+    padding-bottom: 48px;
 `;
 
 const Title = styled.div`
@@ -34,7 +35,7 @@ const FilterDetail = (props) => {
                     return <li className="margin-left--sm" key={param.name}>
                         <h4 className="margin-top--sm">{param.name}</h4>
                         <div>Class: {param.classType}</div>
-                        <div>Description: {param.description}</div>
+                        <div>Description: {param.description || "No description provided."}</div>
                     </li>
                 })}
             </ul>

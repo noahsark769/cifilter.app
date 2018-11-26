@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import SearchBar from './SearchBar';
 
 const SELECT_CATEGORY_NAMES = [
     "CICategoryBlur",
@@ -28,16 +29,18 @@ function intersection(setA, setB) {
     return _intersection;
 }
 
-const groupFilters = (filters, categories) => {
+const groupFilters = (filters, categories, isIncluded) => {
     let map = new Map();
-    let categoriesSet = new Set(categories);
-    for (let category of categories) {
+    let categoriesSet = new Set(categories.concat(["Other"]));
+    for (let category of categoriesSet) {
         map.set(category, []);
     }
-    map.set("Other", []);
-    console.log(filters);
 
     for (let filter of filters) {
+        if (!isIncluded(filter.name)) {
+            continue
+        }
+
         let categoryIntersection = intersection(categoriesSet, new Set(filter.categories));
         if (categoryIntersection.size > 0) {
             // wonky first-item-of-set syntax...
@@ -51,6 +54,13 @@ const groupFilters = (filters, categories) => {
             map.set("Other", uncategorized)
         }
     }
+
+    for (let category of categoriesSet) {
+        if (map.get(category).length == 0) {
+            map.delete(category);
+        }
+    }
+
     return map;
 };
 
@@ -104,11 +114,30 @@ const EntryContainer = styled.div`
     }
 `;
 
+const SearchBarWrapper = styled.div`
+    margin: 0 24px;
+    width: 80%;
+`;
+
 class FilterSelect extends React.Component {
     state = {
-        groupedFilters: groupFilters(this.props.filters, SELECT_CATEGORY_NAMES),
+        groupedFilters: groupFilters(
+            this.props.filters,
+            SELECT_CATEGORY_NAMES,
+            (filterName) => true
+        ),
         selectedFilterName: null
     };
+
+    handleSearchBarChange(newText) {
+        this.setState({
+            groupedFilters: groupFilters(
+                this.props.filters,
+                SELECT_CATEGORY_NAMES,
+                (filterName) => filterName.toLowerCase().includes(newText.toLowerCase())
+            )
+        })
+    }
 
     handleFilterClick(filterName) {
         this.props.onSelectFilter(filterName);
@@ -143,9 +172,11 @@ class FilterSelect extends React.Component {
 
     render() {
         let _this = this;
-        console.log(this.state.groupedFilters);
         return (
             <Container>
+                <SearchBarWrapper>
+                    <SearchBar onChange={this.handleSearchBarChange.bind(this)} />
+                </SearchBarWrapper>  
                 {mapMap(this.state.groupedFilters, function(value, key, map) {
                     return _this.renderEntry(key, value);
                 })}
