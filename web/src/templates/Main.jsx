@@ -1,8 +1,9 @@
 import React from 'react';
+import Nav from '../components/Nav';
 
 const Main = (props) => {
     return (
-        <div><p>This is the main page.</p><h1 className="padding--xl">Heading</h1></div>
+        <Nav />
     )
 };
 export default Main;
