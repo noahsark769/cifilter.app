@@ -16,9 +16,8 @@ const StyledNav = styled.nav`
 `;
 
 const Title = styled.div`
-    font-size: 24;
+    font-size: 20px;
     font-weight: bold;
-    font-family: 'Roboto', 'Open Sans', Helvetica, sans-serif;
     display: inline-block;
 `;
 

@@ -28,7 +28,9 @@ exports.createPages = ({ graphql, actions }) => {
             createPage({
                 path: '/',
                 component: templateComponent,
-                context: data
+                context: {
+                    filters: data
+                }
             });
             // data.pages.forEach((pageData) => {
             //     const pagePath = pageData.pagePath;
