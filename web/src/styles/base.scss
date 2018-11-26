@@ -1,12 +1,16 @@
 $primary-font: 'Open Sans', sans-serif;
 
-$cifilterio-sky-blue: #24baff;
+$cifilterio-primary: #F5BD5D;
 $cifilterio-bright-green: #7ed321;
 $cifilterio-background-color: #f7f7f7;
 
 $cifilterio-primary-dark-gray: #9b9b9b;
 $cifilterio-primary-light-gray: #dcdcdc;
 $cifilterio-soft-text-color: #333333;
+
+* {
+  box-sizing: border-box;
+}
 
 html, body {
     font-family: $primary-font;
