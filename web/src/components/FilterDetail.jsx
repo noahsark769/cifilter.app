@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import FilterTitle from './FilterTitle';
 
 const Container = styled.div`
     width: 700px;
@@ -8,9 +9,9 @@ const Container = styled.div`
     padding-bottom: 48px;
 `;
 
-const Title = styled.div`
-    font-size: 38px;
-    font-weight: bold;
+const Description = styled.div`
+    font-size: 16px;
+    line-height: 22px;
 `;
 
 const FilterDetail = (props) => {
@@ -19,16 +20,13 @@ const FilterDetail = (props) => {
     }
     return (
         <Container>
-            <Title>{props.filter.name}</Title>
-            <p>{props.filter.description}</p>
-            <p>Available iOS: {props.filter.availableIOS}</p>
-            <p>Available Mac: {props.filter.availableMac}</p>
-            <h3 className="margin-top--md">Categories</h3>
-            <ul>
-                {props.filter.categories.map((category) => {
-                    return <li className="margin-left--sm" key={category}>{category}</li>
-                })}
-            </ul>
+            <FilterTitle
+                name={props.filter.name}
+                categories={props.filter.categories}
+                availableMac={props.filter.availableMac}
+                availableIOS={props.filter.availableIOS}
+                className="margin-bottom--md" />
+            <Description>{props.filter.description}</Description>
             <h3 className="margin-top--md">Parameters</h3>
             <ul>
                 {props.filter.parameters.map((param) => {
