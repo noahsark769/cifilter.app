@@ -173,7 +173,7 @@ class FilterSelect extends React.Component {
     render() {
         let _this = this;
         return (
-            <Container>
+            <Container className={this.props.className}>
                 <SearchBarWrapper>
                     <SearchBar onChange={this.handleSearchBarChange.bind(this)} />
                 </SearchBarWrapper>  

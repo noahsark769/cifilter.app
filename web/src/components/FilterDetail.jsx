@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import FilterTitle from './FilterTitle';
+import FilterParameters from './FilterParameters';
 
 const Container = styled.div`
     width: 700px;
@@ -27,16 +28,7 @@ const FilterDetail = (props) => {
                 availableIOS={props.filter.availableIOS}
                 className="margin-bottom--md" />
             <Description>{props.filter.description}</Description>
-            <h3 className="margin-top--md">Parameters</h3>
-            <ul>
-                {props.filter.parameters.map((param) => {
-                    return <li className="margin-left--sm" key={param.name}>
-                        <h4 className="margin-top--sm">{param.name}</h4>
-                        <div>Class: {param.classType}</div>
-                        <div>Description: {param.description || "No description provided."}</div>
-                    </li>
-                })}
-            </ul>
+            <FilterParameters parameters={props.filter.parameters} />
         </Container>
     )
 };

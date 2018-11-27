@@ -37,7 +37,7 @@ class Main extends React.Component {
                     <FilterSelect
                         filters={this.props.pageContext.filters}
                         onSelectFilter={this.handleFilterSelected.bind(this)}
-                        className="margin-right--md" />
+                        className="margin-right--sm" />
                     <FilterDetail filter={this.state.selectedFilter} />
                 </Container>
             </OuterWrapper>
