@@ -14,12 +14,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let filterNames = CIFilter.filterNames(inCategory: nil)
-        let data: [FilterInfo] = filterNames.compactMap { filterName in
-            let filter = CIFilter(name: filterName)!
-            return try? FilterInfo(filter: filter)
-        }
-        print(String(data: try! JSONEncoder().encode(data), encoding: .utf8)!)
+//        let filterNames = CIFilter.filterNames(inCategory: nil)
+//        let data: [FilterInfo] = filterNames.compactMap { filterName in
+//            let filter = CIFilter(name: filterName)!
+//            return try? FilterInfo(filter: filter)
+//        }
+//        print(String(data: try! JSONEncoder().encode(data), encoding: .utf8)!)
 
         window = UIWindow()
         let splitViewController = UISplitViewController()

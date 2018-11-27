@@ -9,6 +9,38 @@
 import UIKit
 import ReactiveLists
 
+// TODO: Use actual autolayout and a YLTableViewSectionHeaderFooterView
+final class FilterCategoryHeaderView: UITableViewHeaderFooterView {
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+
+        self.textLabel?.font = UIFont.boldSystemFont(ofSize: 25)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+private final class FilterHeaderModel: TableSectionHeaderFooterViewModel {
+    let title: String?
+    let height: CGFloat? = UITableView.automaticDimension
+    let viewInfo: SupplementaryViewInfo?
+
+    init(filterName: String) {
+        title = filterName
+        viewInfo = SupplementaryViewInfo(
+            registrationInfo: ViewRegistrationInfo(classType: FilterCategoryHeaderView.self),
+            kind: .header,
+            accessibilityFormat: "FilterCategoryHeaderView"
+        )
+    }
+
+    func applyViewModelToView(_ view: UIView) {
+        (view as? FilterCategoryHeaderView)?.textLabel?.text = title
+    }
+}
+
 private final class FilterCellModel: TableCellViewModel, DiffableViewModel {
     var registrationInfo = ViewRegistrationInfo(classType: UITableViewCell.self)
     var accessibilityFormat: CellAccessibilityFormat = "UITableViewCell"
@@ -39,9 +71,17 @@ final class FilterListViewController: UITableViewController {
             guard text.count > 0 else { return true }
             return $0.lowercased().contains(text.lowercased())
         }
-        return TableViewModel(cellViewModels: filteredNames.map { filterName in
-            return FilterCellModel(filter: CIFilter(name: filterName)!)
-        })
+        return TableViewModel(sectionModels: [
+            TableSectionViewModel(
+                cellViewModels: filteredNames.map { filterName in
+                    return FilterCellModel(filter: CIFilter(name: filterName)!)
+                },
+                headerViewModel: FilterHeaderModel(filterName: filteredNames[0])
+            )
+        ])
+//        return TableViewModel(cellViewModels: filteredNames.map { filterName in
+//            return FilterCellModel(filter: CIFilter(name: filterName)!)
+//        })
     }
 
     init() {
