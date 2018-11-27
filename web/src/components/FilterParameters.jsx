@@ -21,7 +21,9 @@ function filterHasLongParameterNames(parameters) {
 const FilterParameters = (props) => {
     return (
         <div>
-            <Heading className="margin-bottom--md margin-top--lg">Parameters</Heading>
+            <Heading className="margin-bottom--md margin-top--lg">
+                {props.parameters.length > 0 ? "Parameters" : "This filter takes no parameters"}
+            </Heading>
             <div>{props.parameters.sort((p1, p2) => p1.name.localeCompare(p2.name)).map(
                 (parameter) => <FilterParameter
                                     key={parameter.name}
