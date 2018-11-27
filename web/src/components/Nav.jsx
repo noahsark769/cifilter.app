@@ -41,6 +41,7 @@ const Other = styled.div`
 const NavLink = styled.a`
     color: #F5BD5D;
     cursor: pointer;
+    font-weight: bold;
 
     &:hover {
         text-decoration: underline;
