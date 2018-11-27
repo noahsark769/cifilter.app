@@ -24,6 +24,7 @@ const FilterParameters = (props) => {
             <Heading className="margin-bottom--md margin-top--lg">Parameters</Heading>
             <div>{props.parameters.sort((p1, p2) => p1.name.localeCompare(p2.name)).map(
                 (parameter) => <FilterParameter
+                                    key={parameter.name}
                                     longType={filterHasLongParameterNames(props.parameters)}
                                     parameter={parameter} />
             )}</div>

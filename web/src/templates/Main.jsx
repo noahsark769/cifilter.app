@@ -25,7 +25,7 @@ class Main extends React.Component {
 
     handleFilterSelected(filterName) {
         // TODO: this iterates over 200 filters, make it a map up front :/
-        let newFilter = this.props.pageContext.filters.filter((filter) => filter.name == filterName)[0];
+        let newFilter = this.props.pageContext.filters.filter((filter) => filter.name === filterName)[0];
         this.setState({ selectedFilter: newFilter });
     }
 

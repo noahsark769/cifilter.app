@@ -126,7 +126,8 @@ class FilterSelect extends React.Component {
             SELECT_CATEGORY_NAMES,
             (filterName) => true
         ),
-        selectedFilterName: null
+        selectedFilterName: null,
+        selectedFilterParentCategoryName: null
     };
 
     handleSearchBarChange(newText) {
@@ -139,21 +140,77 @@ class FilterSelect extends React.Component {
         })
     }
 
-    handleFilterClick(filterName) {
+    handleFilterClick(filterName, categoryName) {
         this.props.onSelectFilter(filterName);
         this.setState({
-            selectedFilterName: filterName
+            selectedFilterName: filterName,
+            selectedFilterParentCategoryName: categoryName
         });
     };
 
-    renderFilterNames(filterNames) {
+    // Select either the next (forward == true) or previous (forward == false)
+    // filter in the tree. This is basically an interview question.
+    advanceFilterSelection(forward) {
+        if (!this.state.selectedFilterName || !this.state.selectedFilterParentCategoryName) {
+            return;
+        }
+
+        const categoryName = this.state.selectedFilterParentCategoryName;
+        const filterName = this.state.selectedFilterName;
+
+        const categories = Array.from(this.state.groupedFilters.keys());
+        const indexOfCurrentCategory = categories.indexOf(categoryName);
+
+        const currentFilterNames = this.state.groupedFilters.get(categoryName);
+        const indexOfCurrentFilter = currentFilterNames.indexOf(filterName);
+
+        
+        if (indexOfCurrentFilter === currentFilterNames.length - 1 && forward) {
+            // we need to step into the next category
+            if (indexOfCurrentCategory === categories.length - 1) {
+                // we're at the end of the categories, nothing to do
+                return;
+            } else {
+                // step to the 0th element of the next category
+                const newCategory = categories[indexOfCurrentCategory + 1];
+                this.handleFilterClick(this.state.groupedFilters.get(newCategory)[0], newCategory);
+            }
+        } else if (indexOfCurrentFilter === 0 && !forward) {
+            // we need to step into the last category
+            if (indexOfCurrentCategory === 0) {
+                // we're at the beginning of the categories, nothing to do
+                return;
+            } else {
+                // step to the last element of the previous category
+                const newCategory = categories[indexOfCurrentCategory - 1];
+                const newFilterNames = this.state.groupedFilters.get(newCategory)
+                this.handleFilterClick(newFilterNames[newFilterNames.length - 1], newCategory);
+            }
+        } else {
+            // we just need to step
+            const newFilterName = currentFilterNames[indexOfCurrentFilter + (forward ? 1 : -1)];
+            this.handleFilterClick(newFilterName, categoryName);
+        }
+
+    }
+
+    handleKeyPress(keyCode) {
+        // arrow up/down button should select next/previous list element
+        if (keyCode === 38) { // up
+            this.advanceFilterSelection(false);
+        } else if (keyCode === 40) { // down
+            this.advanceFilterSelection(true);
+        }
+    }
+
+    renderFilterNames(filterNames, categoryName) {
         let _this = this;
         return (
             <ul>
                 {filterNames.map(function(filterName) {
                     return <FilterName
                         key={filterName}
-                        onClick={_this.handleFilterClick.bind(_this, filterName)}
+                        onClick={_this.handleFilterClick.bind(_this, filterName, categoryName)}
                         highlighted={_this.state.selectedFilterName == filterName}
                     >{filterName}</FilterName>
                 })}
@@ -165,9 +222,17 @@ class FilterSelect extends React.Component {
         return (
             <EntryContainer key={categoryName}>
                 <Category className="margin-bottom--sm">{categoryName}</Category>
-                {this.renderFilterNames(filterNames)}
+                {this.renderFilterNames(filterNames, categoryName)}
             </EntryContainer>
         );
+    }
+
+    componentDidMount() {
+        let _this = this;
+        document.body.addEventListener('keydown', function(event) {
+            var key = event.keyCode || event.charCode || 0;
+            _this.handleKeyPress(key);
+        });
     }
 
     render() {
