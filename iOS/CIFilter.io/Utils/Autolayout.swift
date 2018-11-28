@@ -9,12 +9,12 @@
 import UIKit
 
 infix operator <=>: MultiplicationPrecedence
-public func <=>(left: NSLayoutXAxisAnchor, right: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
+@discardableResult public func <=>(left: NSLayoutXAxisAnchor, right: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
     let constraint = left.constraint(equalTo: right)
     constraint.isActive = true
     return constraint
 }
-public func <=>(left: NSLayoutYAxisAnchor, right: NSLayoutYAxisAnchor) -> NSLayoutConstraint {
+@discardableResult public func <=>(left: NSLayoutYAxisAnchor, right: NSLayoutYAxisAnchor) -> NSLayoutConstraint {
     let constraint = left.constraint(equalTo: right)
     constraint.isActive = true
     return constraint

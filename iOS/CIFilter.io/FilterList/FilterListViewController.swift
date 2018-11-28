@@ -29,9 +29,10 @@ private final class FilterHeaderModel: TableSectionHeaderFooterViewModel {
 }
 
 private final class FilterCellModel: TableCellViewModel, DiffableViewModel {
-    var registrationInfo = ViewRegistrationInfo(classType: UITableViewCell.self)
-    var accessibilityFormat: CellAccessibilityFormat = "UITableViewCell"
-    let cellIdentifier = "UITableViewCell"
+    var registrationInfo = ViewRegistrationInfo(classType: FilterListNameCell.self)
+    var accessibilityFormat: CellAccessibilityFormat = "FilterListNameCell"
+    let cellIdentifier = "FilterListNameCell"
+    let rowHeight: CGFloat = UITableView.automaticDimension
 
     private let filter: CIFilter
 
@@ -40,7 +41,8 @@ private final class FilterCellModel: TableCellViewModel, DiffableViewModel {
     }
 
     func applyViewModelToCell(_ cell: UITableViewCell) {
-        cell.textLabel?.text = "\(self.filter.name)"
+        guard let cell = cell as? FilterListNameCell else { return }
+        cell.set(text: "\(self.filter.name)")
     }
 
     var diffingKey: String {

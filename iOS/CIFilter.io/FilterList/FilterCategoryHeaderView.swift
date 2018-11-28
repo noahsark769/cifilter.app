@@ -15,6 +15,8 @@ final class FilterCategoryHeaderView: YLTableViewSectionHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
 
+        self.contentView.backgroundColor = .white
+
         self.position = .header
         label.font = .boldSystemFont(ofSize: 22)
 
