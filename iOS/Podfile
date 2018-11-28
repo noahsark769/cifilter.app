@@ -6,6 +6,7 @@ source 'https://github.com/CocoaPods/Specs'
 
 def shared_pods
   pod 'ReactiveLists', '~> 0.3.0'
+  pod 'YLTableView', '~> 2.2.0', :modular_headers => true
 end
 
 target 'CIFilter.io' do

@@ -7,7 +7,7 @@ pods:
 	bundle exec pod install
 
 .PHONY: pods-update
-pods:
+pods-update:
 	bundle exec pod install --repo-update
 
 .PHONY: clean

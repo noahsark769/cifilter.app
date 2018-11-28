@@ -7,19 +7,23 @@ PODS:
     - DifferenceKit/Core
   - ReactiveLists (0.3.0):
     - DifferenceKit (~> 0.6.0)
+  - YLTableView (2.2.0)
 
 DEPENDENCIES:
   - ReactiveLists (~> 0.3.0)
+  - YLTableView (~> 2.2.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - DifferenceKit
     - ReactiveLists
+    - YLTableView
 
 SPEC CHECKSUMS:
   DifferenceKit: 824ab6ecd2a20cc658071b2c0c071114cf91e4c9
   ReactiveLists: 383c6720617abfb9bd47e8e612bfc13e1895eda5
+  YLTableView: c3bcbe16c2a2800765afa1e373a10fbd3174bbfa
 
-PODFILE CHECKSUM: 7c691e2e1534a63e7665d738ee9755148e0e2952
+PODFILE CHECKSUM: e9a712f24f1859d52f2e80ec81144d886e848019
 
 COCOAPODS: 1.5.3

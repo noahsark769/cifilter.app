@@ -9,19 +9,6 @@
 import UIKit
 import ReactiveLists
 
-// TODO: Use actual autolayout and a YLTableViewSectionHeaderFooterView
-final class FilterCategoryHeaderView: UITableViewHeaderFooterView {
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
-
-        self.textLabel?.font = UIFont.boldSystemFont(ofSize: 25)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 private final class FilterHeaderModel: TableSectionHeaderFooterViewModel {
     let title: String?
     let height: CGFloat? = UITableView.automaticDimension
@@ -37,7 +24,7 @@ private final class FilterHeaderModel: TableSectionHeaderFooterViewModel {
     }
 
     func applyViewModelToView(_ view: UIView) {
-        (view as? FilterCategoryHeaderView)?.textLabel?.text = title
+        (view as? FilterCategoryHeaderView)?.label.text = title
     }
 }
 
