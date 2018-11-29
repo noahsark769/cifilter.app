@@ -35,8 +35,12 @@ extension NSLayoutConstraint {
 }
 
 extension UIView {
-    func edges(to view: UIView, insets: UIEdgeInsets = .zero) {
+    func disableTranslatesAutoresizingMaskIntoConstraints() {
         self.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    func edges(to view: UIView, insets: UIEdgeInsets = .zero) {
+        self.disableTranslatesAutoresizingMaskIntoConstraints()
         self.leadingAnchor <=> view.leadingAnchor ++ insets.left
         self.trailingAnchor <=> view.trailingAnchor -- insets.right
         self.topAnchor <=> view.topAnchor ++ insets.top
@@ -46,5 +50,13 @@ extension UIView {
     func edgesToSuperview(insets: UIEdgeInsets = .zero) {
         guard let superview = self.superview else { return }
         self.edges(to: superview, insets: insets)
+    }
+}
+
+extension Array where Element: UIView {
+    func disableTranslatesAutoresizingMaskIntoConstraints() {
+        for view in self {
+            view.disableTranslatesAutoresizingMaskIntoConstraints()
+        }
     }
 }
