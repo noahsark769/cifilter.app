@@ -20,17 +20,17 @@ final class FilterListNameView: UIView {
 
         [label, border].disableTranslatesAutoresizingMaskIntoConstraints()
 
-        border.backgroundColor = UIColor(rgb: 0xa4a4a4)
-        label.textColor = UIColor(rgb: 0xa4a4a4)
+        border.backgroundColor = UIColor(rgb: 0xd6d6d6)
+        label.textColor = UIColor(rgb: 0x999999)
         border.leadingAnchor <=> self.leadingAnchor
         border.topAnchor <=> self.topAnchor
         border.bottomAnchor <=> self.bottomAnchor
-        border.widthAnchor.constraint(equalToConstant: 2).isActive = true
+        border.widthAnchor <=> 2
 
-        label.topAnchor <=> self.topAnchor
-        label.bottomAnchor <=> self.bottomAnchor
+        label.topAnchor <=> self.topAnchor ++ 10
+        label.bottomAnchor <=> self.bottomAnchor -- 10
         label.trailingAnchor <=> self.trailingAnchor
-        border.trailingAnchor <=> label.leadingAnchor ++ 20
+        border.trailingAnchor <=> label.leadingAnchor -- 10
     }
 
     required init?(coder aDecoder: NSCoder) {

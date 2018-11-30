@@ -9,6 +9,7 @@
 import UIKit
 
 infix operator <=>: MultiplicationPrecedence
+infix operator =|: MultiplicationPrecedence
 @discardableResult public func <=>(left: NSLayoutXAxisAnchor, right: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
     let constraint = left.constraint(equalTo: right)
     constraint.isActive = true
@@ -18,6 +19,18 @@ infix operator <=>: MultiplicationPrecedence
     let constraint = left.constraint(equalTo: right)
     constraint.isActive = true
     return constraint
+}
+@discardableResult public func <=>(left: NSLayoutDimension, right: CGFloat) -> NSLayoutConstraint {
+    let constraint = left.constraint(equalToConstant: right)
+    constraint.isActive = true
+    return constraint
+}
+
+@discardableResult public func |= (left: UIView, right: UIView) -> NSLayoutConstraint {
+    return left.leadingAnchor <=> right.leadingAnchor
+}
+@discardableResult public func =| (left: UIView, right: UIView) -> NSLayoutConstraint {
+    return left.trailingAnchor <=> right.trailingAnchor
 }
 
 infix operator --: AdditionPrecedence

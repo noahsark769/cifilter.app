@@ -15,7 +15,7 @@ final class FilterListNameCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         self.contentView.addSubview(filterNameView)
-        filterNameView.edgesToSuperview(insets: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+        filterNameView.edgesToSuperview(insets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
     }
 
     func set(text: String) {

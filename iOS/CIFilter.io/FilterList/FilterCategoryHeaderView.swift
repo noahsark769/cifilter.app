@@ -11,6 +11,7 @@ import YLTableView
 
 final class FilterCategoryHeaderView: YLTableViewSectionHeaderFooterView {
     let label = UILabel()
+    private let separator = SeparatorView(color: UIColor(rgb: 0xdddddd))
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -21,7 +22,11 @@ final class FilterCategoryHeaderView: YLTableViewSectionHeaderFooterView {
         label.font = .boldSystemFont(ofSize: 22)
 
         self.contentView.addSubview(label)
+        self.contentView.addSubview(separator)
         label.edges(to: self.contentView, insets: UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 5))
+        separator |= self.contentView
+        separator =| self.contentView
+        separator.bottomAnchor <=> self.contentView.bottomAnchor
     }
 
     required init?(coder aDecoder: NSCoder) {

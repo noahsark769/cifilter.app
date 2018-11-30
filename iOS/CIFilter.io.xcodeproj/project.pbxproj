@@ -25,6 +25,7 @@
 		A1D5A8BD21AF0E8D00257B5E /* FilterListNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8BC21AF0E8D00257B5E /* FilterListNameView.swift */; };
 		A1D5A8BF21AF0F8200257B5E /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8BE21AF0F8200257B5E /* UIColor+Utils.swift */; };
 		A1D5A8C121AF107D00257B5E /* FilterListNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8C021AF107D00257B5E /* FilterListNameCell.swift */; };
+		A1D5A8C321B054A100257B5E /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8C221B054A100257B5E /* SeparatorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		A1D5A8BC21AF0E8D00257B5E /* FilterListNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListNameView.swift; sourceTree = "<group>"; };
 		A1D5A8BE21AF0F8200257B5E /* UIColor+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Utils.swift"; sourceTree = "<group>"; };
 		A1D5A8C021AF107D00257B5E /* FilterListNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListNameCell.swift; sourceTree = "<group>"; };
+		A1D5A8C221B054A100257B5E /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
 		A8DF7E2364B4EB94F6C83712 /* libPods-CIFilter.io.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CIFilter.io.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F97FF4CF0C09C59DFDF3D2A3 /* Pods-CIFilter.io.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.io.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -143,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				A1D5A8BA21AF03F700257B5E /* Autolayout.swift */,
+				A1D5A8C221B054A100257B5E /* SeparatorView.swift */,
 				A1D5A8BE21AF0F8200257B5E /* UIColor+Utils.swift */,
 			);
 			path = Utils;
@@ -258,6 +261,7 @@
 				A1D5A8AB21ADB31400257B5E /* FilterParameterInfo.swift in Sources */,
 				A1D5A8AD21ADB33300257B5E /* FilterParameterType.swift in Sources */,
 				A1D5A8B521ADB3ED00257B5E /* ParameterData.swift in Sources */,
+				A1D5A8C321B054A100257B5E /* SeparatorView.swift in Sources */,
 				A1D5A8BF21AF0F8200257B5E /* UIColor+Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

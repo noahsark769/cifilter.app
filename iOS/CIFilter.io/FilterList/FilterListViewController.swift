@@ -78,6 +78,7 @@ final class FilterListViewController: UITableViewController {
         super.init(nibName: nil, bundle: nil)
         self.title = "Filters"
         self.definesPresentationContext = true
+        self.tableView.separatorStyle = .none
 
         driver = TableViewDriver(
             tableView: self.tableView,
