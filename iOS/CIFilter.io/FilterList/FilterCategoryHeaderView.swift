@@ -20,6 +20,8 @@ final class FilterCategoryHeaderView: YLTableViewSectionHeaderFooterView {
 
         self.position = .header
         label.font = .boldSystemFont(ofSize: 22)
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.2
 
         self.contentView.addSubview(label)
         self.contentView.addSubview(separator)

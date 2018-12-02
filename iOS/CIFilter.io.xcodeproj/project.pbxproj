@@ -26,6 +26,8 @@
 		A1D5A8BF21AF0F8200257B5E /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8BE21AF0F8200257B5E /* UIColor+Utils.swift */; };
 		A1D5A8C121AF107D00257B5E /* FilterListNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8C021AF107D00257B5E /* FilterListNameCell.swift */; };
 		A1D5A8C321B054A100257B5E /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8C221B054A100257B5E /* SeparatorView.swift */; };
+		A1D5A8C621B0FEB400257B5E /* FilterHeaderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8C521B0FEB400257B5E /* FilterHeaderModel.swift */; };
+		A1D5A8C821B0FECF00257B5E /* FilterCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8C721B0FECF00257B5E /* FilterCellModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		A1D5A8BE21AF0F8200257B5E /* UIColor+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Utils.swift"; sourceTree = "<group>"; };
 		A1D5A8C021AF107D00257B5E /* FilterListNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListNameCell.swift; sourceTree = "<group>"; };
 		A1D5A8C221B054A100257B5E /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
+		A1D5A8C521B0FEB400257B5E /* FilterHeaderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterHeaderModel.swift; sourceTree = "<group>"; };
+		A1D5A8C721B0FECF00257B5E /* FilterCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCellModel.swift; sourceTree = "<group>"; };
 		A8DF7E2364B4EB94F6C83712 /* libPods-CIFilter.io.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CIFilter.io.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F97FF4CF0C09C59DFDF3D2A3 /* Pods-CIFilter.io.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.io.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -133,6 +137,7 @@
 		A1D5A8B621AF033700257B5E /* FilterList */ = {
 			isa = PBXGroup;
 			children = (
+				A1D5A8C421B0FEA600257B5E /* Models */,
 				A1D5A8B721AF034A00257B5E /* FilterCategoryHeaderView.swift */,
 				A1D5A8C021AF107D00257B5E /* FilterListNameCell.swift */,
 				A1D5A8BC21AF0E8D00257B5E /* FilterListNameView.swift */,
@@ -149,6 +154,15 @@
 				A1D5A8BE21AF0F8200257B5E /* UIColor+Utils.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		A1D5A8C421B0FEA600257B5E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A1D5A8C721B0FECF00257B5E /* FilterCellModel.swift */,
+				A1D5A8C521B0FEB400257B5E /* FilterHeaderModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,7 +266,9 @@
 				A1D5A8AF21ADB38200257B5E /* CIVectorCodableWrapper.swift in Sources */,
 				A1D5A8B321ADB3C100257B5E /* Dictionary+Validation.swift in Sources */,
 				A1D5A8B821AF034A00257B5E /* FilterCategoryHeaderView.swift in Sources */,
+				A1D5A8C821B0FECF00257B5E /* FilterCellModel.swift in Sources */,
 				A11C522721968C8900045F2E /* FilterDetailViewController.swift in Sources */,
+				A1D5A8C621B0FEB400257B5E /* FilterHeaderModel.swift in Sources */,
 				A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */,
 				A1D5A8B121ADB3A800257B5E /* FilterInfoConstructionError.swift in Sources */,
 				A1D5A8C121AF107D00257B5E /* FilterListNameCell.swift in Sources */,

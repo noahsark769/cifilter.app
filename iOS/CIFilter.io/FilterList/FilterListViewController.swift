@@ -9,72 +9,74 @@
 import UIKit
 import ReactiveLists
 
-private final class FilterHeaderModel: TableSectionHeaderFooterViewModel {
-    let title: String?
-    let height: CGFloat? = UITableView.automaticDimension
-    let viewInfo: SupplementaryViewInfo?
+func group(filters: [FilterInfo], into categories: [String]) -> [String: [FilterInfo]] {
+    var result: [String: [FilterInfo]] = [:]
 
-    init(filterName: String) {
-        title = filterName
-        viewInfo = SupplementaryViewInfo(
-            registrationInfo: ViewRegistrationInfo(classType: FilterCategoryHeaderView.self),
-            kind: .header,
-            accessibilityFormat: "FilterCategoryHeaderView"
-        )
+    // to make sure the keys are sorted the same was as the passed in categories
+    for category in categories {
+        result[category] = []
     }
-
-    func applyViewModelToView(_ view: UIView) {
-        (view as? FilterCategoryHeaderView)?.label.text = title
+    for filter in filters {
+        var found = false
+        for category in categories {
+            if Set(filter.categories).contains(category) {
+                result[category, default: []].append(filter)
+                found = true
+                break
+            }
+        }
+        if !found {
+            result["Other", default: []].append(filter)
+        }
     }
-}
-
-private final class FilterCellModel: TableCellViewModel, DiffableViewModel {
-    var registrationInfo = ViewRegistrationInfo(classType: FilterListNameCell.self)
-    var accessibilityFormat: CellAccessibilityFormat = "FilterListNameCell"
-    let cellIdentifier = "FilterListNameCell"
-    let rowHeight: CGFloat = UITableView.automaticDimension
-
-    private let filter: CIFilter
-
-    init(filter: CIFilter) {
-        self.filter = filter
-    }
-
-    func applyViewModelToCell(_ cell: UITableViewCell) {
-        guard let cell = cell as? FilterListNameCell else { return }
-        cell.set(text: "\(self.filter.name)")
-    }
-
-    var diffingKey: String {
-        return self.filter.name
-    }
+    return result
 }
 
 final class FilterListViewController: UITableViewController {
-    private let filterNames: [String]
+    static let categoryNames: [String] = [
+        "CICategoryBlur",
+        "CICategoryColorAdjustment",
+        "CICategoryColorEffect",
+        "CICategoryCompositeOperation",
+        "CICategoryDistortionEffect",
+        "CICategoryGenerator",
+        "CICategoryGeometryAdjustment",
+        "CICategoryGradient",
+        "CICategoryHalftoneEffect",
+        "CICategoryReduction",
+        "CICategorySharpen",
+        "CICategoryStylize",
+        "CICategoryTileEffect",
+        "CICategoryTransition",
+        "Other"
+    ]
+
+    private let filterInfos: [FilterInfo]
     private var driver: TableViewDriver! = nil
 
     private func generateTableModel(searchText: String?) -> TableViewModel {
-        let filteredNames = filterNames.filter {
+        let filteredFilters = filterInfos.filter {
             guard let text = searchText else { return true }
             guard text.count > 0 else { return true }
-            return $0.lowercased().contains(text.lowercased())
+            return $0.name.lowercased().contains(text.lowercased())
         }
-        return TableViewModel(sectionModels: [
-            TableSectionViewModel(
-                cellViewModels: filteredNames.map { filterName in
-                    return FilterCellModel(filter: CIFilter(name: filterName)!)
+
+        let groupedFilters = group(filters: filteredFilters, into: FilterListViewController.categoryNames)
+
+        return TableViewModel(sectionModels: FilterListViewController.categoryNames.compactMap { key in
+            guard let filters = groupedFilters[key] else { return nil }
+            guard filters.count > 0 else { return nil }
+            return TableSectionViewModel(
+                cellViewModels: filters.map { filter in
+                    return FilterCellModel(filter: CIFilter(name: filter.name)!)
                 },
-                headerViewModel: FilterHeaderModel(filterName: filteredNames[0])
+                headerViewModel: FilterHeaderModel(filterName: key)
             )
-        ])
-//        return TableViewModel(cellViewModels: filteredNames.map { filterName in
-//            return FilterCellModel(filter: CIFilter(name: filterName)!)
-//        })
+        })
     }
 
-    init() {
-        filterNames = CIFilter.filterNames(inCategory: nil)
+    init(filterInfos: [FilterInfo]) {
+        self.filterInfos = filterInfos
         super.init(nibName: nil, bundle: nil)
         self.title = "Filters"
         self.definesPresentationContext = true
