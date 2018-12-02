@@ -108,8 +108,9 @@
 		A1C6621B2196818100826A2B /* CIFilter.io */ = {
 			isa = PBXGroup;
 			children = (
-				A1D5A8A921ADB30300257B5E /* FilterInfo */,
-				A1D5A8B621AF033700257B5E /* FilterList */,
+				A1D5A8C921B48FB700257B5E /* Filter Detail */,
+				A1D5A8A921ADB30300257B5E /* Filter Info */,
+				A1D5A8B621AF033700257B5E /* Filter List */,
 				A1D5A8B921AF03ED00257B5E /* Utils */,
 				A1C6621C2196818100826A2B /* AppDelegate.swift */,
 				A1C662232196818300826A2B /* Assets.xcassets */,
@@ -121,7 +122,7 @@
 			path = CIFilter.io;
 			sourceTree = "<group>";
 		};
-		A1D5A8A921ADB30300257B5E /* FilterInfo */ = {
+		A1D5A8A921ADB30300257B5E /* Filter Info */ = {
 			isa = PBXGroup;
 			children = (
 				A1D5A8AE21ADB38200257B5E /* CIVectorCodableWrapper.swift */,
@@ -131,10 +132,10 @@
 				A1D5A8AC21ADB33300257B5E /* FilterParameterType.swift */,
 				A1D5A8B421ADB3ED00257B5E /* ParameterData.swift */,
 			);
-			path = FilterInfo;
+			path = "Filter Info";
 			sourceTree = "<group>";
 		};
-		A1D5A8B621AF033700257B5E /* FilterList */ = {
+		A1D5A8B621AF033700257B5E /* Filter List */ = {
 			isa = PBXGroup;
 			children = (
 				A1D5A8C421B0FEA600257B5E /* Models */,
@@ -143,7 +144,7 @@
 				A1D5A8BC21AF0E8D00257B5E /* FilterListNameView.swift */,
 				A11C522421968BB000045F2E /* FilterListViewController.swift */,
 			);
-			path = FilterList;
+			path = "Filter List";
 			sourceTree = "<group>";
 		};
 		A1D5A8B921AF03ED00257B5E /* Utils */ = {
@@ -163,6 +164,13 @@
 				A1D5A8C521B0FEB400257B5E /* FilterHeaderModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		A1D5A8C921B48FB700257B5E /* Filter Detail */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Filter Detail";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
