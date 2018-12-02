@@ -32,6 +32,10 @@ func group(filters: [FilterInfo], into categories: [String]) -> [String: [Filter
     return result
 }
 
+protocol FilterListViewControllerDelegate: class {
+    func filterListViewController(_ vc: FilterListViewController, didTapFilterInfo: FilterInfo)
+}
+
 final class FilterListViewController: UITableViewController {
     static let categoryNames: [String] = [
         "CICategoryBlur",
@@ -51,6 +55,7 @@ final class FilterListViewController: UITableViewController {
         "Other"
     ]
 
+    weak var delegate: FilterListViewControllerDelegate?
     private let filterInfos: [FilterInfo]
     private var driver: TableViewDriver! = nil
 
@@ -68,7 +73,13 @@ final class FilterListViewController: UITableViewController {
             guard filters.count > 0 else { return nil }
             return TableSectionViewModel(
                 cellViewModels: filters.map { filter in
-                    return FilterCellModel(filter: CIFilter(name: filter.name)!)
+                    return FilterCellModel(
+                        filter: CIFilter(name: filter.name)!,
+                        didSelect: { [weak self] in
+                            guard let `self` = self else { return }
+                            self.delegate?.filterListViewController(self, didTapFilterInfo: filter)
+                        }
+                    )
                 },
                 headerViewModel: FilterHeaderModel(filterName: key)
             )

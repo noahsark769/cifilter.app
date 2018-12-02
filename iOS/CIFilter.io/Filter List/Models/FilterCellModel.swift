@@ -14,11 +14,13 @@ final class FilterCellModel: TableCellViewModel, DiffableViewModel {
     var accessibilityFormat: CellAccessibilityFormat = "FilterListNameCell"
     let cellIdentifier = "FilterListNameCell"
     let rowHeight: CGFloat = UITableView.automaticDimension
+    var didSelect: DidSelectClosure? = nil
 
     private let filter: CIFilter
 
-    init(filter: CIFilter) {
+    init(filter: CIFilter, didSelect: @escaping () -> Void) {
         self.filter = filter
+        self.didSelect = didSelect
     }
 
     func applyViewModelToCell(_ cell: UITableViewCell) {

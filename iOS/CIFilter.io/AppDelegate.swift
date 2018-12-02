@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navController = UINavigationController(rootViewController: filterListViewController)
         navController.navigationBar.prefersLargeTitles = true
         let filterDetailViewController = FilterDetailViewController()
+        filterListViewController.delegate = filterDetailViewController
         splitViewController.viewControllers = [navController, filterDetailViewController]
         window?.rootViewController = splitViewController
         window?.makeKeyAndVisible()

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5F31BFC0D3D97B3DB60EB532 /* libPods-CIFilter.io.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8DF7E2364B4EB94F6C83712 /* libPods-CIFilter.io.a */; };
 		A11C522521968BB000045F2E /* FilterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11C522421968BB000045F2E /* FilterListViewController.swift */; };
-		A11C522721968C8900045F2E /* FilterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11C522621968C8900045F2E /* FilterDetailViewController.swift */; };
 		A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1707F65219A1A0A0010E007 /* FilterInfo.swift */; };
 		A1C6621D2196818100826A2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C6621C2196818100826A2B /* AppDelegate.swift */; };
 		A1C662242196818300826A2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1C662232196818300826A2B /* Assets.xcassets */; };
@@ -28,12 +27,14 @@
 		A1D5A8C321B054A100257B5E /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8C221B054A100257B5E /* SeparatorView.swift */; };
 		A1D5A8C621B0FEB400257B5E /* FilterHeaderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8C521B0FEB400257B5E /* FilterHeaderModel.swift */; };
 		A1D5A8C821B0FECF00257B5E /* FilterCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8C721B0FECF00257B5E /* FilterCellModel.swift */; };
+		A1D5A8CB21B48FDD00257B5E /* FilterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8CA21B48FDD00257B5E /* FilterDetailView.swift */; };
+		A1D5A8CD21B4900400257B5E /* FilterDetailTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8CC21B4900400257B5E /* FilterDetailTitleView.swift */; };
+		A1D5A8CF21B493A200257B5E /* FilterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8CE21B493A200257B5E /* FilterDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		08FBAE88B5103E03654DA7F2 /* Pods-CIFilter.io.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.io.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io.debug.xcconfig"; sourceTree = "<group>"; };
 		A11C522421968BB000045F2E /* FilterListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListViewController.swift; sourceTree = "<group>"; };
-		A11C522621968C8900045F2E /* FilterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailViewController.swift; sourceTree = "<group>"; };
 		A1707F65219A1A0A0010E007 /* FilterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInfo.swift; sourceTree = "<group>"; };
 		A1C662192196818100826A2B /* CIFilter.io.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CIFilter.io.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1C6621C2196818100826A2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -54,6 +55,9 @@
 		A1D5A8C221B054A100257B5E /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
 		A1D5A8C521B0FEB400257B5E /* FilterHeaderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterHeaderModel.swift; sourceTree = "<group>"; };
 		A1D5A8C721B0FECF00257B5E /* FilterCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCellModel.swift; sourceTree = "<group>"; };
+		A1D5A8CA21B48FDD00257B5E /* FilterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailView.swift; sourceTree = "<group>"; };
+		A1D5A8CC21B4900400257B5E /* FilterDetailTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailTitleView.swift; sourceTree = "<group>"; };
+		A1D5A8CE21B493A200257B5E /* FilterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailViewController.swift; sourceTree = "<group>"; };
 		A8DF7E2364B4EB94F6C83712 /* libPods-CIFilter.io.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CIFilter.io.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F97FF4CF0C09C59DFDF3D2A3 /* Pods-CIFilter.io.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.io.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,7 +119,6 @@
 				A1C6621C2196818100826A2B /* AppDelegate.swift */,
 				A1C662232196818300826A2B /* Assets.xcassets */,
 				A1D5A8B221ADB3C100257B5E /* Dictionary+Validation.swift */,
-				A11C522621968C8900045F2E /* FilterDetailViewController.swift */,
 				A1C662282196818300826A2B /* Info.plist */,
 				A1C662252196818300826A2B /* LaunchScreen.storyboard */,
 			);
@@ -169,6 +172,9 @@
 		A1D5A8C921B48FB700257B5E /* Filter Detail */ = {
 			isa = PBXGroup;
 			children = (
+				A1D5A8CC21B4900400257B5E /* FilterDetailTitleView.swift */,
+				A1D5A8CA21B48FDD00257B5E /* FilterDetailView.swift */,
+				A1D5A8CE21B493A200257B5E /* FilterDetailViewController.swift */,
 			);
 			path = "Filter Detail";
 			sourceTree = "<group>";
@@ -275,7 +281,9 @@
 				A1D5A8B321ADB3C100257B5E /* Dictionary+Validation.swift in Sources */,
 				A1D5A8B821AF034A00257B5E /* FilterCategoryHeaderView.swift in Sources */,
 				A1D5A8C821B0FECF00257B5E /* FilterCellModel.swift in Sources */,
-				A11C522721968C8900045F2E /* FilterDetailViewController.swift in Sources */,
+				A1D5A8CD21B4900400257B5E /* FilterDetailTitleView.swift in Sources */,
+				A1D5A8CB21B48FDD00257B5E /* FilterDetailView.swift in Sources */,
+				A1D5A8CF21B493A200257B5E /* FilterDetailViewController.swift in Sources */,
 				A1D5A8C621B0FEB400257B5E /* FilterHeaderModel.swift in Sources */,
 				A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */,
 				A1D5A8B121ADB3A800257B5E /* FilterInfoConstructionError.swift in Sources */,
