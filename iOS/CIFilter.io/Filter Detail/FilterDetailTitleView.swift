@@ -22,6 +22,8 @@ final class FilterDetailTitleView: UIView {
 
         titleLabel.font = UIFont.boldSystemFont(ofSize: 46)
         titleLabel.numberOfLines = 1
+        titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.minimumScaleFactor = 0.2
         categoriesLabel.textColor = UIColor(rgb: 0x989898)
         categoriesLabel.numberOfLines = 0
 

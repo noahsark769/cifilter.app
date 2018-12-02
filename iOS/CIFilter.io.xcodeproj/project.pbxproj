@@ -30,6 +30,9 @@
 		A1D5A8CB21B48FDD00257B5E /* FilterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8CA21B48FDD00257B5E /* FilterDetailView.swift */; };
 		A1D5A8CD21B4900400257B5E /* FilterDetailTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8CC21B4900400257B5E /* FilterDetailTitleView.swift */; };
 		A1D5A8CF21B493A200257B5E /* FilterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8CE21B493A200257B5E /* FilterDetailViewController.swift */; };
+		A1D5A8D121B49E5400257B5E /* FilterAvailabilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8D021B49E5400257B5E /* FilterAvailabilityView.swift */; };
+		A1D5A8D321B4A32100257B5E /* UIEdgeInsets+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8D221B4A32100257B5E /* UIEdgeInsets+Utils.swift */; };
+		A1D5A8D521B4A64A00257B5E /* UIStackView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8D421B4A64A00257B5E /* UIStackView+Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +61,9 @@
 		A1D5A8CA21B48FDD00257B5E /* FilterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailView.swift; sourceTree = "<group>"; };
 		A1D5A8CC21B4900400257B5E /* FilterDetailTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailTitleView.swift; sourceTree = "<group>"; };
 		A1D5A8CE21B493A200257B5E /* FilterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailViewController.swift; sourceTree = "<group>"; };
+		A1D5A8D021B49E5400257B5E /* FilterAvailabilityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAvailabilityView.swift; sourceTree = "<group>"; };
+		A1D5A8D221B4A32100257B5E /* UIEdgeInsets+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Utils.swift"; sourceTree = "<group>"; };
+		A1D5A8D421B4A64A00257B5E /* UIStackView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Utils.swift"; sourceTree = "<group>"; };
 		A8DF7E2364B4EB94F6C83712 /* libPods-CIFilter.io.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CIFilter.io.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F97FF4CF0C09C59DFDF3D2A3 /* Pods-CIFilter.io.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.io.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -156,6 +162,8 @@
 				A1D5A8BA21AF03F700257B5E /* Autolayout.swift */,
 				A1D5A8C221B054A100257B5E /* SeparatorView.swift */,
 				A1D5A8BE21AF0F8200257B5E /* UIColor+Utils.swift */,
+				A1D5A8D221B4A32100257B5E /* UIEdgeInsets+Utils.swift */,
+				A1D5A8D421B4A64A00257B5E /* UIStackView+Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -172,6 +180,7 @@
 		A1D5A8C921B48FB700257B5E /* Filter Detail */ = {
 			isa = PBXGroup;
 			children = (
+				A1D5A8D021B49E5400257B5E /* FilterAvailabilityView.swift */,
 				A1D5A8CC21B4900400257B5E /* FilterDetailTitleView.swift */,
 				A1D5A8CA21B48FDD00257B5E /* FilterDetailView.swift */,
 				A1D5A8CE21B493A200257B5E /* FilterDetailViewController.swift */,
@@ -279,6 +288,7 @@
 				A1D5A8BB21AF03F700257B5E /* Autolayout.swift in Sources */,
 				A1D5A8AF21ADB38200257B5E /* CIVectorCodableWrapper.swift in Sources */,
 				A1D5A8B321ADB3C100257B5E /* Dictionary+Validation.swift in Sources */,
+				A1D5A8D121B49E5400257B5E /* FilterAvailabilityView.swift in Sources */,
 				A1D5A8B821AF034A00257B5E /* FilterCategoryHeaderView.swift in Sources */,
 				A1D5A8C821B0FECF00257B5E /* FilterCellModel.swift in Sources */,
 				A1D5A8CD21B4900400257B5E /* FilterDetailTitleView.swift in Sources */,
@@ -295,6 +305,8 @@
 				A1D5A8B521ADB3ED00257B5E /* ParameterData.swift in Sources */,
 				A1D5A8C321B054A100257B5E /* SeparatorView.swift in Sources */,
 				A1D5A8BF21AF0F8200257B5E /* UIColor+Utils.swift in Sources */,
+				A1D5A8D321B4A32100257B5E /* UIEdgeInsets+Utils.swift in Sources */,
+				A1D5A8D521B4A64A00257B5E /* UIStackView+Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
