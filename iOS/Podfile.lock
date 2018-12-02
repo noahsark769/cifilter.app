@@ -1,4 +1,5 @@
 PODS:
+  - AloeStackView (1.0.1)
   - DifferenceKit (0.6.0):
     - DifferenceKit/Core (= 0.6.0)
     - DifferenceKit/UIKitExtension (= 0.6.0)
@@ -10,20 +11,23 @@ PODS:
   - YLTableView (2.2.0)
 
 DEPENDENCIES:
+  - AloeStackView (~> 1.0.1)
   - ReactiveLists (~> 0.3.0)
   - YLTableView (~> 2.2.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - AloeStackView
     - DifferenceKit
     - ReactiveLists
     - YLTableView
 
 SPEC CHECKSUMS:
+  AloeStackView: d22c006da4510db5e220968234174654b5ed6ea5
   DifferenceKit: 824ab6ecd2a20cc658071b2c0c071114cf91e4c9
   ReactiveLists: 383c6720617abfb9bd47e8e612bfc13e1895eda5
   YLTableView: c3bcbe16c2a2800765afa1e373a10fbd3174bbfa
 
-PODFILE CHECKSUM: e9a712f24f1859d52f2e80ec81144d886e848019
+PODFILE CHECKSUM: 922dc9e8f600748e2c8ec1852c86437fab03bdcf
 
 COCOAPODS: 1.5.3

@@ -25,6 +25,7 @@ final class FilterDetailViewController: UIViewController {
         self.view.backgroundColor = .white
         filterView.disableTranslatesAutoresizingMaskIntoConstraints()
         filterView.topAnchor <=> self.view.topAnchor ++ 100
+        filterView.bottomAnchor <=> self.view.bottomAnchor
         filterView.widthAnchor <=> 600
         filterView.centerXAnchor <=> self.view.centerXAnchor
     }

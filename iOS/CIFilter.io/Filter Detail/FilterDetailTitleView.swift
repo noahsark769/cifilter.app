@@ -23,13 +23,14 @@ final class FilterDetailTitleView: UIView {
         titleLabel.font = UIFont.boldSystemFont(ofSize: 46)
         titleLabel.numberOfLines = 1
         categoriesLabel.textColor = UIColor(rgb: 0x989898)
+        categoriesLabel.numberOfLines = 0
 
-        titleLabel.leadingAnchor <=> self.leadingAnchor ++ 10
-        titleLabel.trailingAnchor <=> self.trailingAnchor -- 10
-        categoriesLabel.leadingAnchor <=> self.leadingAnchor ++ 10
-        categoriesLabel.trailingAnchor <=> self.trailingAnchor -- 10
-        titleLabel.topAnchor <=> self.topAnchor ++ 10
-        categoriesLabel.bottomAnchor <=> self.bottomAnchor -- 10
+        titleLabel.leadingAnchor <=> self.leadingAnchor
+        titleLabel.trailingAnchor <=> self.trailingAnchor
+        categoriesLabel.leadingAnchor <=> self.leadingAnchor
+        categoriesLabel.trailingAnchor <=> self.trailingAnchor
+        titleLabel.topAnchor <=> self.topAnchor
+        categoriesLabel.bottomAnchor <=> self.bottomAnchor
         titleLabel.bottomAnchor <=> categoriesLabel.topAnchor -- 10
 
     }

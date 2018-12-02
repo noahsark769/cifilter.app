@@ -7,15 +7,26 @@
 //
 
 import UIKit
+import AloeStackView
 
 final class FilterDetailView: UIView {
     private let titleView: FilterDetailTitleView
 
+    private let stackView: AloeStackView = {
+        let view = AloeStackView()
+        view.rowInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        view.separatorInset = UIEdgeInsets.zero
+        return view
+    }()
+
     init() {
         titleView = FilterDetailTitleView()
         super.init(frame: .zero)
-        addSubview(titleView)
-        titleView.edgesToSuperview()
+
+        stackView.addRow(titleView)
+
+        addSubview(stackView)
+        stackView.edgesToSuperview()
     }
 
     func set(filter: FilterInfo) {
