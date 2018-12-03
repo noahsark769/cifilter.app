@@ -33,6 +33,7 @@
 		A1D5A8D121B49E5400257B5E /* FilterAvailabilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8D021B49E5400257B5E /* FilterAvailabilityView.swift */; };
 		A1D5A8D321B4A32100257B5E /* UIEdgeInsets+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8D221B4A32100257B5E /* UIEdgeInsets+Utils.swift */; };
 		A1D5A8D521B4A64A00257B5E /* UIStackView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8D421B4A64A00257B5E /* UIStackView+Utils.swift */; };
+		A1D5A8D721B4A85A00257B5E /* FilterParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8D621B4A85A00257B5E /* FilterParameterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		A1D5A8D021B49E5400257B5E /* FilterAvailabilityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAvailabilityView.swift; sourceTree = "<group>"; };
 		A1D5A8D221B4A32100257B5E /* UIEdgeInsets+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Utils.swift"; sourceTree = "<group>"; };
 		A1D5A8D421B4A64A00257B5E /* UIStackView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Utils.swift"; sourceTree = "<group>"; };
+		A1D5A8D621B4A85A00257B5E /* FilterParameterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterParameterView.swift; sourceTree = "<group>"; };
 		A8DF7E2364B4EB94F6C83712 /* libPods-CIFilter.io.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CIFilter.io.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F97FF4CF0C09C59DFDF3D2A3 /* Pods-CIFilter.io.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.io.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -184,6 +186,7 @@
 				A1D5A8CC21B4900400257B5E /* FilterDetailTitleView.swift */,
 				A1D5A8CA21B48FDD00257B5E /* FilterDetailView.swift */,
 				A1D5A8CE21B493A200257B5E /* FilterDetailViewController.swift */,
+				A1D5A8D621B4A85A00257B5E /* FilterParameterView.swift */,
 			);
 			path = "Filter Detail";
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 				A11C522521968BB000045F2E /* FilterListViewController.swift in Sources */,
 				A1D5A8AB21ADB31400257B5E /* FilterParameterInfo.swift in Sources */,
 				A1D5A8AD21ADB33300257B5E /* FilterParameterType.swift in Sources */,
+				A1D5A8D721B4A85A00257B5E /* FilterParameterView.swift in Sources */,
 				A1D5A8B521ADB3ED00257B5E /* ParameterData.swift in Sources */,
 				A1D5A8C321B054A100257B5E /* SeparatorView.swift in Sources */,
 				A1D5A8BF21AF0F8200257B5E /* UIColor+Utils.swift in Sources */,
