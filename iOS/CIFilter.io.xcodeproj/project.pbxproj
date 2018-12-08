@@ -10,6 +10,7 @@
 		5F31BFC0D3D97B3DB60EB532 /* libPods-CIFilter.io.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8DF7E2364B4EB94F6C83712 /* libPods-CIFilter.io.a */; };
 		A11C522521968BB000045F2E /* FilterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11C522421968BB000045F2E /* FilterListViewController.swift */; };
 		A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1707F65219A1A0A0010E007 /* FilterInfo.swift */; };
+		A1A0D83521BC60BA0098168C /* FilterExampleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */; };
 		A1C6621D2196818100826A2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C6621C2196818100826A2B /* AppDelegate.swift */; };
 		A1C662242196818300826A2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1C662232196818300826A2B /* Assets.xcassets */; };
 		A1C662272196818300826A2B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1C662252196818300826A2B /* LaunchScreen.storyboard */; };
@@ -40,6 +41,7 @@
 		08FBAE88B5103E03654DA7F2 /* Pods-CIFilter.io.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.io.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io.debug.xcconfig"; sourceTree = "<group>"; };
 		A11C522421968BB000045F2E /* FilterListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListViewController.swift; sourceTree = "<group>"; };
 		A1707F65219A1A0A0010E007 /* FilterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInfo.swift; sourceTree = "<group>"; };
+		A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterExampleProvider.swift; sourceTree = "<group>"; };
 		A1C662192196818100826A2B /* CIFilter.io.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CIFilter.io.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1C6621C2196818100826A2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1C662232196818300826A2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				A1D5A8CC21B4900400257B5E /* FilterDetailTitleView.swift */,
 				A1D5A8CA21B48FDD00257B5E /* FilterDetailView.swift */,
 				A1D5A8CE21B493A200257B5E /* FilterDetailViewController.swift */,
+				A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */,
 				A1D5A8D621B4A85A00257B5E /* FilterParameterView.swift */,
 			);
 			path = "Filter Detail";
@@ -297,6 +300,7 @@
 				A1D5A8CD21B4900400257B5E /* FilterDetailTitleView.swift in Sources */,
 				A1D5A8CB21B48FDD00257B5E /* FilterDetailView.swift in Sources */,
 				A1D5A8CF21B493A200257B5E /* FilterDetailViewController.swift in Sources */,
+				A1A0D83521BC60BA0098168C /* FilterExampleProvider.swift in Sources */,
 				A1D5A8C621B0FEB400257B5E /* FilterHeaderModel.swift in Sources */,
 				A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */,
 				A1D5A8B121ADB3A800257B5E /* FilterInfoConstructionError.swift in Sources */,

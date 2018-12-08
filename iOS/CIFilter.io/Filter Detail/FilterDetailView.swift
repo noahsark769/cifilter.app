@@ -12,6 +12,7 @@ import AloeStackView
 final class FilterDetailView: UIView {
     private let titleView = FilterDetailTitleView()
     private let availabilityView = FilterAvailabilityView()
+    private let exampleProvider = FilterExampleProvider()
 
     private let descriptionLabel: UILabel = {
         let view = UILabel()
@@ -19,10 +20,25 @@ final class FilterDetailView: UIView {
         return view
     }()
 
+    private let noExampleLabel: UILabel = {
+        let view = UILabel()
+        view.numberOfLines = 0
+        view.text = "No example is available for this filter."
+        return view
+    }()
+
     private let parametersLabel: UILabel = {
         let view = UILabel()
         view.font = UIFont.boldSystemFont(ofSize: 14)
         view.textColor = UIColor(rgb: 0xF5BD5D)
+        return view
+    }()
+
+    private let exampleLabel: UILabel = {
+        let view = UILabel()
+        view.font = UIFont.boldSystemFont(ofSize: 14)
+        view.textColor = UIColor(rgb: 0xF5BD5D)
+        view.text = "EXAMPLE"
         return view
     }()
 
@@ -34,6 +50,13 @@ final class FilterDetailView: UIView {
     }()
 
     private let parametersStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.spacing = 10
+        return view
+    }()
+
+    private let exampleStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
         view.spacing = 10
@@ -56,6 +79,9 @@ final class FilterDetailView: UIView {
         stackView.addRow(parametersStackView)
         stackView.setInset(forRow: parametersStackView, inset: UIEdgeInsets(top: 10, left: 0, bottom: 40, right: 0))
 
+        stackView.addRow(exampleStackView)
+        stackView.setInset(forRow: exampleStackView, inset: UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0))
+
         addSubview(stackView)
         stackView.edgesToSuperview()
     }
@@ -71,6 +97,14 @@ final class FilterDetailView: UIView {
             let view = FilterParameterView()
             view.set(parameter: parameter, filter: filter)
             parametersStackView.addArrangedSubview(view)
+        }
+
+        exampleStackView.removeAllArrangedSubviews()
+        exampleStackView.addArrangedSubview(exampleLabel)
+        if self.exampleProvider.isExampleAvailable(forFilterName: filter.name) {
+
+        } else {
+            self.exampleStackView.addArrangedSubview(noExampleLabel)
         }
     }
 
