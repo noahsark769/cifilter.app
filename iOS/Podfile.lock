@@ -8,11 +8,19 @@ PODS:
     - DifferenceKit/Core
   - ReactiveLists (0.3.0):
     - DifferenceKit (~> 0.6.0)
+  - RxAtomic (4.4.0)
+  - RxCocoa (4.4.0):
+    - RxSwift (~> 4.0)
+  - RxSwift (4.4.0):
+    - RxAtomic (~> 4.4)
   - YLTableView (2.2.0)
 
 DEPENDENCIES:
   - AloeStackView (~> 1.0.1)
   - ReactiveLists (~> 0.3.0)
+  - RxAtomic (~> 4.4.0)
+  - RxCocoa (~> 4.4.0)
+  - RxSwift (~> 4.4.0)
   - YLTableView (~> 2.2.0)
 
 SPEC REPOS:
@@ -20,14 +28,20 @@ SPEC REPOS:
     - AloeStackView
     - DifferenceKit
     - ReactiveLists
+    - RxAtomic
+    - RxCocoa
+    - RxSwift
     - YLTableView
 
 SPEC CHECKSUMS:
   AloeStackView: d22c006da4510db5e220968234174654b5ed6ea5
   DifferenceKit: 824ab6ecd2a20cc658071b2c0c071114cf91e4c9
   ReactiveLists: 383c6720617abfb9bd47e8e612bfc13e1895eda5
+  RxAtomic: eacf60db868c96bfd63320e28619fe29c179656f
+  RxCocoa: df63ebf7b9a70d6b4eeea407ed5dd4efc8979749
+  RxSwift: 5976ecd04fc2fefd648827c23de5e11157faa973
   YLTableView: c3bcbe16c2a2800765afa1e373a10fbd3174bbfa
 
-PODFILE CHECKSUM: 922dc9e8f600748e2c8ec1852c86437fab03bdcf
+PODFILE CHECKSUM: 15129d0aaa017c3f7a293a62ce483751d61360bd
 
 COCOAPODS: 1.5.3

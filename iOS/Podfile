@@ -8,6 +8,9 @@ def shared_pods
   pod 'ReactiveLists', '~> 0.3.0'
   pod 'YLTableView', '~> 2.2.0', :modular_headers => true
   pod 'AloeStackView', '~> 1.0.1'
+  pod 'RxAtomic', '~> 4.4.0', :modular_headers => true
+  pod 'RxSwift', '~> 4.4.0', :modular_headers => true
+  pod 'RxCocoa', '~> 4.4.0', :modular_headers => true
 end
 
 target 'CIFilter.io' do

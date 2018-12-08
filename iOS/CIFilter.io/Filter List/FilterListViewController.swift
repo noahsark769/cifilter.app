@@ -8,6 +8,8 @@
 
 import UIKit
 import ReactiveLists
+import RxSwift
+import RxCocoa
 
 func group(filters: [FilterInfo], into categories: [String]) -> [String: [FilterInfo]] {
     var result: [String: [FilterInfo]] = [:]
@@ -58,6 +60,8 @@ final class FilterListViewController: UITableViewController {
     weak var delegate: FilterListViewControllerDelegate?
     private let filterInfos: [FilterInfo]
     private var driver: TableViewDriver! = nil
+    private let bag = DisposeBag()
+    private let searchSubject = PublishSubject<String?>()
 
     private func generateTableModel(searchText: String?) -> TableViewModel {
         let filteredFilters = filterInfos.filter {
@@ -102,6 +106,14 @@ final class FilterListViewController: UITableViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         self.navigationItem.searchController = searchController
+
+        searchSubject.throttle(0.3, scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .map { $0 ?? "" }
+            .subscribe(onNext: { [weak self] text in
+                guard let `self` = self else { return }
+                self.driver.tableViewModel = self.generateTableModel(searchText: text)
+            }).disposed(by: self.bag)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -111,6 +123,6 @@ final class FilterListViewController: UITableViewController {
 
 extension FilterListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        driver.tableViewModel = generateTableModel(searchText: searchController.searchBar.text)
+        searchSubject.onNext(searchController.searchBar.text)
     }
 }
