@@ -14,6 +14,6 @@ struct FilterExample {
 
 final class FilterExampleProvider {
     func isExampleAvailable(forFilterName filterName: String) -> Bool {
-        return false
+        return filterName == "CIBokehBlur"
     }
 }

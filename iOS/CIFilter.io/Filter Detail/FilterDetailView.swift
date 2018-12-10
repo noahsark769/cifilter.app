@@ -27,18 +27,12 @@ final class FilterDetailView: UIView {
         return view
     }()
 
+    private let exampleView = FilterDetailExampleHeaderView()
+
     private let parametersLabel: UILabel = {
         let view = UILabel()
         view.font = UIFont.boldSystemFont(ofSize: 14)
         view.textColor = UIColor(rgb: 0xF5BD5D)
-        return view
-    }()
-
-    private let exampleLabel: UILabel = {
-        let view = UILabel()
-        view.font = UIFont.boldSystemFont(ofSize: 14)
-        view.textColor = UIColor(rgb: 0xF5BD5D)
-        view.text = "EXAMPLE"
         return view
     }()
 
@@ -86,7 +80,7 @@ final class FilterDetailView: UIView {
         stackView.edgesToSuperview()
     }
 
-    func set(filter: FilterInfo) {
+    func set(filter: FilterInfo, tryHandler: @escaping () -> Void) {
         titleView.set(filter: filter)
         availabilityView.set(filter: filter)
         descriptionLabel.text = filter.description
@@ -100,7 +94,8 @@ final class FilterDetailView: UIView {
         }
 
         exampleStackView.removeAllArrangedSubviews()
-        exampleStackView.addArrangedSubview(exampleLabel)
+        exampleStackView.addArrangedSubview(exampleView)
+        exampleView.set(tryHandler: tryHandler)
         if self.exampleProvider.isExampleAvailable(forFilterName: filter.name) {
 
         } else {

@@ -31,7 +31,12 @@ final class FilterDetailViewController: UIViewController {
     }
 
     func set(filter: FilterInfo) {
-        filterView.set(filter: filter)
+        filterView.set(filter: filter, tryHandler: { [weak self] in
+            guard let `self` = self else { return }
+            let vc = FilterWorkshopViewController(filter: filter)
+            let navigationController = UINavigationController(rootViewController: vc)
+            self.splitViewController?.present(navigationController, animated: true, completion: nil)
+        })
     }
 }
 
