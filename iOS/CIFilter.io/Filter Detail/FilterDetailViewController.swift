@@ -10,6 +10,7 @@ import UIKit
 
 final class FilterDetailViewController: UIViewController {
     private let filterView = FilterDetailView()
+    private var presentedWorkshopViewController: FilterWorkshopViewController? = nil
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -35,8 +36,17 @@ final class FilterDetailViewController: UIViewController {
             guard let `self` = self else { return }
             let vc = FilterWorkshopViewController(filter: filter)
             let navigationController = UINavigationController(rootViewController: vc)
+            vc.navigationItem.leftBarButtonItem = UIBarButtonItem(
+                barButtonSystemItem: .done,
+                target: self,
+                action: #selector(self.workshopViewControllerSelectedDone)
+            )
             self.splitViewController?.present(navigationController, animated: true, completion: nil)
         })
+    }
+
+    @objc private func workshopViewControllerSelectedDone(_ sender: Any) {
+        self.splitViewController?.dismiss(animated: true, completion: nil)
     }
 }
 
