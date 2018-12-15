@@ -9,6 +9,7 @@
 import UIKit
 
 final class FilterWorkshopViewController: UIViewController {
+    private let workshopView = FilterWorkshopView()
     init(filter: FilterInfo) {
         super.init(nibName: nil, bundle: nil)
         self.title = filter.name
@@ -18,8 +19,7 @@ final class FilterWorkshopViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "workshop-background")!)
+    override func loadView() {
+        self.view = workshopView
     }
 }
