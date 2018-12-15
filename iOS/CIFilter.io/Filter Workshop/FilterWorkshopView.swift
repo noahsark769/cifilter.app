@@ -10,51 +10,20 @@ import UIKit
 
 final class FilterWorkshopView: UIView {
     private let scrollView = UIScrollView()
-    private let contentView = UIView()
-    private let imageArtboardView = ImageArtboardView(name: "inputImage")
-//    private let imageArtboardView2 = ImageArtboardView(name: "outputImage")
+    private let contentView = FilterWorkshopContentView()
 
     init() {
         super.init(frame: .zero)
         self.backgroundColor = .white
         self.addSubview(scrollView)
+        // TODO: Add double-tap gestures for zooming to this scroll view
 
         scrollView.maximumZoomScale = 20
         scrollView.minimumZoomScale = 0.1
-        contentView.backgroundColor = UIColor(patternImage: UIImage(named: "workshop-background")!)
         scrollView.delegate = self
 
         scrollView.edgesToSuperview()
         scrollView.addSubview(contentView)
-        contentView.addSubview(imageArtboardView)
-//        contentView.addSubview(imageArtboardView2)
-
-        [imageArtboardView, contentView].disableTranslatesAutoresizingMaskIntoConstraints()
-
-        imageArtboardView.set(image: UIImage(named: "knighted")!)
-        imageArtboardView.topAnchor <=> contentView.topAnchor ++ 100
-        imageArtboardView.leadingAnchor <=> contentView.leadingAnchor ++ 100
-
-        let trailingConstraint = imageArtboardView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
-        trailingConstraint.priority = UILayoutPriority(999)
-        trailingConstraint.isActive = true
-        trailingConstraint.constant = -100
-
-        let bottomConstraint = imageArtboardView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        bottomConstraint.priority = UILayoutPriority(999)
-        bottomConstraint.isActive = true
-        bottomConstraint.constant = -100
-
-        let trailingAtLeastConstraint = imageArtboardView.trailingAnchor.constraint(greaterThanOrEqualTo: contentView.trailingAnchor)
-        trailingAtLeastConstraint.priority = .required
-        trailingAtLeastConstraint.isActive = true
-        trailingAtLeastConstraint.constant = -100
-
-        let bottomAtLeastConstraint = imageArtboardView.bottomAnchor.constraint(greaterThanOrEqualTo: contentView.bottomAnchor)
-        bottomAtLeastConstraint.priority = .required
-        bottomAtLeastConstraint.isActive = true
-        bottomAtLeastConstraint.constant = -100
-//        imageArtboardView.edges(to: contentView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -63,6 +32,7 @@ final class FilterWorkshopView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        contentView.layoutIfNeeded()
         updateMinZoomScaleForSize(self.bounds.size)
     }
 
@@ -71,7 +41,7 @@ final class FilterWorkshopView: UIView {
         let heightScale = size.height / contentView.bounds.height
         let minScale = min(widthScale, heightScale)
 
-//        scrollView.minimumZoomScale = minScale
+        scrollView.minimumZoomScale = minScale
         scrollView.zoomScale = minScale
     }
 }

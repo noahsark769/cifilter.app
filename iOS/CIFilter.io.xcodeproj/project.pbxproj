@@ -15,6 +15,7 @@
 		A1A0D83A21BC67ED0098168C /* FilterWorkshopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83921BC67ED0098168C /* FilterWorkshopViewController.swift */; };
 		A1A0D83C21BEBD960098168C /* FilterWorkshopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83B21BEBD960098168C /* FilterWorkshopView.swift */; };
 		A1A0D83E21BEC1B90098168C /* ImageArtboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83D21BEC1B90098168C /* ImageArtboardView.swift */; };
+		A1A0D84021C4AEAA0098168C /* FilterWorkshopContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83F21C4AEAA0098168C /* FilterWorkshopContentView.swift */; };
 		A1C6621D2196818100826A2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C6621C2196818100826A2B /* AppDelegate.swift */; };
 		A1C662242196818300826A2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1C662232196818300826A2B /* Assets.xcassets */; };
 		A1C662272196818300826A2B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1C662252196818300826A2B /* LaunchScreen.storyboard */; };
@@ -50,6 +51,7 @@
 		A1A0D83921BC67ED0098168C /* FilterWorkshopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterWorkshopViewController.swift; sourceTree = "<group>"; };
 		A1A0D83B21BEBD960098168C /* FilterWorkshopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterWorkshopView.swift; sourceTree = "<group>"; };
 		A1A0D83D21BEC1B90098168C /* ImageArtboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageArtboardView.swift; sourceTree = "<group>"; };
+		A1A0D83F21C4AEAA0098168C /* FilterWorkshopContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterWorkshopContentView.swift; sourceTree = "<group>"; };
 		A1C662192196818100826A2B /* CIFilter.io.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CIFilter.io.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1C6621C2196818100826A2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1C662232196818300826A2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 		A1A0D83821BC67C60098168C /* Filter Workshop */ = {
 			isa = PBXGroup;
 			children = (
+				A1A0D83F21C4AEAA0098168C /* FilterWorkshopContentView.swift */,
 				A1A0D83B21BEBD960098168C /* FilterWorkshopView.swift */,
 				A1A0D83921BC67ED0098168C /* FilterWorkshopViewController.swift */,
 				A1A0D83D21BEC1B90098168C /* ImageArtboardView.swift */,
@@ -331,6 +334,7 @@
 				A1D5A8AB21ADB31400257B5E /* FilterParameterInfo.swift in Sources */,
 				A1D5A8AD21ADB33300257B5E /* FilterParameterType.swift in Sources */,
 				A1D5A8D721B4A85A00257B5E /* FilterParameterView.swift in Sources */,
+				A1A0D84021C4AEAA0098168C /* FilterWorkshopContentView.swift in Sources */,
 				A1A0D83C21BEBD960098168C /* FilterWorkshopView.swift in Sources */,
 				A1A0D83A21BC67ED0098168C /* FilterWorkshopViewController.swift in Sources */,
 				A1A0D83E21BEC1B90098168C /* ImageArtboardView.swift in Sources */,
