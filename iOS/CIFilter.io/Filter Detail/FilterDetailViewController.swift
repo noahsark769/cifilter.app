@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class FilterDetailViewController: UIViewController {
+    private let bag = DisposeBag()
+    private var presentWorkshopSubscription: Disposable? = nil
     private let filterView = FilterDetailView()
-    private var presentedWorkshopViewController: FilterWorkshopViewController? = nil
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -32,7 +35,9 @@ final class FilterDetailViewController: UIViewController {
     }
 
     func set(filter: FilterInfo) {
-        filterView.set(filter: filter, tryHandler: { [weak self] in
+        filterView.set(filter: filter)
+        self.presentWorkshopSubscription?.dispose()
+        self.presentWorkshopSubscription = filterView.rx.workshopTap.subscribe(onNext: { [weak self] in
             guard let `self` = self else { return }
             let vc = FilterWorkshopViewController(filter: filter)
             let navigationController = UINavigationController(rootViewController: vc)

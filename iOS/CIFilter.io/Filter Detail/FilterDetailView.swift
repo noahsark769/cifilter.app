@@ -8,6 +8,8 @@
 
 import UIKit
 import AloeStackView
+import RxSwift
+import RxCocoa
 
 final class FilterDetailView: UIView {
     private let titleView = FilterDetailTitleView()
@@ -27,7 +29,7 @@ final class FilterDetailView: UIView {
         return view
     }()
 
-    private let exampleView = FilterDetailExampleHeaderView()
+    fileprivate let exampleView = FilterDetailExampleHeaderView()
 
     private let parametersLabel: UILabel = {
         let view = UILabel()
@@ -80,7 +82,7 @@ final class FilterDetailView: UIView {
         stackView.edgesToSuperview()
     }
 
-    func set(filter: FilterInfo, tryHandler: @escaping () -> Void) {
+    func set(filter: FilterInfo) {
         titleView.set(filter: filter)
         availabilityView.set(filter: filter)
         descriptionLabel.text = filter.description
@@ -95,7 +97,6 @@ final class FilterDetailView: UIView {
 
         exampleStackView.removeAllArrangedSubviews()
         exampleStackView.addArrangedSubview(exampleView)
-        exampleView.set(tryHandler: tryHandler)
         if self.exampleProvider.isExampleAvailable(forFilterName: filter.name) {
 
         } else {
@@ -105,5 +106,11 @@ final class FilterDetailView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension Reactive where Base == FilterDetailView {
+    var workshopTap: ControlEvent<Void> {
+        return self.base.exampleView.rx.tryItTap
     }
 }
