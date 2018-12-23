@@ -11,6 +11,7 @@ def shared_pods
   pod 'RxAtomic', '~> 4.4.0', :modular_headers => true
   pod 'RxSwift', '~> 4.4.0', :modular_headers => true
   pod 'RxCocoa', '~> 4.4.0', :modular_headers => true
+  pod 'RxGesture', '~> 2.1.0', :modular_headers => true
 end
 
 target 'CIFilter.io' do
