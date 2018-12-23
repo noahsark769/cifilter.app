@@ -7,8 +7,7 @@
 //
 
 import UIKit
-
-import UIKit
+import RxSwift
 
 final class EitherView: UIView {
     private let firstView: UIView
@@ -42,6 +41,7 @@ final class EitherView: UIView {
 
 final class ImageArtboardView: UIView {
     private var eitherView: EitherView!
+    private let bag = DisposeBag()
 
     private let nameLabel: UILabel = {
         let view = UILabel()
@@ -51,33 +51,35 @@ final class ImageArtboardView: UIView {
         return view
     }()
     private let imageView = UIImageView()
-    private let containerView = UIView()
     private let imageChooserView = ImageChooserView()
 
     init(name: String) {
         super.init(frame: .zero)
-        self.eitherView = EitherView(containerView, imageChooserView)
+        self.eitherView = EitherView(imageView, imageChooserView)
         addSubview(eitherView)
         nameLabel.text = name
-        containerView.addSubview(nameLabel)
-        containerView.addSubview(imageView)
+        self.addSubview(nameLabel)
 
         imageView.contentMode = .scaleToFill
 
-        [nameLabel, imageView].disableTranslatesAutoresizingMaskIntoConstraints()
-        containerView.topAnchor <=> nameLabel.topAnchor
-        nameLabel.bottomAnchor <=> imageView.topAnchor -- 10
-        imageView.bottomAnchor <=> containerView.bottomAnchor
-        nameLabel.leadingAnchor <=> containerView.leadingAnchor
-        imageView.leadingAnchor <=> containerView.leadingAnchor
-        nameLabel.trailingAnchor <=> containerView.trailingAnchor
-        imageView.trailingAnchor <=> containerView.trailingAnchor
+        [nameLabel, imageView, eitherView].disableTranslatesAutoresizingMaskIntoConstraints()
+        self.topAnchor <=> nameLabel.topAnchor
+        nameLabel.bottomAnchor <=> eitherView.topAnchor -- 10
+        eitherView.bottomAnchor <=> self.bottomAnchor
+
+        nameLabel.leadingAnchor <=> self.leadingAnchor
+        nameLabel.trailingAnchor <=> self.trailingAnchor
+        eitherView.leadingAnchor <=> self.leadingAnchor
+        eitherView.trailingAnchor <=> self.trailingAnchor
 
         imageView.setContentHuggingPriority(.required, for: .vertical)
         imageView.setContentHuggingPriority(.required, for: .horizontal)
-        self.containerView.edgesToSuperview()
         self.eitherView.setEnabled(self.imageChooserView)
-        eitherView.edgesToSuperview()
+
+        imageChooserView.didChooseImage.subscribe(onNext: { image in
+            self.imageView.image = image
+            self.eitherView.setEnabled(self.imageView)
+        }).disposed(by: self.bag)
     }
 
     required init?(coder aDecoder: NSCoder) {

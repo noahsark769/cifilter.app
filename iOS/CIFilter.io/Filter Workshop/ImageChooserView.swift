@@ -11,8 +11,8 @@ import RxSwift
 import RxCocoa
 
 private let artboardSize: CGFloat = 650
-private let artboardPadding: CGFloat = 10
-private let artboardSpacing: CGFloat = 10
+private let artboardPadding: CGFloat = 20
+private let artboardSpacing: CGFloat = 20
 
 private let builtInImageNames = [
     "knighted",
@@ -29,6 +29,15 @@ final class ImageChooserView: UIView {
         let view = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         view.backgroundColor = .clear
         view.register(ImageChooserCell.self, forCellWithReuseIdentifier: String(describing: ImageChooserCell.self))
+        view.isScrollEnabled = false
+
+        guard let layout = view.collectionViewLayout as? UICollectionViewFlowLayout else {
+            fatalError("Should be the right layout type")
+        }
+        layout.minimumInteritemSpacing = artboardSpacing
+        layout.sectionInset = UIEdgeInsets(all: artboardPadding)
+        view.collectionViewLayout = layout
+
         return view
     }()
 
@@ -41,13 +50,6 @@ final class ImageChooserView: UIView {
 
         self.addSubview(collectionView)
         collectionView.edgesToSuperview()
-
-        guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
-            fatalError("Should be the right layout type")
-        }
-        layout.minimumInteritemSpacing = artboardSpacing
-        layout.sectionInset = UIEdgeInsets(all: artboardPadding)
-        collectionView.collectionViewLayout = layout
 
         collectionView.dataSource = self
         collectionView.delegate = self
