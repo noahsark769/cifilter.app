@@ -25,7 +25,7 @@ final class FilterDetailTitleView: UIView {
                 self.stackView.removeArrangedSubview(titleLabel)
                 titleLabel.removeFromSuperview()
             } else {
-                self.stackView.addArrangedSubview(titleLabel)
+                self.stackView.insertArrangedSubview(titleLabel, at: 0)
             }
         }
     }

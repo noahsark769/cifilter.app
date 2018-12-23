@@ -39,7 +39,7 @@ final class FilterDetailViewController: UIViewController {
             (filterView |= self.view) ++ 10
             (filterView =| self.view) -- 10
         } else {
-            filterView.widthAnchor.constraint(lessThanOrEqualToConstant: 600).isActive = true
+            filterView.widthAnchor <=> 600
             filterView.centerXAnchor <=> self.view.centerXAnchor
         }
     }
