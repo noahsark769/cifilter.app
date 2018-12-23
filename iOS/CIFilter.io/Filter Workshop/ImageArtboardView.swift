@@ -12,6 +12,8 @@ final class ImageArtboardView: UIView {
     private let nameLabel: UILabel = {
         let view = UILabel()
         view.numberOfLines = 0
+        view.font = UIFont(name: "Courier New", size: 17)
+        view.numberOfLines = 1
         return view
     }()
 
