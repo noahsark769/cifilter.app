@@ -15,6 +15,7 @@ final class FilterDetailView: UIView {
     private let titleView = FilterDetailTitleView()
     private let availabilityView = FilterAvailabilityView()
     private let exampleProvider = FilterExampleProvider()
+    private let isCompressed: Bool
 
     private let descriptionLabel: UILabel = {
         let view = UILabel()
@@ -59,11 +60,15 @@ final class FilterDetailView: UIView {
         return view
     }()
 
-    init() {
+    init(isCompressed: Bool) {
+        self.isCompressed = isCompressed
         super.init(frame: .zero)
 
+        addSubview(stackView)
+        stackView.edgesToSuperview()
+
         stackView.addRow(titleView)
-        stackView.setInset(forRow: titleView, inset: UIEdgeInsets(top: 100, left: 10, bottom: 10, right: 10))
+        stackView.setInset(forRow: titleView, inset: UIEdgeInsets(top: isCompressed ? 10 : 100, left: 0, bottom: 10, right: 0))
 
         stackView.automaticallyHidesLastSeparator = true
         stackView.hidesSeparatorsByDefault = true
@@ -77,12 +82,10 @@ final class FilterDetailView: UIView {
 
         stackView.addRow(exampleStackView)
         stackView.setInset(forRow: exampleStackView, inset: UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0))
-
-        addSubview(stackView)
-        stackView.edgesToSuperview()
     }
 
     func set(filter: FilterInfo) {
+        titleView.isCompressed = isCompressed
         titleView.set(filter: filter)
         availabilityView.set(filter: filter)
         descriptionLabel.text = filter.description

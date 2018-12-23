@@ -13,7 +13,7 @@ import RxCocoa
 final class FilterDetailViewController: UIViewController {
     private let bag = DisposeBag()
     private var presentWorkshopSubscription: Disposable? = nil
-    private let filterView = FilterDetailView()
+    private var filterView: FilterDetailView!
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -25,16 +25,27 @@ final class FilterDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let isCompressed = self.view.frame.size.width < 415
+        filterView = FilterDetailView(isCompressed: isCompressed)
         self.view.addSubview(filterView)
         self.view.backgroundColor = .white
         filterView.disableTranslatesAutoresizingMaskIntoConstraints()
         filterView.topAnchor <=> self.view.topAnchor
         filterView.bottomAnchor <=> self.view.bottomAnchor
-        filterView.widthAnchor <=> 600
-        filterView.centerXAnchor <=> self.view.centerXAnchor
+
+        // Constrain to edges, unless that makes it bigger than 600pt
+        if isCompressed {
+            // TODO: set precedence of these operators correctly so we don't need parens
+            (filterView |= self.view) ++ 10
+            (filterView =| self.view) -- 10
+        } else {
+            filterView.widthAnchor.constraint(lessThanOrEqualToConstant: 600).isActive = true
+            filterView.centerXAnchor <=> self.view.centerXAnchor
+        }
     }
 
     func set(filter: FilterInfo) {
+        self.title = filter.name
         filterView.set(filter: filter)
         self.presentWorkshopSubscription?.dispose()
         self.presentWorkshopSubscription = filterView.rx.workshopTap.subscribe(onNext: { [weak self] in
@@ -59,8 +70,9 @@ extension FilterDetailViewController: FilterListViewControllerDelegate {
     func filterListViewController(_ vc: FilterListViewController, didTapFilterInfo filter: FilterInfo) {
         self.set(filter: filter)
 
-        // `self.splitViewController` might be nil here if we're in a horizontally compact environment,
-        // but we know the filter list VC's splitViewController will always be non-nil
+        // `self.splitViewController` might be nil here if we're in a horizontally compact environment
+        // with the filter list VC currently active, but we know the filter list VC's
+        // splitViewController will always be non-nil, so we use that
         guard let splitViewController = vc.splitViewController else {
             print("WARNING no split view controller!!")
             return

@@ -12,13 +12,29 @@ final class FilterDetailTitleView: UIView {
     private let titleLabel = UILabel()
     private let categoriesLabel = UILabel()
 
+    private let stackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.spacing = 10
+        return view
+    }()
+
+    var isCompressed: Bool = false {
+        didSet {
+            if self.isCompressed {
+                self.stackView.removeArrangedSubview(titleLabel)
+                titleLabel.removeFromSuperview()
+            } else {
+                self.stackView.addArrangedSubview(titleLabel)
+            }
+        }
+    }
+
     init() {
         super.init(frame: .zero)
 
-        addSubview(titleLabel)
-        addSubview(categoriesLabel)
-
-        [titleLabel, categoriesLabel].disableTranslatesAutoresizingMaskIntoConstraints()
+        addSubview(stackView)
+        [stackView].disableTranslatesAutoresizingMaskIntoConstraints()
 
         titleLabel.font = UIFont.boldSystemFont(ofSize: 46)
         titleLabel.numberOfLines = 1
@@ -27,14 +43,9 @@ final class FilterDetailTitleView: UIView {
         categoriesLabel.textColor = UIColor(rgb: 0x989898)
         categoriesLabel.numberOfLines = 0
 
-        titleLabel.leadingAnchor <=> self.leadingAnchor
-        titleLabel.trailingAnchor <=> self.trailingAnchor
-        categoriesLabel.leadingAnchor <=> self.leadingAnchor
-        categoriesLabel.trailingAnchor <=> self.trailingAnchor
-        titleLabel.topAnchor <=> self.topAnchor
-        categoriesLabel.bottomAnchor <=> self.bottomAnchor
-        titleLabel.bottomAnchor <=> categoriesLabel.topAnchor -- 10
-
+        stackView.edgesToSuperview()
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(categoriesLabel)
     }
 
     func set(filter: FilterInfo) {
