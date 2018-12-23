@@ -22,10 +22,28 @@ final class FilterCategoryHeaderView: YLTableViewSectionHeaderFooterView {
         label.font = .boldSystemFont(ofSize: 22)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.2
+        label.disableTranslatesAutoresizingMaskIntoConstraints()
 
         self.contentView.addSubview(label)
         self.contentView.addSubview(separator)
-        label.edges(to: self.contentView, insets: UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 5))
+
+        // One each of the left and bottom constraints have to be 999 priority in order to avoid
+        // pesky autolayout encapsulated height issues
+        // http://aplus.rs/2017/one-solution-for-90pct-auto-layout/
+        label.bottomAnchor <=> self.contentView.bottomAnchor -- 10
+        let top = label.topAnchor.constraint(equalTo: self.contentView.topAnchor)
+        top.priority = UILayoutPriority(rawValue: 999)
+        top.constant = 20
+        top.isActive = true
+        let leading = label.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor)
+        leading.priority = UILayoutPriority(rawValue: 1000)
+        leading.constant = 10
+        leading.isActive = true
+        let trailing = label.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)
+        trailing.priority = UILayoutPriority(rawValue: 999)
+        trailing.constant = -5
+        trailing.isActive = true
+
         separator |= self.contentView
         separator =| self.contentView
         separator.bottomAnchor <=> self.contentView.bottomAnchor

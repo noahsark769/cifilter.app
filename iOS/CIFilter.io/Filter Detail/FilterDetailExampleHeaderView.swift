@@ -34,9 +34,6 @@ final class FilterDetailExampleHeaderView: UIView {
             for: .normal
         )
         view.setTitleColor(UIColor(rgb: 0x80a5b1), for: .normal)
-//        view.rx.tap.subscribe(onNext: { [weak self] in
-//            self?.tryHandler?()
-//        })
         return view
     }()
 
