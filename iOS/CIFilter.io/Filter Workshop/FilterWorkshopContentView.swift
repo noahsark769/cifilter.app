@@ -40,6 +40,7 @@ final class FilterWorkshopContentView: UIView {
 
     func set(filter: FilterInfo) {
         self.filter = filter
+        print(filter.parameters)
         bag = DisposeBag() // unsubscribe all current subscriptions
         parameterConfiguration = [:]
         stackView.removeAllArrangedSubviews()

@@ -43,8 +43,8 @@ final class ImageChooserView: UIView {
             let row = i % numImagePerArtboardRow
             let column = Int(i / 3)
             imageView.frame = CGRect(
-                x: artboardPadding + (imageSize + artboardSpacing) * CGFloat(column),
-                y: artboardPadding + (imageSize + artboardSpacing) * CGFloat(row),
+                x: artboardPadding + (imageSize + artboardSpacing) * CGFloat(row),
+                y: artboardPadding + (imageSize + artboardSpacing) * CGFloat(column),
                 width: imageSize,
                 height: imageSize
             )
