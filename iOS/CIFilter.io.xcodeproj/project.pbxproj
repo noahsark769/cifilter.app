@@ -10,7 +10,6 @@
 		5F31BFC0D3D97B3DB60EB532 /* libPods-CIFilter.io.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8DF7E2364B4EB94F6C83712 /* libPods-CIFilter.io.a */; };
 		A11C522521968BB000045F2E /* FilterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11C522421968BB000045F2E /* FilterListViewController.swift */; };
 		A128993921CFFF7000BEE395 /* ImageChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128993821CFFF7000BEE395 /* ImageChooserView.swift */; };
-		A128993B21D02E7400BEE395 /* ImageChooserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128993A21D02E7400BEE395 /* ImageChooserCell.swift */; };
 		A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1707F65219A1A0A0010E007 /* FilterInfo.swift */; };
 		A1A0D83521BC60BA0098168C /* FilterExampleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */; };
 		A1A0D83721BC659B0098168C /* FilterDetailExampleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83621BC659B0098168C /* FilterDetailExampleHeaderView.swift */; };
@@ -48,7 +47,6 @@
 		08FBAE88B5103E03654DA7F2 /* Pods-CIFilter.io.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.io.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io.debug.xcconfig"; sourceTree = "<group>"; };
 		A11C522421968BB000045F2E /* FilterListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListViewController.swift; sourceTree = "<group>"; };
 		A128993821CFFF7000BEE395 /* ImageChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageChooserView.swift; sourceTree = "<group>"; };
-		A128993A21D02E7400BEE395 /* ImageChooserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageChooserCell.swift; sourceTree = "<group>"; };
 		A1707F65219A1A0A0010E007 /* FilterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInfo.swift; sourceTree = "<group>"; };
 		A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterExampleProvider.swift; sourceTree = "<group>"; };
 		A1A0D83621BC659B0098168C /* FilterDetailExampleHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailExampleHeaderView.swift; sourceTree = "<group>"; };
@@ -122,7 +120,6 @@
 				A1A0D83B21BEBD960098168C /* FilterWorkshopView.swift */,
 				A1A0D83921BC67ED0098168C /* FilterWorkshopViewController.swift */,
 				A1A0D83D21BEC1B90098168C /* ImageArtboardView.swift */,
-				A128993A21D02E7400BEE395 /* ImageChooserCell.swift */,
 				A128993821CFFF7000BEE395 /* ImageChooserView.swift */,
 			);
 			path = "Filter Workshop";
@@ -344,7 +341,6 @@
 				A1A0D83C21BEBD960098168C /* FilterWorkshopView.swift in Sources */,
 				A1A0D83A21BC67ED0098168C /* FilterWorkshopViewController.swift in Sources */,
 				A1A0D83E21BEC1B90098168C /* ImageArtboardView.swift in Sources */,
-				A128993B21D02E7400BEE395 /* ImageChooserCell.swift in Sources */,
 				A128993921CFFF7000BEE395 /* ImageChooserView.swift in Sources */,
 				A1D5A8B521ADB3ED00257B5E /* ParameterData.swift in Sources */,
 				A1D5A8C321B054A100257B5E /* SeparatorView.swift in Sources */,
