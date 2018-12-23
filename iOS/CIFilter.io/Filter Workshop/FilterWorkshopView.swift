@@ -44,6 +44,10 @@ final class FilterWorkshopView: UIView {
         scrollView.minimumZoomScale = minScale
         scrollView.zoomScale = minScale
     }
+
+    func set(filter: FilterInfo) {
+        contentView.set(filter: filter)
+    }
 }
 
 extension FilterWorkshopView: UIScrollViewDelegate {

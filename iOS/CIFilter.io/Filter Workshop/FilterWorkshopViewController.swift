@@ -10,7 +10,9 @@ import UIKit
 
 final class FilterWorkshopViewController: UIViewController {
     private let workshopView = FilterWorkshopView()
+    private let filter: FilterInfo
     init(filter: FilterInfo) {
+        self.filter = filter
         super.init(nibName: nil, bundle: nil)
         self.title = filter.name
     }
@@ -21,5 +23,6 @@ final class FilterWorkshopViewController: UIViewController {
 
     override func loadView() {
         self.view = workshopView
+        workshopView.set(filter: self.filter)
     }
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 final class EitherView: UIView {
     private let firstView: UIView
@@ -36,12 +37,16 @@ final class EitherView: UIView {
         } else {
             print("WARNING tried to set a view enabled that was not part of EitherView")
         }
+        self.setNeedsUpdateConstraints()
     }
 }
 
 final class ImageArtboardView: UIView {
     private var eitherView: EitherView!
     private let bag = DisposeBag()
+    var didChooseImage: ControlEvent<UIImage> {
+        return imageChooserView.didChooseImage
+    }
 
     private let nameLabel: UILabel = {
         let view = UILabel()
@@ -74,6 +79,7 @@ final class ImageArtboardView: UIView {
 
         imageView.setContentHuggingPriority(.required, for: .vertical)
         imageView.setContentHuggingPriority(.required, for: .horizontal)
+        nameLabel.setContentHuggingPriority(.required, for: .vertical)
         self.eitherView.setEnabled(self.imageChooserView)
 
         imageChooserView.didChooseImage.subscribe(onNext: { image in
@@ -88,5 +94,6 @@ final class ImageArtboardView: UIView {
 
     func set(image: UIImage) {
         imageView.image = image
+        self.eitherView.setEnabled(self.imageView)
     }
 }

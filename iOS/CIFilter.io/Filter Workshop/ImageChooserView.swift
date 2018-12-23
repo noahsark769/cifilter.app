@@ -25,7 +25,7 @@ final class ImageChooserView: UIView {
     private let bag = DisposeBag()
     private let chooseImageSubject = PublishSubject<UIImage>()
     lazy var didChooseImage = {
-        ControlEvent<UIImage>(events: chooseImageSubject)
+        return ControlEvent<UIImage>(events: chooseImageSubject)
     }()
 
     init() {
