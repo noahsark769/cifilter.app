@@ -58,5 +58,13 @@ final class FilterDetailViewController: UIViewController {
 extension FilterDetailViewController: FilterListViewControllerDelegate {
     func filterListViewController(_ vc: FilterListViewController, didTapFilterInfo filter: FilterInfo) {
         self.set(filter: filter)
+
+        // `self.splitViewController` might be nil here if we're in a horizontally compact environment,
+        // but we know the filter list VC's splitViewController will always be non-nil
+        guard let splitViewController = vc.splitViewController else {
+            print("WARNING no split view controller!!")
+            return
+        }
+        splitViewController.showDetailViewController(self, sender: nil)
     }
 }

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Nav from '../components/Nav';
 import FilterSelect from '../components/FilterSelect';
 import FilterDetail from '../components/FilterDetail';
+import { Helmet } from "react-helmet";
 
 const OuterWrapper = styled.div`
     display: flex;
@@ -32,6 +33,9 @@ class Main extends React.Component {
     render() {
         return (
             <OuterWrapper>
+                <Helmet>
+                    <title>CIFilter Reference</title>
+                </Helmet>
                 <Nav />
                 <Container>
                     <FilterSelect
