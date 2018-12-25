@@ -9,6 +9,7 @@
 import UIKit
 
 final class FilterWorkshopView: UIView {
+    private var hasInitiallyLaidOut: Bool = false
     private let scrollView = UIScrollView()
     private let contentView = FilterWorkshopContentView()
 
@@ -33,7 +34,10 @@ final class FilterWorkshopView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         contentView.layoutIfNeeded()
-        updateMinZoomScaleForSize(self.bounds.size)
+        if !hasInitiallyLaidOut {
+            updateMinZoomScaleForSize(self.bounds.size)
+            hasInitiallyLaidOut = true
+        }
     }
 
     private func updateMinZoomScaleForSize(_ size: CGSize) {

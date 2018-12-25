@@ -11,6 +11,9 @@
 		A11C522521968BB000045F2E /* FilterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11C522421968BB000045F2E /* FilterListViewController.swift */; };
 		A128993921CFFF7000BEE395 /* ImageChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128993821CFFF7000BEE395 /* ImageChooserView.swift */; };
 		A128993D21D047BD00BEE395 /* FilterWorkshopParametersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128993C21D047BD00BEE395 /* FilterWorkshopParametersView.swift */; };
+		A128993F21D058B300BEE395 /* EitherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128993E21D058B300BEE395 /* EitherView.swift */; };
+		A128994121D18E6800BEE395 /* WorkshopParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994021D18E6800BEE395 /* WorkshopParameterView.swift */; };
+		A128994321D1A56900BEE395 /* NumericSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994221D1A56900BEE395 /* NumericSlider.swift */; };
 		A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1707F65219A1A0A0010E007 /* FilterInfo.swift */; };
 		A1A0D83521BC60BA0098168C /* FilterExampleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */; };
 		A1A0D83721BC659B0098168C /* FilterDetailExampleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83621BC659B0098168C /* FilterDetailExampleHeaderView.swift */; };
@@ -49,6 +52,9 @@
 		A11C522421968BB000045F2E /* FilterListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListViewController.swift; sourceTree = "<group>"; };
 		A128993821CFFF7000BEE395 /* ImageChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageChooserView.swift; sourceTree = "<group>"; };
 		A128993C21D047BD00BEE395 /* FilterWorkshopParametersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterWorkshopParametersView.swift; sourceTree = "<group>"; };
+		A128993E21D058B300BEE395 /* EitherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EitherView.swift; sourceTree = "<group>"; };
+		A128994021D18E6800BEE395 /* WorkshopParameterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkshopParameterView.swift; sourceTree = "<group>"; };
+		A128994221D1A56900BEE395 /* NumericSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumericSlider.swift; sourceTree = "<group>"; };
 		A1707F65219A1A0A0010E007 /* FilterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInfo.swift; sourceTree = "<group>"; };
 		A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterExampleProvider.swift; sourceTree = "<group>"; };
 		A1A0D83621BC659B0098168C /* FilterDetailExampleHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailExampleHeaderView.swift; sourceTree = "<group>"; };
@@ -124,6 +130,8 @@
 				A1A0D83921BC67ED0098168C /* FilterWorkshopViewController.swift */,
 				A1A0D83D21BEC1B90098168C /* ImageArtboardView.swift */,
 				A128993821CFFF7000BEE395 /* ImageChooserView.swift */,
+				A128994221D1A56900BEE395 /* NumericSlider.swift */,
+				A128994021D18E6800BEE395 /* WorkshopParameterView.swift */,
 			);
 			path = "Filter Workshop";
 			sourceTree = "<group>";
@@ -192,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				A1D5A8BA21AF03F700257B5E /* Autolayout.swift */,
+				A128993E21D058B300BEE395 /* EitherView.swift */,
 				A1D5A8C221B054A100257B5E /* SeparatorView.swift */,
 				A1D5A8BE21AF0F8200257B5E /* UIColor+Utils.swift */,
 				A1D5A8D221B4A32100257B5E /* UIEdgeInsets+Utils.swift */,
@@ -323,6 +332,7 @@
 				A1D5A8BB21AF03F700257B5E /* Autolayout.swift in Sources */,
 				A1D5A8AF21ADB38200257B5E /* CIVectorCodableWrapper.swift in Sources */,
 				A1D5A8B321ADB3C100257B5E /* Dictionary+Validation.swift in Sources */,
+				A128993F21D058B300BEE395 /* EitherView.swift in Sources */,
 				A1D5A8D121B49E5400257B5E /* FilterAvailabilityView.swift in Sources */,
 				A1D5A8B821AF034A00257B5E /* FilterCategoryHeaderView.swift in Sources */,
 				A1D5A8C821B0FECF00257B5E /* FilterCellModel.swift in Sources */,
@@ -346,11 +356,13 @@
 				A1A0D83A21BC67ED0098168C /* FilterWorkshopViewController.swift in Sources */,
 				A1A0D83E21BEC1B90098168C /* ImageArtboardView.swift in Sources */,
 				A128993921CFFF7000BEE395 /* ImageChooserView.swift in Sources */,
+				A128994321D1A56900BEE395 /* NumericSlider.swift in Sources */,
 				A1D5A8B521ADB3ED00257B5E /* ParameterData.swift in Sources */,
 				A1D5A8C321B054A100257B5E /* SeparatorView.swift in Sources */,
 				A1D5A8BF21AF0F8200257B5E /* UIColor+Utils.swift in Sources */,
 				A1D5A8D321B4A32100257B5E /* UIEdgeInsets+Utils.swift in Sources */,
 				A1D5A8D521B4A64A00257B5E /* UIStackView+Utils.swift in Sources */,
+				A128994121D18E6800BEE395 /* WorkshopParameterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

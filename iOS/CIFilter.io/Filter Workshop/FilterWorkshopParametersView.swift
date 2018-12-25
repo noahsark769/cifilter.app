@@ -32,8 +32,8 @@ final class FilterWorkshopParametersView: UIStackView {
         self.removeAllArrangedSubviews()
         disposeBag = DisposeBag()
         for parameter in parameters {
-            switch parameter.classType {
-            case "CIImage":
+            switch parameter.type {
+            case .image:
                 let imageArtboardView = ImageArtboardView(name: parameter.name)
                 self.addArrangedSubview(imageArtboardView)
                 imageArtboardView.didChooseImage.subscribe(onNext: { image in
@@ -43,6 +43,16 @@ final class FilterWorkshopParametersView: UIStackView {
                     }
                     self.updateParameterSubject.onNext((parameter.name, CIImage(cgImage: cgImage)))
                 }).disposed(by: disposeBag!)
+            case let .scalar(info):
+                guard let sliderMin = info.sliderMin, let sliderMax = info.sliderMax else {
+                    print("WARNING No slider min/max for \(parameter.name)")
+                    continue
+                }
+                let parameterView = WorkshopParameterView(
+                    type: .slider(min: sliderMin, max: sliderMax),
+                    name: parameter.name
+                )
+                self.addArrangedSubview(parameterView)
             default:
                 print("WARNING don't know how to process parameter type \(parameter.classType)")
             }
