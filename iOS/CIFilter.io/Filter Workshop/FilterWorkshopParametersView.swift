@@ -52,6 +52,9 @@ final class FilterWorkshopParametersView: UIStackView {
                     type: .slider(min: sliderMin, max: sliderMax),
                     name: parameter.name
                 )
+                parameterView.valueDidChange.subscribe(onNext: { value in
+                    self.updateParameterSubject.onNext((parameter.name, value))
+                }).disposed(by: disposeBag!)
                 self.addArrangedSubview(parameterView)
             default:
                 print("WARNING don't know how to process parameter type \(parameter.classType)")

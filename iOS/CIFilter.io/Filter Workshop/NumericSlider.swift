@@ -7,8 +7,15 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class NumericSlider: UIView {
+    private let valueDidChangeObservable = PublishSubject<Float>()
+    lazy var valueDidChange: ControlEvent<Float> = {
+        return ControlEvent(events: valueDidChangeObservable)
+    }()
+
     private let slider = UISlider()
     private let minimumLabel: UILabel = {
         let view = UILabel()
@@ -67,6 +74,8 @@ final class NumericSlider: UIView {
         )
 
         valueLabel.isHidden = slider.value == slider.maximumValue || slider.value == slider.minimumValue
+
+        valueDidChangeObservable.onNext(slider.value)
     }
 
     required init?(coder aDecoder: NSCoder) {

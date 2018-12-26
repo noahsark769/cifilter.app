@@ -7,11 +7,19 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class WorkshopParameterView: UIView {
+    private let bag = DisposeBag()
     enum ParameterType {
         case slider(min: Float, max: Float)
     }
+
+    private let valueDidChangeObservable = PublishSubject<Any>()
+    lazy var valueDidChange: ControlEvent<Any> = {
+        return ControlEvent(events: valueDidChangeObservable)
+    }()
 
     private let stackView: UIStackView = {
         let view = UIStackView()
@@ -39,6 +47,9 @@ final class WorkshopParameterView: UIView {
             let slider = NumericSlider(min: min, max: max)
             slider.widthAnchor <=> 400
             stackView.addArrangedSubview(slider)
+            slider.valueDidChange.throttle(0.3, scheduler: MainScheduler.instance).subscribe(onNext: { float in
+                self.valueDidChangeObservable.onNext(float)
+            }).disposed(by: bag)
         }
 
         stackView.edgesToSuperview()

@@ -78,6 +78,7 @@ final class FilterWorkshopContentView: UIView {
         for parameter in self.filter.parameters {
             guard let value = parameterConfiguration[parameter.name] else {
                 print("Not ready yet, need \(parameter.name)")
+                print(parameterConfiguration)
                 return
             }
             filter.setValue(value, forKey: parameter.name)
