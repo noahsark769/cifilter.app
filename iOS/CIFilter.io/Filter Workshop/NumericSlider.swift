@@ -59,7 +59,12 @@ final class NumericSlider: UIView {
     @objc private func sliderValueChanged() {
         let thumbRect = slider.thumbRect(forBounds: slider.frame, trackRect: slider.trackRect(forBounds: slider.frame), value: slider.value)
         valueLabel.text = String(format: "%.2f", slider.value)
-        valueLabel.frame = CGRect(x: thumbRect.minX, y: thumbRect.maxY + 10, width: valueLabel.intrinsicContentSize.width, height: valueLabel.intrinsicContentSize.height)
+        valueLabel.frame = CGRect(
+            x: thumbRect.minX - (valueLabel.intrinsicContentSize.width - thumbRect.width) / 2,
+            y: thumbRect.maxY + 10,
+            width: valueLabel.intrinsicContentSize.width,
+            height: valueLabel.intrinsicContentSize.height
+        )
 
         valueLabel.isHidden = slider.value == slider.maximumValue || slider.value == slider.minimumValue
     }

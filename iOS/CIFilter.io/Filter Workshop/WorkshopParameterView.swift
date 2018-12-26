@@ -8,16 +8,6 @@
 
 import UIKit
 
-func image(ofText text: String, fontSize: CGFloat, fontName: String) -> UIImage? {
-    let filter = CIFilter(name: "CITextImageGenerator")!
-    filter.setValue(text, forKey: "inputText")
-    filter.setValue(fontName, forKey: "inputFontName")
-    filter.setValue(fontSize / UIScreen.main.scale, forKey: "inputFontSize")
-    filter.setValue(UIScreen.main.scale, forKey: "inputScaleFactor")
-    guard let resultImage = filter.outputImage else { return nil }
-    return UIImage(ciImage: resultImage)
-}
-
 final class WorkshopParameterView: UIView {
     enum ParameterType {
         case slider(min: Float, max: Float)
