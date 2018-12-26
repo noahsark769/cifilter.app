@@ -75,15 +75,19 @@ final class FilterWorkshopContentView: UIView {
 
     private func generateOutputImageIfPossible() {
         let filter = CIFilter(name: self.filter.name)!
+        var stillNeededValues = [String]()
         for parameter in self.filter.parameters {
             guard let value = parameterConfiguration[parameter.name] else {
-                print("Not ready yet, need \(parameter.name)")
-                print(parameterConfiguration)
-                return
+                stillNeededValues.append(parameter.name)
+                continue
             }
             filter.setValue(value, forKey: parameter.name)
         }
-        let image = UIImage(ciImage: filter.outputImage!)
-        outputImageView.set(image: image)
+        if stillNeededValues.count > 0 {
+            print("Still need: \(stillNeededValues)")
+        } else {
+            let image = UIImage(ciImage: filter.outputImage!)
+            outputImageView.set(image: image)
+        }
     }
 }

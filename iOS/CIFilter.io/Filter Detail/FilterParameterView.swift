@@ -76,7 +76,7 @@ final class FilterParameterView: UIView {
     func set(parameter: FilterParameterInfo, filter: FilterInfo) {
         nameLabel.text = parameter.name
         classLabel.text = parameter.classType
-        descriptionLabel.text = (parameter.description ?? "No description provided by Core Image.")
+        descriptionLabel.text = parameter.descriptionOrDefault
 
         self.nameLabelConstraint?.isActive = false
         if (filter.hasLongParameterNames) {

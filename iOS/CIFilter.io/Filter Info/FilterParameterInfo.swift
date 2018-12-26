@@ -29,6 +29,10 @@ struct FilterParameterInfo: Encodable {
 
         type = try FilterParameterType(filterAttributeDict: parameterSpecificDict, className: try filterAttributeDict.validatedValue(key: kCIAttributeClass))
     }
+
+    var descriptionOrDefault: String {
+        return self.description ?? "No description provided by Core Image."
+    }
 }
 
 extension FilterParameterInfo {

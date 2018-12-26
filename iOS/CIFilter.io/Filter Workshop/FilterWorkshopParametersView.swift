@@ -44,18 +44,25 @@ final class FilterWorkshopParametersView: UIStackView {
                     self.updateParameterSubject.onNext((parameter.name, CIImage(cgImage: cgImage)))
                 }).disposed(by: disposeBag!)
             case let .scalar(info):
-                guard let sliderMin = info.sliderMin, let sliderMax = info.sliderMax else {
-                    print("WARNING No slider min/max for \(parameter.name)")
-                    continue
+                if let sliderMin = info.sliderMin, let sliderMax = info.sliderMax {
+                    let parameterView = WorkshopParameterView(
+                        type: .slider(min: sliderMin, max: sliderMax),
+                        parameter: parameter
+                    )
+                    parameterView.valueDidChange.subscribe(onNext: { value in
+                        self.updateParameterSubject.onNext((parameter.name, value))
+                    }).disposed(by: disposeBag!)
+                    self.addArrangedSubview(parameterView)
+                } else {
+                    let parameterView = WorkshopParameterView(
+                        type: .number,
+                        parameter: parameter
+                    )
+                    parameterView.valueDidChange.subscribe(onNext: { value in
+                        self.updateParameterSubject.onNext((parameter.name, value))
+                    }).disposed(by: disposeBag!)
+                    self.addArrangedSubview(parameterView)
                 }
-                let parameterView = WorkshopParameterView(
-                    type: .slider(min: sliderMin, max: sliderMax),
-                    name: parameter.name
-                )
-                parameterView.valueDidChange.subscribe(onNext: { value in
-                    self.updateParameterSubject.onNext((parameter.name, value))
-                }).disposed(by: disposeBag!)
-                self.addArrangedSubview(parameterView)
             default:
                 print("WARNING don't know how to process parameter type \(parameter.classType)")
             }
