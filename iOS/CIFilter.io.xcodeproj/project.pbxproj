@@ -15,6 +15,7 @@
 		A128994121D18E6800BEE395 /* WorkshopParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994021D18E6800BEE395 /* WorkshopParameterView.swift */; };
 		A128994321D1A56900BEE395 /* NumericSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994221D1A56900BEE395 /* NumericSlider.swift */; };
 		A128994521D40A3F00BEE395 /* FreeformNumberInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994421D40A3F00BEE395 /* FreeformNumberInput.swift */; };
+		A128994721D41EAC00BEE395 /* AsyncFilterApplicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994621D41EAC00BEE395 /* AsyncFilterApplicator.swift */; };
 		A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1707F65219A1A0A0010E007 /* FilterInfo.swift */; };
 		A1A0D83521BC60BA0098168C /* FilterExampleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */; };
 		A1A0D83721BC659B0098168C /* FilterDetailExampleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83621BC659B0098168C /* FilterDetailExampleHeaderView.swift */; };
@@ -57,6 +58,7 @@
 		A128994021D18E6800BEE395 /* WorkshopParameterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkshopParameterView.swift; sourceTree = "<group>"; };
 		A128994221D1A56900BEE395 /* NumericSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumericSlider.swift; sourceTree = "<group>"; };
 		A128994421D40A3F00BEE395 /* FreeformNumberInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeformNumberInput.swift; sourceTree = "<group>"; };
+		A128994621D41EAC00BEE395 /* AsyncFilterApplicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncFilterApplicator.swift; sourceTree = "<group>"; };
 		A1707F65219A1A0A0010E007 /* FilterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInfo.swift; sourceTree = "<group>"; };
 		A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterExampleProvider.swift; sourceTree = "<group>"; };
 		A1A0D83621BC659B0098168C /* FilterDetailExampleHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailExampleHeaderView.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 		A1A0D83821BC67C60098168C /* Filter Workshop */ = {
 			isa = PBXGroup;
 			children = (
+				A128994621D41EAC00BEE395 /* AsyncFilterApplicator.swift */,
 				A1A0D83F21C4AEAA0098168C /* FilterWorkshopContentView.swift */,
 				A128993C21D047BD00BEE395 /* FilterWorkshopParametersView.swift */,
 				A1A0D83B21BEBD960098168C /* FilterWorkshopView.swift */,
@@ -332,6 +335,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1C6621D2196818100826A2B /* AppDelegate.swift in Sources */,
+				A128994721D41EAC00BEE395 /* AsyncFilterApplicator.swift in Sources */,
 				A1D5A8BB21AF03F700257B5E /* Autolayout.swift in Sources */,
 				A1D5A8AF21ADB38200257B5E /* CIVectorCodableWrapper.swift in Sources */,
 				A1D5A8B321ADB3C100257B5E /* Dictionary+Validation.swift in Sources */,

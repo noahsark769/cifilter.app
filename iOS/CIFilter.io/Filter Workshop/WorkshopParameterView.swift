@@ -40,7 +40,7 @@ final class WorkshopParameterView: UIView {
         let view = UILabel()
         view.font = UIFont.italicSystemFont(ofSize: 14)
         view.textColor = UIColor(rgb: 0x666666)
-        view.numberOfLines = 1
+        view.numberOfLines = 0
         return view
     }()
 
@@ -61,12 +61,12 @@ final class WorkshopParameterView: UIView {
             let slider = NumericSlider(min: min, max: max)
             slider.widthAnchor <=> 400
             stackView.addArrangedSubview(slider)
-            slider.valueDidChange.throttle(0.3, scheduler: MainScheduler.instance).subscribe(onNext: { float in
+            slider.valueDidChange.subscribe(onNext: { float in
                 self.valueDidChangeObservable.onNext(float)
             }).disposed(by: bag)
         case .number:
             let numericInput = FreeformNumberInput()
-            numericInput.valueDidChange.throttle(0.3, scheduler: MainScheduler.instance).subscribe(onNext: { float in
+            numericInput.valueDidChange.subscribe(onNext: { float in
                 self.valueDidChangeObservable.onNext(float)
             }).disposed(by: bag)
             stackView.addArrangedSubview(numericInput)

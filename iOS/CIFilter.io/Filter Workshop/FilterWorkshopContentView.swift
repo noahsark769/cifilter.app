@@ -11,7 +11,8 @@ import RxSwift
 import AloeStackView
 
 final class FilterWorkshopContentView: UIView {
-    private var bag: DisposeBag? = nil
+    private let applicator = AsyncFilterApplicator()
+    private var bag = DisposeBag()
     private var filter: FilterInfo! = nil
     private let nonImageParametersView = FilterWorkshopParametersView()
     private let imageParametersView = FilterWorkshopParametersView()
@@ -36,14 +37,27 @@ final class FilterWorkshopContentView: UIView {
         // and as such the superview will not be responsible for disabling its autoresizing mask
         [stackView, self].disableTranslatesAutoresizingMaskIntoConstraints()
         stackView.edges(to: self, insets: UIEdgeInsets(all: 100))
+
+        applicator.events.observeOn(MainScheduler.instance).subscribe(onNext: { event in
+            switch event {
+            case .generationStarted:
+                print("Starting to generate image...")
+            case let .generationErrored(error):
+                print("Generation errored! \(error)")
+            case let .generationCompleted(image):
+                print("Generation completed!!")
+                self.outputImageView.set(image: image)
+                print("Finished setting image")
+            }
+        }).disposed(by: bag)
     }
 
     func set(filter: FilterInfo) {
         self.filter = filter
         print(filter.parameters)
-        bag = DisposeBag() // unsubscribe all current subscriptions
         parameterConfiguration = [:]
         stackView.removeAllArrangedSubviews()
+        applicator.set(filter: filter)
 
         let imageParameters = filter.parameters.filter({ $0.classType == "CIImage" })
         let nonImageParameters = filter.parameters.filter({ $0.classType != "CIImage" })
@@ -51,19 +65,13 @@ final class FilterWorkshopContentView: UIView {
         if nonImageParameters.count > 0 {
             stackView.addArrangedSubview(nonImageParametersView)
             nonImageParametersView.set(parameters: nonImageParameters)
-            nonImageParametersView.didUpdateParameter.subscribe(onNext: { (name, value) in
-                self.parameterConfiguration[name] = value
-                self.generateOutputImageIfPossible()
-            }).disposed(by: bag!)
+            applicator.addSubscription(for: nonImageParametersView.didUpdateParameter.asObservable())
         }
 
         if imageParameters.count > 0 {
             stackView.addArrangedSubview(imageParametersView)
             imageParametersView.set(parameters: imageParameters)
-            imageParametersView.didUpdateParameter.subscribe(onNext: { (name, value) in
-                self.parameterConfiguration[name] = value
-                self.generateOutputImageIfPossible()
-            }).disposed(by: bag!)
+            applicator.addSubscription(for: imageParametersView.didUpdateParameter.asObservable())
         }
 
         stackView.addArrangedSubview(outputImageView)
@@ -71,23 +79,5 @@ final class FilterWorkshopContentView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    private func generateOutputImageIfPossible() {
-        let filter = CIFilter(name: self.filter.name)!
-        var stillNeededValues = [String]()
-        for parameter in self.filter.parameters {
-            guard let value = parameterConfiguration[parameter.name] else {
-                stillNeededValues.append(parameter.name)
-                continue
-            }
-            filter.setValue(value, forKey: parameter.name)
-        }
-        if stillNeededValues.count > 0 {
-            print("Still need: \(stillNeededValues)")
-        } else {
-            let image = UIImage(ciImage: filter.outputImage!)
-            outputImageView.set(image: image)
-        }
     }
 }

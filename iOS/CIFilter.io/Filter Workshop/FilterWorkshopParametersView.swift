@@ -13,9 +13,9 @@ import AloeStackView
 
 final class FilterWorkshopParametersView: UIStackView {
     var disposeBag: DisposeBag? = nil
-    private let updateParameterSubject = PublishSubject<(String, Any)>()
-    lazy var didUpdateParameter: ControlEvent<(String, Any)> = {
-        return ControlEvent<(String, Any)>(events: updateParameterSubject)
+    private let updateParameterSubject = PublishSubject<ParameterValue>()
+    lazy var didUpdateParameter: ControlEvent<ParameterValue> = {
+        return ControlEvent<ParameterValue>(events: updateParameterSubject)
     }()
     init() {
         super.init(frame: .zero)
@@ -26,6 +26,32 @@ final class FilterWorkshopParametersView: UIStackView {
 
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func addViewsAndSubscriptions(for info: FilterNumberParameterInfo<Float>, parameter: FilterParameterInfo) {
+        if let sliderMin = info.sliderMin, let sliderMax = info.sliderMax {
+            let parameterView = WorkshopParameterView(
+                type: .slider(min: sliderMin, max: sliderMax),
+                parameter: parameter
+            )
+            parameterView.valueDidChange.subscribe(onNext: { value in
+                self.updateParameterSubject.onNext(
+                    ParameterValue(name: parameter.name, value: value)
+                )
+            }).disposed(by: disposeBag!)
+            self.addArrangedSubview(parameterView)
+        } else {
+            let parameterView = WorkshopParameterView(
+                type: .number,
+                parameter: parameter
+            )
+            parameterView.valueDidChange.subscribe(onNext: { value in
+                self.updateParameterSubject.onNext(
+                    ParameterValue(name: parameter.name, value: value)
+                )
+            }).disposed(by: disposeBag!)
+            self.addArrangedSubview(parameterView)
+        }
     }
 
     func set(parameters: [FilterParameterInfo]) {
@@ -41,28 +67,14 @@ final class FilterWorkshopParametersView: UIStackView {
                         print("WARNING could not generate CGImage from chosen UIImage")
                         return
                     }
-                    self.updateParameterSubject.onNext((parameter.name, CIImage(cgImage: cgImage)))
+                    self.updateParameterSubject.onNext(
+                        ParameterValue(name: parameter.name, value: CIImage(cgImage: cgImage))
+                    )
                 }).disposed(by: disposeBag!)
             case let .scalar(info):
-                if let sliderMin = info.sliderMin, let sliderMax = info.sliderMax {
-                    let parameterView = WorkshopParameterView(
-                        type: .slider(min: sliderMin, max: sliderMax),
-                        parameter: parameter
-                    )
-                    parameterView.valueDidChange.subscribe(onNext: { value in
-                        self.updateParameterSubject.onNext((parameter.name, value))
-                    }).disposed(by: disposeBag!)
-                    self.addArrangedSubview(parameterView)
-                } else {
-                    let parameterView = WorkshopParameterView(
-                        type: .number,
-                        parameter: parameter
-                    )
-                    parameterView.valueDidChange.subscribe(onNext: { value in
-                        self.updateParameterSubject.onNext((parameter.name, value))
-                    }).disposed(by: disposeBag!)
-                    self.addArrangedSubview(parameterView)
-                }
+                self.addViewsAndSubscriptions(for: info, parameter: parameter)
+            case let .distance(info):
+                self.addViewsAndSubscriptions(for: info, parameter: parameter)
             default:
                 print("WARNING don't know how to process parameter type \(parameter.classType)")
             }
