@@ -35,7 +35,7 @@ final class FreeformNumberInput: UIView {
         return view
     }()
 
-    init() {
+    init(min: Float?, max: Float?, defaultValue: Float?) {
         super.init(frame: .zero)
         addSubview(textView)
         textView.heightAnchor <=> 36
@@ -54,5 +54,15 @@ extension FreeformNumberInput: UITextViewDelegate {
             return
         }
         valueDidChangeObservable.onNext(number)
+    }
+
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        guard text == "" || !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return false
+        }
+        let currentText: String = textView.text ?? ""
+        guard let swiftRange = Range<String.Index>(range, in: currentText) else { return false }
+        let effectiveText: String = currentText.replacingCharacters(in: swiftRange, with: text)
+        return effectiveText == "" || FreeformNumberInput.numberFormatter.number(from: effectiveText) != nil
     }
 }

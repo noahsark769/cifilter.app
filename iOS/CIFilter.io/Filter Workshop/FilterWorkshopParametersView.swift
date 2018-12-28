@@ -42,7 +42,9 @@ final class FilterWorkshopParametersView: UIStackView {
             self.addArrangedSubview(parameterView)
         } else {
             let parameterView = WorkshopParameterView(
-                type: .number,
+                type: .number(
+                    min: info.minValue, max: info.maxValue, defaultValue: info.defaultValue
+                ),
                 parameter: parameter
             )
             parameterView.valueDidChange.subscribe(onNext: { value in
@@ -57,7 +59,9 @@ final class FilterWorkshopParametersView: UIStackView {
     func set(parameters: [FilterParameterInfo]) {
         self.removeAllArrangedSubviews()
         disposeBag = DisposeBag()
-        for parameter in parameters {
+        for parameter in parameters.sorted(by: { first, second in
+            return first.name < second.name
+        }) {
             switch parameter.type {
             case .image:
                 let imageArtboardView = ImageArtboardView(name: parameter.name)

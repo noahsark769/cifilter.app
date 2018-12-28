@@ -14,7 +14,7 @@ final class WorkshopParameterView: UIView {
     private let bag = DisposeBag()
     enum ParameterType {
         case slider(min: Float, max: Float)
-        case number
+        case number(min: Float?, max: Float?, defaultValue: Float?)
     }
 
     private let valueDidChangeObservable = PublishSubject<Any>()
@@ -64,8 +64,8 @@ final class WorkshopParameterView: UIView {
             slider.valueDidChange.subscribe(onNext: { float in
                 self.valueDidChangeObservable.onNext(float)
             }).disposed(by: bag)
-        case .number:
-            let numericInput = FreeformNumberInput()
+        case let .number(min, max, defaultValue):
+            let numericInput = FreeformNumberInput(min: min, max: max, defaultValue: defaultValue)
             numericInput.valueDidChange.subscribe(onNext: { float in
                 self.valueDidChangeObservable.onNext(float)
             }).disposed(by: bag)
