@@ -28,7 +28,7 @@ final class ImageArtboardView: UIView {
 
     init(name: String) {
         super.init(frame: .zero)
-        self.eitherView = EitherView(imageView, imageChooserView)
+        self.eitherView = EitherView(views: [imageView, imageChooserView])
         addSubview(eitherView)
         nameLabel.text = name
         self.addSubview(nameLabel)
