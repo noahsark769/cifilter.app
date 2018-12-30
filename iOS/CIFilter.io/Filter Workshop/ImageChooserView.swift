@@ -11,7 +11,6 @@ import RxSwift
 import RxCocoa
 import RxGesture
 
-private let artboardSize: CGFloat = 650
 private let artboardPadding: CGFloat = 20
 private let artboardSpacing: CGFloat = 20
 private let numImagePerArtboardRow = 3
@@ -22,6 +21,7 @@ private let builtInImageNames = [
 ]
 
 final class ImageChooserView: UIView {
+    static let artboardSize: CGFloat = 650
     private let bag = DisposeBag()
     private let chooseImageSubject = PublishSubject<UIImage>()
     lazy var didChooseImage = {
@@ -32,11 +32,11 @@ final class ImageChooserView: UIView {
         super.init(frame: .zero)
         self.backgroundColor = UIColor(rgb: 0xeeeeee)
         self.disableTranslatesAutoresizingMaskIntoConstraints()
-        self.widthAnchor <=> artboardSize
-        self.heightAnchor <=> artboardSize
+        self.widthAnchor <=> ImageChooserView.artboardSize
+        self.heightAnchor <=> ImageChooserView.artboardSize
 
         // TODO: refactor this hacky code
-        let imageSize = (artboardSize - (artboardPadding * 2) - (artboardSpacing * 2)) / 3
+        let imageSize = (ImageChooserView.artboardSize - (artboardPadding * 2) - (artboardSpacing * 2)) / 3
         for (i, imageName) in builtInImageNames.enumerated() {
             let image = UIImage(named: imageName)!
             let imageView = UIImageView(image: image)

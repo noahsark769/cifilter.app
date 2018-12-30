@@ -41,7 +41,7 @@ final class FilterWorkshopContentView: UIView {
         applicator.events.observeOn(MainScheduler.instance).subscribe(onNext: { event in
             switch event {
             case .generationStarted:
-                print("Starting to generate image...")
+                self.outputImageView.setLoading()
             case let .generationErrored(error):
                 print("Generation errored! \(error)")
             case let .generationCompleted(image):
