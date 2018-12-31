@@ -13,6 +13,7 @@ import RxCocoa
 final class FilterWorkshopParameterView: UIView {
     private let bag = DisposeBag()
     enum ParameterType {
+        /// Currently unused. See NumericSlider for explanation
         case slider(min: Float, max: Float)
         case number(min: Float?, max: Float?, defaultValue: Float?)
     }
@@ -55,6 +56,8 @@ final class FilterWorkshopParameterView: UIView {
         stackView.addArrangedSubview(descriptionLabel)
         nameLabel.text = parameter.name
         descriptionLabel.text = parameter.descriptionOrDefault
+
+        nameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 360).isActive = true
 
         switch type {
         case let .slider(min, max):

@@ -10,6 +10,10 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+/**
+ * TODO: This slider is not used anywhere, but we're keeping it here in case there becomes a use case
+ * for it. We can re-evaluate whether we need it when the app is released.
+ */
 final class NumericSlider: UIView {
     private let valueDidChangeObservable = PublishSubject<Float>()
     lazy var valueDidChange: ControlEvent<Float> = {

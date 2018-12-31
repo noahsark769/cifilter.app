@@ -29,31 +29,18 @@ final class FilterWorkshopParametersView: UIStackView {
     }
 
     private func addViewsAndSubscriptions(for info: FilterNumberParameterInfo<Float>, parameter: FilterParameterInfo) {
-        if let sliderMin = info.sliderMin, let sliderMax = info.sliderMax {
-            let parameterView = FilterWorkshopParameterView(
-                type: .slider(min: sliderMin, max: sliderMax),
-                parameter: parameter
+        let parameterView = FilterWorkshopParameterView(
+            type: .number(
+                min: info.minValue, max: info.maxValue, defaultValue: info.defaultValue
+            ),
+            parameter: parameter
+        )
+        parameterView.valueDidChange.subscribe(onNext: { value in
+            self.updateParameterSubject.onNext(
+                ParameterValue(name: parameter.name, value: value)
             )
-            parameterView.valueDidChange.subscribe(onNext: { value in
-                self.updateParameterSubject.onNext(
-                    ParameterValue(name: parameter.name, value: value)
-                )
-            }).disposed(by: disposeBag!)
-            self.addArrangedSubview(parameterView)
-        } else {
-            let parameterView = FilterWorkshopParameterView(
-                type: .number(
-                    min: info.minValue, max: info.maxValue, defaultValue: info.defaultValue
-                ),
-                parameter: parameter
-            )
-            parameterView.valueDidChange.subscribe(onNext: { value in
-                self.updateParameterSubject.onNext(
-                    ParameterValue(name: parameter.name, value: value)
-                )
-            }).disposed(by: disposeBag!)
-            self.addArrangedSubview(parameterView)
-        }
+        }).disposed(by: disposeBag!)
+        self.addArrangedSubview(parameterView)
     }
 
     func set(parameters: [FilterParameterInfo]) {
