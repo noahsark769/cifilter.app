@@ -12,6 +12,7 @@ def shared_pods
   pod 'RxSwift', '~> 4.4.0', :modular_headers => true
   pod 'RxCocoa', '~> 4.4.0', :modular_headers => true
   pod 'RxGesture', '~> 2.1.0', :modular_headers => true
+  pod 'IQKeyboardManagerSwift', '~> 6.2.0'
 end
 
 target 'CIFilter.io' do
