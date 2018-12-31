@@ -45,6 +45,14 @@ final class FilterWorkshopParameterView: UIView {
         return view
     }()
 
+    private let informationLabel: UILabel = {
+        let view = UILabel()
+        view.font = UIFont.systemFont(ofSize: 14)
+        view.textColor = UIColor(rgb: 0x666666)
+        view.numberOfLines = 0
+        return view
+    }()
+
     // TODO: I don't like passing in the parameter info AND the parameter type here. We should either
     // derive parameter type from paramter info OR pass in description, min/max, etc directly instead
     // of parameter info
@@ -53,9 +61,11 @@ final class FilterWorkshopParameterView: UIView {
 
         addSubview(stackView)
         stackView.addArrangedSubview(nameLabel)
+        stackView.addArrangedSubview(informationLabel)
         stackView.addArrangedSubview(descriptionLabel)
         nameLabel.text = parameter.name
         descriptionLabel.text = parameter.descriptionOrDefault
+        informationLabel.text = parameter.type.informationalDescription
 
         nameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 360).isActive = true
 

@@ -9,7 +9,11 @@
 import Foundation
 import CoreImage
 
-struct FilterTransformParameterInfo: Codable {
+protocol FilterInformationalStringConvertible {
+    var informationalDescription: String? { get }
+}
+
+struct FilterTransformParameterInfo: Codable, FilterInformationalStringConvertible {
     let defaultValue: CGAffineTransform
     let identity: CGAffineTransform
 
@@ -21,9 +25,13 @@ struct FilterTransformParameterInfo: Codable {
             throw FilterInfoConstructionError.allKeysNotParsed
         }
     }
+
+    var informationalDescription: String? {
+        return "Default: " + String(describing: defaultValue)
+    }
 }
 
-struct FilterVectorParameterInfo: Codable {
+struct FilterVectorParameterInfo: Codable, FilterInformationalStringConvertible {
     let defaultValue: CIVectorCodableWrapper?
     let identity: CIVectorCodableWrapper?
 
@@ -52,9 +60,16 @@ struct FilterVectorParameterInfo: Codable {
         try container.encode(defaultValue, forKey: .defaultValue)
         try container.encode(identity, forKey: .identity)
     }
+
+    var informationalDescription: String? {
+        guard let defaultValue = self.defaultValue else {
+            return nil
+        }
+        return "Default: " + String(describing: defaultValue)
+    }
 }
 
-struct FilterDataParameterInfo: Codable {
+struct FilterDataParameterInfo: Codable, FilterInformationalStringConvertible {
     let defaultValue: Data?
     let identity: Data?
 
@@ -66,11 +81,15 @@ struct FilterDataParameterInfo: Codable {
             throw FilterInfoConstructionError.allKeysNotParsed
         }
     }
+
+    var informationalDescription: String? {
+        return defaultValue.flatMap { _ in "Has default value." }
+    }
 }
 
-struct FilterColorParameterInfo: Encodable {
-    let defaultValue: CGColorSpace
-    let identity: CGColorSpace?
+struct FilterColorParameterInfo: Encodable, FilterInformationalStringConvertible {
+    let defaultValue: CIColor
+    let identity: CIColor?
 
     init(filterAttributeDict: [String: Any]) throws {
         defaultValue = try filterAttributeDict.validatedValue(key: kCIAttributeDefault)
@@ -82,11 +101,17 @@ struct FilterColorParameterInfo: Encodable {
     }
 
     func encode(to encoder: Encoder) throws {
+        // Do nothing here. We ignore this info for encoding (since CIColor and CGColorSpace aren't
+        // codable).
+    }
 
+    var informationalDescription: String? {
+        // Apparently, no filters exist with input colors which don't have default values.
+        return "Has default value."
     }
 }
 
-struct FilterUnspecifiedObjectParameterInfo: Encodable {
+struct FilterUnspecifiedObjectParameterInfo: Encodable, FilterInformationalStringConvertible {
     let defaultValue: NSObject?
 
     init(filterAttributeDict: [String: Any]) throws {
@@ -100,9 +125,13 @@ struct FilterUnspecifiedObjectParameterInfo: Encodable {
     func encode(to encoder: Encoder) throws {
 
     }
+
+    var informationalDescription: String? {
+        return defaultValue.flatMap { _ in "Has default value." }
+    }
 }
 
-struct FilterStringParameterInfo: Codable {
+struct FilterStringParameterInfo: Codable, FilterInformationalStringConvertible {
     let defaultValue: String?
 
     init(filterAttributeDict: [String: Any]) throws {
@@ -112,9 +141,13 @@ struct FilterStringParameterInfo: Codable {
             throw FilterInfoConstructionError.allKeysNotParsed
         }
     }
+
+    var informationalDescription: String? {
+        return defaultValue.flatMap { "Default: \($0)" }
+    }
 }
 
-struct FilterNumberParameterInfo<T: Codable>: Codable {
+struct FilterNumberParameterInfo<T: Codable>: Codable, FilterInformationalStringConvertible {
     let minValue: T?
     let maxValue: T?
     let defaultValue: T?
@@ -134,14 +167,25 @@ struct FilterNumberParameterInfo<T: Codable>: Codable {
             throw FilterInfoConstructionError.allKeysNotParsed
         }
     }
+
+    var informationalDescription: String? {
+        return [
+            minValue.flatMap { "Min: \($0)" },
+            maxValue.flatMap { "Max: \($0)" }
+        ].compactMap({ $0 }).joined(separator: " ")
+    }
 }
 
-struct FilterTimeParameterInfo: Codable {
+struct FilterTimeParameterInfo: Codable, FilterInformationalStringConvertible {
     let numberInfo: FilterNumberParameterInfo<Float>
     let identity: Float
 
     init(filterAttributeDict: [String: Any]) throws {
         identity = try filterAttributeDict.validatedValue(key: kCIAttributeIdentity)
         numberInfo = try FilterNumberParameterInfo(filterAttributeDict: filterAttributeDict.removing(key: kCIAttributeIdentity))
+    }
+
+    var informationalDescription: String? {
+        return numberInfo.informationalDescription
     }
 }

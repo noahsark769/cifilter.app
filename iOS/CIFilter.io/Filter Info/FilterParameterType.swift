@@ -58,7 +58,7 @@ private func filterParameterType(forAttributesDict dict: [String: Any], classNam
     }
 }
 
-enum FilterParameterType: Encodable  {
+enum FilterParameterType: Encodable, FilterInformationalStringConvertible  {
     func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(rawType)
@@ -151,6 +151,38 @@ enum FilterParameterType: Encodable  {
         case .cgImageMetadata: return .cgImageMetadata
         case .offset: return .offset
         case .array: return .array
+        }
+    }
+
+    var informationalDescription: String? {
+        switch self {
+        case let .time(info): return (info.informationalDescription ?? "")
+        case let .scalar(info): return "Scalar. " + (info.informationalDescription ?? "")
+        case let .distance(info): return "Distance. " + (info.informationalDescription ?? "")
+        case let .unspecifiedNumber(info): return "Number." + (info.informationalDescription ?? "")
+        case let .unspecifiedVector(info): return "Vector." + (info.informationalDescription ?? "")
+        case let .angle(info): return "Angle. " + (info.informationalDescription ?? "")
+        case let .boolean(info): return "Boolean. " + (info.informationalDescription ?? "")
+        case .integer: return "Integer."
+        case let .count(info): return "Count. " + (info.informationalDescription ?? "")
+        case .image: return "Image."
+        case .gradientImage: return "Gradient image."
+        case .attributedString: return "Attributed String."
+        case let .data(info): return "Data. " + (info.informationalDescription ?? "")
+        case .barcode: return "Barcode descriptor."
+        case .cameraCalibrationData: return "Camera calibration data."
+        case let .color(info): return "Color. " + (info.informationalDescription ?? "")
+        case let .opaqueColor(info): return "Opaque color. " + (info.informationalDescription ?? "")
+        case let .position(info): return "Position. " + (info.informationalDescription ?? "")
+        case let .position3(info): return "Position (3D). " + (info.informationalDescription ?? "")
+        case let .transform(info): return "Transform. " + (info.informationalDescription ?? "")
+        case let .rectangle(info): return "Rectangle. " + (info.informationalDescription ?? "")
+        case let .unspecifiedObject(info): return "Object. " + (info.informationalDescription ?? "")
+        case .mlModel: return "Machine learning model."
+        case let .string(info): return "String. " + (info.informationalDescription ?? "")
+        case .cgImageMetadata: return "Image metadata."
+        case let .offset(info): return "Offset. " + (info.informationalDescription ?? "")
+        case .array: return "Array."
         }
     }
 
