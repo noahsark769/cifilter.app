@@ -12,7 +12,7 @@
 		A128993921CFFF7000BEE395 /* ImageChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128993821CFFF7000BEE395 /* ImageChooserView.swift */; };
 		A128993D21D047BD00BEE395 /* FilterWorkshopParametersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128993C21D047BD00BEE395 /* FilterWorkshopParametersView.swift */; };
 		A128993F21D058B300BEE395 /* EitherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128993E21D058B300BEE395 /* EitherView.swift */; };
-		A128994121D18E6800BEE395 /* WorkshopParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994021D18E6800BEE395 /* WorkshopParameterView.swift */; };
+		A128994121D18E6800BEE395 /* FilterWorkshopParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994021D18E6800BEE395 /* FilterWorkshopParameterView.swift */; };
 		A128994321D1A56900BEE395 /* NumericSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994221D1A56900BEE395 /* NumericSlider.swift */; };
 		A128994521D40A3F00BEE395 /* FreeformNumberInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994421D40A3F00BEE395 /* FreeformNumberInput.swift */; };
 		A128994721D41EAC00BEE395 /* AsyncFilterApplicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994621D41EAC00BEE395 /* AsyncFilterApplicator.swift */; };
@@ -55,7 +55,7 @@
 		A128993821CFFF7000BEE395 /* ImageChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageChooserView.swift; sourceTree = "<group>"; };
 		A128993C21D047BD00BEE395 /* FilterWorkshopParametersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterWorkshopParametersView.swift; sourceTree = "<group>"; };
 		A128993E21D058B300BEE395 /* EitherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EitherView.swift; sourceTree = "<group>"; };
-		A128994021D18E6800BEE395 /* WorkshopParameterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkshopParameterView.swift; sourceTree = "<group>"; };
+		A128994021D18E6800BEE395 /* FilterWorkshopParameterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterWorkshopParameterView.swift; sourceTree = "<group>"; };
 		A128994221D1A56900BEE395 /* NumericSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumericSlider.swift; sourceTree = "<group>"; };
 		A128994421D40A3F00BEE395 /* FreeformNumberInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeformNumberInput.swift; sourceTree = "<group>"; };
 		A128994621D41EAC00BEE395 /* AsyncFilterApplicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncFilterApplicator.swift; sourceTree = "<group>"; };
@@ -131,13 +131,13 @@
 				A128994621D41EAC00BEE395 /* AsyncFilterApplicator.swift */,
 				A1A0D83F21C4AEAA0098168C /* FilterWorkshopContentView.swift */,
 				A128993C21D047BD00BEE395 /* FilterWorkshopParametersView.swift */,
+				A128994021D18E6800BEE395 /* FilterWorkshopParameterView.swift */,
 				A1A0D83B21BEBD960098168C /* FilterWorkshopView.swift */,
 				A1A0D83921BC67ED0098168C /* FilterWorkshopViewController.swift */,
 				A128994421D40A3F00BEE395 /* FreeformNumberInput.swift */,
 				A1A0D83D21BEC1B90098168C /* ImageArtboardView.swift */,
 				A128993821CFFF7000BEE395 /* ImageChooserView.swift */,
 				A128994221D1A56900BEE395 /* NumericSlider.swift */,
-				A128994021D18E6800BEE395 /* WorkshopParameterView.swift */,
 			);
 			path = "Filter Workshop";
 			sourceTree = "<group>";
@@ -359,6 +359,7 @@
 				A1D5A8D721B4A85A00257B5E /* FilterParameterView.swift in Sources */,
 				A1A0D84021C4AEAA0098168C /* FilterWorkshopContentView.swift in Sources */,
 				A128993D21D047BD00BEE395 /* FilterWorkshopParametersView.swift in Sources */,
+				A128994121D18E6800BEE395 /* FilterWorkshopParameterView.swift in Sources */,
 				A1A0D83C21BEBD960098168C /* FilterWorkshopView.swift in Sources */,
 				A1A0D83A21BC67ED0098168C /* FilterWorkshopViewController.swift in Sources */,
 				A128994521D40A3F00BEE395 /* FreeformNumberInput.swift in Sources */,
@@ -370,7 +371,6 @@
 				A1D5A8BF21AF0F8200257B5E /* UIColor+Utils.swift in Sources */,
 				A1D5A8D321B4A32100257B5E /* UIEdgeInsets+Utils.swift in Sources */,
 				A1D5A8D521B4A64A00257B5E /* UIStackView+Utils.swift in Sources */,
-				A128994121D18E6800BEE395 /* WorkshopParameterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

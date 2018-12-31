@@ -30,7 +30,7 @@ final class FilterWorkshopParametersView: UIStackView {
 
     private func addViewsAndSubscriptions(for info: FilterNumberParameterInfo<Float>, parameter: FilterParameterInfo) {
         if let sliderMin = info.sliderMin, let sliderMax = info.sliderMax {
-            let parameterView = WorkshopParameterView(
+            let parameterView = FilterWorkshopParameterView(
                 type: .slider(min: sliderMin, max: sliderMax),
                 parameter: parameter
             )
@@ -41,7 +41,7 @@ final class FilterWorkshopParametersView: UIStackView {
             }).disposed(by: disposeBag!)
             self.addArrangedSubview(parameterView)
         } else {
-            let parameterView = WorkshopParameterView(
+            let parameterView = FilterWorkshopParameterView(
                 type: .number(
                     min: info.minValue, max: info.maxValue, defaultValue: info.defaultValue
                 ),

@@ -1,5 +1,5 @@
 //
-//  WorkshopParameterView.swift
+//  FilterWorkshopParameterView.swift
 //  CIFilter.io
 //
 //  Created by Noah Gilmore on 12/24/18.
@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class WorkshopParameterView: UIView {
+final class FilterWorkshopParameterView: UIView {
     private let bag = DisposeBag()
     enum ParameterType {
         case slider(min: Float, max: Float)
