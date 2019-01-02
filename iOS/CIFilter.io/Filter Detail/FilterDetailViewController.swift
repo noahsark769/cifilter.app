@@ -52,6 +52,7 @@ final class FilterDetailViewController: UIViewController {
             guard let `self` = self else { return }
             let vc = FilterWorkshopViewController(filter: filter)
             let navigationController = UINavigationController(rootViewController: vc)
+            navigationController.navigationBar.isTranslucent = false
             vc.navigationItem.leftBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .done,
                 target: self,

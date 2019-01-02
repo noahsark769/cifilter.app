@@ -11,7 +11,7 @@ import RxSwift
 import AloeStackView
 
 final class FilterWorkshopContentView: UIView {
-    private let applicator = AsyncFilterApplicator()
+    private let applicator: AsyncFilterApplicator
     private var bag = DisposeBag()
     private var filter: FilterInfo! = nil
     private let nonImageParametersView = FilterWorkshopParametersView()
@@ -28,7 +28,8 @@ final class FilterWorkshopContentView: UIView {
 
     private var parameterConfiguration: [String: Any] = [:]
 
-    init() {
+    init(applicator: AsyncFilterApplicator) {
+        self.applicator = applicator
         super.init(frame: .zero)
         self.backgroundColor = UIColor(patternImage: UIImage(named: "workshop-background")!)
         self.addSubview(stackView)

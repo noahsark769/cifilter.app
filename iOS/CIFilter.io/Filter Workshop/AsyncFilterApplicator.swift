@@ -74,8 +74,14 @@ final class AsyncFilterApplicator {
         if stillNeededParameterNames.count > 0 {
             events.onNext(.generationErrored(error: .needsMoreParameters(names: stillNeededParameterNames)))
         } else {
+            print("Generating image with parameters: \(currentParameterConfiguration)")
             queue.cancelAllOperations()
-            queue.addOperation {
+
+            let blockOperation = BlockOperation()
+            blockOperation.addExecutionBlock { [weak blockOperation] in
+                guard let op = blockOperation, !op.isCancelled else {
+                    return
+                }
                 guard let outputImage = ciFilter.outputImage else {
                     self.events.onNext(.generationErrored(error: .generationFailed))
                     return
@@ -85,8 +91,10 @@ final class AsyncFilterApplicator {
                     self.events.onNext(.generationErrored(error: .implementationError(message: "Could not create cgImage from CIContext")))
                     return
                 }
+                guard !op.isCancelled else { return }
                 self.events.onNext(.generationCompleted(image: UIImage(cgImage: cgImage)))
             }
+            queue.addOperation(blockOperation)
             self.events.onNext(.generationStarted)
         }
     }
