@@ -75,6 +75,7 @@ final class FilterWorkshopContentView: UIView {
             applicator.addSubscription(for: imageParametersView.didUpdateParameter.asObservable())
         }
 
+        outputImageView.setDefault()
         stackView.addArrangedSubview(outputImageView)
     }
 

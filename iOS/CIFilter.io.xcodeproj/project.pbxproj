@@ -16,6 +16,9 @@
 		A128994321D1A56900BEE395 /* NumericSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994221D1A56900BEE395 /* NumericSlider.swift */; };
 		A128994521D40A3F00BEE395 /* FreeformNumberInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994421D40A3F00BEE395 /* FreeformNumberInput.swift */; };
 		A128994721D41EAC00BEE395 /* AsyncFilterApplicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994621D41EAC00BEE395 /* AsyncFilterApplicator.swift */; };
+		A128994C21DD477000BEE395 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994B21DD477000BEE395 /* Colors.swift */; };
+		A128994E21DD479100BEE395 /* OutputImageActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994D21DD479100BEE395 /* OutputImageActivityIndicatorView.swift */; };
+		A128995021DD47D900BEE395 /* OutputImageNotGeneratedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994F21DD47D900BEE395 /* OutputImageNotGeneratedView.swift */; };
 		A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1707F65219A1A0A0010E007 /* FilterInfo.swift */; };
 		A1A0D83521BC60BA0098168C /* FilterExampleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */; };
 		A1A0D83721BC659B0098168C /* FilterDetailExampleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83621BC659B0098168C /* FilterDetailExampleHeaderView.swift */; };
@@ -59,6 +62,9 @@
 		A128994221D1A56900BEE395 /* NumericSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumericSlider.swift; sourceTree = "<group>"; };
 		A128994421D40A3F00BEE395 /* FreeformNumberInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeformNumberInput.swift; sourceTree = "<group>"; };
 		A128994621D41EAC00BEE395 /* AsyncFilterApplicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncFilterApplicator.swift; sourceTree = "<group>"; };
+		A128994B21DD477000BEE395 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		A128994D21DD479100BEE395 /* OutputImageActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputImageActivityIndicatorView.swift; sourceTree = "<group>"; };
+		A128994F21DD47D900BEE395 /* OutputImageNotGeneratedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputImageNotGeneratedView.swift; sourceTree = "<group>"; };
 		A1707F65219A1A0A0010E007 /* FilterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInfo.swift; sourceTree = "<group>"; };
 		A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterExampleProvider.swift; sourceTree = "<group>"; };
 		A1A0D83621BC659B0098168C /* FilterDetailExampleHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailExampleHeaderView.swift; sourceTree = "<group>"; };
@@ -125,6 +131,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A128994A21DD475900BEE395 /* Standard */ = {
+			isa = PBXGroup;
+			children = (
+				A128994B21DD477000BEE395 /* Colors.swift */,
+			);
+			path = Standard;
+			sourceTree = "<group>";
+		};
 		A1A0D83821BC67C60098168C /* Filter Workshop */ = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +152,8 @@
 				A1A0D83D21BEC1B90098168C /* ImageArtboardView.swift */,
 				A128993821CFFF7000BEE395 /* ImageChooserView.swift */,
 				A128994221D1A56900BEE395 /* NumericSlider.swift */,
+				A128994D21DD479100BEE395 /* OutputImageActivityIndicatorView.swift */,
+				A128994F21DD47D900BEE395 /* OutputImageNotGeneratedView.swift */,
 			);
 			path = "Filter Workshop";
 			sourceTree = "<group>";
@@ -167,6 +183,7 @@
 				A1D5A8A921ADB30300257B5E /* Filter Info */,
 				A1D5A8B621AF033700257B5E /* Filter List */,
 				A1A0D83821BC67C60098168C /* Filter Workshop */,
+				A128994A21DD475900BEE395 /* Standard */,
 				A1D5A8B921AF03ED00257B5E /* Utils */,
 				A1C6621C2196818100826A2B /* AppDelegate.swift */,
 				A1C662232196818300826A2B /* Assets.xcassets */,
@@ -361,6 +378,7 @@
 				A128994721D41EAC00BEE395 /* AsyncFilterApplicator.swift in Sources */,
 				A1D5A8BB21AF03F700257B5E /* Autolayout.swift in Sources */,
 				A1D5A8AF21ADB38200257B5E /* CIVectorCodableWrapper.swift in Sources */,
+				A128994C21DD477000BEE395 /* Colors.swift in Sources */,
 				A1D5A8B321ADB3C100257B5E /* Dictionary+Validation.swift in Sources */,
 				A128993F21D058B300BEE395 /* EitherView.swift in Sources */,
 				A1D5A8D121B49E5400257B5E /* FilterAvailabilityView.swift in Sources */,
@@ -389,6 +407,8 @@
 				A1A0D83E21BEC1B90098168C /* ImageArtboardView.swift in Sources */,
 				A128993921CFFF7000BEE395 /* ImageChooserView.swift in Sources */,
 				A128994321D1A56900BEE395 /* NumericSlider.swift in Sources */,
+				A128994E21DD479100BEE395 /* OutputImageActivityIndicatorView.swift in Sources */,
+				A128995021DD47D900BEE395 /* OutputImageNotGeneratedView.swift in Sources */,
 				A1D5A8B521ADB3ED00257B5E /* ParameterData.swift in Sources */,
 				A1D5A8C321B054A100257B5E /* SeparatorView.swift in Sources */,
 				A1D5A8BF21AF0F8200257B5E /* UIColor+Utils.swift in Sources */,

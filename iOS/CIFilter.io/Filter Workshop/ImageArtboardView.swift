@@ -10,48 +10,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-enum Colors {
-    case primary
-    case availabilityBlue
-    case availabilityRed
-    case borderGray
-
-    var color: UIColor {
-        switch self {
-        case .primary: return UIColor(rgb: 0xF5BD5D)
-        case .availabilityRed: return UIColor(rgb: 0xFF8D8D)
-        case .availabilityBlue: return UIColor(rgb: 0x74AEDF)
-        case .borderGray: return UIColor(rgb: 0xAFAFAF)
-        }
-    }
-}
-
-final class OutputImageActivityIndicatorView: UIView {
-    private let activityView = UIActivityIndicatorView(style: .whiteLarge)
-    init() {
-        super.init(frame: .zero)
-        self.backgroundColor = Colors.primary.color
-        addSubview(activityView)
-        activityView.disableTranslatesAutoresizingMaskIntoConstraints()
-        activityView.centerXAnchor <=> self.centerXAnchor
-        activityView.centerYAnchor <=> self.centerYAnchor
-        self.widthAnchor <=> ImageChooserView.artboardSize
-        self.heightAnchor <=> ImageChooserView.artboardSize
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func startAnimating() {
-        activityView.startAnimating()
-    }
-
-    func stopAnimating() {
-        activityView.stopAnimating()
-    }
-}
-
 final class ImageArtboardView: UIView {
     private var eitherView: EitherView!
     private let bag = DisposeBag()
@@ -65,13 +23,16 @@ final class ImageArtboardView: UIView {
         view.numberOfLines = 1
         return view
     }()
+    private let noImageGeneratedView = OutputImageNotGeneratedView()
     private let imageView = UIImageView()
     private let imageChooserView = ImageChooserView()
     private let activityView = OutputImageActivityIndicatorView()
 
     init(name: String) {
         super.init(frame: .zero)
-        self.eitherView = EitherView(views: [imageView, imageChooserView, activityView])
+        self.eitherView = EitherView(views: [
+            imageView, imageChooserView, activityView, noImageGeneratedView
+        ])
         addSubview(eitherView)
         nameLabel.text = name
         self.addSubview(nameLabel)
@@ -103,6 +64,7 @@ final class ImageArtboardView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // TODO: These functions should be condensed into one that takes an enum
     func set(image: UIImage) {
         self.activityView.stopAnimating()
         imageView.image = image
@@ -112,5 +74,10 @@ final class ImageArtboardView: UIView {
     func setLoading() {
         self.eitherView.setEnabled(self.activityView)
         self.activityView.startAnimating()
+    }
+
+    func setDefault() {
+        self.activityView.stopAnimating()
+        self.eitherView.setEnabled(self.noImageGeneratedView)
     }
 }
