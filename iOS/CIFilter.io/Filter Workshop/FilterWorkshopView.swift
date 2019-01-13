@@ -19,9 +19,6 @@ final class FilterWorkshopView: UIView {
         return FilterWorkshopContentView(applicator: self.applicator)
     }()
     private let consoleView = ImageWorkshopConsoleView()
-    var didSaveOutputImage: PublishSubject<UIImage> {
-        return contentView.didSaveOutputImage
-    }
 
     init(applicator: AsyncFilterApplicator) {
         self.applicator = applicator

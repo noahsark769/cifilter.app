@@ -29,10 +29,6 @@ final class FilterWorkshopViewController: UIViewController {
         self.shareItem.isEnabled = false
         self.navigationItem.rightBarButtonItem = shareItem
 
-        workshopView.didSaveOutputImage.subscribe {
-            print("Le did save image")
-        }.disposed(by: bag)
-
         applicator.events.observeOn(MainScheduler.instance).subscribe(onNext: { event in
             guard case let .generationCompleted(image, _) = event else {
                 self.shareItem.isEnabled = false
