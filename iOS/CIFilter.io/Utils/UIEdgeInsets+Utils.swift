@@ -12,8 +12,4 @@ extension UIEdgeInsets {
     init(all: CGFloat) {
         self.init(top: all, left: all, bottom: all, right: all)
     }
-
-    static func all(_ value: CGFloat) -> UIEdgeInsets {
-        return UIEdgeInsets(all: value)
-    }
 }
