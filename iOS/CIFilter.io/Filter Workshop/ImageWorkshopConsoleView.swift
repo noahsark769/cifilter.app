@@ -14,8 +14,8 @@ import UIKit
  */
 final class ImageWorkshopConsoleView: UIStackView {
     enum EventType {
-        case showActivity(animated: Bool)
-        case hideActivity(animated: Bool)
+        case showActivity
+        case hideActivity
         case success(message: String, animated: Bool)
         case error(message: String)
     }
@@ -38,55 +38,37 @@ final class ImageWorkshopConsoleView: UIStackView {
 
     func update(for event: EventType) {
         switch event {
-        case let .showActivity(animated):
-            let block: () -> Void = {
-                self.activityIndicator.isHidden = false
-            }
-            if animated {
-                UIView.animate(withDuration: 0.3) {
-                    block()
-                }
-            } else {
-                block()
-            }
+        case .showActivity:
+            self.activityIndicator.isHidden = false
             activityIndicator.startAnimating()
-        case let .hideActivity(animated):
-            let block = {
-                self.activityIndicator.isHidden = true
-            }
-            if animated {
-                UIView.animate(withDuration: 0.3) {
-                    block()
-                }
-            } else {
-                block()
-            }
+        case .hideActivity:
+            self.activityIndicator.isHidden = true
             activityIndicator.stopAnimating()
         case let .success(message, animated):
             let messageView = ImageWorkshopConsoleMessageView(type: .success, message: message)
-            if animated {
-                messageView.isHidden = true
-            }
             self.addArrangedSubview(messageView)
             if animated {
+                messageView.alpha = 0
+                messageView.transform = CGAffineTransform(translationX: 50, y: 0)
+
                 UIView.animate(withDuration: 0.3) {
-                    messageView.isHidden = false
+                    messageView.alpha = 1
+                    messageView.transform = .identity
                 }
             }
-            let anim = CAKeyframeAnimation()
-            anim.isAdditive = true
 
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: {
-                if animated {
-                    UIView.animate(withDuration: 0.3, animations: {
-                        messageView.isHidden = true
-                    }, completion: { _ in
-                        self.removeArrangedSubview(messageView)
-                        messageView.removeFromSuperview()
-                    })
-                } else {
+                let removeBlock = {
                     self.removeArrangedSubview(messageView)
                     messageView.removeFromSuperview()
+                }
+                if animated {
+                    UIView.animate(withDuration: 0.3, animations: {
+                        messageView.transform = CGAffineTransform(translationX: -50, y: 0)
+                        messageView.alpha = 0
+                    }, completion: { _ in removeBlock() })
+                } else {
+                    removeBlock()
                 }
             })
         case let .error(message):

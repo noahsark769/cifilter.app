@@ -26,11 +26,12 @@ final class AsyncFilterApplicator {
 
     enum Event {
         case generationStarted
-        case generationCompleted(image: UIImage)
+        case generationCompleted(image: UIImage, totalTime: TimeInterval)
         case generationErrored(error: Error)
     }
 
     let events = PublishSubject<Event>()
+    var timeStarted: TimeInterval? = nil
 
     private var bag = DisposeBag()
     private var currentFilter: FilterInfo? = nil
@@ -92,10 +93,14 @@ final class AsyncFilterApplicator {
                     return
                 }
                 guard !op.isCancelled else { return }
-                self.events.onNext(.generationCompleted(image: UIImage(cgImage: cgImage)))
+                self.events.onNext(.generationCompleted(
+                    image: UIImage(cgImage: cgImage),
+                    totalTime: CACurrentMediaTime() - self.timeStarted!
+                ))
             }
             queue.addOperation(blockOperation)
             self.events.onNext(.generationStarted)
+            self.timeStarted = CACurrentMediaTime()
         }
     }
 }

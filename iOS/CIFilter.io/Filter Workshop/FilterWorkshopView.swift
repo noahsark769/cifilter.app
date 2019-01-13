@@ -41,12 +41,17 @@ final class FilterWorkshopView: UIView {
         applicator.events.observeOn(MainScheduler.instance).subscribe(onNext: { event in
             switch event {
             case .generationStarted:
-                self.consoleView.update(for: .showActivity(animated: true))
-            case .generationCompleted:
-                self.consoleView.update(for: .hideActivity(animated: true))
-                self.consoleView.update(for: .success(message: "Generation completed!", animated: true))
+                self.consoleView.update(for: .showActivity)
+            case let .generationCompleted(_, totalTime):
+                self.consoleView.update(for: .hideActivity)
+
+                // Only show a success message if the generation took more than 4 seconds, so as
+                // not to be intrusive for filters that don't take much time to apply
+                if totalTime > 4 {
+                    self.consoleView.update(for: .success(message: "Generation completed in \(String(format: "%.2f", totalTime)) seconds", animated: true))
+                }
             case .generationErrored:
-                self.consoleView.update(for: .hideActivity(animated: true))
+                self.consoleView.update(for: .hideActivity)
             }
         }).disposed(by: bag)
     }
