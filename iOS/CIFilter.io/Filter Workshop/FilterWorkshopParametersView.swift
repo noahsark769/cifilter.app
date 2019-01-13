@@ -11,6 +11,20 @@ import RxSwift
 import RxCocoa
 import AloeStackView
 
+final class RedView: UILabel {
+    init(text: String) {
+        super.init(frame: .zero)
+        self.backgroundColor = .red
+        self.heightAnchor <=> 60
+        self.textColor = .white
+        self.text = text
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 final class FilterWorkshopParametersView: UIStackView {
     var disposeBag: DisposeBag? = nil
     private let updateParameterSubject = PublishSubject<ParameterValue>()
@@ -68,6 +82,7 @@ final class FilterWorkshopParametersView: UIStackView {
                 self.addViewsAndSubscriptions(for: info, parameter: parameter)
             default:
                 print("WARNING don't know how to process parameter type \(parameter.classType)")
+                self.addArrangedSubview(RedView(text: "\(parameter.name): \(parameter.classType)"))
             }
         }
     }
