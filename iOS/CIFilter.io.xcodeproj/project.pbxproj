@@ -20,6 +20,9 @@
 		A128994E21DD479100BEE395 /* OutputImageActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994D21DD479100BEE395 /* OutputImageActivityIndicatorView.swift */; };
 		A128995021DD47D900BEE395 /* OutputImageNotGeneratedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994F21DD47D900BEE395 /* OutputImageNotGeneratedView.swift */; };
 		A128995221DD6D4000BEE395 /* CwlMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128995121DD6D4000BEE395 /* CwlMutex.swift */; };
+		A128995421DEE3C700BEE395 /* FilterApplicationIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128995321DEE3C600BEE395 /* FilterApplicationIndicator.swift */; };
+		A128995621DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128995521DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift */; };
+		A128995821DEE44F00BEE395 /* ImageWorkshopConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128995721DEE44F00BEE395 /* ImageWorkshopConsoleView.swift */; };
 		A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1707F65219A1A0A0010E007 /* FilterInfo.swift */; };
 		A1A0D83521BC60BA0098168C /* FilterExampleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */; };
 		A1A0D83721BC659B0098168C /* FilterDetailExampleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83621BC659B0098168C /* FilterDetailExampleHeaderView.swift */; };
@@ -67,6 +70,9 @@
 		A128994D21DD479100BEE395 /* OutputImageActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputImageActivityIndicatorView.swift; sourceTree = "<group>"; };
 		A128994F21DD47D900BEE395 /* OutputImageNotGeneratedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputImageNotGeneratedView.swift; sourceTree = "<group>"; };
 		A128995121DD6D4000BEE395 /* CwlMutex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CwlMutex.swift; sourceTree = "<group>"; };
+		A128995321DEE3C600BEE395 /* FilterApplicationIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterApplicationIndicator.swift; sourceTree = "<group>"; };
+		A128995521DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWorkshopConsoleMessageView.swift; sourceTree = "<group>"; };
+		A128995721DEE44F00BEE395 /* ImageWorkshopConsoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWorkshopConsoleView.swift; sourceTree = "<group>"; };
 		A1707F65219A1A0A0010E007 /* FilterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInfo.swift; sourceTree = "<group>"; };
 		A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterExampleProvider.swift; sourceTree = "<group>"; };
 		A1A0D83621BC659B0098168C /* FilterDetailExampleHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailExampleHeaderView.swift; sourceTree = "<group>"; };
@@ -145,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				A128994621D41EAC00BEE395 /* AsyncFilterApplicator.swift */,
+				A128995321DEE3C600BEE395 /* FilterApplicationIndicator.swift */,
 				A1A0D83F21C4AEAA0098168C /* FilterWorkshopContentView.swift */,
 				A128993C21D047BD00BEE395 /* FilterWorkshopParametersView.swift */,
 				A128994021D18E6800BEE395 /* FilterWorkshopParameterView.swift */,
@@ -153,6 +160,8 @@
 				A128994421D40A3F00BEE395 /* FreeformNumberInput.swift */,
 				A1A0D83D21BEC1B90098168C /* ImageArtboardView.swift */,
 				A128993821CFFF7000BEE395 /* ImageChooserView.swift */,
+				A128995521DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift */,
+				A128995721DEE44F00BEE395 /* ImageWorkshopConsoleView.swift */,
 				A128994221D1A56900BEE395 /* NumericSlider.swift */,
 				A128994D21DD479100BEE395 /* OutputImageActivityIndicatorView.swift */,
 				A128994F21DD47D900BEE395 /* OutputImageNotGeneratedView.swift */,
@@ -385,6 +394,7 @@
 				A128995221DD6D4000BEE395 /* CwlMutex.swift in Sources */,
 				A1D5A8B321ADB3C100257B5E /* Dictionary+Validation.swift in Sources */,
 				A128993F21D058B300BEE395 /* EitherView.swift in Sources */,
+				A128995421DEE3C700BEE395 /* FilterApplicationIndicator.swift in Sources */,
 				A1D5A8D121B49E5400257B5E /* FilterAvailabilityView.swift in Sources */,
 				A1D5A8B821AF034A00257B5E /* FilterCategoryHeaderView.swift in Sources */,
 				A1D5A8C821B0FECF00257B5E /* FilterCellModel.swift in Sources */,
@@ -410,6 +420,8 @@
 				A128994521D40A3F00BEE395 /* FreeformNumberInput.swift in Sources */,
 				A1A0D83E21BEC1B90098168C /* ImageArtboardView.swift in Sources */,
 				A128993921CFFF7000BEE395 /* ImageChooserView.swift in Sources */,
+				A128995621DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift in Sources */,
+				A128995821DEE44F00BEE395 /* ImageWorkshopConsoleView.swift in Sources */,
 				A128994321D1A56900BEE395 /* NumericSlider.swift in Sources */,
 				A128994E21DD479100BEE395 /* OutputImageActivityIndicatorView.swift in Sources */,
 				A128995021DD47D900BEE395 /* OutputImageNotGeneratedView.swift in Sources */,

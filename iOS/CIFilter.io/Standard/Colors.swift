@@ -13,6 +13,7 @@ enum Colors {
     case availabilityBlue
     case availabilityRed
     case borderGray
+    case successGreen
 
     var color: UIColor {
         switch self {
@@ -20,6 +21,7 @@ enum Colors {
         case .availabilityRed: return UIColor(rgb: 0xFF8D8D)
         case .availabilityBlue: return UIColor(rgb: 0x74AEDF)
         case .borderGray: return UIColor(rgb: 0xAFAFAF)
+        case .successGreen: return UIColor(rgb: 0x8DCA83)
         }
     }
 }
