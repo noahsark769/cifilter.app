@@ -33,7 +33,7 @@ final class FilterWorkshopView: UIView {
         scrollView.edgesToSuperview()
         scrollView.addSubview(contentView)
 
-//        consoleView.disableTranslatesAutoresizingMaskIntoConstraints()
+        consoleView.disableTranslatesAutoresizingMaskIntoConstraints()
         addSubview(consoleView)
         consoleView.leadingAnchor <=> self.leadingAnchor ++ 20
         consoleView.topAnchor <=> self.topAnchor ++ 20
