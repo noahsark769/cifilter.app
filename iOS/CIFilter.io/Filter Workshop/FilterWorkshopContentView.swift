@@ -27,6 +27,9 @@ final class FilterWorkshopContentView: UIView {
     }()
 
     private var parameterConfiguration: [String: Any] = [:]
+    var didSaveOutputImage: PublishSubject<UIImage> {
+        return outputImageView.didSaveImage
+    }
 
     init(applicator: AsyncFilterApplicator) {
         self.applicator = applicator
@@ -38,6 +41,8 @@ final class FilterWorkshopContentView: UIView {
         // and as such the superview will not be responsible for disabling its autoresizing mask
         [stackView, self].disableTranslatesAutoresizingMaskIntoConstraints()
         stackView.edges(to: self, insets: UIEdgeInsets(all: 100))
+
+        outputImageView.enableSavingToPhotos = true
 
         applicator.events.observeOn(MainScheduler.instance).subscribe(onNext: { event in
             switch event {

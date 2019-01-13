@@ -13,14 +13,18 @@ import RxCocoa
 final class FilterWorkshopView: UIView {
     private var hasInitiallyLaidOut: Bool = false
     private let scrollView = UIScrollView()
-    private let applicator = AsyncFilterApplicator()
+    private let applicator: AsyncFilterApplicator
     private let bag = DisposeBag()
     private lazy var contentView: FilterWorkshopContentView = {
         return FilterWorkshopContentView(applicator: self.applicator)
     }()
     private let consoleView = ImageWorkshopConsoleView()
+    var didSaveOutputImage: PublishSubject<UIImage> {
+        return contentView.didSaveOutputImage
+    }
 
-    init() {
+    init(applicator: AsyncFilterApplicator) {
+        self.applicator = applicator
         super.init(frame: .zero)
         self.backgroundColor = .white
         self.addSubview(scrollView)
