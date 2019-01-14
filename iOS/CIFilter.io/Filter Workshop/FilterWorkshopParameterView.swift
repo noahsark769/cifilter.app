@@ -16,6 +16,7 @@ final class FilterWorkshopParameterView: UIView {
         /// Currently unused. See NumericSlider for explanation
         case slider(min: Float, max: Float)
         case number(min: Float?, max: Float?, defaultValue: Float?)
+        case integer(min: Int?, max: Int?, defaultValue: Int?)
     }
 
     private let valueDidChangeObservable = PublishSubject<Any>()
@@ -78,6 +79,12 @@ final class FilterWorkshopParameterView: UIView {
                 self.valueDidChangeObservable.onNext(float)
             }).disposed(by: bag)
         case let .number(min, max, defaultValue):
+            let numericInput = FreeformNumberInput(min: min, max: max, defaultValue: defaultValue)
+            numericInput.valueDidChange.subscribe(onNext: { float in
+                self.valueDidChangeObservable.onNext(float)
+            }).disposed(by: bag)
+            stackView.addArrangedSubview(numericInput)
+        case let .integer(min, max, defaultValue):
             let numericInput = FreeformNumberInput(min: min, max: max, defaultValue: defaultValue)
             numericInput.valueDidChange.subscribe(onNext: { float in
                 self.valueDidChangeObservable.onNext(float)

@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import AloeStackView
 
-final class RedView: UILabel {
+private final class RedView: UILabel {
     init(text: String) {
         super.init(frame: .zero)
         self.backgroundColor = .red
@@ -57,6 +57,21 @@ final class FilterWorkshopParametersView: UIStackView {
         self.addArrangedSubview(parameterView)
     }
 
+    private func addViewsAndSubscriptions(for info: FilterNumberParameterInfo<Int>, parameter: FilterParameterInfo) {
+        let parameterView = FilterWorkshopParameterView(
+            type: .integer(
+                min: info.minValue, max: info.maxValue, defaultValue: info.defaultValue
+            ),
+            parameter: parameter
+        )
+        parameterView.valueDidChange.subscribe(onNext: { value in
+            self.updateParameterSubject.onNext(
+                ParameterValue(name: parameter.name, value: value)
+            )
+        }).disposed(by: disposeBag!)
+        self.addArrangedSubview(parameterView)
+    }
+
     func set(parameters: [FilterParameterInfo]) {
         self.removeAllArrangedSubviews()
         disposeBag = DisposeBag()
@@ -79,6 +94,12 @@ final class FilterWorkshopParametersView: UIStackView {
             case let .scalar(info):
                 self.addViewsAndSubscriptions(for: info, parameter: parameter)
             case let .distance(info):
+                self.addViewsAndSubscriptions(for: info, parameter: parameter)
+            case let .angle(info):
+                self.addViewsAndSubscriptions(for: info, parameter: parameter)
+            case let .unspecifiedNumber(info):
+                self.addViewsAndSubscriptions(for: info, parameter: parameter)
+            case let .count(info):
                 self.addViewsAndSubscriptions(for: info, parameter: parameter)
             default:
                 print("WARNING don't know how to process parameter type \(parameter.classType)")

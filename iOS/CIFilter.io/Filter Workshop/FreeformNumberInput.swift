@@ -22,6 +22,8 @@ final class FreeformNumberInput: UIView {
         return ControlEvent(events: valueDidChangeObservable)
     }()
 
+    private let allowsIntegerInputsOnly: Bool
+
     lazy var textView: UITextView = {
         let view = UITextView()
         view.layer.borderColor = UIColor(rgb: 0xeeeeee).cgColor
@@ -35,7 +37,17 @@ final class FreeformNumberInput: UIView {
         return view
     }()
 
+    // TODO: clean up this hacky duplication
     init(min: Float?, max: Float?, defaultValue: Float?) {
+        allowsIntegerInputsOnly = false
+        super.init(frame: .zero)
+        addSubview(textView)
+        textView.heightAnchor <=> 36
+        textView.edgesToSuperview()
+    }
+
+    init(min: Int?, max: Int?, defaultValue: Int?) {
+        allowsIntegerInputsOnly = true
         super.init(frame: .zero)
         addSubview(textView)
         textView.heightAnchor <=> 36
@@ -63,6 +75,17 @@ extension FreeformNumberInput: UITextViewDelegate {
         let currentText: String = textView.text ?? ""
         guard let swiftRange = Range<String.Index>(range, in: currentText) else { return false }
         let effectiveText: String = currentText.replacingCharacters(in: swiftRange, with: text)
-        return effectiveText == "" || FreeformNumberInput.numberFormatter.number(from: effectiveText) != nil
+
+        // Allow deleting the entire text field
+        if effectiveText.isEmpty {
+            return true
+        }
+
+        // If we only accept ints, disallow the decimal separator
+        if allowsIntegerInputsOnly && effectiveText.contains(FreeformNumberInput.numberFormatter.decimalSeparator) {
+            return false
+        }
+
+        return FreeformNumberInput.numberFormatter.number(from: effectiveText) != nil
     }
 }
