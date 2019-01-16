@@ -22,6 +22,8 @@ final class FreeformNumberInput: UIView {
         return ControlEvent(events: valueDidChangeObservable)
     }()
 
+    private(set) var lastValue: NSNumber? = nil
+
     private let allowsIntegerInputsOnly: Bool
 
     lazy var textView: UITextView = {
@@ -38,12 +40,20 @@ final class FreeformNumberInput: UIView {
     }()
 
     // TODO: clean up this hacky duplication
-    init(min: Float?, max: Float?, defaultValue: Float?) {
+    private init(minFloat: Float?, maxFloat: Float?, defaultValueFloat: Float?) {
         allowsIntegerInputsOnly = false
         super.init(frame: .zero)
         addSubview(textView)
         textView.heightAnchor <=> 36
         textView.edgesToSuperview()
+    }
+
+    convenience init(min: Float?, max: Float?, defaultValue: Float?) {
+        self.init(minFloat: min, maxFloat: max, defaultValueFloat: defaultValue)
+    }
+
+    static func createEmptyFloat() -> FreeformNumberInput {
+        return FreeformNumberInput(minFloat: nil, maxFloat: nil, defaultValueFloat: nil)
     }
 
     init(min: Int?, max: Int?, defaultValue: Int?) {
@@ -57,6 +67,11 @@ final class FreeformNumberInput: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    private func publishValue(_ value: NSNumber) {
+        lastValue = value
+        valueDidChangeObservable.onNext(value)
+    }
 }
 
 extension FreeformNumberInput: UITextViewDelegate {
@@ -65,7 +80,7 @@ extension FreeformNumberInput: UITextViewDelegate {
             print("WARNING FreeformNumberInput did not have valid number!")
             return
         }
-        valueDidChangeObservable.onNext(number)
+        self.publishValue(number)
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -78,6 +93,11 @@ extension FreeformNumberInput: UITextViewDelegate {
 
         // Allow deleting the entire text field
         if effectiveText.isEmpty {
+            return true
+        }
+
+        // Allow inputting only a negative sign
+        if effectiveText == "-" {
             return true
         }
 

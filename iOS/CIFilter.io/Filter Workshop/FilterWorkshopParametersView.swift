@@ -72,6 +72,21 @@ final class FilterWorkshopParametersView: UIStackView {
         self.addArrangedSubview(parameterView)
     }
 
+    private func addViewsAndSubscriptions(for info: FilterVectorParameterInfo, parameter: FilterParameterInfo) {
+        let parameterView = FilterWorkshopParameterView(
+            type: .vector(
+                defaultValue: info.defaultValue
+            ),
+            parameter: parameter
+        )
+        parameterView.valueDidChange.subscribe(onNext: { value in
+            self.updateParameterSubject.onNext(
+                ParameterValue(name: parameter.name, value: value)
+            )
+        }).disposed(by: disposeBag!)
+        self.addArrangedSubview(parameterView)
+    }
+
     func set(parameters: [FilterParameterInfo]) {
         self.removeAllArrangedSubviews()
         disposeBag = DisposeBag()
@@ -100,6 +115,16 @@ final class FilterWorkshopParametersView: UIStackView {
             case let .unspecifiedNumber(info):
                 self.addViewsAndSubscriptions(for: info, parameter: parameter)
             case let .count(info):
+                self.addViewsAndSubscriptions(for: info, parameter: parameter)
+            case let .position(info):
+                self.addViewsAndSubscriptions(for: info, parameter: parameter)
+            case let .position3(info):
+                self.addViewsAndSubscriptions(for: info, parameter: parameter)
+            case let .rectangle(info):
+                self.addViewsAndSubscriptions(for: info, parameter: parameter)
+            case let .offset(info):
+                self.addViewsAndSubscriptions(for: info, parameter: parameter)
+            case let .unspecifiedVector(info):
                 self.addViewsAndSubscriptions(for: info, parameter: parameter)
             default:
                 print("WARNING don't know how to process parameter type \(parameter.classType)")

@@ -9,6 +9,16 @@
 import Foundation
 import CoreImage
 
+extension CIVector {
+    convenience init(floats: [CGFloat]) {
+        var unsafePointer: UnsafePointer<CGFloat>? = nil
+        floats.withUnsafeBufferPointer { unsafeBufferPointer in
+            unsafePointer = unsafeBufferPointer.baseAddress!
+        }
+        self.init(values: unsafePointer!, count: floats.count)
+    }
+}
+
 struct CIVectorCodableWrapper: Codable {
     let vector: CIVector
 
@@ -18,11 +28,7 @@ struct CIVectorCodableWrapper: Codable {
         while !container.isAtEnd {
             floats.append(try container.decode(CGFloat.self))
         }
-        var unsafePointer: UnsafePointer<CGFloat>? = nil
-        floats.withUnsafeBufferPointer { unsafeBufferPointer in
-            unsafePointer = unsafeBufferPointer.baseAddress!
-        }
-        vector = CIVector(values: unsafePointer!, count: container.count!)
+        vector = CIVector(floats: floats)
     }
 
     func encode(to encoder: Encoder) throws {
