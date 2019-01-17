@@ -18,6 +18,7 @@ final class FilterWorkshopParameterView: UIView {
         case number(min: Float?, max: Float?, defaultValue: Float?)
         case integer(min: Int?, max: Int?, defaultValue: Int?)
         case vector(defaultValue: CIVectorCodableWrapper?)
+        case color(defaultValue: CIColor)
     }
 
     private let valueDidChangeObservable = PublishSubject<Any>()
@@ -97,6 +98,9 @@ final class FilterWorkshopParameterView: UIView {
                 self.valueDidChangeObservable.onNext(vector)
             }).disposed(by: bag)
             stackView.addArrangedSubview(vectorInput)
+        case let .color(defaultValue):
+            let colorInput = ColorInput(defaultValue:defaultValue)
+            stackView.addArrangedSubview(colorInput)
         }
 
         stackView.edgesToSuperview()

@@ -24,6 +24,7 @@
 		A128995621DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128995521DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift */; };
 		A128995821DEE44F00BEE395 /* ImageWorkshopConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128995721DEE44F00BEE395 /* ImageWorkshopConsoleView.swift */; };
 		A130BD7D21EC0D1F00E586F6 /* VectorInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130BD7C21EC0D1F00E586F6 /* VectorInput.swift */; };
+		A130BD7F21EFA22400E586F6 /* ColorInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130BD7E21EFA22400E586F6 /* ColorInput.swift */; };
 		A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1707F65219A1A0A0010E007 /* FilterInfo.swift */; };
 		A1A0D83521BC60BA0098168C /* FilterExampleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */; };
 		A1A0D83721BC659B0098168C /* FilterDetailExampleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83621BC659B0098168C /* FilterDetailExampleHeaderView.swift */; };
@@ -75,6 +76,7 @@
 		A128995521DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWorkshopConsoleMessageView.swift; sourceTree = "<group>"; };
 		A128995721DEE44F00BEE395 /* ImageWorkshopConsoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWorkshopConsoleView.swift; sourceTree = "<group>"; };
 		A130BD7C21EC0D1F00E586F6 /* VectorInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorInput.swift; sourceTree = "<group>"; };
+		A130BD7E21EFA22400E586F6 /* ColorInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorInput.swift; sourceTree = "<group>"; };
 		A1707F65219A1A0A0010E007 /* FilterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInfo.swift; sourceTree = "<group>"; };
 		A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterExampleProvider.swift; sourceTree = "<group>"; };
 		A1A0D83621BC659B0098168C /* FilterDetailExampleHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailExampleHeaderView.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				A128994621D41EAC00BEE395 /* AsyncFilterApplicator.swift */,
+				A130BD7E21EFA22400E586F6 /* ColorInput.swift */,
 				A128995321DEE3C600BEE395 /* FilterApplicationIndicator.swift */,
 				A1A0D83F21C4AEAA0098168C /* FilterWorkshopContentView.swift */,
 				A128993C21D047BD00BEE395 /* FilterWorkshopParametersView.swift */,
@@ -393,6 +396,7 @@
 				A128994721D41EAC00BEE395 /* AsyncFilterApplicator.swift in Sources */,
 				A1D5A8BB21AF03F700257B5E /* Autolayout.swift in Sources */,
 				A1D5A8AF21ADB38200257B5E /* CIVectorCodableWrapper.swift in Sources */,
+				A130BD7F21EFA22400E586F6 /* ColorInput.swift in Sources */,
 				A128994C21DD477000BEE395 /* Colors.swift in Sources */,
 				A128995221DD6D4000BEE395 /* CwlMutex.swift in Sources */,
 				A1D5A8B321ADB3C100257B5E /* Dictionary+Validation.swift in Sources */,
