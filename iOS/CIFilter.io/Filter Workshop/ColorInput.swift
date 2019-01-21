@@ -134,6 +134,11 @@ final class ColorInput: UIView {
                 self.setNeedsLayout()
             }
         }).disposed(by: bag)
+
+        self.rx.tapGesture().subscribe(onNext: { recognizer in
+            self.dragLocation = recognizer.location(in: self)
+            self.setNeedsLayout()
+        }).disposed(by: bag)
     }
 
     required init?(coder aDecoder: NSCoder) {
