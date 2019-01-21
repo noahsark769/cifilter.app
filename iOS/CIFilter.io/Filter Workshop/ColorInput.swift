@@ -10,20 +10,88 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxGesture
+import CoreGraphics
+
+final class ColorInputDragIndicatorView: UIView {
+    private let shapeLayer = CAShapeLayer()
+    private let colorLayer = CAShapeLayer()
+
+    var sideLength: CGFloat = 0 {
+        didSet {
+            self.generatePaths()
+        }
+    }
+
+    var indicatorColor: UIColor = .black {
+        didSet {
+            self.generatePaths()
+        }
+    }
+
+    var cornerRadius: CGFloat = 0 {
+        didSet {
+            self.generatePaths()
+        }
+    }
+
+    var color: CGColor? {
+        get { return self.colorLayer.fillColor }
+        set { self.colorLayer.fillColor = newValue }
+    }
+
+    init(sideLength: CGFloat, color: UIColor) {
+        super.init(frame: .zero)
+        self.layer.addSublayer(shapeLayer)
+        self.layer.addSublayer(colorLayer)
+
+        shapeLayer.fillColor = color.cgColor
+
+        self.generatePaths()
+
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOpacity = 0.36
+        self.layer.shadowOffset = CGSize(width: 1, height: 1)
+        self.layer.shadowRadius = 10
+    }
+
+    private func generateShapePath() {
+        let path = CGMutablePath()
+        // upper left
+        path.move(to: .zero)
+
+        // upper right
+        path.addLine(to: CGPoint(x: sideLength, y: 0))
+
+        // lower right
+        path.addLine(to: CGPoint(x: sideLength, y: sideLength))
+
+        // bottom of point
+        path.addLine(to: CGPoint(x: sideLength / 2, y: sideLength * 1.5))
+
+        // lower left
+        path.addLine(to: CGPoint(x: 0, y: sideLength))
+        path.addLine(to: .zero)
+        shapeLayer.path = path
+    }
+
+    private func generateColorPath() {
+        let path = UIBezierPath(rect: CGRect(x: 4, y: 4, width: sideLength - 8, height: sideLength - 8)).cgPath
+        colorLayer.path = path
+    }
+
+    private func generatePaths() {
+        self.generateColorPath()
+        self.generateShapePath()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
 
 final class ColorInput: UIView {
     private let imageView = UIImageView()
-    private let draggableIndicatorView: UIView = {
-        let view = UIView()
-        view.layer.borderColor = UIColor(rgb: 0xcccccc).cgColor
-        view.layer.borderWidth = 4
-        view.layer.cornerRadius = 4
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.36
-        view.layer.shadowOffset = CGSize(width: 1, height: 1)
-        view.layer.shadowRadius = 10
-        return view
-    }()
+    private let draggableIndicatorView = ColorInputDragIndicatorView(sideLength: 40, color: UIColor(rgb: 0x333333))
     private let colorSpace = CGColorSpaceCreateDeviceRGB()
     private var dragLocation: CGPoint = .zero
     private var lastLocation: CGPoint = .zero
@@ -46,13 +114,15 @@ final class ColorInput: UIView {
         addSubview(imageView)
         imageView.edgesToSuperview()
 
+        draggableIndicatorView.indicatorColor = UIColor(rgb: 0x333333)
+
         addSubview(draggableIndicatorView)
         draggableIndicatorView.disableTranslatesAutoresizingMaskIntoConstraints()
         let multiplier: CGFloat = 1 / 5
         draggableIndicatorView.widthAnchor.constraint(equalTo: self.imageView.widthAnchor, multiplier: multiplier, constant: 0).isActive = true
         draggableIndicatorView.heightAnchor.constraint(equalTo: self.imageView.heightAnchor, multiplier: multiplier, constant: 0).isActive = true
 
-        draggableIndicatorView.rx.panGesture(configuration: { gesture, recognizer in
+        self.rx.panGesture(configuration: { gesture, recognizer in
             recognizer.simultaneousRecognitionPolicy = .never
             FilterWorkshopView.globalPanGestureRecognizer.require(toFail: gesture)
         }).subscribe(onNext: { recognizer in
@@ -72,7 +142,10 @@ final class ColorInput: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        draggableIndicatorView.center = self.dragLocation
-        draggableIndicatorView.backgroundColor = self.imageView.getPixelColorAt(point: self.dragLocation)
+
+        let multiplier: CGFloat = 1 / 5
+        draggableIndicatorView.sideLength = self.imageView.frame.width * multiplier
+        draggableIndicatorView.center = CGPoint(x: self.dragLocation.x, y: self.dragLocation.y - draggableIndicatorView.frame.height / 2 - draggableIndicatorView.sideLength / 2)
+        draggableIndicatorView.color = self.imageView.getPixelColorAt(point: self.dragLocation).cgColor
     }
 }
