@@ -11,6 +11,8 @@ import RxSwift
 import RxCocoa
 
 final class FilterWorkshopView: UIView {
+    // TODO: this is a VERY ugly hack
+    static var globalPanGestureRecognizer: UIPanGestureRecognizer!
     private var hasInitiallyLaidOut: Bool = false
     private let scrollView = UIScrollView()
     private let applicator: AsyncFilterApplicator
@@ -38,6 +40,8 @@ final class FilterWorkshopView: UIView {
         addSubview(consoleView)
         consoleView.leadingAnchor <=> self.leadingAnchor ++ 20
         consoleView.topAnchor <=> self.topAnchor ++ 20
+
+        FilterWorkshopView.globalPanGestureRecognizer = scrollView.panGestureRecognizer
 
         applicator.events.observeOn(MainScheduler.instance).subscribe(onNext: { event in
             switch event {
