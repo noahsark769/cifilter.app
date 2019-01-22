@@ -100,6 +100,9 @@ final class FilterWorkshopParameterView: UIView {
             stackView.addArrangedSubview(vectorInput)
         case let .color(defaultValue):
             let colorInput = ColorInput(defaultValue:defaultValue)
+            colorInput.valueDidChange.subscribe(onNext: { vector in
+                self.valueDidChangeObservable.onNext(vector)
+            }).disposed(by: bag)
             stackView.addArrangedSubview(colorInput)
         }
 

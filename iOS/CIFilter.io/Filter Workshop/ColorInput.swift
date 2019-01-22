@@ -56,21 +56,34 @@ final class ColorInputDragIndicatorView: UIView {
 
     private func generateShapePath() {
         let path = CGMutablePath()
+
+        let upperLeft = CGPoint.zero
+        let upperRight = CGPoint(x: sideLength, y: 0)
+        let lowerRight = CGPoint(x: sideLength, y: sideLength)
+        let lowerLeft = CGPoint(x: 0, y: sideLength)
+        let bottomTip = CGPoint(x: sideLength / 2, y: sideLength * 1.5)
+
         // upper left
-        path.move(to: .zero)
+        path.move(to: upperLeft.offsetX(by: cornerRadius))
 
         // upper right
-        path.addLine(to: CGPoint(x: sideLength, y: 0))
+        path.addLine(to: upperRight.offsetX(by: -cornerRadius))
+        path.addArc(tangent1End: upperRight, tangent2End: upperRight.offsetY(by: cornerRadius), radius: cornerRadius)
 
         // lower right
-        path.addLine(to: CGPoint(x: sideLength, y: sideLength))
+        path.addLine(to: lowerRight.offsetY(by: -cornerRadius))
+        path.addArc(tangent1End: lowerRight, tangent2End: lowerRight.offsetY(by: cornerRadius).offsetX(by: -cornerRadius), radius: cornerRadius)
 
         // bottom of point
-        path.addLine(to: CGPoint(x: sideLength / 2, y: sideLength * 1.5))
+        path.addLine(to: bottomTip)
 
         // lower left
-        path.addLine(to: CGPoint(x: 0, y: sideLength))
-        path.addLine(to: .zero)
+        path.addLine(to: lowerLeft.offsetX(by: cornerRadius).offsetY(by: cornerRadius))
+        path.addArc(tangent1End: lowerLeft, tangent2End: lowerLeft.offsetY(by: -cornerRadius), radius: cornerRadius)
+
+        // upper left
+        path.addLine(to: upperLeft.offsetY(by: cornerRadius))
+        path.addArc(tangent1End: upperLeft, tangent2End: upperLeft.offsetX(by: cornerRadius), radius: cornerRadius)
         shapeLayer.path = path
     }
 
@@ -87,15 +100,21 @@ final class ColorInputDragIndicatorView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: sideLength, height: sideLength * 1.5)
+    }
 }
 
 final class ColorInput: UIView {
+    private static let nullDragLocation = CGPoint(x: -1, y: -1)
     private let imageView = UIImageView()
     private let draggableIndicatorView = ColorInputDragIndicatorView(sideLength: 40, color: UIColor(rgb: 0x333333))
     private let colorSpace = CGColorSpaceCreateDeviceRGB()
-    private var dragLocation: CGPoint = .zero
+    private var dragLocation: CGPoint = ColorInput.nullDragLocation
     private var lastLocation: CGPoint = .zero
     private let bag = DisposeBag()
+    let valueDidChange = PublishSubject<CIColor>()
 
     init(defaultValue: CIColor) {
         // TODO: defaultValue is currently unused
@@ -103,41 +122,43 @@ final class ColorInput: UIView {
         let filter = CIFilter(name: "CIHueSaturationValueGradient", parameters: [
             "inputColorSpace": self.colorSpace,
             "inputDither": NSNumber(floatLiteral: 0),
-            "inputRadius": NSNumber(integerLiteral: 100),
+            "inputRadius": NSNumber(integerLiteral: 200),
             "inputSoftness": NSNumber(integerLiteral: 0),
             "inputValue": NSNumber(integerLiteral: 1)
         ])!
         let image = UIImage(ciImage: filter.outputImage!)
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.image = image
 
         addSubview(imageView)
         imageView.edgesToSuperview()
 
         draggableIndicatorView.indicatorColor = UIColor(rgb: 0x333333)
+        draggableIndicatorView.cornerRadius = 4
 
         addSubview(draggableIndicatorView)
-        draggableIndicatorView.disableTranslatesAutoresizingMaskIntoConstraints()
-        let multiplier: CGFloat = 1 / 5
-        draggableIndicatorView.widthAnchor.constraint(equalTo: self.imageView.widthAnchor, multiplier: multiplier, constant: 0).isActive = true
-        draggableIndicatorView.heightAnchor.constraint(equalTo: self.imageView.heightAnchor, multiplier: multiplier, constant: 0).isActive = true
 
-        self.rx.panGesture(configuration: { gesture, recognizer in
+        self.imageView.rx.panGesture(configuration: { gesture, recognizer in
             recognizer.simultaneousRecognitionPolicy = .never
             FilterWorkshopView.globalPanGestureRecognizer.require(toFail: gesture)
         }).subscribe(onNext: { recognizer in
             if case .began = recognizer.state {
-                self.dragLocation = recognizer.location(in: self)
+                self.dragLocation = recognizer.location(in: self.imageView)
                 self.setNeedsLayout()
+                self.reportColor()
             } else if case .changed = recognizer.state {
-                self.dragLocation = recognizer.location(in: self)
+                self.dragLocation = recognizer.location(in: self.imageView)
                 self.setNeedsLayout()
+                self.reportColor()
             }
         }).disposed(by: bag)
 
-        self.rx.tapGesture().subscribe(onNext: { recognizer in
+        self.imageView.rx.tapGesture().subscribe(onNext: { recognizer in
+            let supportedStates: [UIGestureRecognizer.State] = [.began, .changed, .ended]
+            guard supportedStates.contains(recognizer.state) else { return }
             self.dragLocation = recognizer.location(in: self)
             self.setNeedsLayout()
+            self.reportColor()
         }).disposed(by: bag)
     }
 
@@ -145,12 +166,33 @@ final class ColorInput: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private func reportColor() {
+        let color = self.imageView.getPixelColorAt(point: self.dragLocation)
+        let ciColor = CIColor(color: color)
+        self.valueDidChange.onNext(ciColor)
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
 
+        if self.dragLocation == ColorInput.nullDragLocation {
+            self.dragLocation = imageView.center
+        }
+
+        // don't do anything if we're outside the color wheel's radius
+        guard self.dragLocation.isInside(circleWithRadius: imageView.bounds.width / 2, centeredAt: imageView.center) else {
+            return
+        }
+
         let multiplier: CGFloat = 1 / 5
         draggableIndicatorView.sideLength = self.imageView.frame.width * multiplier
-        draggableIndicatorView.center = CGPoint(x: self.dragLocation.x, y: self.dragLocation.y - draggableIndicatorView.frame.height / 2 - draggableIndicatorView.sideLength / 2)
+        draggableIndicatorView.frame = CGRect(
+            origin: CGPoint(
+                x: self.dragLocation.x - draggableIndicatorView.sideLength / 2,
+                y: self.dragLocation.y - draggableIndicatorView.intrinsicContentSize.height
+            ),
+            size: draggableIndicatorView.intrinsicContentSize
+        )
         draggableIndicatorView.color = self.imageView.getPixelColorAt(point: self.dragLocation).cgColor
     }
 }
