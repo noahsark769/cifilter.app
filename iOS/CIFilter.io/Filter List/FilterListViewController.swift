@@ -81,6 +81,7 @@ final class FilterListViewController: UITableViewController {
                         filter: CIFilter(name: filter.name)!,
                         didSelect: { [weak self] in
                             guard let `self` = self else { return }
+                            self.navigationItem.searchController?.searchBar.resignFirstResponder()
                             self.delegate?.filterListViewController(self, didTapFilterInfo: filter)
                         }
                     )

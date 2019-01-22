@@ -78,8 +78,8 @@ extension FilterDetailViewController: FilterListViewControllerDelegate {
             print("WARNING no split view controller!!")
             return
         }
-        splitViewController.showDetailViewController(self, sender: nil)
-//        splitViewController.toggleMasterView()
+//        splitViewController.showDetailViewController(self, sender: nil)
+        splitViewController.toggleMasterView()
     }
 }
 

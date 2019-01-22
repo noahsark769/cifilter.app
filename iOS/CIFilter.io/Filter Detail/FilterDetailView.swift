@@ -68,7 +68,7 @@ final class FilterDetailView: UIView {
         stackView.edgesToSuperview()
 
         stackView.addRow(titleView)
-        stackView.setInset(forRow: titleView, inset: UIEdgeInsets(top: isCompressed ? 10 : 100, left: 0, bottom: 10, right: 0))
+        stackView.setInset(forRow: titleView, inset: UIEdgeInsets(top: isCompressed ? 10 : 70, left: 0, bottom: 10, right: 0))
 
         stackView.automaticallyHidesLastSeparator = true
         stackView.hidesSeparatorsByDefault = true
