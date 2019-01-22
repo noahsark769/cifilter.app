@@ -144,6 +144,8 @@ final class FilterWorkshopParametersView: UIStackView {
                 self.addViewsAndSubscriptions(for: info, parameter: parameter)
             case let .color(info):
                 self.addViewsAndSubscriptions(for: info, parameter: parameter)
+            case let .opaqueColor(info):
+                self.addViewsAndSubscriptions(for: info, parameter: parameter)
             default:
                 print("WARNING don't know how to process parameter type \(parameter.classType)")
                 self.addArrangedSubview(RedView(text: "\(parameter.name): \(parameter.classType)"))

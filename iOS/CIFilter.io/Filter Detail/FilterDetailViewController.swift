@@ -79,5 +79,14 @@ extension FilterDetailViewController: FilterListViewControllerDelegate {
             return
         }
         splitViewController.showDetailViewController(self, sender: nil)
+        splitViewController.toggleMasterView()
+    }
+}
+
+// Hacky stuff as per https://stackoverflow.com/questions/27243158/hiding-the-master-view-controller-with-uisplitviewcontroller-in-ios8
+extension UISplitViewController {
+    func toggleMasterView() {
+        let barButtonItem = self.displayModeButtonItem
+        UIApplication.shared.sendAction(barButtonItem.action!, to: barButtonItem.target, from: nil, for: nil)
     }
 }
