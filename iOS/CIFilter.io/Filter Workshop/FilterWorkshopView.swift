@@ -55,8 +55,15 @@ final class FilterWorkshopView: UIView {
                 if totalTime > 4 {
                     self.consoleView.update(for: .success(message: "Generation completed in \(String(format: "%.2f", totalTime)) seconds", animated: true))
                 }
-            case .generationErrored:
+            case let .generationErrored(error):
                 self.consoleView.update(for: .hideActivity)
+
+                if case .needsMoreParameters = error {
+                    return
+                }
+
+//                guard case error != AsyncFilterApplicator.Error.needsMoreParameters else { return }
+                self.consoleView.update(for: .error(message: "Generation errored. Please submit an issue on github. Error: \(error)", animated: true))
             }
         }).disposed(by: bag)
     }

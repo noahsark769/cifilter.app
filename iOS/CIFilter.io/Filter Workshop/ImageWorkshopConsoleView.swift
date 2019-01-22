@@ -17,7 +17,7 @@ final class ImageWorkshopConsoleView: UIStackView {
         case showActivity
         case hideActivity
         case success(message: String, animated: Bool)
-        case error(message: String)
+        case error(message: String, animated: Bool)
     }
 
     private let activityIndicator = FilterApplicationIndicator()
@@ -45,35 +45,38 @@ final class ImageWorkshopConsoleView: UIStackView {
             self.activityIndicator.isHidden = true
             activityIndicator.stopAnimating()
         case let .success(message, animated):
-            let messageView = ImageWorkshopConsoleMessageView(type: .success, message: message)
-            self.addArrangedSubview(messageView)
-            if animated {
-                messageView.alpha = 0
-                messageView.transform = CGAffineTransform(translationX: 50, y: 0)
-
-                UIView.animate(withDuration: 0.3) {
-                    messageView.alpha = 1
-                    messageView.transform = .identity
-                }
-            }
-
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: {
-                let removeBlock = {
-                    self.removeArrangedSubview(messageView)
-                    messageView.removeFromSuperview()
-                }
-                if animated {
-                    UIView.animate(withDuration: 0.3, animations: {
-                        messageView.transform = CGAffineTransform(translationX: -50, y: 0)
-                        messageView.alpha = 0
-                    }, completion: { _ in removeBlock() })
-                } else {
-                    removeBlock()
-                }
-            })
-        case let .error(message):
-            let messageView = ImageWorkshopConsoleMessageView(type: .error, message: message)
-            self.addArrangedSubview(messageView)
+            self.addConsoleMessage(message, animated: animated, type: .success)
+        case let .error(message, animated):
+            self.addConsoleMessage(message, animated: animated, type: .error)
         }
+    }
+
+    private func addConsoleMessage(_ message: String, animated: Bool, type: ImageWorkshopConsoleMessageView.MessageType) {
+        let messageView = ImageWorkshopConsoleMessageView(type: type, message: message)
+        self.addArrangedSubview(messageView)
+        if animated {
+            messageView.alpha = 0
+            messageView.transform = CGAffineTransform(translationX: 50, y: 0)
+
+            UIView.animate(withDuration: 0.3) {
+                messageView.alpha = 1
+                messageView.transform = .identity
+            }
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3, execute: {
+            let removeBlock = {
+                self.removeArrangedSubview(messageView)
+                messageView.removeFromSuperview()
+            }
+            if animated {
+                UIView.animate(withDuration: 0.3, animations: {
+                    messageView.transform = CGAffineTransform(translationX: -50, y: 0)
+                    messageView.alpha = 0
+                }, completion: { _ in removeBlock() })
+            } else {
+                removeBlock()
+            }
+        })
     }
 }

@@ -18,7 +18,7 @@ final class ImageWorkshopConsoleMessageView: UIView {
         let view = UILabel()
         view.font = UIFont.boldSystemFont(ofSize: 15)
         view.textColor = .white
-        view.numberOfLines = 1
+        view.numberOfLines = 0
         return view
     }()
 
@@ -33,7 +33,10 @@ final class ImageWorkshopConsoleMessageView: UIView {
 
         addSubview(label)
         label.edges(to: self, insets: .all(10))
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
         label.text = message
+        label.widthAnchor.constraint(lessThanOrEqualToConstant: 500).isActive = true
     }
 
     required init?(coder aDecoder: NSCoder) {

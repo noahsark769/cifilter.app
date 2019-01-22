@@ -79,7 +79,7 @@ extension FilterDetailViewController: FilterListViewControllerDelegate {
             return
         }
         splitViewController.showDetailViewController(self, sender: nil)
-        splitViewController.toggleMasterView()
+//        splitViewController.toggleMasterView()
     }
 }
 
