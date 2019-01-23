@@ -35,6 +35,7 @@ final class FreeformNumberInput: UIView {
         view.font = UIFont(name: "Courier New", size: 17)
         view.textColor = .black
         view.backgroundColor = UIColor(rgb: 0xefefef)
+        view.keyboardType = .numberPad
         view.delegate = self
         return view
     }()
