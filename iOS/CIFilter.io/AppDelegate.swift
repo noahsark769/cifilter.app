@@ -33,10 +33,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         filterListViewController.delegate = filterDetailViewController
         filterDetailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
         splitViewController.viewControllers = [navController, UINavigationController(rootViewController: filterDetailViewController)]
-        splitViewController.preferredDisplayMode = .primaryOverlay
 
         window?.rootViewController = splitViewController
         window?.makeKeyAndVisible()
+
+        splitViewController.toggleMasterView()
         return true
     }
 }
