@@ -37,6 +37,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = splitViewController
         window?.makeKeyAndVisible()
 
+        // preload built in images
+        DispatchQueue.global(qos: .default).async {
+            print("\(BuiltInImage.all)")
+        }
+
         splitViewController.toggleMasterView()
         return true
     }

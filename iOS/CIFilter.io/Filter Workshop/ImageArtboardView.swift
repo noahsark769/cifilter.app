@@ -58,6 +58,9 @@ final class ImageArtboardView: UIView {
             self.imageView.image = image
             self.eitherView.setEnabled(self.imageView)
         }).disposed(by: self.bag)
+
+        imageView.layer.borderColor = UIColor(rgb: 0xdddddd).cgColor
+        imageView.layer.borderWidth = 1
     }
 
     required init?(coder aDecoder: NSCoder) {
