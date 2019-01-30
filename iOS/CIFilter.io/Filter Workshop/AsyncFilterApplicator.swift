@@ -89,11 +89,16 @@ final class AsyncFilterApplicator {
                 guard let op = blockOperation, !op.isCancelled else {
                     return
                 }
-                guard let outputImage = ciFilter.outputImage else {
+                guard var outputImage = ciFilter.outputImage else {
                     self.events.onNext(.generationErrored(error: .generationFailed))
                     return
                 }
                 let context = CIContext(options: nil)
+
+                if outputImage.extent.isInfinite {
+                    outputImage = outputImage.cropped(to: CGRect(x: 0, y: 0, width: 500, height: 500))
+                }
+
                 guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
                     self.events.onNext(.generationErrored(error: .implementationError(message: "Could not create cgImage from CIContext")))
                     return
