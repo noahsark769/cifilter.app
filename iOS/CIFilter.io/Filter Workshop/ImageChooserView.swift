@@ -17,7 +17,9 @@ private let numImagePerArtboardRow = 3
 
 private let builtInImageNames = [
     "knighted",
-    "liberty"
+    "liberty",
+    "paper",
+    "playhouse"
 ]
 
 final class ImageChooserView: UIView {
