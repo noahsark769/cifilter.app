@@ -13,7 +13,7 @@ import RxCocoa
 final class FilterWorkshopView: UIView {
     // TODO: this is a VERY ugly hack
     static var globalPanGestureRecognizer: UIPanGestureRecognizer!
-    private var hasInitiallyLaidOut: Bool = false
+    private var needsZoomScaleUpdate: Bool = false
     private let scrollView = UIScrollView()
     private let applicator: AsyncFilterApplicator
     private let bag = DisposeBag()
@@ -66,6 +66,8 @@ final class FilterWorkshopView: UIView {
                 self.consoleView.update(for: .error(message: "Generation errored. Please submit an issue on github. Error: \(error)", animated: true))
             }
         }).disposed(by: bag)
+
+        needsZoomScaleUpdate = true // we need to update the zoom scale on first layout
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -75,19 +77,22 @@ final class FilterWorkshopView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         contentView.layoutIfNeeded()
-        if !hasInitiallyLaidOut {
-            updateMinZoomScaleForSize(self.bounds.size)
-            hasInitiallyLaidOut = true
+        let minScale = updateMinZoomScaleForSize(self.bounds.size)
+        scrollView.contentSize = contentView.bounds.size
+        scrollView.zoomScale = scrollView.zoomScale
+        if needsZoomScaleUpdate {
+            scrollView.zoomScale = minScale
+            needsZoomScaleUpdate = false
         }
     }
 
-    private func updateMinZoomScaleForSize(_ size: CGSize) {
+    private func updateMinZoomScaleForSize(_ size: CGSize) -> CGFloat {
         let widthScale = size.width / contentView.bounds.width
         let heightScale = size.height / contentView.bounds.height
         let minScale = min(widthScale, heightScale)
 
         scrollView.minimumZoomScale = minScale
-        scrollView.zoomScale = minScale
+        return minScale
     }
 
     func set(filter: FilterInfo) {
