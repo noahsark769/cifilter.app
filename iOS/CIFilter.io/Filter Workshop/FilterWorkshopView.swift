@@ -35,6 +35,8 @@ final class FilterWorkshopView: UIView {
 
         scrollView.edgesToSuperview()
         scrollView.addSubview(contentView)
+        // scroll view content size constraint:
+        contentView.edgesToSuperview()
 
         consoleView.disableTranslatesAutoresizingMaskIntoConstraints()
         addSubview(consoleView)
@@ -76,23 +78,21 @@ final class FilterWorkshopView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+
         contentView.layoutIfNeeded()
-        let minScale = updateMinZoomScaleForSize(self.bounds.size)
-        scrollView.contentSize = contentView.bounds.size
-        scrollView.zoomScale = scrollView.zoomScale
-        if needsZoomScaleUpdate {
+
+        let widthScale = scrollView.bounds.width / contentView.bounds.width
+        let heightScale = scrollView.bounds.height / contentView.bounds.height
+        let minScale = min(widthScale, heightScale)
+
+        if !minScale.isInfinite {
+            scrollView.minimumZoomScale = minScale
+        }
+
+        if needsZoomScaleUpdate && !minScale.isInfinite {
             scrollView.zoomScale = minScale
             needsZoomScaleUpdate = false
         }
-    }
-
-    private func updateMinZoomScaleForSize(_ size: CGSize) -> CGFloat {
-        let widthScale = size.width / contentView.bounds.width
-        let heightScale = size.height / contentView.bounds.height
-        let minScale = min(widthScale, heightScale)
-
-        scrollView.minimumZoomScale = minScale
-        return minScale
     }
 
     func set(filter: FilterInfo) {

@@ -75,8 +75,6 @@ final class ImageChooserView: UIView {
         self.widthAnchor <=> ImageChooserView.artboardSize
         self.heightAnchor <=> ImageChooserView.artboardSize
 
-        let sourceOverCompositingFilter = CIFilter(name: "CISourceOverCompositing")!
-
         // TODO: refactor this hacky code
         let imageSize = (ImageChooserView.artboardSize - (artboardPadding * 2) - (artboardSpacing * 2)) / 3
         for (i, builtInImage) in BuiltInImage.all.enumerated() {
