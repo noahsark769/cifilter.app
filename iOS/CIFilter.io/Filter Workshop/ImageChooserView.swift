@@ -22,6 +22,7 @@ struct BuiltInImage {
         "inputSharpness": 1
     ])!
     private static let sourceOverCompositingFilter = CIFilter(name: "CISourceOverCompositing")!
+    private static let constantColorFilter = CIFilter(name: "CIConstantColorGenerator")!
 
     private init(name: String, useCheckerboard: Bool = false) {
         let uiImage = UIImage(named: name)!
@@ -43,16 +44,34 @@ struct BuiltInImage {
         }
     }
 
+    private init(name: String, generator: () -> (CIImage, CGRect)) {
+        let context = CIContext()
+        let (ciImage, extent) = generator()
+        guard let cgImage = context.createCGImage(ciImage, from: extent) else {
+            fatalError("Could not create built in image from ciContext")
+        }
+        let image = UIImage(cgImage: cgImage)
+        imageForImageChooser = image
+        self.image = image
+    }
+
     static let knighted = BuiltInImage(name: "knighted")
     static let liberty = BuiltInImage(name: "liberty")
     static let paper = BuiltInImage(name: "paper", useCheckerboard: true)
     static let playhouse = BuiltInImage(name: "playhouse", useCheckerboard: true)
+    static let black = BuiltInImage(name: "black", generator: {
+        BuiltInImage.constantColorFilter.setDefaults()
+        BuiltInImage.constantColorFilter.setValue(CIColor.black, forKey: "inputColor")
+        let ciImage = BuiltInImage.constantColorFilter.outputImage!
+        return (ciImage, CGRect(origin: .zero, size: CGSize(width: 500, height: 500)))
+    });
 
     static let all: [BuiltInImage] = [
         .knighted,
         .liberty,
         .paper,
-        .playhouse
+        .playhouse,
+        .black
     ]
 }
 
