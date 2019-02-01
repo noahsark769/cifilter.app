@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxGesture
 
 final class FilterWorkshopView: UIView {
     // TODO: this is a VERY ugly hack
@@ -64,8 +65,23 @@ final class FilterWorkshopView: UIView {
                     return
                 }
 
-//                guard case error != AsyncFilterApplicator.Error.needsMoreParameters else { return }
                 self.consoleView.update(for: .error(message: "Generation errored. Please submit an issue on github. Error: \(error)", animated: true))
+            }
+        }).disposed(by: bag)
+
+        scrollView.rx.tapGesture { gesture, delegate in
+            gesture.numberOfTapsRequired = 2
+        }.subscribe(onNext: { recognizer in
+            if recognizer.state == .ended {
+                if self.scrollView.zoomScale > self.scrollView.minimumZoomScale {
+                    self.scrollView.setZoomScale(self.scrollView.minimumZoomScale, animated: true)
+                } else {
+                    let location = recognizer.location(in: self.contentView)
+                    let width: CGFloat = ImageChooserView.artboardSize * 1.6
+                    let height: CGFloat = ImageChooserView.artboardSize * 1.6
+                    let rect = CGRect(x: location.x - width / 2, y: location.y - height / 2, width: width, height: height)
+                    self.scrollView.zoom(to: rect, animated: true)
+                }
             }
         }).disposed(by: bag)
 
