@@ -111,7 +111,7 @@ final class FilterWorkshopParametersView: UIStackView {
             switch parameter.type {
             case .image: fallthrough
             case .gradientImage:
-                let imageArtboardView = ImageArtboardView(name: parameter.name)
+                let imageArtboardView = ImageArtboardView(name: parameter.name, configuration: .input)
                 self.addArrangedSubview(imageArtboardView)
                 imageArtboardView.didChooseImage.subscribe(onNext: { image in
                     guard let cgImage = image.cgImage else {

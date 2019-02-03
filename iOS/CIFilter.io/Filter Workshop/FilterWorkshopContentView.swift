@@ -16,7 +16,7 @@ final class FilterWorkshopContentView: UIView {
     private var filter: FilterInfo! = nil
     private let nonImageParametersView = FilterWorkshopParametersView()
     private let imageParametersView = FilterWorkshopParametersView()
-    private lazy var outputImageView: ImageArtboardView = ImageArtboardView(name: "outputImage")
+    private lazy var outputImageView: ImageArtboardView = ImageArtboardView(name: "outputImage", configuration: .output)
 
     private let stackView: UIStackView = {
         let view = UIStackView()

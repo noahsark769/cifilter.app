@@ -28,7 +28,6 @@ final class FilterWorkshopView: UIView {
         super.init(frame: .zero)
         self.backgroundColor = .white
         self.addSubview(scrollView)
-        // TODO: Add double-tap gestures for zooming to this scroll view
 
         scrollView.maximumZoomScale = 20
         scrollView.minimumZoomScale = 0.1
