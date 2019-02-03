@@ -11,6 +11,32 @@ import RxSwift
 import RxCocoa
 import RxGesture
 
+import UIKit
+
+final class ImageChooserAddView: UIView {
+    private var plusLabel: UILabel = {
+        let view = UILabel()
+        view.text = "+"
+        view.accessibilityLabel = "Add Image"
+        view.font = UIFont.systemFont(ofSize: 30)
+        view.textColor = Colors.availabilityBlue.color
+        return view
+    }()
+
+    init() {
+        super.init(frame: .zero)
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.widthAnchor <=> ImageChooserView.artboardSize
+        self.heightAnchor <=> ImageChooserView.artboardSize
+        addSubview(plusLabel)
+
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 private let artboardPadding: CGFloat = 20
 private let artboardSpacing: CGFloat = 20
 private let numImagePerArtboardRow = 3
@@ -22,6 +48,10 @@ final class ImageChooserView: UIView {
     lazy var didChooseImage = {
         return ControlEvent<UIImage>(events: chooseImageSubject)
     }()
+
+    static var imageSize: CGFloat {
+        return (ImageChooserView.artboardSize - (artboardPadding * 2) - (artboardSpacing * 2)) / CGFloat(numImagePerArtboardRow)
+    }
 
     private let verticalStackView: UIStackView = {
         let view = UIStackView()
@@ -55,11 +85,10 @@ final class ImageChooserView: UIView {
         }
     }
 
-    private func newImageView(image: BuiltInImage) -> UIImageView {
-        let imageSize = (ImageChooserView.artboardSize - (artboardPadding * 2) - (artboardSpacing * 2)) / 3
+    private func newImageView(image: BuiltInImage) -> UIImageView {let imageSize = (ImageChooserView.artboardSize - (artboardPadding * 2) - (artboardSpacing * 2)) / 3
         let imageView = UIImageView(image: image.imageForImageChooser)
-        imageView.heightAnchor <=> imageSize
-        imageView.widthAnchor <=> imageSize
+        imageView.heightAnchor <=> ImageChooserView.imageSize
+        imageView.widthAnchor <=> ImageChooserView.imageSize
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 4

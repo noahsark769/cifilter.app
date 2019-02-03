@@ -20,7 +20,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let filterNames = CIFilter.filterNames(inCategory: nil)
         let data: [FilterInfo] = filterNames.compactMap { filterName in
             let filter = CIFilter(name: filterName)!
-            return try? FilterInfo(filter: filter)
+            let filterInfo = try? FilterInfo(filter: filter)
+//            if filter.name == "CIDepthBlurEffect" {
+////                print(filter.attributes)
+////                print(filter.value)
+//                print("-------------")
+//                filter.setDefaults()
+//                for paramName in filterInfo!.parameters.map({ $0.name }) {
+//                    print(filter.attributes)
+//                    print("\(paramName): \(filter.value(forKey: paramName))")
+//                }
+//                print("-------------")
+//            }
+            return filterInfo
         }
 //        print(String(data: try! JSONEncoder().encode(data), encoding: .utf8)!)
 
