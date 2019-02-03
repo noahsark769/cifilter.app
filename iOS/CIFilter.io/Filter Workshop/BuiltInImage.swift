@@ -8,6 +8,22 @@
 
 import UIKit
 
+extension CIImage {
+    func checkerboarded() -> CIImage {
+        let checkerboardFilter = CIFilter(name: "CICheckerboardGenerator", parameters: [
+            "inputWidth": 40,
+            "inputColor0": CIColor.white,
+            "inputColor1": CIColor(color: UIColor(rgb: 0xeeeeee)),
+            "inputCenter": CIVector(x: 0, y: 0),
+            "inputSharpness": 1
+        ])!
+        let sourceOverCompositingFilter = CIFilter(name: "CISourceOverCompositing")!
+        sourceOverCompositingFilter.setValue(checkerboardFilter.outputImage!, forKey: kCIInputBackgroundImageKey)
+        sourceOverCompositingFilter.setValue(self, forKey: kCIInputImageKey)
+        return sourceOverCompositingFilter.outputImage!
+    }
+}
+
 struct BuiltInImage {
     let image: UIImage
     let imageForImageChooser: UIImage
@@ -20,18 +36,15 @@ struct BuiltInImage {
         ])!
     private static let sourceOverCompositingFilter = CIFilter(name: "CISourceOverCompositing")!
     private static let constantColorFilter = CIFilter(name: "CIConstantColorGenerator")!
+    private static let linearGradientFilter = CIFilter(name: "CISmoothLinearGradient")!
 
     private init(name: String, useCheckerboard: Bool = false) {
         let uiImage = UIImage(named: name)!
         image = uiImage
         if useCheckerboard {
             let ciImage = CIImage(image: uiImage)!
-            let checkerboard = BuiltInImage.checkerboardFilter.outputImage!
-            BuiltInImage.sourceOverCompositingFilter.setDefaults()
-            BuiltInImage.sourceOverCompositingFilter.setValue(checkerboard, forKey: kCIInputBackgroundImageKey)
-            BuiltInImage.sourceOverCompositingFilter.setValue(ciImage, forKey: kCIInputImageKey)
+            let outputImage = ciImage.checkerboarded()
             let context = CIContext()
-            let outputImage = BuiltInImage.sourceOverCompositingFilter.outputImage!
             guard let cgImage = context.createCGImage(outputImage, from: ciImage.extent) else {
                 fatalError("Could not create built in image from ciContext")
             }
@@ -41,15 +54,20 @@ struct BuiltInImage {
         }
     }
 
-    private init(name: String, generator: () -> (CIImage, CGRect)) {
+    private init(name: String, generator: () -> (CIImage, CIImage, CGRect)) {
         let context = CIContext()
-        let (ciImage, extent) = generator()
+        let (ciImage, ciImageForImageChooser, extent) = generator()
         guard let cgImage = context.createCGImage(ciImage, from: extent) else {
             fatalError("Could not create built in image from ciContext")
         }
         let image = UIImage(cgImage: cgImage)
-        imageForImageChooser = image
         self.image = image
+
+        guard let cgImageForChooser = context.createCGImage(ciImageForImageChooser, from: extent) else {
+            fatalError("Could not create built in image from ciContext")
+        }
+        let imageForChooser = UIImage(cgImage: cgImageForChooser)
+        self.imageForImageChooser = imageForChooser
     }
 
     static let knighted = BuiltInImage(name: "knighted")
@@ -60,7 +78,22 @@ struct BuiltInImage {
         BuiltInImage.constantColorFilter.setDefaults()
         BuiltInImage.constantColorFilter.setValue(CIColor.black, forKey: "inputColor")
         let ciImage = BuiltInImage.constantColorFilter.outputImage!
-        return (ciImage, CGRect(origin: .zero, size: CGSize(width: 500, height: 500)))
+        return (ciImage, ciImage, CGRect(origin: .zero, size: CGSize(width: 500, height: 500)))
+    });
+    static let white = BuiltInImage(name: "white", generator: {
+        BuiltInImage.constantColorFilter.setDefaults()
+        BuiltInImage.constantColorFilter.setValue(CIColor.white, forKey: "inputColor")
+        let ciImage = BuiltInImage.constantColorFilter.outputImage!
+        return (ciImage, ciImage, CGRect(origin: .zero, size: CGSize(width: 500, height: 500)))
+    });
+    static let gradient = BuiltInImage(name: "gradient", generator: {
+        BuiltInImage.linearGradientFilter.setDefaults()
+        BuiltInImage.linearGradientFilter.setValue(CIColor(red: 0, green: 0, blue: 0, alpha: 1), forKey: "inputColor0")
+        BuiltInImage.linearGradientFilter.setValue(CIColor(red: 0, green: 0, blue: 0, alpha: 0), forKey: "inputColor1")
+        BuiltInImage.linearGradientFilter.setValue(CIVector(x: 0, y: 250), forKey: "inputPoint0")
+        BuiltInImage.linearGradientFilter.setValue(CIVector(x: 500, y: 250), forKey: "inputPoint1")
+        let ciImage = BuiltInImage.linearGradientFilter.outputImage!
+        return (ciImage, ciImage.checkerboarded(), CGRect(origin: .zero, size: CGSize(width: 500, height: 500)))
     });
 
     static let all: [BuiltInImage] = [
@@ -68,6 +101,8 @@ struct BuiltInImage {
         .liberty,
         .paper,
         .playhouse,
-        .black
+        .black,
+        .white,
+        .gradient
     ]
 }
