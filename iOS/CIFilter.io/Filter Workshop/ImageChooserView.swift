@@ -14,22 +14,32 @@ import RxGesture
 import UIKit
 
 final class ImageChooserAddView: UIView {
+    let didTap = PublishSubject<Void>()
+    private let bag = DisposeBag()
     private var plusLabel: UILabel = {
         let view = UILabel()
         view.text = "+"
         view.accessibilityLabel = "Add Image"
-        view.font = UIFont.systemFont(ofSize: 30)
-        view.textColor = Colors.availabilityBlue.color
+        view.font = UIFont.systemFont(ofSize: 80)
+        view.textColor = .white
+        view.setContentHuggingPriority(.required, for: .vertical)
         return view
     }()
 
     init() {
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.widthAnchor <=> ImageChooserView.artboardSize
-        self.heightAnchor <=> ImageChooserView.artboardSize
-        addSubview(plusLabel)
+        self.widthAnchor <=> ImageChooserView.imageSize
+        self.heightAnchor <=> ImageChooserView.imageSize
+        self.backgroundColor = Colors.availabilityBlue.color
 
+        addSubview(plusLabel)
+        plusLabel.translatesAutoresizingMaskIntoConstraints = false
+        plusLabel.centerXAnchor <=> self.centerXAnchor
+        plusLabel.centerYAnchor <=> self.centerYAnchor
+        self.rx.tapGesture().when(.ended).subscribe({ _ in
+            self.didTap.onNext(())
+        }).disposed(by: bag)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -48,6 +58,9 @@ final class ImageChooserView: UIView {
     lazy var didChooseImage = {
         return ControlEvent<UIImage>(events: chooseImageSubject)
     }()
+    var didChooseAdd: PublishSubject<Void> {
+        return addView.didTap
+    }
 
     static var imageSize: CGFloat {
         return (ImageChooserView.artboardSize - (artboardPadding * 2) - (artboardSpacing * 2)) / CGFloat(numImagePerArtboardRow)
@@ -68,6 +81,8 @@ final class ImageChooserView: UIView {
         return view
     }
 
+    private let addView = ImageChooserAddView()
+
     init() {
         super.init(frame: .zero)
         self.backgroundColor = UIColor(rgb: 0xf3f3f3)
@@ -83,9 +98,15 @@ final class ImageChooserView: UIView {
             }
             currentStackView.addArrangedSubview(self.newImageView(image: builtInImage))
         }
+
+        if BuiltInImage.all.count % numImagePerArtboardRow == 0 {
+            currentStackView = newStackView()
+            verticalStackView.addArrangedSubview(currentStackView)
+        }
+        currentStackView.addArrangedSubview(addView)
     }
 
-    private func newImageView(image: BuiltInImage) -> UIImageView {let imageSize = (ImageChooserView.artboardSize - (artboardPadding * 2) - (artboardSpacing * 2)) / 3
+    private func newImageView(image: BuiltInImage) -> UIImageView {
         let imageView = UIImageView(image: image.imageForImageChooser)
         imageView.heightAnchor <=> ImageChooserView.imageSize
         imageView.widthAnchor <=> ImageChooserView.imageSize
