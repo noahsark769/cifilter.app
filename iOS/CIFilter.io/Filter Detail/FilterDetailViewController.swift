@@ -10,23 +10,16 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+private let isCompressed = UIScreen.main.bounds.width < 415
+
 final class FilterDetailViewController: UIViewController {
     private let bag = DisposeBag()
     private var presentWorkshopSubscription: Disposable? = nil
-    private var filterView: FilterDetailView!
+    private var filterView: FilterDetailView = FilterDetailView(isCompressed: isCompressed)
 
     init() {
         super.init(nibName: nil, bundle: nil)
-    }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let isCompressed = self.view.frame.size.width < 415
-        filterView = FilterDetailView(isCompressed: isCompressed)
         self.view.addSubview(filterView)
         self.view.backgroundColor = .white
         filterView.disableTranslatesAutoresizingMaskIntoConstraints()
@@ -42,6 +35,14 @@ final class FilterDetailViewController: UIViewController {
             filterView.widthAnchor <=> 600
             filterView.centerXAnchor <=> self.view.centerXAnchor
         }
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
     }
 
     func set(filter: FilterInfo) {
@@ -79,6 +80,7 @@ extension FilterDetailViewController: FilterListViewControllerDelegate {
             return
         }
         splitViewController.toggleMasterView()
+        splitViewController.showDetailViewController(self, sender: nil)
     }
 }
 

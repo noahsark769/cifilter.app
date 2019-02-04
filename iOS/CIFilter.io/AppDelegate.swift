@@ -44,7 +44,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let filterDetailViewController = FilterDetailViewController()
         filterListViewController.delegate = filterDetailViewController
         filterDetailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
-        splitViewController.viewControllers = [navController, UINavigationController(rootViewController: filterDetailViewController)]
+        filterDetailViewController.navigationItem.leftItemsSupplementBackButton = true
+        filterDetailViewController.navigationItem.largeTitleDisplayMode = .never
+        let detailNavController = UINavigationController(rootViewController: filterDetailViewController)
+        splitViewController.viewControllers = [navController, detailNavController]
+        splitViewController.delegate = self
 
         window?.rootViewController = splitViewController
         window?.makeKeyAndVisible()
@@ -55,6 +59,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         splitViewController.toggleMasterView()
+//        splitViewController.preferredDisplayMode = .primaryOverlay
+        return true
+    }
+}
+
+extension AppDelegate: UISplitViewControllerDelegate {
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
         return true
     }
 }
