@@ -85,7 +85,6 @@ final class FilterDetailView: UIView {
     }
 
     func set(filter: FilterInfo) {
-        titleView.isCompressed = isCompressed
         titleView.set(filter: filter)
         availabilityView.set(filter: filter)
         descriptionLabel.text = filter.description

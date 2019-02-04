@@ -75,12 +75,12 @@ extension FilterDetailViewController: FilterListViewControllerDelegate {
         // `self.splitViewController` might be nil here if we're in a horizontally compact environment
         // with the filter list VC currently active, but we know the filter list VC's
         // splitViewController will always be non-nil, so we use that
-        guard let splitViewController = vc.splitViewController else {
+        guard let splitViewController = vc.splitViewController, let navController = self.navigationController else {
             print("WARNING no split view controller!!")
             return
         }
         splitViewController.toggleMasterView()
-        splitViewController.showDetailViewController(self, sender: nil)
+        splitViewController.showDetailViewController(navController, sender: nil)
     }
 }
 

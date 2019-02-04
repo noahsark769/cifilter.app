@@ -19,17 +19,6 @@ final class FilterDetailTitleView: UIView {
         return view
     }()
 
-    var isCompressed: Bool = false {
-        didSet {
-            if self.isCompressed {
-                self.stackView.removeArrangedSubview(titleLabel)
-                titleLabel.removeFromSuperview()
-            } else {
-                self.stackView.insertArrangedSubview(titleLabel, at: 0)
-            }
-        }
-    }
-
     init() {
         super.init(frame: .zero)
 
