@@ -22,6 +22,9 @@ final class ImageArtboardView: UIView {
     var didChooseImage: ControlEvent<UIImage> {
         return imageChooserView.didChooseImage
     }
+    var didChooseAdd: PublishSubject<UIView> {
+        return imageChooserView.didChooseAdd
+    }
 
     private let nameLabel: UILabel = {
         let view = UILabel()
@@ -80,10 +83,6 @@ final class ImageArtboardView: UIView {
         imageChooserView.didChooseImage.subscribe(onNext: { image in
             self.set(image: image)
         }).disposed(by: self.bag)
-        imageChooserView.didChooseAdd.subscribe(onNext: { _ in
-            print("CHOOSE ADD")
-        }).disposed(by: self.bag)
-
 
         imageView.layer.borderColor = UIColor(rgb: 0xdddddd).cgColor
         imageView.layer.borderWidth = 1

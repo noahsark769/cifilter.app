@@ -19,6 +19,7 @@ final class FilterWorkshopViewController: UIViewController {
     private var currentImage: UIImage? = nil
     private let filter: FilterInfo
     private var shareItem: UIBarButtonItem! = nil
+    private var inputImageCurrentlySelecting: String? = nil
 
     init(filter: FilterInfo) {
         self.filter = filter
@@ -36,6 +37,20 @@ final class FilterWorkshopViewController: UIViewController {
             }
             self.shareItem.isEnabled = true
             self.currentImage = image
+        }).disposed(by: bag)
+
+        workshopView.didChooseAddImage.subscribe(onNext: { paramName, sourceView in
+            self.inputImageCurrentlySelecting = paramName
+            let vc = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            vc.addAction(UIAlertAction(title: "Take photo", style: .default, handler: { _ in
+                print("Take photo!")
+            }))
+            vc.addAction(UIAlertAction(title: "Select from library", style: .default, handler: { _ in
+                print("LIBARY")
+            }))
+            vc.popoverPresentationController?.sourceView = sourceView
+            vc.popoverPresentationController?.sourceRect = sourceView.bounds
+            self.present(vc, animated: true, completion: nil)
         }).disposed(by: bag)
     }
 

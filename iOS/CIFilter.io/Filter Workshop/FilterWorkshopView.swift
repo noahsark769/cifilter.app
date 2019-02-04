@@ -23,6 +23,8 @@ final class FilterWorkshopView: UIView {
     }()
     private let consoleView = ImageWorkshopConsoleView()
 
+    var didChooseAddImage: PublishSubject<(String, UIView)> { return contentView.didChooseAddImage }
+
     init(applicator: AsyncFilterApplicator) {
         self.applicator = applicator
         super.init(frame: .zero)

@@ -18,6 +18,10 @@ final class FilterWorkshopContentView: UIView {
     private let imageParametersView = FilterWorkshopParametersView()
     private lazy var outputImageView: ImageArtboardView = ImageArtboardView(name: "outputImage", configuration: .output)
 
+    var didChooseAddImage: PublishSubject<(String, UIView)> {
+        return imageParametersView.didChooseAddImage
+    }
+
     private let stackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal

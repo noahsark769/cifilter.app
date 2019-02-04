@@ -16,11 +16,12 @@ import UIKit
 final class ImageChooserAddView: UIView {
     let didTap = PublishSubject<Void>()
     private let bag = DisposeBag()
+    
     private var plusLabel: UILabel = {
         let view = UILabel()
-        view.text = "+"
+        view.text = "Add"
         view.accessibilityLabel = "Add Image"
-        view.font = UIFont.systemFont(ofSize: 80)
+        view.font = UIFont.systemFont(ofSize: 30)
         view.textColor = .white
         view.setContentHuggingPriority(.required, for: .vertical)
         return view
@@ -58,9 +59,7 @@ final class ImageChooserView: UIView {
     lazy var didChooseImage = {
         return ControlEvent<UIImage>(events: chooseImageSubject)
     }()
-    var didChooseAdd: PublishSubject<Void> {
-        return addView.didTap
-    }
+    var didChooseAdd = PublishSubject<UIView>()
 
     static var imageSize: CGFloat {
         return (ImageChooserView.artboardSize - (artboardPadding * 2) - (artboardSpacing * 2)) / CGFloat(numImagePerArtboardRow)
@@ -104,6 +103,10 @@ final class ImageChooserView: UIView {
             verticalStackView.addArrangedSubview(currentStackView)
         }
         currentStackView.addArrangedSubview(addView)
+
+        addView.didTap.subscribe(onNext: {
+            self.didChooseAdd.onNext(self.addView)
+        }).disposed(by: bag)
     }
 
     private func newImageView(image: BuiltInImage) -> UIImageView {

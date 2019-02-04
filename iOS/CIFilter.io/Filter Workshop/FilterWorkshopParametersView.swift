@@ -31,6 +31,7 @@ final class FilterWorkshopParametersView: UIStackView {
     lazy var didUpdateParameter: ControlEvent<ParameterValue> = {
         return ControlEvent<ParameterValue>(events: updateParameterSubject)
     }()
+    let didChooseAddImage = PublishSubject<(String, UIView)>()
     init() {
         super.init(frame: .zero)
         self.axis = .vertical
@@ -121,6 +122,9 @@ final class FilterWorkshopParametersView: UIStackView {
                     self.updateParameterSubject.onNext(
                         ParameterValue(name: parameter.name, value: CIImage(cgImage: cgImage))
                     )
+                }).disposed(by: disposeBag!)
+                imageArtboardView.didChooseAdd.subscribe(onNext: { view in
+                    self.didChooseAddImage.onNext((parameter.name, view))
                 }).disposed(by: disposeBag!)
             case let .scalar(info):
                 self.addViewsAndSubscriptions(for: info, parameter: parameter)
