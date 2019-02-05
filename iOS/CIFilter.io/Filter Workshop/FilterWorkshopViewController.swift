@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import MobileCoreServices
 
 final class FilterWorkshopViewController: UIViewController {
     private let bag = DisposeBag()
@@ -42,12 +43,21 @@ final class FilterWorkshopViewController: UIViewController {
         workshopView.didChooseAddImage.subscribe(onNext: { paramName, sourceView in
             self.inputImageCurrentlySelecting = paramName
             let vc = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            vc.addAction(UIAlertAction(title: "Take photo", style: .default, handler: { _ in
-                print("Take photo!")
+            vc.addAction(UIAlertAction(title: "Take photo", style: .default, handler: { [weak self] _ in
+                let picker = UIImagePickerController()
+                picker.sourceType = .camera
+                picker.mediaTypes = [kUTTypeImage as String]
+                picker.delegate = self
+                self?.present(picker, animated: true, completion: nil)
             }))
-            vc.addAction(UIAlertAction(title: "Select from library", style: .default, handler: { _ in
-                print("LIBARY")
+            vc.addAction(UIAlertAction(title: "Select from library", style: .default, handler: { [weak self] _ in
+                let picker = UIImagePickerController()
+                picker.sourceType = .photoLibrary
+                picker.mediaTypes = [kUTTypeImage as String]
+                picker.delegate = self
+                self?.present(picker, animated: true, completion: nil)
             }))
+            vc.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
             vc.popoverPresentationController?.sourceView = sourceView
             vc.popoverPresentationController?.sourceRect = sourceView.bounds
             self.present(vc, animated: true, completion: nil)
@@ -69,5 +79,19 @@ final class FilterWorkshopViewController: UIViewController {
     override func loadView() {
         self.view = workshopView
         workshopView.set(filter: self.filter)
+    }
+}
+
+extension FilterWorkshopViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        // TODO: Errors for these
+        guard let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        guard let currentlySelectingParamName = self.inputImageCurrentlySelecting else { return }
+        self.workshopView.setImage(originalImage, forParameterNamed: currentlySelectingParamName)
+        self.dismiss(animated: true, completion: nil)
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
     }
 }

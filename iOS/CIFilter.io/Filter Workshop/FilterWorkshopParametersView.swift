@@ -32,6 +32,7 @@ final class FilterWorkshopParametersView: UIStackView {
         return ControlEvent<ParameterValue>(events: updateParameterSubject)
     }()
     let didChooseAddImage = PublishSubject<(String, UIView)>()
+    private var paramNamesToImageArtboards: [String: ImageArtboardView] = [:]
     init() {
         super.init(frame: .zero)
         self.axis = .vertical
@@ -104,6 +105,7 @@ final class FilterWorkshopParametersView: UIStackView {
     }
 
     func set(parameters: [FilterParameterInfo]) {
+        paramNamesToImageArtboards = [:]
         self.removeAllArrangedSubviews()
         disposeBag = DisposeBag()
         for parameter in parameters.sorted(by: { first, second in
@@ -126,6 +128,7 @@ final class FilterWorkshopParametersView: UIStackView {
                 imageArtboardView.didChooseAdd.subscribe(onNext: { view in
                     self.didChooseAddImage.onNext((parameter.name, view))
                 }).disposed(by: disposeBag!)
+                paramNamesToImageArtboards[parameter.name] = imageArtboardView
             case let .scalar(info):
                 self.addViewsAndSubscriptions(for: info, parameter: parameter)
             case let .distance(info):
@@ -155,5 +158,9 @@ final class FilterWorkshopParametersView: UIStackView {
                 self.addArrangedSubview(RedView(text: "\(parameter.name): \(parameter.classType)"))
             }
         }
+    }
+
+    func setImage(_ image: UIImage, forParameterNamed name: String) {
+        paramNamesToImageArtboards[name]?.set(image: image, reportOnSubject: true)
     }
 }

@@ -115,6 +115,10 @@ final class FilterWorkshopView: UIView {
     func set(filter: FilterInfo) {
         contentView.set(filter: filter)
     }
+
+    func setImage(_ image: UIImage, forParameterNamed name: String) {
+        contentView.setImage(image, forParameterNamed: name)
+    }
 }
 
 extension FilterWorkshopView: UIScrollViewDelegate {

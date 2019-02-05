@@ -19,9 +19,7 @@ final class ImageArtboardView: UIView {
     private let configuration: Configuration
     private var eitherView: EitherView!
     private let bag = DisposeBag()
-    var didChooseImage: ControlEvent<UIImage> {
-        return imageChooserView.didChooseImage
-    }
+    var didChooseImage = PublishSubject<UIImage>()
     var didChooseAdd: PublishSubject<UIView> {
         return imageChooserView.didChooseAdd
     }
@@ -93,6 +91,8 @@ final class ImageArtboardView: UIView {
         }).disposed(by: bag)
         editButton.isHidden = true
         editButton.setContentHuggingPriority(.required, for: .horizontal)
+
+        imageChooserView.didChooseImage.bind(to: self.didChooseImage).disposed(by: bag)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -100,11 +100,15 @@ final class ImageArtboardView: UIView {
     }
 
     // TODO: These functions should be condensed into one that takes an enum
-    func set(image: UIImage) {
+    func set(image: UIImage, reportOnSubject: Bool = false) {
         self.activityView.stopAnimating()
         imageView.image = image
         self.eitherView.setEnabled(self.imageView)
         self.editButton.isHidden = self.configuration != .input
+
+        if reportOnSubject {
+            didChooseImage.onNext(image)
+        }
     }
 
     func setChoosing() {

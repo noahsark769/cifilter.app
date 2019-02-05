@@ -83,6 +83,10 @@ final class FilterWorkshopContentView: UIView {
         stackView.addArrangedSubview(outputImageView)
     }
 
+    func setImage(_ image: UIImage, forParameterNamed name: String) {
+        imageParametersView.setImage(image, forParameterNamed: name)
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
