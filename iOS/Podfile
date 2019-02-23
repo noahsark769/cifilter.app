@@ -18,3 +18,7 @@ end
 target 'CIFilter.io' do
   shared_pods
 end
+
+target 'CIFilter.ioTests' do
+  shared_pods
+end

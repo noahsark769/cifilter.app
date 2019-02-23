@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24F467DEA7F7F3D844749670 /* libPods-CIFilter.ioTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C48797878CD99B8CB9EA772 /* libPods-CIFilter.ioTests.a */; };
 		5F31BFC0D3D97B3DB60EB532 /* libPods-CIFilter.io.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8DF7E2364B4EB94F6C83712 /* libPods-CIFilter.io.a */; };
+		A116A0E0220B4CA9005DE07F /* UIColorUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A116A0DF220B4CA9005DE07F /* UIColorUtilsTest.swift */; };
 		A11C522521968BB000045F2E /* FilterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11C522421968BB000045F2E /* FilterListViewController.swift */; };
 		A128993921CFFF7000BEE395 /* ImageChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128993821CFFF7000BEE395 /* ImageChooserView.swift */; };
 		A128993D21D047BD00BEE395 /* FilterWorkshopParametersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128993C21D047BD00BEE395 /* FilterWorkshopParametersView.swift */; };
@@ -61,8 +63,24 @@
 		A1D5A8D721B4A85A00257B5E /* FilterParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8D621B4A85A00257B5E /* FilterParameterView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		A116A0DA220B4C93005DE07F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1C662112196818100826A2B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A1C662182196818100826A2B;
+			remoteInfo = CIFilter.io;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		08FBAE88B5103E03654DA7F2 /* Pods-CIFilter.io.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.io.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io.debug.xcconfig"; sourceTree = "<group>"; };
+		0C48797878CD99B8CB9EA772 /* libPods-CIFilter.ioTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CIFilter.ioTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BC47CD1E0BB2EEB52DDF0D2 /* Pods-CIFilter.ioTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.ioTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.ioTests/Pods-CIFilter.ioTests.release.xcconfig"; sourceTree = "<group>"; };
+		A116A0D5220B4C93005DE07F /* CIFilter.ioTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CIFilter.ioTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A116A0D7220B4C93005DE07F /* CIFilter_ioTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIFilter_ioTests.swift; sourceTree = "<group>"; };
+		A116A0D9220B4C93005DE07F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A116A0DF220B4CA9005DE07F /* UIColorUtilsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorUtilsTest.swift; sourceTree = "<group>"; };
 		A11C522421968BB000045F2E /* FilterListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListViewController.swift; sourceTree = "<group>"; };
 		A128993821CFFF7000BEE395 /* ImageChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageChooserView.swift; sourceTree = "<group>"; };
 		A128993C21D047BD00BEE395 /* FilterWorkshopParametersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterWorkshopParametersView.swift; sourceTree = "<group>"; };
@@ -118,9 +136,18 @@
 		A1D5A8D621B4A85A00257B5E /* FilterParameterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterParameterView.swift; sourceTree = "<group>"; };
 		A8DF7E2364B4EB94F6C83712 /* libPods-CIFilter.io.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CIFilter.io.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F97FF4CF0C09C59DFDF3D2A3 /* Pods-CIFilter.io.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.io.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io.release.xcconfig"; sourceTree = "<group>"; };
+		FE5D796C946C31D82424702D /* Pods-CIFilter.ioTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.ioTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.ioTests/Pods-CIFilter.ioTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A116A0D2220B4C93005DE07F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24F467DEA7F7F3D844749670 /* libPods-CIFilter.ioTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A1C662162196818100826A2B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -137,6 +164,8 @@
 			children = (
 				08FBAE88B5103E03654DA7F2 /* Pods-CIFilter.io.debug.xcconfig */,
 				F97FF4CF0C09C59DFDF3D2A3 /* Pods-CIFilter.io.release.xcconfig */,
+				FE5D796C946C31D82424702D /* Pods-CIFilter.ioTests.debug.xcconfig */,
+				6BC47CD1E0BB2EEB52DDF0D2 /* Pods-CIFilter.ioTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -145,8 +174,19 @@
 			isa = PBXGroup;
 			children = (
 				A8DF7E2364B4EB94F6C83712 /* libPods-CIFilter.io.a */,
+				0C48797878CD99B8CB9EA772 /* libPods-CIFilter.ioTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A116A0D6220B4C93005DE07F /* CIFilter.ioTests */ = {
+			isa = PBXGroup;
+			children = (
+				A116A0D7220B4C93005DE07F /* CIFilter_ioTests.swift */,
+				A116A0D9220B4C93005DE07F /* Info.plist */,
+				A116A0DF220B4CA9005DE07F /* UIColorUtilsTest.swift */,
+			);
+			path = CIFilter.ioTests;
 			sourceTree = "<group>";
 		};
 		A128994A21DD475900BEE395 /* Standard */ = {
@@ -186,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				A1C6621B2196818100826A2B /* CIFilter.io */,
+				A116A0D6220B4C93005DE07F /* CIFilter.ioTests */,
 				521EE2C65F91622949C25D8A /* Frameworks */,
 				21F45C3D75D451327515769A /* Pods */,
 				A1C6621A2196818100826A2B /* Products */,
@@ -196,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				A1C662192196818100826A2B /* CIFilter.io.app */,
+				A116A0D5220B4C93005DE07F /* CIFilter.ioTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -285,6 +327,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A116A0D4220B4C93005DE07F /* CIFilter.ioTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A116A0DE220B4C93005DE07F /* Build configuration list for PBXNativeTarget "CIFilter.ioTests" */;
+			buildPhases = (
+				23B3E918299932C4122B4876 /* [CP] Check Pods Manifest.lock */,
+				A116A0D1220B4C93005DE07F /* Sources */,
+				A116A0D2220B4C93005DE07F /* Frameworks */,
+				A116A0D3220B4C93005DE07F /* Resources */,
+				000194CF983F7F92BA46EF66 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A116A0DB220B4C93005DE07F /* PBXTargetDependency */,
+			);
+			name = CIFilter.ioTests;
+			productName = CIFilter.ioTests;
+			productReference = A116A0D5220B4C93005DE07F /* CIFilter.ioTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		A1C662182196818100826A2B /* CIFilter.io */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A1C6622B2196818300826A2B /* Build configuration list for PBXNativeTarget "CIFilter.io" */;
@@ -310,10 +372,14 @@
 		A1C662112196818100826A2B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1000;
+				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Noah Gilmore";
 				TargetAttributes = {
+					A116A0D4220B4C93005DE07F = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = A1C662182196818100826A2B;
+					};
 					A1C662182196818100826A2B = {
 						CreatedOnToolsVersion = 10.0;
 					};
@@ -333,11 +399,19 @@
 			projectRoot = "";
 			targets = (
 				A1C662182196818100826A2B /* CIFilter.io */,
+				A116A0D4220B4C93005DE07F /* CIFilter.ioTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A116A0D3220B4C93005DE07F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A1C662172196818100826A2B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -350,6 +424,50 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		000194CF983F7F92BA46EF66 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CIFilter.ioTests/Pods-CIFilter.ioTests-resources.sh",
+				"${PODS_ROOT}/IQKeyboardManagerSwift/IQKeyboardManagerSwift/Resources/IQKeyboardManager.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CIFilter.ioTests/Pods-CIFilter.ioTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		23B3E918299932C4122B4876 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CIFilter.ioTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4E0E2384EB43E66F70BFB7CE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -397,6 +515,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A116A0D1220B4C93005DE07F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A116A0E0220B4CA9005DE07F /* UIColorUtilsTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A1C662152196818100826A2B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -455,6 +581,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		A116A0DB220B4C93005DE07F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A1C662182196818100826A2B /* CIFilter.io */;
+			targetProxy = A116A0DA220B4C93005DE07F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		A1C662252196818300826A2B /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -467,6 +601,50 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		A116A0DC220B4C93005DE07F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FE5D796C946C31D82424702D /* Pods-CIFilter.ioTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 29P3YRFLV5;
+				INFOPLIST_FILE = CIFilter.ioTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.noahgilmore.CIFilter-ioTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CIFilter.io.app/CIFilter.io";
+			};
+			name = Debug;
+		};
+		A116A0DD220B4C93005DE07F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6BC47CD1E0BB2EEB52DDF0D2 /* Pods-CIFilter.ioTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 29P3YRFLV5;
+				INFOPLIST_FILE = CIFilter.ioTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.noahgilmore.CIFilter-ioTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CIFilter.io.app/CIFilter.io";
+			};
+			name = Release;
+		};
 		A1C662292196818300826A2B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -624,6 +802,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A116A0DE220B4C93005DE07F /* Build configuration list for PBXNativeTarget "CIFilter.ioTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A116A0DC220B4C93005DE07F /* Debug */,
+				A116A0DD220B4C93005DE07F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A1C662142196818100826A2B /* Build configuration list for PBXProject "CIFilter.io" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

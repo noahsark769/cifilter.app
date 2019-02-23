@@ -108,9 +108,15 @@ final class ColorInputDragIndicatorView: UIView {
 
 final class ColorInput: UIView {
     private static let nullDragLocation = CGPoint(x: -1, y: -1)
+    private let mainStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .vertical
+        view.spacing = 5
+        return view
+    }()
+    private let hexInput: ColorHexInput
     private let imageView = UIImageView()
     private let draggableIndicatorView = ColorInputDragIndicatorView(sideLength: 40, color: UIColor(rgb: 0x333333))
-    private let colorSpace = CGColorSpaceCreateDeviceRGB()
     private var dragLocation: CGPoint = ColorInput.nullDragLocation
     private var lastLocation: CGPoint = .zero
     private let bag = DisposeBag()
@@ -118,9 +124,10 @@ final class ColorInput: UIView {
 
     init(defaultValue: CIColor) {
         // TODO: defaultValue is currently unused
+        self.hexInput = ColorHexInput(default: UIColor(ciColor: defaultValue))
         super.init(frame: .zero)
         let filter = CIFilter(name: "CIHueSaturationValueGradient", parameters: [
-            "inputColorSpace": self.colorSpace,
+            "inputColorSpace": CGColorSpaceCreateDeviceRGB(),
             "inputDither": NSNumber(floatLiteral: 0),
             "inputRadius": NSNumber(integerLiteral: 200),
             "inputSoftness": NSNumber(integerLiteral: 0),
@@ -130,8 +137,10 @@ final class ColorInput: UIView {
         imageView.contentMode = .scaleAspectFit
         imageView.image = image
 
-        addSubview(imageView)
-        imageView.edgesToSuperview()
+        addSubview(mainStackView)
+        mainStackView.edgesToSuperview()
+        mainStackView.addArrangedSubview(imageView)
+        mainStackView.addArrangedSubview(hexInput)
 
         draggableIndicatorView.indicatorColor = UIColor(rgb: 0x333333)
         draggableIndicatorView.cornerRadius = 4
