@@ -1,0 +1,86 @@
+//
+//  ColorHexInput.swift
+//  CIFilter.io
+//
+//  Created by Noah Gilmore on 2/23/19.
+//  Copyright © 2019 Noah Gilmore. All rights reserved.
+//
+
+import UIKit
+import RxSwift
+import RxCocoa
+
+final class ColorHexInput: UIView {
+    let valueDidChange = PublishSubject<UIColor>()
+
+    lazy var textView: UITextView = {
+        let view = UITextView()
+        view.layer.borderColor = UIColor(rgb: 0xeeeeee).cgColor
+        view.layer.borderWidth = 1 / UIScreen.main.scale
+        view.layer.cornerRadius = 4
+        view.clipsToBounds = true
+        view.font = UIFont(name: "Courier New", size: 17)
+        view.textColor = .black
+        view.backgroundColor = UIColor(rgb: 0xefefef)
+        view.keyboardType = .numberPad
+        view.delegate = self
+        return view
+    }()
+
+    init(default: UIColor?) {
+        // TODO: default is unused
+        super.init(frame: .zero)
+        addSubview(textView)
+        textView.heightAnchor <=> 36
+        textView.edgesToSuperview()
+    }
+
+    func set(text: String) {
+        guard self.shouldAllowTextUpdate(to: text) else {
+            // TODO: Log error here, we should never get text that is not a valid color
+            return
+        }
+        textView.text = text
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension CharacterSet {
+    static let hexCodeCharacters = CharacterSet(charactersIn: "#abcdefABCDEF1234567890")
+}
+
+extension ColorHexInput: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        if let color = UIColor(hexString: textView.text) {
+            valueDidChange.onNext(color)
+        }
+    }
+
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        guard text == "" || !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return false
+        }
+        let currentText: String = textView.text ?? ""
+        guard let swiftRange = Range<String.Index>(range, in: currentText) else { return false }
+        let effectiveText: String = currentText.replacingCharacters(in: swiftRange, with: text)
+        return self.shouldAllowTextUpdate(to: effectiveText)
+    }
+
+    func shouldAllowTextUpdate(to effectiveText: String) -> Bool {
+        // Allow deleting the entire text field
+        if effectiveText.isEmpty {
+            return true
+        }
+
+        let extraLength = effectiveText.contains("#") ? 1 : 0
+        if effectiveText.count - extraLength > 8 {
+            return false
+        }
+
+        // Return true if it looks like part of a hex code
+        return CharacterSet.hexCodeCharacters.isSuperset(of: CharacterSet(charactersIn: effectiveText))
+    }
+}

@@ -154,11 +154,11 @@ final class ColorInput: UIView {
             if case .began = recognizer.state {
                 self.dragLocation = recognizer.location(in: self.imageView)
                 self.setNeedsLayout()
-                self.reportColor()
+                self.reportColorFromDragLocation()
             } else if case .changed = recognizer.state {
                 self.dragLocation = recognizer.location(in: self.imageView)
                 self.setNeedsLayout()
-                self.reportColor()
+                self.reportColorFromDragLocation()
             }
         }).disposed(by: bag)
 
@@ -167,7 +167,17 @@ final class ColorInput: UIView {
             guard supportedStates.contains(recognizer.state) else { return }
             self.dragLocation = recognizer.location(in: self)
             self.setNeedsLayout()
-            self.reportColor()
+            self.reportColorFromDragLocation()
+        }).disposed(by: bag)
+
+        self.hexInput.valueDidChange.subscribe(onNext: { color in
+            guard let colorLocation = self.imageView.pointOnColorWheel(for: color) else {
+                // TODO: log error here
+                return
+            }
+            self.dragLocation = colorLocation
+            self.setNeedsLayout()
+            self.report(color: color)
         }).disposed(by: bag)
     }
 
@@ -175,10 +185,15 @@ final class ColorInput: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func reportColor() {
-        let color = self.imageView.getPixelColorAt(point: self.dragLocation)
+    private func report(color: UIColor) {
         let ciColor = CIColor(color: color)
         self.valueDidChange.onNext(ciColor)
+    }
+
+    private func reportColorFromDragLocation() {
+        let color = self.imageView.getPixelColorAt(point: self.dragLocation)
+        self.hexInput.set(text: color.toHexString())
+        self.report(color: color)
     }
 
     override func layoutSubviews() {

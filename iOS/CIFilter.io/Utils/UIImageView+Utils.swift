@@ -36,4 +36,23 @@ extension UIImageView {
         pixel.deallocate()
         return color
     }
+
+    func pointOnColorWheel(for color: UIColor) -> CGPoint? {
+        guard let image = self.image else { return nil }
+
+        var hue: CGFloat = 0
+        var saturation: CGFloat = 0
+        var brightness: CGFloat = 0
+        color.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: nil)
+
+        let width = self.frame.size.width
+        let radius = width / 2
+        let colorRadius = saturation * radius
+        let angle = (1 - hue) * (2 * CGFloat.pi)
+        let midX = width / 2
+        let midY = self.frame.size.height / 2
+        let xOffset = cos(angle) * colorRadius
+        let yOffset = sin(angle) * colorRadius
+        return CGPoint(x: midX + xOffset, y: midY + yOffset)
+    }
 }

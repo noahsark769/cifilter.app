@@ -71,8 +71,11 @@ extension UIColor {
 
         getRed(&r, green: &g, blue: &b, alpha: &a)
 
-        let rgb: Int = (Int)(r*255) << 32 | (Int)(g*255) << 16 | (Int)(b*255) << 8 | (Int)(a*255) << 0
+        let rgb: Int = (Int)(r*255) << 24 | (Int)(g*255) << 16 | (Int)(b*255) << 8 | (Int)(a*255) << 0
 
-        return String(format:"#%06x", rgb)
+        let string = String(format:"#%08x", rgb)
+        print("\(r) \(g) \(b) \(a)")
+        print(string)
+        return string
     }
 }
