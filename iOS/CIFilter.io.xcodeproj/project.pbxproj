@@ -25,6 +25,7 @@
 		A128995421DEE3C700BEE395 /* FilterApplicationIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128995321DEE3C600BEE395 /* FilterApplicationIndicator.swift */; };
 		A128995621DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128995521DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift */; };
 		A128995821DEE44F00BEE395 /* ImageWorkshopConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128995721DEE44F00BEE395 /* ImageWorkshopConsoleView.swift */; };
+		A12B7AF122299D0C0084AAE6 /* ColorInputDragIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B7AF022299D0C0084AAE6 /* ColorInputDragIndicatorView.swift */; };
 		A130BD7D21EC0D1F00E586F6 /* VectorInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130BD7C21EC0D1F00E586F6 /* VectorInput.swift */; };
 		A130BD7F21EFA22400E586F6 /* ColorInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130BD7E21EFA22400E586F6 /* ColorInput.swift */; };
 		A130BD8121F0EAC700E586F6 /* UIImageView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130BD8021F0EAC700E586F6 /* UIImageView+Utils.swift */; };
@@ -97,6 +98,7 @@
 		A128995321DEE3C600BEE395 /* FilterApplicationIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterApplicationIndicator.swift; sourceTree = "<group>"; };
 		A128995521DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWorkshopConsoleMessageView.swift; sourceTree = "<group>"; };
 		A128995721DEE44F00BEE395 /* ImageWorkshopConsoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWorkshopConsoleView.swift; sourceTree = "<group>"; };
+		A12B7AF022299D0C0084AAE6 /* ColorInputDragIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorInputDragIndicatorView.swift; sourceTree = "<group>"; };
 		A130BD7C21EC0D1F00E586F6 /* VectorInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorInput.swift; sourceTree = "<group>"; };
 		A130BD7E21EFA22400E586F6 /* ColorInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorInput.swift; sourceTree = "<group>"; };
 		A130BD8021F0EAC700E586F6 /* UIImageView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Utils.swift"; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 				A130BDF222068CCE00E586F6 /* BuiltInImage.swift */,
 				A172BAC32221CCFA00182C56 /* ColorHexInput.swift */,
 				A130BD7E21EFA22400E586F6 /* ColorInput.swift */,
+				A12B7AF022299D0C0084AAE6 /* ColorInputDragIndicatorView.swift */,
 				A128995321DEE3C600BEE395 /* FilterApplicationIndicator.swift */,
 				A1A0D83F21C4AEAA0098168C /* FilterWorkshopContentView.swift */,
 				A128993C21D047BD00BEE395 /* FilterWorkshopParametersView.swift */,
@@ -538,6 +541,7 @@
 				A1D5A8AF21ADB38200257B5E /* CIVectorCodableWrapper.swift in Sources */,
 				A172BAC42221CCFB00182C56 /* ColorHexInput.swift in Sources */,
 				A130BD7F21EFA22400E586F6 /* ColorInput.swift in Sources */,
+				A12B7AF122299D0C0084AAE6 /* ColorInputDragIndicatorView.swift in Sources */,
 				A128994C21DD477000BEE395 /* Colors.swift in Sources */,
 				A128995221DD6D4000BEE395 /* CwlMutex.swift in Sources */,
 				A1D5A8B321ADB3C100257B5E /* Dictionary+Validation.swift in Sources */,

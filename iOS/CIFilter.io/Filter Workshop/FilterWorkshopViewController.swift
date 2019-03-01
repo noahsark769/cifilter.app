@@ -20,6 +20,7 @@ final class FilterWorkshopViewController: UIViewController {
     private var currentImage: UIImage? = nil
     private let filter: FilterInfo
     private var shareItem: UIBarButtonItem! = nil
+    private var exportItem: UIBarButtonItem! = nil
     private var inputImageCurrentlySelecting: String? = nil
 
     init(filter: FilterInfo) {
@@ -29,14 +30,23 @@ final class FilterWorkshopViewController: UIViewController {
 
         self.shareItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapShareButton))
         self.shareItem.isEnabled = false
-        self.navigationItem.rightBarButtonItem = shareItem
+        self.exportItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(didTapExportButton))
+        self.exportItem.isEnabled = false
+
+        #if DEBUG
+            self.navigationItem.rightBarButtonItems = [exportItem, shareItem]
+        #else
+            self.navigationItem.rightBarButtonItem = shareItem
+        #endif
 
         applicator.events.observeOn(MainScheduler.instance).subscribe(onNext: { event in
             guard case let .generationCompleted(image, _) = event else {
                 self.shareItem.isEnabled = false
+                self.exportItem.isEnabled = false
                 return
             }
             self.shareItem.isEnabled = true
+            self.exportItem.isEnabled = true
             self.currentImage = image
         }).disposed(by: bag)
 
@@ -70,6 +80,10 @@ final class FilterWorkshopViewController: UIViewController {
         shareController.modalPresentationStyle = .popover
         shareController.popoverPresentationController?.barButtonItem = self.shareItem
         self.present(shareController, animated: true)
+    }
+
+    @objc private func didTapExportButton() {
+        print("didTapExport")
     }
 
     required init?(coder aDecoder: NSCoder) {
