@@ -171,10 +171,7 @@ final class ColorInput: UIView {
         }).disposed(by: bag)
 
         self.hexInput.valueDidChange.subscribe(onNext: { color in
-            guard let colorLocation = self.imageView.pointOnColorWheel(for: color) else {
-                // TODO: log error here
-                return
-            }
+            let colorLocation = self.imageView.pointOnColorWheel(for: color)
             self.dragLocation = colorLocation
             self.setNeedsLayout()
             self.report(color: color)

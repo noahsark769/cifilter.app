@@ -37,9 +37,7 @@ extension UIImageView {
         return color
     }
 
-    func pointOnColorWheel(for color: UIColor) -> CGPoint? {
-        guard let image = self.image else { return nil }
-
+    func pointOnColorWheel(for color: UIColor) -> CGPoint {
         var hue: CGFloat = 0
         var saturation: CGFloat = 0
         var brightness: CGFloat = 0
