@@ -66,11 +66,6 @@ final class AsyncFilterApplicator {
         let ciFilter = CIFilter(name: filter.name)!
         var stillNeededParameterNames = [String]()
 
-        // TODO: remove
-        if filter.name == "CIHueSaturationValueGradient" {
-            self.currentParameterConfiguration["inputColorSpace"] = CGColorSpaceCreateDeviceRGB()
-        }
-
         for parameter in filter.parameters {
             guard let value = self.currentParameterConfiguration[parameter.name] else {
                 stillNeededParameterNames.append(parameter.name)
