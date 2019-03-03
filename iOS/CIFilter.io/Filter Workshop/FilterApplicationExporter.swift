@@ -41,25 +41,21 @@ final class FilterApplicationExporter {
         print(images)
 
         do {
-            nonImages["_metadata"] = [
+            var metadata: [String: Any] = [
+                "$metadataVersion": 1,
                 "$timeCreated": Date().timeIntervalSince1970,
                 "$iOSVersionOfGeneration": UIDevice.current.systemVersion,
                 "$CIFilter.ioShaOfGeneration": AppDelegate.shared.sha(),
                 "$CIFilter.ioVersionOfGeneration": AppDelegate.shared.appVersion()
             ]
-            let jsonData = try JSONSerialization.data(withJSONObject: nonImages, options: [])
             let uuid = UUID()
             let destinationDirectory = FileManager.default.documentsDirectory
                 .appendingPathComponent("export")
                 .appendingPathComponent(filterName)
                 .appendingPathComponent("\(uuid)")
             try FileManager.default.createDirectory(at: destinationDirectory, withIntermediateDirectories: true, attributes: nil)
-            FileManager.default.createFile(
-                atPath: destinationDirectory.appendingPathComponent("metadata.json").path,
-                contents: jsonData,
-                attributes: nil
-            )
 
+            var associations = [String: Any]()
             for (key, image) in images {
                 guard let image = image as? CIImage else { continue }
                 guard let result = RenderingResult(
@@ -70,13 +66,15 @@ final class FilterApplicationExporter {
                     print("You might want to do something about that")
                     continue
                 }
+                let imageFilename = "\(key).png"
+                let imageMetadataFilename = "\(key).metadata.json"
                 FileManager.default.createFile(
-                    atPath: destinationDirectory.appendingPathComponent("\(key).png").path,
+                    atPath: destinationDirectory.appendingPathComponent(imageFilename).path,
                     contents: result.image.pngData(),
                     attributes: nil
                 )
                 FileManager.default.createFile(
-                    atPath: destinationDirectory.appendingPathComponent("\(key).metadata.json").path,
+                    atPath: destinationDirectory.appendingPathComponent(imageMetadataFilename).path,
                     contents: try JSONSerialization.data(
                         withJSONObject: [
                             "wasCropped": result.wasCropped
@@ -85,7 +83,20 @@ final class FilterApplicationExporter {
                     ),
                     attributes: nil
                 )
+                associations[key] = [
+                    "image": imageFilename,
+                    "metadata": imageMetadataFilename
+                ]
             }
+
+            metadata["_associations"] = associations
+            nonImages["_metadata"] = metadata
+
+            FileManager.default.createFile(
+                atPath: destinationDirectory.appendingPathComponent("metadata.json").path,
+                contents: try JSONSerialization.data(withJSONObject: nonImages, options: []),
+                attributes: nil
+            )
 
             FileManager.default.createFile(
                 atPath: destinationDirectory.appendingPathComponent("outputImage.png").path,
