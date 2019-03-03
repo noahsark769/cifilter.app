@@ -10,6 +10,7 @@
 		24F467DEA7F7F3D844749670 /* libPods-CIFilter.ioTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C48797878CD99B8CB9EA772 /* libPods-CIFilter.ioTests.a */; };
 		5F31BFC0D3D97B3DB60EB532 /* libPods-CIFilter.io.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8DF7E2364B4EB94F6C83712 /* libPods-CIFilter.io.a */; };
 		A116A0E0220B4CA9005DE07F /* UIColorUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A116A0DF220B4CA9005DE07F /* UIColorUtilsTest.swift */; };
+		A119025B222B31B000FE27A3 /* UIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A119025A222B31B000FE27A3 /* UIImage+Utils.swift */; };
 		A11C522521968BB000045F2E /* FilterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11C522421968BB000045F2E /* FilterListViewController.swift */; };
 		A128993921CFFF7000BEE395 /* ImageChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128993821CFFF7000BEE395 /* ImageChooserView.swift */; };
 		A128993D21D047BD00BEE395 /* FilterWorkshopParametersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128993C21D047BD00BEE395 /* FilterWorkshopParametersView.swift */; };
@@ -26,6 +27,7 @@
 		A128995621DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128995521DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift */; };
 		A128995821DEE44F00BEE395 /* ImageWorkshopConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128995721DEE44F00BEE395 /* ImageWorkshopConsoleView.swift */; };
 		A12B7AF122299D0C0084AAE6 /* ColorInputDragIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B7AF022299D0C0084AAE6 /* ColorInputDragIndicatorView.swift */; };
+		A12B7AF3222AEDA20084AAE6 /* FilterApplicationExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B7AF2222AEDA20084AAE6 /* FilterApplicationExporter.swift */; };
 		A130BD7D21EC0D1F00E586F6 /* VectorInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130BD7C21EC0D1F00E586F6 /* VectorInput.swift */; };
 		A130BD7F21EFA22400E586F6 /* ColorInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130BD7E21EFA22400E586F6 /* ColorInput.swift */; };
 		A130BD8121F0EAC700E586F6 /* UIImageView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130BD8021F0EAC700E586F6 /* UIImageView+Utils.swift */; };
@@ -83,6 +85,7 @@
 		A116A0D7220B4C93005DE07F /* CIFilter_ioTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIFilter_ioTests.swift; sourceTree = "<group>"; };
 		A116A0D9220B4C93005DE07F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A116A0DF220B4CA9005DE07F /* UIColorUtilsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorUtilsTest.swift; sourceTree = "<group>"; };
+		A119025A222B31B000FE27A3 /* UIImage+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Utils.swift"; sourceTree = "<group>"; };
 		A11C522421968BB000045F2E /* FilterListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListViewController.swift; sourceTree = "<group>"; };
 		A128993821CFFF7000BEE395 /* ImageChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageChooserView.swift; sourceTree = "<group>"; };
 		A128993C21D047BD00BEE395 /* FilterWorkshopParametersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterWorkshopParametersView.swift; sourceTree = "<group>"; };
@@ -99,6 +102,7 @@
 		A128995521DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWorkshopConsoleMessageView.swift; sourceTree = "<group>"; };
 		A128995721DEE44F00BEE395 /* ImageWorkshopConsoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWorkshopConsoleView.swift; sourceTree = "<group>"; };
 		A12B7AF022299D0C0084AAE6 /* ColorInputDragIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorInputDragIndicatorView.swift; sourceTree = "<group>"; };
+		A12B7AF2222AEDA20084AAE6 /* FilterApplicationExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterApplicationExporter.swift; sourceTree = "<group>"; };
 		A130BD7C21EC0D1F00E586F6 /* VectorInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorInput.swift; sourceTree = "<group>"; };
 		A130BD7E21EFA22400E586F6 /* ColorInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorInput.swift; sourceTree = "<group>"; };
 		A130BD8021F0EAC700E586F6 /* UIImageView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Utils.swift"; sourceTree = "<group>"; };
@@ -209,6 +213,7 @@
 				A172BAC32221CCFA00182C56 /* ColorHexInput.swift */,
 				A130BD7E21EFA22400E586F6 /* ColorInput.swift */,
 				A12B7AF022299D0C0084AAE6 /* ColorInputDragIndicatorView.swift */,
+				A12B7AF2222AEDA20084AAE6 /* FilterApplicationExporter.swift */,
 				A128995321DEE3C600BEE395 /* FilterApplicationIndicator.swift */,
 				A1A0D83F21C4AEAA0098168C /* FilterWorkshopContentView.swift */,
 				A128993C21D047BD00BEE395 /* FilterWorkshopParametersView.swift */,
@@ -301,6 +306,7 @@
 				A1D5A8C221B054A100257B5E /* SeparatorView.swift */,
 				A1D5A8BE21AF0F8200257B5E /* UIColor+Utils.swift */,
 				A1D5A8D221B4A32100257B5E /* UIEdgeInsets+Utils.swift */,
+				A119025A222B31B000FE27A3 /* UIImage+Utils.swift */,
 				A130BD8021F0EAC700E586F6 /* UIImageView+Utils.swift */,
 				A1D5A8D421B4A64A00257B5E /* UIStackView+Utils.swift */,
 			);
@@ -362,6 +368,7 @@
 				A1C662162196818100826A2B /* Frameworks */,
 				A1C662172196818100826A2B /* Resources */,
 				A1D2225C1C26C1BC0C9CA081 /* [CP] Copy Pods Resources */,
+				A12B7AF4222AF54B0084AAE6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -496,6 +503,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		A12B7AF4222AF54B0084AAE6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "git=$(sh /etc/profile; which git)\nnumber_of_commits=$(\"$git\" rev-list HEAD --count)\nsha=$(\"$git\" rev-parse --verify HEAD)\n\ntarget_plist=\"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\ndsym_plist=\"$DWARF_DSYM_FOLDER_PATH/$DWARF_DSYM_FILE_NAME/Contents/Info.plist\"\n\nfor plist in \"$target_plist\" \"$dsym_plist\"; do\nif [ -f \"$plist\" ]; then\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $number_of_commits\" \"$plist\"\n/usr/libexec/PlistBuddy -c \"Add :NGGitSha string $sha\" \"$plist\"\n/usr/libexec/PlistBuddy -c \"Set :NGGitSha $sha\" \"$plist\"\n/usr/libexec/PlistBuddy -c \"Add :NGCommitNumber string $number_of_commits\" \"$plist\"\n/usr/libexec/PlistBuddy -c \"Set :NGCommitNumber $number_of_commits\" \"$plist\"\nfi\ndone\n";
+		};
 		A1D2225C1C26C1BC0C9CA081 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -546,6 +570,7 @@
 				A128995221DD6D4000BEE395 /* CwlMutex.swift in Sources */,
 				A1D5A8B321ADB3C100257B5E /* Dictionary+Validation.swift in Sources */,
 				A128993F21D058B300BEE395 /* EitherView.swift in Sources */,
+				A12B7AF3222AEDA20084AAE6 /* FilterApplicationExporter.swift in Sources */,
 				A128995421DEE3C700BEE395 /* FilterApplicationIndicator.swift in Sources */,
 				A1D5A8D121B49E5400257B5E /* FilterAvailabilityView.swift in Sources */,
 				A1D5A8B821AF034A00257B5E /* FilterCategoryHeaderView.swift in Sources */,
@@ -581,6 +606,7 @@
 				A1D5A8C321B054A100257B5E /* SeparatorView.swift in Sources */,
 				A1D5A8BF21AF0F8200257B5E /* UIColor+Utils.swift in Sources */,
 				A1D5A8D321B4A32100257B5E /* UIEdgeInsets+Utils.swift in Sources */,
+				A119025B222B31B000FE27A3 /* UIImage+Utils.swift in Sources */,
 				A130BD8121F0EAC700E586F6 /* UIImageView+Utils.swift in Sources */,
 				A1D5A8D521B4A64A00257B5E /* UIStackView+Utils.swift in Sources */,
 				A130BD7D21EC0D1F00E586F6 /* VectorInput.swift in Sources */,

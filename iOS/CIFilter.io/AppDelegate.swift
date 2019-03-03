@@ -14,6 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    static var shared: AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         IQKeyboardManager.shared.enable = true
 
@@ -61,6 +65,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         splitViewController.toggleMasterView()
 //        splitViewController.preferredDisplayMode = .primaryOverlay
         return true
+    }
+
+    func appVersion() -> String {
+        return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+    }
+
+    func sha() -> String {
+        guard let sha = Bundle.main.object(forInfoDictionaryKey: "NGGitSha") as? String else {
+            print("WARNING git sha could not be determined")
+            #if DEBUG
+            fatalError()
+            #else
+            return "unknown"
+            #endif
+        }
+        return sha
+    }
+
+    func commitNumber() -> String {
+        guard let number = Bundle.main.object(forInfoDictionaryKey: "NGCommitNumber") as? String else {
+            print("WARNING commit number could not be determined")
+            fatalError()
+        }
+        return number
     }
 }
 

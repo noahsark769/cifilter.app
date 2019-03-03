@@ -51,7 +51,7 @@ final class FilterWorkshopView: UIView {
             switch event {
             case .generationStarted:
                 self.consoleView.update(for: .showActivity)
-            case let .generationCompleted(_, totalTime):
+            case let .generationCompleted(_, totalTime, _):
                 self.consoleView.update(for: .hideActivity)
 
                 // Only show a success message if the generation took more than 4 seconds, so as

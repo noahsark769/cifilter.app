@@ -49,7 +49,7 @@ final class FilterWorkshopContentView: UIView {
                 self.outputImageView.setLoading()
             case let .generationErrored(error):
                 print("Generation errored! \(error)")
-            case let .generationCompleted(image, _):
+            case let .generationCompleted(image, _, _):
                 print("Generation completed!!")
                 self.outputImageView.set(image: image)
                 print("Finished setting image")

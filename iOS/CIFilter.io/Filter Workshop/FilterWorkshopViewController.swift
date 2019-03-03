@@ -14,6 +14,7 @@ import MobileCoreServices
 final class FilterWorkshopViewController: UIViewController {
     private let bag = DisposeBag()
     private let applicator = AsyncFilterApplicator()
+    private let exporter = FilterApplicationExporter()
     private lazy var workshopView: FilterWorkshopView = {
         return FilterWorkshopView(applicator: self.applicator)
     }()
@@ -22,6 +23,7 @@ final class FilterWorkshopViewController: UIViewController {
     private var shareItem: UIBarButtonItem! = nil
     private var exportItem: UIBarButtonItem! = nil
     private var inputImageCurrentlySelecting: String? = nil
+    private var currentGeneratedImageParmaeters: [String: Any]? = nil
 
     init(filter: FilterInfo) {
         self.filter = filter
@@ -40,7 +42,7 @@ final class FilterWorkshopViewController: UIViewController {
         #endif
 
         applicator.events.observeOn(MainScheduler.instance).subscribe(onNext: { event in
-            guard case let .generationCompleted(image, _) = event else {
+            guard case let .generationCompleted(image, _, parameters) = event else {
                 self.shareItem.isEnabled = false
                 self.exportItem.isEnabled = false
                 return
@@ -48,6 +50,7 @@ final class FilterWorkshopViewController: UIViewController {
             self.shareItem.isEnabled = true
             self.exportItem.isEnabled = true
             self.currentImage = image
+            self.currentGeneratedImageParmaeters = parameters
         }).disposed(by: bag)
 
         workshopView.didChooseAddImage.subscribe(onNext: { paramName, sourceView in
@@ -83,7 +86,10 @@ final class FilterWorkshopViewController: UIViewController {
     }
 
     @objc private func didTapExportButton() {
-        print("didTapExport")
+        guard let outputImage = self.currentImage, let parameters = self.currentGeneratedImageParmaeters else {
+            return
+        }
+        exporter.export(outputImage: outputImage, parameters: parameters, filterName: self.filter.name)
     }
 
     required init?(coder aDecoder: NSCoder) {

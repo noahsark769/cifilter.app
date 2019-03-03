@@ -26,7 +26,7 @@ final class AsyncFilterApplicator {
 
     enum Event {
         case generationStarted
-        case generationCompleted(image: UIImage, totalTime: TimeInterval)
+        case generationCompleted(image: UIImage, totalTime: TimeInterval, parameters: [String: Any])
         case generationErrored(error: Error)
     }
 
@@ -101,7 +101,8 @@ final class AsyncFilterApplicator {
                 guard !op.isCancelled else { return }
                 self.events.onNext(.generationCompleted(
                     image: UIImage(cgImage: cgImage),
-                    totalTime: CACurrentMediaTime() - self.timeStarted!
+                    totalTime: CACurrentMediaTime() - self.timeStarted!,
+                    parameters: self.currentParameterConfiguration
                 ))
             }
             queue.addOperation(blockOperation)
