@@ -67,25 +67,14 @@ final class FilterApplicationExporter {
                     continue
                 }
                 let imageFilename = "\(key).png"
-                let imageMetadataFilename = "\(key).metadata.json"
                 FileManager.default.createFile(
                     atPath: destinationDirectory.appendingPathComponent(imageFilename).path,
                     contents: result.image.pngData(),
                     attributes: nil
                 )
-                FileManager.default.createFile(
-                    atPath: destinationDirectory.appendingPathComponent(imageMetadataFilename).path,
-                    contents: try JSONSerialization.data(
-                        withJSONObject: [
-                            "wasCropped": result.wasCropped
-                        ],
-                        options: []
-                    ),
-                    attributes: nil
-                )
                 associations[key] = [
                     "image": imageFilename,
-                    "metadata": imageMetadataFilename
+                    "wasCropped": result.wasCropped
                 ]
             }
 

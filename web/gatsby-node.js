@@ -1,6 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
+// https://stackoverflow.com/questions/18112204/get-all-directories-within-directory-nodejs
+const isDirectorySync = (source) => fs.lstatSync(source).isDirectory()
+const getDirectoriesSync = (source) => {
+  return fs.readdirSync(source).map(name => path.join(source, name)).filter(isDirectorySync)
+}
+
 const readJsonAsync = (filepath, callback) => {
     return new Promise((resolve, reject) => {
         fs.readFile(filepath, 'utf-8', function(err, data) {
@@ -18,28 +24,59 @@ const readJsonAsync = (filepath, callback) => {
     });
 }
 
+const combineFilterDataWithExampleData = (data) => {
+    return Promise.all(data.map((filter) => {
+        const name = filter.name;
+        const examplesDirectoryPath = path.resolve(`src/data/examples/${name}/`);
+        if (!fs.existsSync(examplesDirectoryPath)) {
+            return Promise.resolve({
+                ...filter,
+                examples: null
+            });
+        }
+
+        const exampleDirectoryPaths = getDirectoriesSync(examplesDirectoryPath);
+        return Promise.all(exampleDirectoryPaths.map((exampleDirectoryPath) => {
+            return readJsonAsync(path.join(exampleDirectoryPath, "metadata.json")).then((json) => {
+                return {
+                    id: path.basename(exampleDirectoryPath),
+                    data: json
+                };
+            })
+        })).then((examples) => {
+            return {
+                ...filter,
+                examples: examples
+            }
+        });
+    }));
+};
+
 exports.createPages = ({ graphql, actions }) => {
-    const { createPage } = actions
+    const { createPage } = actions;
 
     return new Promise((resolve, reject) => {
-        const templateComponent = path.resolve(`src/templates/Main.jsx`)
+        const templateComponent = path.resolve(`src/templates/Main.jsx`);
 
         readJsonAsync(path.resolve(`src/data/filters.json`)).then((data) => {
-            createPage({
-                path: '/',
-                component: templateComponent,
-                context: {
-                    filters: data
-                }
+            combineFilterDataWithExampleData(data).then((editedData) => {
+                console.log(editedData.filter(filter => filter.name === "CISourceInCompositing"));
+                createPage({
+                    path: '/',
+                    component: templateComponent,
+                    context: {
+                        filters: editedData
+                    }
+                });
+                // data.pages.forEach((pageData) => {
+                //     const pagePath = pageData.pagePath;
+                //     createPage({
+                //         path: pagePath,
+                //         component: templateComponent,
+                //         context: pageData,
+                //     })
+                // });
             });
-            // data.pages.forEach((pageData) => {
-            //     const pagePath = pageData.pagePath;
-            //     createPage({
-            //         path: pagePath,
-            //         component: templateComponent,
-            //         context: pageData,
-            //     })
-            // });
             resolve();
         });
     })
