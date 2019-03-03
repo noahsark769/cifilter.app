@@ -1,13 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import FilterParameter from './FilterParameter';
-
-const Heading = styled.div`
-    font-size: 14px;
-    font-weight: bold;
-    color: #F5BD5D;
-    text-transform: uppercase;
-`;
+import FilterDetailSectionHeading from './FilterDetailSectionHeading';
 
 function filterHasLongParameterNames(parameters) {
     for (let parameter of parameters) {
@@ -21,9 +15,9 @@ function filterHasLongParameterNames(parameters) {
 const FilterParameters = (props) => {
     return (
         <div>
-            <Heading className="margin-bottom--md margin-top--lg">
+            <FilterDetailSectionHeading>
                 {props.parameters.length > 0 ? "Parameters" : "This filter takes no parameters"}
-            </Heading>
+            </FilterDetailSectionHeading>
             <div>{props.parameters.sort((p1, p2) => p1.name.localeCompare(p2.name)).map(
                 (parameter) => <FilterParameter
                                     key={parameter.name}

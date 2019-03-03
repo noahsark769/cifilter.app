@@ -26,8 +26,6 @@ const Image = (props) => (
       const image = data.images.edges.find(n => {
         return n.node.relativePath.includes(props.filename);
       });
-      console.log(props.filename);
-      console.log(data);
       if (!image) {
         return null;
       }
