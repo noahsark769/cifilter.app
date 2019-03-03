@@ -38,9 +38,11 @@ const combineFilterDataWithExampleData = (data) => {
         const exampleDirectoryPaths = getDirectoriesSync(examplesDirectoryPath);
         return Promise.all(exampleDirectoryPaths.map((exampleDirectoryPath) => {
             return readJsonAsync(path.join(exampleDirectoryPath, "metadata.json")).then((json) => {
+                const id = path.basename(exampleDirectoryPath)
                 return {
-                    id: path.basename(exampleDirectoryPath),
-                    data: json
+                    id: id,
+                    data: json,
+                    basepath: `examples/${name}/${id}`
                 };
             })
         })).then((examples) => {

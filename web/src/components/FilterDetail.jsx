@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import FilterTitle from './FilterTitle';
 import FilterParameters from './FilterParameters';
+import FilterExample from './FilterExample';
 
 const Container = styled.div`
     width: 700px;
@@ -29,6 +30,7 @@ const FilterDetail = (props) => {
                 className="margin-bottom--md" />
             <Description>{props.filter.description}</Description>
             <FilterParameters parameters={props.filter.parameters} />
+            { props.filter.examples && <FilterExample example={props.filter.examples[0]} /> }
         </Container>
     )
 };
