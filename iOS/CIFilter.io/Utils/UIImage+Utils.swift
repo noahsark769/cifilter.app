@@ -12,7 +12,9 @@ import CoreImage
 struct RenderingResult {
     let image: UIImage
     let wasCropped: Bool
+}
 
+extension RenderingResult {
     init?(renderingFrom ciImage: CIImage, maximumExtent: CGRect) {
         let context = CIContext()
         var imageToRender = ciImage

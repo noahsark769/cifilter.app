@@ -18,7 +18,7 @@ final class FilterWorkshopViewController: UIViewController {
     private lazy var workshopView: FilterWorkshopView = {
         return FilterWorkshopView(applicator: self.applicator)
     }()
-    private var currentImage: UIImage? = nil
+    private var currentImage: RenderingResult? = nil
     private let filter: FilterInfo
     private var shareItem: UIBarButtonItem! = nil
     private var exportItem: UIBarButtonItem! = nil

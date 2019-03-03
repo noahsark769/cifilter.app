@@ -49,9 +49,9 @@ final class FilterWorkshopContentView: UIView {
                 self.outputImageView.setLoading()
             case let .generationErrored(error):
                 print("Generation errored! \(error)")
-            case let .generationCompleted(image, _, _):
+            case let .generationCompleted(renderingResult, _, _):
                 print("Generation completed!!")
-                self.outputImageView.set(image: image)
+                self.outputImageView.set(image: renderingResult.image)
                 print("Finished setting image")
             }
         }).disposed(by: bag)

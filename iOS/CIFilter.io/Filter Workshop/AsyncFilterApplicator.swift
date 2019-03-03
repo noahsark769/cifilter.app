@@ -26,7 +26,7 @@ final class AsyncFilterApplicator {
 
     enum Event {
         case generationStarted
-        case generationCompleted(image: UIImage, totalTime: TimeInterval, parameters: [String: Any])
+        case generationCompleted(image: RenderingResult, totalTime: TimeInterval, parameters: [String: Any])
         case generationErrored(error: Error)
     }
 
@@ -90,8 +90,10 @@ final class AsyncFilterApplicator {
                 }
                 let context = CIContext(options: nil)
 
+                var wasCropped = false
                 if outputImage.extent.isInfinite {
                     outputImage = outputImage.cropped(to: CGRect(x: 0, y: 0, width: 500, height: 500))
+                    wasCropped = true
                 }
 
                 guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
@@ -100,7 +102,7 @@ final class AsyncFilterApplicator {
                 }
                 guard !op.isCancelled else { return }
                 self.events.onNext(.generationCompleted(
-                    image: UIImage(cgImage: cgImage),
+                    image: RenderingResult(image: UIImage(cgImage: cgImage), wasCropped: wasCropped),
                     totalTime: CACurrentMediaTime() - self.timeStarted!,
                     parameters: self.currentParameterConfiguration
                 ))

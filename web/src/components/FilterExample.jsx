@@ -20,6 +20,17 @@ const Wrapper = styled.div`
     }
 `;
 
+const OutputImageWrapper = styled.div`
+    flex: 2;
+    &:first-child {
+        margin-right: 20px;
+    }
+`;
+
+const OutputImageSpacer = styled.div`
+    flex: 1;
+`;
+
 const ArrowContainer = styled.div`
     display: flex;
     justify-content: center;
@@ -28,13 +39,16 @@ const ArrowContainer = styled.div`
 
 const FilterExample = (props) => {
     console.log(props);
-
+    const outputImageFilename = props.example.data.outputImage.image;
     return (
         <Container>
             <FilterDetailSectionHeading>Example</FilterDetailSectionHeading>
             <ImageList>
-                {Object.entries(props.example.data._metadata._associations).map((entry) => {
+                {Object.entries(props.example.data).map((entry) => {
                     const [name, data] = entry;
+                    if (name === "_metadata") { return null; }
+                    if (data.type !== "image") { return null; }
+                    if (name === "outputImage") { return null; }
                     return (
                         <Wrapper>
                             <FilterExampleImage
@@ -45,7 +59,19 @@ const FilterExample = (props) => {
                         </Wrapper>);
                 })}
             </ImageList>
-            <ArrowContainer><IoIosArrowRoundDown size={50} color="#999" /></ArrowContainer>
+            <ArrowContainer>
+                <IoIosArrowRoundDown size={50} color="#999" />
+            </ArrowContainer>
+            <ImageList>
+                <OutputImageSpacer />
+                <OutputImageWrapper>
+                    <FilterExampleImage
+                        name="outputImage"
+                        filename={`${props.example.basepath}/${outputImageFilename}`}
+                    />
+                </OutputImageWrapper>
+                <OutputImageSpacer />
+            </ImageList>
         </Container>
     )
 };

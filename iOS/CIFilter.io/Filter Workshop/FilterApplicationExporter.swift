@@ -24,7 +24,7 @@ final class FilterApplicationExporter {
     // Reserved for configuration
     init() {}
 
-    func export(outputImage: UIImage, parameters: [String: Any], filterName: String) {
+    func export(outputImage: RenderingResult, parameters: [String: Any], filterName: String) {
         let images = parameters.filter { $1 is CIImage }
         var nonImages = parameters.filter { !($1 is CIImage) }
 
@@ -41,13 +41,6 @@ final class FilterApplicationExporter {
         print(images)
 
         do {
-            var metadata: [String: Any] = [
-                "$metadataVersion": 1,
-                "$timeCreated": Date().timeIntervalSince1970,
-                "$iOSVersionOfGeneration": UIDevice.current.systemVersion,
-                "$CIFilter.ioShaOfGeneration": AppDelegate.shared.sha(),
-                "$CIFilter.ioVersionOfGeneration": AppDelegate.shared.appVersion()
-            ]
             let uuid = UUID()
             let destinationDirectory = FileManager.default.documentsDirectory
                 .appendingPathComponent("export")
@@ -55,7 +48,6 @@ final class FilterApplicationExporter {
                 .appendingPathComponent("\(uuid)")
             try FileManager.default.createDirectory(at: destinationDirectory, withIntermediateDirectories: true, attributes: nil)
 
-            var associations = [String: Any]()
             for (key, image) in images {
                 guard let image = image as? CIImage else { continue }
                 guard let result = RenderingResult(
@@ -72,13 +64,27 @@ final class FilterApplicationExporter {
                     contents: result.image.pngData(),
                     attributes: nil
                 )
-                associations[key] = [
+                nonImages[key] = [
+                    "type": "image",
                     "image": imageFilename,
                     "wasCropped": result.wasCropped
                 ]
             }
 
-            metadata["_associations"] = associations
+            let outputImageFilename = "outputImage.png"
+            nonImages["outputImage"] = [
+                "type": "image",
+                "image": outputImageFilename,
+                "wasCropped": outputImage.wasCropped
+            ]
+
+            let metadata: [String: Any] = [
+                "$metadataVersion": 1,
+                "$timeCreated": Date().timeIntervalSince1970,
+                "$iOSVersionOfGeneration": UIDevice.current.systemVersion,
+                "$CIFilter.ioShaOfGeneration": AppDelegate.shared.sha(),
+                "$CIFilter.ioVersionOfGeneration": AppDelegate.shared.appVersion()
+            ]
             nonImages["_metadata"] = metadata
 
             FileManager.default.createFile(
@@ -88,8 +94,8 @@ final class FilterApplicationExporter {
             )
 
             FileManager.default.createFile(
-                atPath: destinationDirectory.appendingPathComponent("outputImage.png").path,
-                contents: outputImage.pngData(),
+                atPath: destinationDirectory.appendingPathComponent(outputImageFilename).path,
+                contents: outputImage.image.pngData(),
                 attributes: nil
             )
             print("Export success")
