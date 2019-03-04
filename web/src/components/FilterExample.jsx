@@ -24,49 +24,74 @@ const ArrowContainer = styled.div`
     margin: 0 20px;
 `;
 
+const WasCropped = (props) => {
+    if (props.wasCropped) {
+        return (<span>Note: this example image was cropped since the original outputImage had infinite extent.</span>)
+    }
+    return null;
+};
+
+const HorizontalImageConfiguration = (props) => {
+    return (
+        <ImageList>
+            {props.parameterValues.map((value) => {
+                const {name, type, additionalData} = value;
+                if (type !== "image") { return null; }
+                if (name === "outputImage") { return null; }
+                return (
+                    <Wrapper>
+                        <FilterExampleImage
+                            key={name}
+                            name={name}
+                            filename={`${props.basepath}/${additionalData.image}`}
+                        />
+                    </Wrapper>);
+            })}
+            <ArrowContainer>
+                <IoIosArrowRoundForward size={50} color="#999" />
+            </ArrowContainer>
+            <Wrapper>
+                <FilterExampleImage
+                    name="outputImage"
+                    filename={`${props.basepath}/${props.outputImageData.image}`}
+                />
+                <WasCropped wasCropped={props.outputImageData.wasCropped} />
+            </Wrapper>
+        </ImageList>
+    );
+};
+
 const FilterExample = (props) => {
     console.log(props);
     const outputImageData = props.example.data.parameterValues.filter(
         ({ name }) => name === 'outputImage'
     )[0];
-    const outputImageFilename = outputImageData.additionalData.image;
 
-    const renderWasCropped = () => {
-        if (outputImageData.wasCropped) {
-            return (<span>Note: this example image was cropped since the original outputImage had infinite extent.</span>)
-        }
-        return null;
-    };
+    const nonImageParameters = props.example.data.parameterValues.filter(({ type }) => type !== "image");
+    const imageParameters = props.example.data.parameterValues.filter(
+        ({ type, name }) => type === "image" && name !== "outputImage"
+    );
+
+    let rendered;
+    if (nonImageParameters.length == 0 && imageParameters.length == 2) {
+        rendered = (<HorizontalImageConfiguration
+            basepath={props.example.basepath}
+            outputImageData={outputImageData.additionalData}
+            parameterValues={props.example.data.parameterValues}
+            />);
+    } else {
+        rendered = (<HorizontalImageConfiguration
+            basepath={props.example.basepath}
+            outputImageData={outputImageData.additionalData}
+            parameterValues={props.example.data.parameterValues}
+            />); 
+    }
 
     return (
         <>
             <FilterDetailSectionHeading>Example</FilterDetailSectionHeading>
-            <ImageList>
-                {props.example.data.parameterValues.map((value) => {
-                    const {name, type, additionalData} = value;
-                    if (type !== "image") { return null; }
-                    if (name === "outputImage") { return null; }
-                    return (
-                        <Wrapper>
-                            <FilterExampleImage
-                                key={name}
-                                name={name}
-                                filename={`${props.example.basepath}/${additionalData.image}`}
-                            />
-                        </Wrapper>);
-                })}
-                <ArrowContainer>
-                    <IoIosArrowRoundForward size={50} color="#999" />
-                </ArrowContainer>
-                <Wrapper>
-                    <FilterExampleImage
-                        name="outputImage"
-                        filename={`${props.example.basepath}/${outputImageFilename}`}
-                    />
-                    {renderWasCropped()}
-                </Wrapper>
-            </ImageList>
+            {rendered}
         </>
-    )
+    );
 };
 export default FilterExample;
