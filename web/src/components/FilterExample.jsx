@@ -4,10 +4,6 @@ import FilterExampleImage from './FilterExampleImage';
 import FilterDetailSectionHeading from './FilterDetailSectionHeading';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 
-const Container = styled.div`
-
-`;
-
 const ImageList = styled.div`
     display: flex;
     flex-direction: row;
@@ -43,7 +39,7 @@ const FilterExample = (props) => {
     };
 
     return (
-        <Container>
+        <>
             <FilterDetailSectionHeading>Example</FilterDetailSectionHeading>
             <ImageList>
                 {props.example.data.parameterValues.map((value) => {
@@ -70,7 +66,7 @@ const FilterExample = (props) => {
                     {renderWasCropped()}
                 </Wrapper>
             </ImageList>
-        </Container>
+        </>
     )
 };
 export default FilterExample;
