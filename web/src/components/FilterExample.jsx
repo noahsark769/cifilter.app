@@ -30,22 +30,32 @@ const ArrowContainer = styled.div`
 
 const FilterExample = (props) => {
     console.log(props);
-    const outputImageFilename = props.example.data.outputImage.image;
+    const outputImageData = props.example.data.parameterValues.filter(
+        ({ name }) => name === 'outputImage'
+    )[0];
+    const outputImageFilename = outputImageData.additionalData.image;
+
+    const renderWasCropped = () => {
+        if (outputImageData.wasCropped) {
+            return (<span>Note: this example image was cropped since the original outputImage had infinite extent.</span>)
+        }
+        return null;
+    };
+
     return (
         <Container>
             <FilterDetailSectionHeading>Example</FilterDetailSectionHeading>
             <ImageList>
-                {Object.entries(props.example.data).map((entry) => {
-                    const [name, data] = entry;
-                    if (name === "_metadata") { return null; }
-                    if (data.type !== "image") { return null; }
+                {props.example.data.parameterValues.map((value) => {
+                    const {name, type, additionalData} = value;
+                    if (type !== "image") { return null; }
                     if (name === "outputImage") { return null; }
                     return (
                         <Wrapper>
                             <FilterExampleImage
                                 key={name}
                                 name={name}
-                                filename={`${props.example.basepath}/${data.image}`}
+                                filename={`${props.example.basepath}/${additionalData.image}`}
                             />
                         </Wrapper>);
                 })}
@@ -57,6 +67,7 @@ const FilterExample = (props) => {
                         name="outputImage"
                         filename={`${props.example.basepath}/${outputImageFilename}`}
                     />
+                    {renderWasCropped()}
                 </Wrapper>
             </ImageList>
         </Container>

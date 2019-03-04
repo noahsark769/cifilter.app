@@ -62,7 +62,6 @@ exports.createPages = ({ graphql, actions }) => {
 
         readJsonAsync(path.resolve(`src/data/filters.json`)).then((data) => {
             combineFilterDataWithExampleData(data).then((editedData) => {
-                console.log(editedData.filter(filter => filter.name === "CISourceInCompositing"));
                 createPage({
                     path: '/',
                     component: templateComponent,

@@ -16,6 +16,80 @@ extension FileManager {
     }
 }
 
+struct AnyEncodable: Encodable {
+    var value: Encodable
+
+    init(_ value: Encodable) {
+        self.value = value
+    }
+
+    func encode(to encoder: Encoder) throws {
+        try value.encode(to: encoder)
+    }
+}
+
+struct ExportMetadata: Encodable {
+    let version: Int
+    let timeCreated: TimeInterval
+    let iosVersionOfGeneration: String
+    let shaOfGeneration: String
+    let appVersionOfGeneration: String
+}
+
+protocol ExportType: Encodable {}
+
+struct ExportInt: ExportType {
+    let value: Int
+}
+
+struct ExportDouble: ExportType {
+    let value: Double
+}
+
+struct ExportImage: ExportType {
+    let image: String
+    let wasCropped: Bool
+}
+
+struct ExportColor: ExportType {
+    let value: CIColor
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(UIColor(ciColor: value).toHexString())
+    }
+}
+
+struct ExportParameterValue: Encodable {
+    let type: String
+    let name: String
+    let additionalData: AnyEncodable
+}
+
+struct ExportExample: Encodable {
+    let metadata: ExportMetadata
+    let parameterValues: [ExportParameterValue]
+
+    enum CodingKeys: String, CodingKey {
+        case metadata = "_metadata"
+        case parameterValues
+    }
+}
+
+extension ExportParameterValue {
+    init(name: String, int: Int) {
+        self.init(type: "number", name: name, additionalData: AnyEncodable(ExportInt(value: int)))
+    }
+
+    init(name: String, color: CIColor) {
+        self.init(type: "color", name: name, additionalData: AnyEncodable(ExportColor(value: color)))
+    }
+
+    init(name: String, image: String, wasCropped: Bool) {
+        self.init(type: "image", name: name, additionalData: AnyEncodable(ExportImage(image: image, wasCropped: wasCropped)))
+    }
+}
+
 /**
  * Takes one application of a filter (a unique set of input params and an output image) and exports
  * them to disk.
@@ -24,84 +98,77 @@ final class FilterApplicationExporter {
     // Reserved for configuration
     init() {}
 
+    static func exportToFilesystem(image: CIImage, filterName: String, parameterName: String, exportId: UUID) -> ExportParameterValue {
+        guard let result = RenderingResult(
+            renderingFrom: image,
+            maximumExtent: CGRect(x: 0, y: 0, width: 500, height: 500)
+            ) else {
+                fatalError("Uh oh! Could not render exported png for \(filterName) \(parameterName)")
+        }
+        return FilterApplicationExporter.exportToFilesystem(renderingResult: result, filterName: filterName, parameterName: parameterName, exportId: exportId)
+    }
+
+    static func exportToFilesystem(renderingResult result: RenderingResult, filterName: String, parameterName: String, exportId: UUID) -> ExportParameterValue {
+        let destinationDirectory = FileManager.default.documentsDirectory
+            .appendingPathComponent("export")
+            .appendingPathComponent(filterName)
+            .appendingPathComponent("\(exportId)")
+        try! FileManager.default.createDirectory(at: destinationDirectory, withIntermediateDirectories: true, attributes: nil)
+        let imageFilename = "\(parameterName).png"
+        FileManager.default.createFile(
+            atPath: destinationDirectory.appendingPathComponent(imageFilename).path,
+            contents: result.image.pngData(),
+            attributes: nil
+        )
+
+        return ExportParameterValue(name: parameterName, image: imageFilename, wasCropped: result.wasCropped)
+    }
+
+    static func transformParameterValues(_ original: [String: Any], filterName: String, exportId: UUID) -> [ExportParameterValue] {
+        var result = [ExportParameterValue]()
+        for (key, value) in original {
+            switch value {
+            case let image as CIImage:
+                result.append(FilterApplicationExporter.exportToFilesystem(
+                    image: image,
+                    filterName: filterName,
+                    parameterName: key,
+                    exportId: exportId
+                ))
+            case let value as Int:
+                result.append(ExportParameterValue(name: key, int: value))
+            case let ciColor as CIColor:
+                result.append(ExportParameterValue(name: key, color: ciColor))
+            default:
+                fatalError("Could not map value of type \(type(of: value)): \(value)")
+            }
+        }
+        return result
+    }
+
     func export(outputImage: RenderingResult, parameters: [String: Any], filterName: String) {
-        let images = parameters.filter { $1 is CIImage }
-        var nonImages = parameters.filter { !($1 is CIImage) }
+        let encoder = JSONEncoder()
+        let exportId = UUID()
+        var exportParameterValues = FilterApplicationExporter.transformParameterValues(parameters, filterName: filterName, exportId: exportId)
+        exportParameterValues.append(FilterApplicationExporter.exportToFilesystem(renderingResult: outputImage, filterName: filterName, parameterName: "outputImage", exportId: exportId))
 
-        for (key, value) in nonImages {
-            if value is NSNumber || value is NSString {
-                continue
-            } else {
-                // TODO: log error
-                print("Uh oh! \(key) was not a valid type")
-                print("You might want to do something about that")
-            }
-        }
-
-        print(images)
-
-        do {
-            let uuid = UUID()
-            let destinationDirectory = FileManager.default.documentsDirectory
-                .appendingPathComponent("export")
-                .appendingPathComponent(filterName)
-                .appendingPathComponent("\(uuid)")
-            try FileManager.default.createDirectory(at: destinationDirectory, withIntermediateDirectories: true, attributes: nil)
-
-            for (key, image) in images {
-                guard let image = image as? CIImage else { continue }
-                guard let result = RenderingResult(
-                    renderingFrom: image,
-                    maximumExtent: CGRect(x: 0, y: 0, width: 500, height: 500)
-                ) else {
-                    print("Uh oh! Could not render exported png for \(filterName) \(key)")
-                    print("You might want to do something about that")
-                    continue
-                }
-                let imageFilename = "\(key).png"
-                FileManager.default.createFile(
-                    atPath: destinationDirectory.appendingPathComponent(imageFilename).path,
-                    contents: result.image.pngData(),
-                    attributes: nil
-                )
-                nonImages[key] = [
-                    "type": "image",
-                    "image": imageFilename,
-                    "wasCropped": result.wasCropped
-                ]
-            }
-
-            let outputImageFilename = "outputImage.png"
-            nonImages["outputImage"] = [
-                "type": "image",
-                "image": outputImageFilename,
-                "wasCropped": outputImage.wasCropped
-            ]
-
-            let metadata: [String: Any] = [
-                "$metadataVersion": 1,
-                "$timeCreated": Date().timeIntervalSince1970,
-                "$iOSVersionOfGeneration": UIDevice.current.systemVersion,
-                "$CIFilter.ioShaOfGeneration": AppDelegate.shared.sha(),
-                "$CIFilter.ioVersionOfGeneration": AppDelegate.shared.appVersion()
-            ]
-            nonImages["_metadata"] = metadata
-
-            FileManager.default.createFile(
-                atPath: destinationDirectory.appendingPathComponent("metadata.json").path,
-                contents: try JSONSerialization.data(withJSONObject: nonImages, options: []),
-                attributes: nil
-            )
-
-            FileManager.default.createFile(
-                atPath: destinationDirectory.appendingPathComponent(outputImageFilename).path,
-                contents: outputImage.image.pngData(),
-                attributes: nil
-            )
-            print("Export success")
-        } catch {
-            print("Uh oh! Encountered an error serializing json: \(error)")
-            print("You might want to do something about that")
-        }
+        let metadata = ExportMetadata(
+            version: 1,
+            timeCreated: Date().timeIntervalSince1970,
+            iosVersionOfGeneration: UIDevice.current.systemVersion,
+            shaOfGeneration: AppDelegate.shared.sha(),
+            appVersionOfGeneration: AppDelegate.shared.appVersion()
+        )
+        let exportExample = ExportExample(metadata: metadata, parameterValues: exportParameterValues)
+        let destinationDirectory = FileManager.default.documentsDirectory
+            .appendingPathComponent("export")
+            .appendingPathComponent(filterName)
+            .appendingPathComponent("\(exportId)")
+        FileManager.default.createFile(
+            atPath: destinationDirectory.appendingPathComponent("metadata.json").path,
+            contents: try! encoder.encode(exportExample),
+            attributes: nil
+        )
+        print("Export success")
     }
 }
