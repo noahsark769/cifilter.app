@@ -2,10 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import Image from './Image';
 
-const Container = styled.div`
-
-`;
-
 const Name = styled.div`
     font-size: 12px;
     font-weight: bold;
@@ -22,12 +18,11 @@ const ImageContainer = styled.div`
 `;
 
 const FilterExampleImage = (props) => {
-    console.log(props);
     return (
-        <Container>
+        <>
             <Name>{props.name}</Name>
             <ImageContainer><Image filename={props.filename} /></ImageContainer>
-        </Container>
+        </>
     )
 };
 export default FilterExampleImage;

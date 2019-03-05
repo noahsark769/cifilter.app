@@ -1,68 +1,89 @@
 import React from 'react';
 import styled from 'styled-components';
 import FilterExampleImage from './FilterExampleImage';
+import FilterExampleParameter from './FilterExampleParameter';
 import FilterDetailSectionHeading from './FilterDetailSectionHeading';
-import { IoIosArrowRoundForward } from 'react-icons/io';
+import HorizontalImageConfiguration, { WasCropped } from './HorizontalImageConfiguration';
+import { IoIosArrowRoundDown } from 'react-icons/io';
 
-const ImageList = styled.div`
+const FlexParent = styled.div`
+    display: flex;
+    flex-direction: ${props => props.column ? "column" : "row"};
+`;
+
+const Container = styled.div`
     display: flex;
     flex-direction: row;
 `;
 
-const Wrapper = styled.div`
-    flex: 4;
+const Column = styled.div`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     &:first-child {
-        margin-right: 20px;
+        margin-right: 24px;
     }
 `;
 
 const ArrowContainer = styled.div`
     flex: 1;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
-    margin: 0 20px;
+    margin: 20px 0;
+    width: 100%;
 `;
 
-const WasCropped = (props) => {
-    if (props.wasCropped) {
-        return (<span>Note: this example image was cropped since the original outputImage had infinite extent.</span>)
-    }
-    return null;
-};
+const OutputImageContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+`;
 
-const HorizontalImageConfiguration = (props) => {
+const OutputImageWrapper = styled.div`
+    flex-grow: 0.46;
+`;
+
+const NormalImageConfiguration = (props) => {
+    console.log(props);
     return (
-        <ImageList>
-            {props.parameterValues.map((value) => {
-                const {name, type, additionalData} = value;
-                if (type !== "image") { return null; }
-                if (name === "outputImage") { return null; }
-                return (
-                    <Wrapper>
-                        <FilterExampleImage
-                            key={name}
-                            name={name}
-                            filename={`${props.basepath}/${additionalData.image}`}
-                        />
-                    </Wrapper>);
-            })}
+        <FlexParent column>
+            <Container>
+                <Column>
+                    {props.imageParameters.map((value) => {
+                        const {name, type, additionalData} = value;
+                        return (<FilterExampleImage
+                                    key={name}
+                                    name={name}
+                                    filename={`${props.basepath}/${additionalData.image}`}
+                                />);
+                    })}
+                </Column>
+                <Column>
+                    {props.nonImageParameters.map((value) => {
+                        return (<FilterExampleParameter
+                                    key={value.name}
+                                    data={value}
+                                />);
+                    })}
+                </Column>
+            </Container>
             <ArrowContainer>
-                <IoIosArrowRoundForward size={50} color="#999" />
+                <IoIosArrowRoundDown size={50} color="#999" />
             </ArrowContainer>
-            <Wrapper>
-                <FilterExampleImage
-                    name="outputImage"
-                    filename={`${props.basepath}/${props.outputImageData.image}`}
-                />
-                <WasCropped wasCropped={props.outputImageData.wasCropped} />
-            </Wrapper>
-        </ImageList>
+            <OutputImageContainer>
+                <OutputImageWrapper>
+                    <FilterExampleImage
+                        name="outputImage"
+                        filename={`${props.basepath}/${props.outputImageData.image}`}
+                    />
+                </OutputImageWrapper>
+            </OutputImageContainer>
+        </FlexParent>
     );
 };
 
 const FilterExample = (props) => {
-    console.log(props);
     const outputImageData = props.example.data.parameterValues.filter(
         ({ name }) => name === 'outputImage'
     )[0];
@@ -80,10 +101,11 @@ const FilterExample = (props) => {
             parameterValues={props.example.data.parameterValues}
             />);
     } else {
-        rendered = (<HorizontalImageConfiguration
+        rendered = (<NormalImageConfiguration
             basepath={props.example.basepath}
             outputImageData={outputImageData.additionalData}
-            parameterValues={props.example.data.parameterValues}
+            nonImageParameters={nonImageParameters}
+            imageParameters={imageParameters}
             />); 
     }
 
