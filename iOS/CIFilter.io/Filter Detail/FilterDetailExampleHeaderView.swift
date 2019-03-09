@@ -41,15 +41,15 @@ final class FilterDetailExampleHeaderView: UIView {
         super.init(frame: .zero)
 
         addSubview(exampleLabel)
-        addSubview(tryItButton)
+//        addSubview(tryItButton)
 
         [exampleLabel, tryItButton].disableTranslatesAutoresizingMaskIntoConstraints()
 
-        tryItButton.topAnchor <=> self.topAnchor
-        tryItButton.bottomAnchor <=> self.bottomAnchor
-        tryItButton.trailingAnchor <=> self.trailingAnchor
+//        tryItButton.topAnchor <=> self.topAnchor
+//        tryItButton.bottomAnchor <=> self.bottomAnchor
+//        tryItButton.trailingAnchor <=> self.trailingAnchor
         exampleLabel.leadingAnchor <=> self.leadingAnchor
-        tryItButton.centerYAnchor <=> exampleLabel.centerYAnchor
+//        tryItButton.centerYAnchor <=> self.centerYAnchor
     }
 
 //    func set(tryHandler: @escaping () -> Void) {
