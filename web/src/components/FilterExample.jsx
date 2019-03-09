@@ -64,6 +64,7 @@ const NormalImageConfiguration = (props) => {
                         return (<FilterExampleParameter
                                     key={value.name}
                                     data={value}
+                                    className="margin-bottom--md"
                                 />);
                     })}
                 </Column>

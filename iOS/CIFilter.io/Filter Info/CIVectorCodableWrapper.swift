@@ -19,9 +19,11 @@ extension CIVector {
     }
 }
 
-struct CIVectorCodableWrapper: Codable {
+struct CIVectorCodableWrapper {
     let vector: CIVector
+}
 
+extension CIVectorCodableWrapper: Codable {
     public init(from decoder: Decoder) throws {
         var container = try decoder.unkeyedContainer()
         var floats: [CGFloat] = []

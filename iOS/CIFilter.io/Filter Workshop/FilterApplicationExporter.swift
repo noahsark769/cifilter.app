@@ -51,6 +51,10 @@ struct ExportImage: ExportType {
     let wasCropped: Bool
 }
 
+struct ExportVector: ExportType {
+    let value: CIVectorCodableWrapper
+}
+
 struct ExportColor: ExportType {
     let value: CIColor
 
@@ -87,6 +91,10 @@ extension ExportParameterValue {
 
     init(name: String, image: String, wasCropped: Bool) {
         self.init(type: "image", name: name, additionalData: AnyEncodable(ExportImage(image: image, wasCropped: wasCropped)))
+    }
+
+    init(name: String, vector: CIVector) {
+        self.init(type: "vector", name: name, additionalData: AnyEncodable(ExportVector(value: CIVectorCodableWrapper(vector: vector))))
     }
 }
 
@@ -139,6 +147,8 @@ final class FilterApplicationExporter {
                 result.append(ExportParameterValue(name: key, int: value))
             case let ciColor as CIColor:
                 result.append(ExportParameterValue(name: key, color: ciColor))
+            case let ciVector as CIVector:
+                result.append(ExportParameterValue(name: key, vector: ciVector))
             default:
                 fatalError("Could not map value of type \(type(of: value)): \(value)")
             }
