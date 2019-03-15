@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Noah Gilmore <noah.w.gilmore@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.0.19",
+    "gatsby": "^2.1.34",
     "gatsby-image": "^2.0.15",
     "gatsby-plugin-favicon": "^3.1.5",
     "gatsby-plugin-force-trailing-slashes": "^1.0.4",
