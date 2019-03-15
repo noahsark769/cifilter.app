@@ -60,7 +60,7 @@ const Nav = (props) => {
             <Other>
                 <NavLink className="margin-right--md">ABOUT</NavLink>
                 <NavLink className="margin-right--md">SUPPORT</NavLink>
-                <NavLink className="margin-right--md"><IoLogoGithub size="24" /></NavLink>
+                <NavLink className="margin-right--md" href="https://github.com/noahsark769/cifilter.io"><IoLogoGithub size="24" /></NavLink>
                 <NavLink><IoIosAppstore size="24" /></NavLink>
             </Other>
         </StyledNav>
