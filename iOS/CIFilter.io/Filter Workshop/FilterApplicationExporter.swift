@@ -85,6 +85,10 @@ extension ExportParameterValue {
         self.init(type: "number", name: name, additionalData: AnyEncodable(ExportInt(value: int)))
     }
 
+    init(name: String, double: Double) {
+        self.init(type: "number", name: name, additionalData: AnyEncodable(ExportDouble(value: double)))
+    }
+
     init(name: String, color: CIColor) {
         self.init(type: "color", name: name, additionalData: AnyEncodable(ExportColor(value: color)))
     }
@@ -149,6 +153,10 @@ final class FilterApplicationExporter {
                 result.append(ExportParameterValue(name: key, color: ciColor))
             case let ciVector as CIVector:
                 result.append(ExportParameterValue(name: key, vector: ciVector))
+            case let double as Double:
+                result.append(ExportParameterValue(name: key, double: double))
+            case let float as Float:
+                result.append(ExportParameterValue(name: key, double: Double(float)))
             default:
                 fatalError("Could not map value of type \(type(of: value)): \(value)")
             }

@@ -18,7 +18,7 @@ const Description = styled.div`
 
 const FilterDetail = (props) => {
     if (!props.filter) {
-        return <Container>Ain't nothin here</Container>
+        return <Container>Select a CIFilter from the left to get started...</Container>
     }
     return (
         <Container>

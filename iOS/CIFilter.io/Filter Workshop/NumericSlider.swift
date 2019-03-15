@@ -65,6 +65,13 @@ final class NumericSlider: UIView {
         valueLabel.text = "\(initialValue)"
 
         slider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
+
+        // TODO: this is incredibly hacky
+        for recognizer in slider.gestureRecognizers ?? [] {
+            if recognizer is UIPanGestureRecognizer {
+                FilterWorkshopView.globalPanGestureRecognizer.require(toFail: recognizer)
+            }
+        }
     }
 
     @objc private func sliderValueChanged() {

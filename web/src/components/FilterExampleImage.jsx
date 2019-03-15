@@ -19,10 +19,10 @@ const ImageContainer = styled.div`
 
 const FilterExampleImage = (props) => {
     return (
-        <>
+        <div className={props.className}>
             <Name>{props.name}</Name>
             <ImageContainer><Image filename={props.filename} /></ImageContainer>
-        </>
+        </div>
     )
 };
 export default FilterExampleImage;

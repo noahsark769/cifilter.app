@@ -72,6 +72,7 @@ struct BuiltInImage {
 
     static let knighted = BuiltInImage(name: "knighted")
     static let liberty = BuiltInImage(name: "liberty")
+    static let shaded = BuiltInImage(name: "shadedsphere")
     static let paper = BuiltInImage(name: "paper", useCheckerboard: true)
     static let playhouse = BuiltInImage(name: "playhouse", useCheckerboard: true)
     static let black = BuiltInImage(name: "black", generator: {
@@ -101,6 +102,7 @@ struct BuiltInImage {
         .liberty,
         .paper,
         .playhouse,
+        .shaded,
         .black,
         .white,
         .gradient

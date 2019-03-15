@@ -56,6 +56,7 @@ const NormalImageConfiguration = (props) => {
                                     key={name}
                                     name={name}
                                     filename={`${props.basepath}/${additionalData.image}`}
+                                    className="margin-bottom--md"
                                 />);
                     })}
                 </Column>
@@ -95,7 +96,7 @@ const FilterExample = (props) => {
     );
 
     let rendered;
-    if (nonImageParameters.length == 0 && imageParameters.length == 2) {
+    if (nonImageParameters.length == 0 && imageParameters.length <= 2) {
         rendered = (<HorizontalImageConfiguration
             basepath={props.example.basepath}
             outputImageData={outputImageData.additionalData}

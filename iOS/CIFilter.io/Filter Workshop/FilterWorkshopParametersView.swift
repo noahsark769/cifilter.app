@@ -44,6 +44,9 @@ final class FilterWorkshopParametersView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // TODO: Having all these functions which do basically the same thing with different parameter types
+    // is super hacky. Ideally, we'd have FilterParameterType itself be able to generate an applicable
+    // FilterWorkshopParameterView.ParameterType
     private func addViewsAndSubscriptions(for info: FilterNumberParameterInfo<Float>, parameter: FilterParameterInfo) {
         let parameterView = FilterWorkshopParameterView(
             type: .number(
@@ -104,6 +107,21 @@ final class FilterWorkshopParametersView: UIStackView {
         self.addArrangedSubview(parameterView)
     }
 
+    private func addViewsAndSubscriptions(for info: FilterTimeParameterInfo, parameter: FilterParameterInfo) {
+        let parameterView = FilterWorkshopParameterView(
+            type: .slider (
+                min: 0, max: 1
+            ),
+            parameter: parameter
+        )
+        parameterView.valueDidChange.subscribe(onNext: { value in
+            self.updateParameterSubject.onNext(
+                ParameterValue(name: parameter.name, value: value)
+            )
+        }).disposed(by: disposeBag!)
+        self.addArrangedSubview(parameterView)
+    }
+
     func set(parameters: [FilterParameterInfo]) {
         paramNamesToImageArtboards = [:]
         self.removeAllArrangedSubviews()
@@ -152,6 +170,8 @@ final class FilterWorkshopParametersView: UIStackView {
             case let .color(info):
                 self.addViewsAndSubscriptions(for: info, parameter: parameter)
             case let .opaqueColor(info):
+                self.addViewsAndSubscriptions(for: info, parameter: parameter)
+            case let .time(info):
                 self.addViewsAndSubscriptions(for: info, parameter: parameter)
             default:
                 print("WARNING don't know how to process parameter type \(parameter.classType)")
