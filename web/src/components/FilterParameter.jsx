@@ -28,6 +28,10 @@ const Description = styled.div`
     ${(props) => props.longType && css`
         flex: 5;
     `};
+
+    ${(props) => props.italic && css`
+        font-style: italic;
+    `};
 `;
 
 const ParameterName = styled.div`
@@ -49,7 +53,7 @@ const FilterParameter = (props) => {
                 <ParameterName className="margin-bottom--sm">{props.parameter.name}</ParameterName>
                 <ParameterClass>{props.parameter.classType}</ParameterClass>
             </TypeContainer>
-            <Description longType={props.longType}>{props.parameter.description || "No description provided by Core Image."}</Description>
+            <Description longType={props.longType} italic={!props.parameter.description}>{props.parameter.description || "No description provided by Core Image."}</Description>
         </Container>
     )
 };
