@@ -162,7 +162,7 @@ enum FilterParameterType: Encodable, FilterInformationalStringConvertible  {
         case let .unspecifiedNumber(info): return "Number." + (info.informationalDescription ?? "")
         case let .unspecifiedVector(info): return "Vector." + (info.informationalDescription ?? "")
         case let .angle(info): return "Angle. " + (info.informationalDescription ?? "")
-        case let .boolean(info): return "Boolean. " + (info.informationalDescription ?? "")
+        case .boolean: return "Boolean."
         case .integer: return "Integer."
         case let .count(info): return "Count. " + (info.informationalDescription ?? "")
         case .image: return "Image."

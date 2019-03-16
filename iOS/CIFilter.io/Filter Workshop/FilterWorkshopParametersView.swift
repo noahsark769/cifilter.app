@@ -62,11 +62,12 @@ final class FilterWorkshopParametersView: UIStackView {
         self.addArrangedSubview(parameterView)
     }
 
-    private func addViewsAndSubscriptions(for info: FilterNumberParameterInfo<Int>, parameter: FilterParameterInfo) {
+    private func addViewsAndSubscriptions(for info: FilterNumberParameterInfo<Int>, parameter: FilterParameterInfo, isBoolean: Bool = false) {
+        let type: FilterWorkshopParameterView.ParameterType = isBoolean ? .boolean : .integer(
+            min: info.minValue, max: info.maxValue, defaultValue: info.defaultValue
+        )
         let parameterView = FilterWorkshopParameterView(
-            type: .integer(
-                min: info.minValue, max: info.maxValue, defaultValue: info.defaultValue
-            ),
+            type: type,
             parameter: parameter
         )
         parameterView.valueDidChange.subscribe(onNext: { value in
@@ -173,6 +174,8 @@ final class FilterWorkshopParametersView: UIStackView {
                 self.addViewsAndSubscriptions(for: info, parameter: parameter)
             case let .time(info):
                 self.addViewsAndSubscriptions(for: info, parameter: parameter)
+            case let .boolean(info):
+                self.addViewsAndSubscriptions(for: info, parameter: parameter, isBoolean: true)
             default:
                 print("WARNING don't know how to process parameter type \(parameter.classType)")
                 self.addArrangedSubview(RedView(text: "\(parameter.name): \(parameter.classType)"))

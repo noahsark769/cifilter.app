@@ -19,6 +19,7 @@ final class FilterWorkshopParameterView: UIView {
         case integer(min: Int?, max: Int?, defaultValue: Int?)
         case vector(defaultValue: CIVectorCodableWrapper?)
         case color(defaultValue: CIColor)
+        case boolean
     }
 
     private let valueDidChangeObservable = PublishSubject<Any>()
@@ -64,6 +65,7 @@ final class FilterWorkshopParameterView: UIView {
 
         addSubview(stackView)
         stackView.addArrangedSubview(nameLabel)
+        nameLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         stackView.addArrangedSubview(informationLabel)
         stackView.addArrangedSubview(descriptionLabel)
         nameLabel.text = parameter.name
@@ -73,6 +75,12 @@ final class FilterWorkshopParameterView: UIView {
         nameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 360).isActive = true
 
         switch type {
+        case .boolean:
+            let uiSwitch = UISwitch()
+            stackView.addArrangedSubview(uiSwitch)
+            uiSwitch.rx.isOn.subscribe(onNext: { value in
+                self.valueDidChangeObservable.onNext(value ? 1 : 0)
+            }).disposed(by: bag)
         case let .slider(min, max):
             let slider = NumericSlider(min: min, max: max)
             slider.widthAnchor <=> 400

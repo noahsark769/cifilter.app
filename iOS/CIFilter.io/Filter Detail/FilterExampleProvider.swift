@@ -26,6 +26,14 @@ final class FilterExampleProvider {
         switch filterName {
         case "CIDepthBlurEffect":
             return .notAvailable(reason: "CIFilter.io does not currently support capturing depth and camera calibration data.")
+        case "CICameraCalibrationLensCorrection":
+            return .notAvailable(reason: "CIFilter.io does not currently support capturing camera calibration data.")
+        case "CIColorCube": fallthrough
+        case "CIColorCubesMixedWithMask": fallthrough
+        case "CIColorCubeWithColorSpace":
+            return .notAvailable(reason: "CIFilter.io does not currently support capturing color cube data.")
+        case "CIColorCurves":
+            return .notAvailable(reason: "CIFilter.io does not currently support capturing color curve data.")
         default:
             return .available
         }
