@@ -4,6 +4,7 @@ import Nav from '../components/Nav';
 import FilterSelect from '../components/FilterSelect';
 import FilterDetail from '../components/FilterDetail';
 import { Helmet } from "react-helmet";
+import ReactGA from 'react-ga';
 
 const OuterWrapper = styled.div`
     display: flex;
@@ -47,6 +48,11 @@ class Main extends React.Component {
                 </Container>
             </OuterWrapper>
         );
+    }
+
+    componentDidMount() {
+        ReactGA.initialize('UA-136382558-1');
+        ReactGA.pageview(window.location.pathname + window.location.search);
     }
 };
 export default Main;
