@@ -45,7 +45,6 @@ const OutputImageWrapper = styled.div`
 `;
 
 const NormalImageConfiguration = (props) => {
-    console.log(props);
     return (
         <FlexParent column>
             <Container>

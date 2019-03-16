@@ -146,6 +146,7 @@ class FilterSelect extends React.Component {
             selectedFilterName: filterName,
             selectedFilterParentCategoryName: categoryName
         });
+        window.location.hash = filterName
     };
 
     // Select either the next (forward == true) or previous (forward == false)
@@ -233,6 +234,17 @@ class FilterSelect extends React.Component {
             var key = event.keyCode || event.charCode || 0;
             _this.handleKeyPress(key);
         });
+
+        const hash = window.location.hash.replace("#", "");
+        if (hash) {
+            for (let [categoryName, filterNames] of this.state.groupedFilters[Symbol.iterator]()) {
+                for (let filterName of filterNames) {
+                    if (filterName === hash) {
+                        this.handleFilterClick(filterName, categoryName);
+                    }
+                }
+            }
+        }
     }
 
     render() {

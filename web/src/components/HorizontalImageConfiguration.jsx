@@ -35,9 +35,8 @@ const HorizontalImageConfiguration = (props) => {
                 if (type !== "image") { return null; }
                 if (name === "outputImage") { return null; }
                 return (
-                    <Wrapper>
+                    <Wrapper key={name}>
                         <FilterExampleImage
-                            key={name}
                             name={name}
                             filename={`${props.basepath}/${additionalData.image}`}
                         />
