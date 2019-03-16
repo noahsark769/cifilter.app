@@ -39,14 +39,14 @@ const Categories = styled.div`
 `;
 
 const macSystemName = (version) => {
-    if (Number.parseFloat(version) >= 10.12) {
+    const [major, minor] = version.split(".")
+    if (Number.parseInt(major) >= 10 && Number.parseInt(minor || "0") >= 12) {
         return "macOS";
     }
     return "OSX";
 };
 
 const FilterTitle = (props) => {
-    console.log(props);
     return (
         <div className={props.className}>
             <Title className="margin-bottom--sm">{props.name}</Title>
