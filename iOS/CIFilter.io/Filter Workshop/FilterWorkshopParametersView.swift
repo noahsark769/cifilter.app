@@ -27,10 +27,7 @@ private final class RedView: UILabel {
 
 final class FilterWorkshopParametersView: UIStackView {
     var disposeBag: DisposeBag? = nil
-    private let updateParameterSubject = PublishSubject<ParameterValue>()
-    lazy var didUpdateParameter: ControlEvent<ParameterValue> = {
-        return ControlEvent<ParameterValue>(events: updateParameterSubject)
-    }()
+    let didUpdateFilterParameters = PublishSubject<[String: Any]>()
     let didChooseAddImage = PublishSubject<(String, UIView)>()
     private var paramNamesToImageArtboards: [String: ImageArtboardView] = [:]
     init() {
@@ -44,176 +41,124 @@ final class FilterWorkshopParametersView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // TODO: Having all these functions which do basically the same thing with different parameter types
-    // is super hacky. Ideally, we'd have FilterParameterType itself be able to generate an applicable
-    // FilterWorkshopParameterView.ParameterType
-    private func addViewsAndSubscriptions(for info: FilterNumberParameterInfo<Float>, parameter: FilterParameterInfo) {
-        let parameterView = FilterWorkshopParameterView(
-            type: .number(
-                min: info.minValue, max: info.maxValue, defaultValue: info.defaultValue
-            ),
-            parameter: parameter
-        )
-        parameterView.valueDidChange.subscribe(onNext: { value in
-            self.updateParameterSubject.onNext(
-                ParameterValue(name: parameter.name, value: value)
-            )
-        }).disposed(by: disposeBag!)
-        self.addArrangedSubview(parameterView)
-    }
-
-    private func addViewsAndSubscriptions(for info: FilterNumberParameterInfo<Int>, parameter: FilterParameterInfo, isBoolean: Bool = false) {
-        let type: FilterWorkshopParameterView.ParameterType = isBoolean ? .boolean : .integer(
-            min: info.minValue, max: info.maxValue, defaultValue: info.defaultValue
-        )
-        let parameterView = FilterWorkshopParameterView(
-            type: type,
-            parameter: parameter
-        )
-        parameterView.valueDidChange.bind(to: <#T##(ControlEvent<Any>) -> R#>) .subscribe(onNext: { value in
-            self.updateParameterSubject.onNext(
-                ParameterValue(name: parameter.name, value: value)
-            )
-        }).disposed(by: disposeBag!)
-        self.addArrangedSubview(parameterView)
-    }
-
-    private func addViewsAndSubscriptions(for info: FilterVectorParameterInfo, parameter: FilterParameterInfo) {
-        let parameterView = FilterWorkshopParameterView(
-            type: .vector(
-                defaultValue: info.defaultValue
-            ),
-            parameter: parameter
-        )
-        parameterView.valueDidChange.subscribe(onNext: { value in
-            self.updateParameterSubject.onNext(
-                ParameterValue(name: parameter.name, value: value)
-            )
-        }).disposed(by: disposeBag!)
-        self.addArrangedSubview(parameterView)
-    }
-
-    private func addViewsAndSubscriptions(for info: FilterColorParameterInfo, parameter: FilterParameterInfo) {
-        let parameterView = FilterWorkshopParameterView(
-            type: .color(
-                defaultValue: info.defaultValue
-            ),
-            parameter: parameter
-        )
-        parameterView.valueDidChange.subscribe(onNext: { value in
-            self.updateParameterSubject.onNext(
-                ParameterValue(name: parameter.name, value: value)
-            )
-        }).disposed(by: disposeBag!)
-        self.addArrangedSubview(parameterView)
-    }
-
-    private func addViewsAndSubscriptions(for info: FilterTimeParameterInfo, parameter: FilterParameterInfo) {
-        let parameterView = FilterWorkshopParameterView(
-            type: .slider(
-                min: 0, max: 1
-            ),
-            parameter: parameter
-        )
-        parameterView.valueDidChange.subscribe(onNext: { value in
-            self.updateParameterSubject.onNext(
-                ParameterValue(name: parameter.name, value: value)
-            )
-        }).disposed(by: disposeBag!)
-        self.addArrangedSubview(parameterView)
-    }
-
-    private func addViewsAndSubscriptions(for info: FilterDataParameterInfo, parameter: FilterParameterInfo) {
-        let parameterView = FilterWorkshopParameterView(
-            type: .freeformStringAsData,
-            parameter: parameter
-        )
-        parameterView.valueDidChange.subscribe(onNext: { value in
-            self.updateParameterSubject.onNext(
-                ParameterValue(name: parameter.name, value: value)
-            )
-        }).disposed(by: disposeBag!)
-        self.addArrangedSubview(parameterView)
-    }
-
-    private func addViewsAndSubscriptions(for info: FilterStringParameterInfo, parameter: FilterParameterInfo) {
-        let parameterView = FilterWorkshopParameterView(
-            type: .freeformString,
-            parameter: parameter
-        )
-        parameterView.valueDidChange.subscribe(onNext: { value in
-            self.updateParameterSubject.onNext(
-                ParameterValue(name: parameter.name, value: value)
-            )
-        }).disposed(by: disposeBag!)
-        self.addArrangedSubview(parameterView)
-    }
-
     func set(parameters: [FilterParameterInfo]) {
         paramNamesToImageArtboards = [:]
         self.removeAllArrangedSubviews()
         disposeBag = DisposeBag()
+
+        var observables: [Observable<ParameterValue>] = []
         for parameter in parameters.sorted(by: { first, second in
             return first.name < second.name
         }) {
-            switch parameter.type {
-            case .image: fallthrough
-            case .gradientImage:
+            if let workshopParameterViewType = parameter.type.workshopParameterViewType {
+                let parameterView = FilterWorkshopParameterView(
+                    type: workshopParameterViewType,
+                    parameter: parameter
+                )
+                observables.append(parameterView.valueDidChangeObservable.map { ParameterValue(name: parameter.name, value: $0) })
+                self.addArrangedSubview(parameterView)
+            } else if parameter.type.isImageType {
                 let imageArtboardView = ImageArtboardView(name: parameter.name, configuration: .input)
                 self.addArrangedSubview(imageArtboardView)
-                imageArtboardView.didChooseImage.subscribe(onNext: { image in
+                observables.append(imageArtboardView.didChooseImage.map { image in
                     guard let cgImage = image.cgImage else {
-                        print("WARNING could not generate CGImage from chosen UIImage")
-                        return
+                        fatalError("WARNING could not generate CGImage from chosen UIImage")
                     }
-                    self.updateParameterSubject.onNext(
-                        ParameterValue(name: parameter.name, value: CIImage(cgImage: cgImage))
-                    )
-                }).disposed(by: disposeBag!)
-                imageArtboardView.didChooseAdd.subscribe(onNext: { view in
-                    self.didChooseAddImage.onNext((parameter.name, view))
-                }).disposed(by: disposeBag!)
+                    return ParameterValue(name: parameter.name, value: CIImage(cgImage: cgImage))
+                })
+                imageArtboardView.didChooseAdd
+                    .map { (parameter.name, $0) }
+                    .subscribe(self.didChooseAddImage)
+                    .disposed(by: disposeBag!)
                 paramNamesToImageArtboards[parameter.name] = imageArtboardView
-            case let .scalar(info):
-                self.addViewsAndSubscriptions(for: info, parameter: parameter)
-            case let .distance(info):
-                self.addViewsAndSubscriptions(for: info, parameter: parameter)
-            case let .angle(info):
-                self.addViewsAndSubscriptions(for: info, parameter: parameter)
-            case let .unspecifiedNumber(info):
-                self.addViewsAndSubscriptions(for: info, parameter: parameter)
-            case let .count(info):
-                self.addViewsAndSubscriptions(for: info, parameter: parameter)
-            case let .position(info):
-                self.addViewsAndSubscriptions(for: info, parameter: parameter)
-            case let .position3(info):
-                self.addViewsAndSubscriptions(for: info, parameter: parameter)
-            case let .rectangle(info):
-                self.addViewsAndSubscriptions(for: info, parameter: parameter)
-            case let .offset(info):
-                self.addViewsAndSubscriptions(for: info, parameter: parameter)
-            case let .unspecifiedVector(info):
-                self.addViewsAndSubscriptions(for: info, parameter: parameter)
-            case let .color(info):
-                self.addViewsAndSubscriptions(for: info, parameter: parameter)
-            case let .opaqueColor(info):
-                self.addViewsAndSubscriptions(for: info, parameter: parameter)
-            case let .time(info):
-                self.addViewsAndSubscriptions(for: info, parameter: parameter)
-            case let .boolean(info):
-                self.addViewsAndSubscriptions(for: info, parameter: parameter, isBoolean: true)
-            case let .data(info):
-                self.addViewsAndSubscriptions(for: info, parameter: parameter)
-            case let .string(info):
-                self.addViewsAndSubscriptions(for: info, parameter: parameter)
-            default:
+            } else {
                 print("WARNING don't know how to process parameter type \(parameter.classType)")
                 self.addArrangedSubview(RedView(text: "\(parameter.name): \(parameter.classType)"))
             }
         }
+        Observable.combineLatest(observables) { values in
+            var dict: [String: Any] = [:]
+            for parameterValue in values {
+                dict[parameterValue.name] = parameterValue.value
+            }
+            return dict
+        }.subscribe(self.didUpdateFilterParameters).disposed(by: disposeBag!)
     }
 
     func setImage(_ image: UIImage, forParameterNamed name: String) {
         paramNamesToImageArtboards[name]?.set(image: image, reportOnSubject: true)
+    }
+}
+
+extension FilterParameterType {
+    var isImageType: Bool {
+        switch self {
+        case .image: return true
+        case .gradientImage: return true
+        default: return false
+        }
+    }
+
+    var workshopParameterViewType: FilterWorkshopParameterView.ParameterType? {
+        switch self {
+        case let .scalar(info):
+            return .number(
+                min: info.minValue, max: info.maxValue, defaultValue: info.defaultValue
+            )
+        case let .distance(info):
+            return .number(
+                min: info.minValue, max: info.maxValue, defaultValue: info.defaultValue
+            )
+        case let .angle(info):
+            return .number(
+                min: info.minValue, max: info.maxValue, defaultValue: info.defaultValue
+            )
+        case let .unspecifiedNumber(info):
+            return .number(
+                min: info.minValue, max: info.maxValue, defaultValue: info.defaultValue
+            )
+        case let .count(info):
+            return .integer(
+                min: info.minValue, max: info.maxValue, defaultValue: info.defaultValue
+            )
+        case let .position(info):
+            return .vector(
+                defaultValue: info.defaultValue
+            )
+        case let .position3(info):
+            return .vector(
+                defaultValue: info.defaultValue
+            )
+        case let .rectangle(info):
+            return .vector(
+                defaultValue: info.defaultValue
+            )
+        case let .offset(info):
+            return .vector(
+                defaultValue: info.defaultValue
+            )
+        case let .unspecifiedVector(info):
+            return .vector(
+                defaultValue: info.defaultValue
+            )
+        case let .color(info):
+            return .color(
+                defaultValue: info.defaultValue
+            )
+        case let .opaqueColor(info):
+            return .color(
+                defaultValue: info.defaultValue
+            )
+        case .time:
+            return .slider(min: 0, max: 1)
+        case .boolean:
+            return .boolean
+        case .data:
+            return .freeformStringAsData
+        case .string:
+            return .freeformString
+        default:
+            return nil
+        }
     }
 }

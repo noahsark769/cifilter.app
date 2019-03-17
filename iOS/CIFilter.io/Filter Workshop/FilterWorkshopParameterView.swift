@@ -13,7 +13,6 @@ import RxCocoa
 final class FilterWorkshopParameterView: UIView {
     private let bag = DisposeBag()
     enum ParameterType {
-        /// Currently unused. See NumericSlider for explanation
         case slider(min: Float, max: Float)
         case number(min: Float?, max: Float?, defaultValue: Float?)
         case integer(min: Int?, max: Int?, defaultValue: Int?)
@@ -24,10 +23,7 @@ final class FilterWorkshopParameterView: UIView {
         case freeformStringAsData
     }
 
-    private let valueDidChangeObservable = PublishSubject<Any>()
-    lazy var valueDidChange: ControlEvent<Any> = {
-        return ControlEvent(events: valueDidChangeObservable)
-    }()
+    let valueDidChangeObservable = ReplaySubject<Any>.create(bufferSize: 1)
 
     private let stackView: UIStackView = {
         let view = UIStackView()
@@ -80,9 +76,9 @@ final class FilterWorkshopParameterView: UIView {
         case .boolean:
             let uiSwitch = UISwitch()
             stackView.addArrangedSubview(uiSwitch)
-            uiSwitch.rx.isOn.subscribe(onNext: { value in
-                self.valueDidChangeObservable.onNext(value ? 1 : 0)
-            }).disposed(by: bag)
+            let behaviorSubject = BehaviorSubject(value: false)
+            uiSwitch.rx.isOn.subscribe(behaviorSubject).disposed(by: bag)
+            behaviorSubject.map { $0 ? 1 : 0 }.subscribe(self.valueDidChangeObservable).disposed(by: bag)
         case let .slider(min, max):
             let slider = NumericSlider(min: min, max: max)
             slider.widthAnchor <=> 400

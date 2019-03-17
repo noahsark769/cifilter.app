@@ -35,7 +35,6 @@ final class AsyncFilterApplicator {
 
     private var bag = DisposeBag()
     private var currentFilter: FilterInfo? = nil
-    private var currentParameterConfiguration = [String: Any]()
     private lazy var queue: OperationQueue = {
         let queue = OperationQueue()
         queue.qualityOfService = .userInitiated
@@ -47,18 +46,13 @@ final class AsyncFilterApplicator {
         bag = DisposeBag() // dispose all current subscriptions
     }
 
-    func set(value: Any, forParameterName name: String) {
-        self.currentParameterConfiguration[name] = value
-    }
-
-    func addSubscription(for observable: Observable<ParameterValue>) {
+    func addSubscription(for observable: Observable<[String: Any]>) {
         observable.throttle(0.3, scheduler: MainScheduler.instance).subscribe(onNext: { value in
-            self.currentParameterConfiguration[value.name] = value.value
-            self.generateOutputImageIfPossible()
+            self.generateOutputImageIfPossible(parameterConfiguration: value)
         }).disposed(by: bag)
     }
 
-    func generateOutputImageIfPossible() {
+    func generateOutputImageIfPossible(parameterConfiguration: [String: Any]) {
         guard let filter = self.currentFilter else {
             events.onNext(.generationErrored(error: .implementationError(message: "No filter name provided")))
             return
@@ -67,7 +61,7 @@ final class AsyncFilterApplicator {
         var stillNeededParameterNames = [String]()
 
         for parameter in filter.parameters {
-            guard let value = self.currentParameterConfiguration[parameter.name] else {
+            guard let value = parameterConfiguration[parameter.name] else {
                 stillNeededParameterNames.append(parameter.name)
                 continue
             }
@@ -76,7 +70,7 @@ final class AsyncFilterApplicator {
         if stillNeededParameterNames.count > 0 {
             events.onNext(.generationErrored(error: .needsMoreParameters(names: stillNeededParameterNames)))
         } else {
-            print("Generating image with parameters: \(currentParameterConfiguration)")
+            print("Generating image with parameters: \(parameterConfiguration)")
             queue.cancelAllOperations()
 
             let blockOperation = BlockOperation()
@@ -104,7 +98,7 @@ final class AsyncFilterApplicator {
                 self.events.onNext(.generationCompleted(
                     image: RenderingResult(image: UIImage(cgImage: cgImage), wasCropped: wasCropped),
                     totalTime: CACurrentMediaTime() - self.timeStarted!,
-                    parameters: self.currentParameterConfiguration
+                    parameters: parameterConfiguration
                 ))
             }
             queue.addOperation(blockOperation)

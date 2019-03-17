@@ -70,18 +70,31 @@ final class FilterWorkshopContentView: UIView {
         if nonImageParameters.count > 0 {
             stackView.addArrangedSubview(nonImageParametersView)
             nonImageParametersView.set(parameters: nonImageParameters)
-            applicator.addSubscription(for: nonImageParametersView.didUpdateParameter.asObservable())
         }
 
         if imageParameters.count > 0 {
             stackView.addArrangedSubview(imageParametersView)
             imageParametersView.set(parameters: imageParameters)
-            applicator.addSubscription(for: imageParametersView.didUpdateParameter.asObservable())
         }
+
+        applicator.addSubscription(for: Observable.combineLatest(
+            [
+                nonImageParametersView.didUpdateFilterParameters,
+                imageParametersView.didUpdateFilterParameters
+            ]
+        ) { values in
+            var dict: [String: Any] = [:]
+            for parameterMapping in values {
+                for (key, value) in parameterMapping {
+                    dict[key] = value
+                }
+            }
+            return dict
+        })
 
         if nonImageParameters.count + imageParameters.count == 0 {
             // triggers subscription
-            applicator.generateOutputImageIfPossible()
+            applicator.generateOutputImageIfPossible(parameterConfiguration: [:])
         }
 
         outputImageView.setDefault()
