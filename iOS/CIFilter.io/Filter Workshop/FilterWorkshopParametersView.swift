@@ -70,7 +70,7 @@ final class FilterWorkshopParametersView: UIStackView {
             type: type,
             parameter: parameter
         )
-        parameterView.valueDidChange.subscribe(onNext: { value in
+        parameterView.valueDidChange.bind(to: <#T##(ControlEvent<Any>) -> R#>) .subscribe(onNext: { value in
             self.updateParameterSubject.onNext(
                 ParameterValue(name: parameter.name, value: value)
             )
@@ -110,9 +110,35 @@ final class FilterWorkshopParametersView: UIStackView {
 
     private func addViewsAndSubscriptions(for info: FilterTimeParameterInfo, parameter: FilterParameterInfo) {
         let parameterView = FilterWorkshopParameterView(
-            type: .slider (
+            type: .slider(
                 min: 0, max: 1
             ),
+            parameter: parameter
+        )
+        parameterView.valueDidChange.subscribe(onNext: { value in
+            self.updateParameterSubject.onNext(
+                ParameterValue(name: parameter.name, value: value)
+            )
+        }).disposed(by: disposeBag!)
+        self.addArrangedSubview(parameterView)
+    }
+
+    private func addViewsAndSubscriptions(for info: FilterDataParameterInfo, parameter: FilterParameterInfo) {
+        let parameterView = FilterWorkshopParameterView(
+            type: .freeformStringAsData,
+            parameter: parameter
+        )
+        parameterView.valueDidChange.subscribe(onNext: { value in
+            self.updateParameterSubject.onNext(
+                ParameterValue(name: parameter.name, value: value)
+            )
+        }).disposed(by: disposeBag!)
+        self.addArrangedSubview(parameterView)
+    }
+
+    private func addViewsAndSubscriptions(for info: FilterStringParameterInfo, parameter: FilterParameterInfo) {
+        let parameterView = FilterWorkshopParameterView(
+            type: .freeformString,
             parameter: parameter
         )
         parameterView.valueDidChange.subscribe(onNext: { value in
@@ -176,6 +202,10 @@ final class FilterWorkshopParametersView: UIStackView {
                 self.addViewsAndSubscriptions(for: info, parameter: parameter)
             case let .boolean(info):
                 self.addViewsAndSubscriptions(for: info, parameter: parameter, isBoolean: true)
+            case let .data(info):
+                self.addViewsAndSubscriptions(for: info, parameter: parameter)
+            case let .string(info):
+                self.addViewsAndSubscriptions(for: info, parameter: parameter)
             default:
                 print("WARNING don't know how to process parameter type \(parameter.classType)")
                 self.addArrangedSubview(RedView(text: "\(parameter.name): \(parameter.classType)"))

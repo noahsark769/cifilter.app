@@ -518,7 +518,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "git=$(sh /etc/profile; which git)\nnumber_of_commits=$(\"$git\" rev-list HEAD --count)\nsha=$(\"$git\" rev-parse --verify HEAD)\n\ntarget_plist=\"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\ndsym_plist=\"$DWARF_DSYM_FOLDER_PATH/$DWARF_DSYM_FILE_NAME/Contents/Info.plist\"\n\nfor plist in \"$target_plist\" \"$dsym_plist\"; do\nif [ -f \"$plist\" ]; then\n$(/usr/libexec/PlistBuddy -c 'Delete :NGGitSha' \"$plist\" 2>/dev/null)\n$(/usr/libexec/PlistBuddy -c 'Delete :NGCommitNumber' \"$plist\" 2>/dev/null)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $number_of_commits\" \"$plist\" \\\n&& /usr/libexec/PlistBuddy -c \"Add :NGGitSha string $sha\" \"$plist\" \\\n&& /usr/libexec/PlistBuddy -c \"Add :NGCommitNumber string $number_of_commits\" \"$plist\"\nfi\ndone\n";
+			shellScript = "git=$(sh /etc/profile; which git)\nnumber_of_commits=$(\"$git\" rev-list HEAD --count)\nsha=$(\"$git\" rev-parse --verify HEAD)\n\ntarget_plist=\"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\ndsym_plist=\"$DWARF_DSYM_FOLDER_PATH/$DWARF_DSYM_FILE_NAME/Contents/Info.plist\"\n\nfor plist in \"$target_plist\" \"$dsym_plist\"; do\nif [ -s \"$plist\" ]; then\n$(/usr/libexec/PlistBuddy -c 'Delete :NGGitSha' \"$plist\" 2>/dev/null)\n$(/usr/libexec/PlistBuddy -c 'Delete :NGCommitNumber' \"$plist\" 2>/dev/null)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $number_of_commits\" \"$plist\" \\\n&& /usr/libexec/PlistBuddy -c \"Add :NGGitSha string $sha\" \"$plist\" \\\n&& /usr/libexec/PlistBuddy -c \"Add :NGCommitNumber string $number_of_commits\" \"$plist\"\nfi\ndone\n";
 		};
 		A1D2225C1C26C1BC0C9CA081 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;

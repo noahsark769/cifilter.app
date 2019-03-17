@@ -20,6 +20,8 @@ final class FilterWorkshopParameterView: UIView {
         case vector(defaultValue: CIVectorCodableWrapper?)
         case color(defaultValue: CIColor)
         case boolean
+        case freeformString
+        case freeformStringAsData
     }
 
     private let valueDidChangeObservable = PublishSubject<Any>()
@@ -112,6 +114,18 @@ final class FilterWorkshopParameterView: UIView {
                 self.valueDidChangeObservable.onNext(vector)
             }).disposed(by: bag)
             stackView.addArrangedSubview(colorInput)
+        case .freeformString:
+            let numericInput = FreeformTextInput()
+            numericInput.valueDidChange.subscribe(onNext: { string in
+                self.valueDidChangeObservable.onNext(string)
+            }).disposed(by: bag)
+            stackView.addArrangedSubview(numericInput)
+        case .freeformStringAsData:
+            let numericInput = FreeformTextInput()
+            numericInput.valueDidChange.subscribe(onNext: { string in
+                self.valueDidChangeObservable.onNext(string.data(using: .utf8)!)
+            }).disposed(by: bag)
+            stackView.addArrangedSubview(numericInput)
         }
 
         stackView.edgesToSuperview()

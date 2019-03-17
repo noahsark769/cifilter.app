@@ -34,6 +34,14 @@ final class FilterExampleProvider {
             return .notAvailable(reason: "CIFilter.io does not currently support capturing color cube data.")
         case "CIColorCurves":
             return .notAvailable(reason: "CIFilter.io does not currently support capturing color curve data.")
+        case "CIAttributedTextImageGenerator":
+            return .notAvailable(reason: "CIFilter.io does not currently support capturing attributed text.")
+        case "CIBarcodeGenerator":
+            return .notAvailable(reason: "CIFilter.io does not currently support capturing an abstract CIBarcodeDescriptor. If you'd like, please see other generator filters such as CIQRCodeGenerator, CIPDF417CodeGenerator, and CIAztecCodeGenerator. CIFilter.io does not support generating Data Matrix codes at this time.")
+        case "CIMeshGenerator":
+            return .notAvailable(reason: "CIFilter.io does not currently support capturing mesh array data.")
+        case "CIAffineTransform":
+            return .notAvailable(reason: "CIFilter.io does not currently support capturing affine transform data.")
         default:
             return .available
         }

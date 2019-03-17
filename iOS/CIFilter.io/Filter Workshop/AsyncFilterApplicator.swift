@@ -58,7 +58,7 @@ final class AsyncFilterApplicator {
         }).disposed(by: bag)
     }
 
-    private func generateOutputImageIfPossible() {
+    func generateOutputImageIfPossible() {
         guard let filter = self.currentFilter else {
             events.onNext(.generationErrored(error: .implementationError(message: "No filter name provided")))
             return

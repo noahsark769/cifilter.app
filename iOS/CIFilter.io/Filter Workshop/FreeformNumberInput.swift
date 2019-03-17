@@ -110,3 +110,42 @@ extension FreeformNumberInput: UITextViewDelegate {
         return FreeformNumberInput.numberFormatter.number(from: effectiveText) != nil
     }
 }
+
+final class FreeformTextInput: UIView, UITextViewDelegate {
+    private let valueDidChangeObservable = PublishSubject<String>()
+    lazy var valueDidChange: ControlEvent<String> = {
+        return ControlEvent(events: valueDidChangeObservable)
+    }()
+
+    lazy var textView: UITextView = {
+        let view = UITextView()
+        view.layer.borderColor = UIColor(rgb: 0xeeeeee).cgColor
+        view.layer.borderWidth = 1 / UIScreen.main.scale
+        view.layer.cornerRadius = 4
+        view.clipsToBounds = true
+        view.font = UIFont(name: "Courier New", size: 17)
+        view.textColor = .black
+        view.backgroundColor = UIColor(rgb: 0xefefef)
+        view.delegate = self
+        return view
+    }()
+
+    init() {
+        super.init(frame: .zero)
+        addSubview(textView)
+        textView.heightAnchor <=> 36
+        textView.edgesToSuperview()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func publishValue(_ value: String) {
+        valueDidChangeObservable.onNext(value)
+    }
+
+    func textViewDidChange(_ textView: UITextView) {
+        self.publishValue(textView.text ?? "")
+    }
+}
