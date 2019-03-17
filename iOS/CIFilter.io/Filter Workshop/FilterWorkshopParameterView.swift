@@ -21,6 +21,7 @@ final class FilterWorkshopParameterView: UIView {
         case boolean
         case freeformString
         case freeformStringAsData
+        case colorSpace
     }
 
     let valueDidChangeObservable = ReplaySubject<Any>.create(bufferSize: 1)
@@ -55,6 +56,15 @@ final class FilterWorkshopParameterView: UIView {
         return view
     }()
 
+    private func furtherDetailLabel(text: String) -> UILabel {
+        let view = UILabel()
+        view.font = UIFont.systemFont(ofSize: 14)
+        view.textColor = UIColor(rgb: 0x666666)
+        view.numberOfLines = 0
+        view.text = text
+        return view
+    }
+
     // TODO: I don't like passing in the parameter info AND the parameter type here. We should either
     // derive parameter type from paramter info OR pass in description, min/max, etc directly instead
     // of parameter info
@@ -73,6 +83,10 @@ final class FilterWorkshopParameterView: UIView {
         nameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 360).isActive = true
 
         switch type {
+        case .colorSpace:
+            stackView.addArrangedSubview(self.furtherDetailLabel(text: "CIFilter.io does not support selecting color spaces. The device color space will be used."))
+            let behaviorSubject = BehaviorSubject<CGColorSpace>(value: CGColorSpaceCreateDeviceRGB())
+            behaviorSubject.map { $0 as Any }.subscribe(self.valueDidChangeObservable).disposed(by: bag)
         case .boolean:
             let uiSwitch = UISwitch()
             stackView.addArrangedSubview(uiSwitch)

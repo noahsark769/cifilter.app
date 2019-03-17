@@ -77,12 +77,13 @@ final class FilterWorkshopContentView: UIView {
             imageParametersView.set(parameters: imageParameters)
         }
 
-        applicator.addSubscription(for: Observable.combineLatest(
-            [
-                nonImageParametersView.didUpdateFilterParameters,
-                imageParametersView.didUpdateFilterParameters
-            ]
-        ) { values in
+        outputImageView.setDefault()
+        stackView.addArrangedSubview(outputImageView)
+
+        applicator.addSubscription(for: Observable.combineLatest([
+            nonImageParametersView.didUpdateFilterParameters,
+            imageParametersView.didUpdateFilterParameters
+        ]) { values in
             var dict: [String: Any] = [:]
             for parameterMapping in values {
                 for (key, value) in parameterMapping {
@@ -91,14 +92,6 @@ final class FilterWorkshopContentView: UIView {
             }
             return dict
         })
-
-        if nonImageParameters.count + imageParameters.count == 0 {
-            // triggers subscription
-            applicator.generateOutputImageIfPossible(parameterConfiguration: [:])
-        }
-
-        outputImageView.setDefault()
-        stackView.addArrangedSubview(outputImageView)
     }
 
     func setImage(_ image: UIImage, forParameterNamed name: String) {

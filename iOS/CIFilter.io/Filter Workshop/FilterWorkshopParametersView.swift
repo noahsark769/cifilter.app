@@ -27,7 +27,7 @@ private final class RedView: UILabel {
 
 final class FilterWorkshopParametersView: UIStackView {
     var disposeBag: DisposeBag? = nil
-    let didUpdateFilterParameters = PublishSubject<[String: Any]>()
+    let didUpdateFilterParameters = BehaviorSubject<[String: Any]>(value: [:])
     let didChooseAddImage = PublishSubject<(String, UIView)>()
     private var paramNamesToImageArtboards: [String: ImageArtboardView] = [:]
     init() {
@@ -50,14 +50,16 @@ final class FilterWorkshopParametersView: UIStackView {
         for parameter in parameters.sorted(by: { first, second in
             return first.name < second.name
         }) {
-            if let workshopParameterViewType = parameter.type.workshopParameterViewType {
+            if let workshopParameterViewType = parameter.workshopParameterViewType {
                 let parameterView = FilterWorkshopParameterView(
                     type: workshopParameterViewType,
                     parameter: parameter
                 )
-                observables.append(parameterView.valueDidChangeObservable.map { ParameterValue(name: parameter.name, value: $0) })
+                observables.append(parameterView.valueDidChangeObservable.map {
+                    ParameterValue(name: parameter.name, value: $0)
+                })
                 self.addArrangedSubview(parameterView)
-            } else if parameter.type.isImageType {
+            } else if parameter.isImageType {
                 let imageArtboardView = ImageArtboardView(name: parameter.name, configuration: .input)
                 self.addArrangedSubview(imageArtboardView)
                 observables.append(imageArtboardView.didChooseImage.map { image in
@@ -90,9 +92,9 @@ final class FilterWorkshopParametersView: UIStackView {
     }
 }
 
-extension FilterParameterType {
+extension FilterParameterInfo {
     var isImageType: Bool {
-        switch self {
+        switch self.type {
         case .image: return true
         case .gradientImage: return true
         default: return false
@@ -100,7 +102,7 @@ extension FilterParameterType {
     }
 
     var workshopParameterViewType: FilterWorkshopParameterView.ParameterType? {
-        switch self {
+        switch self.type {
         case let .scalar(info):
             return .number(
                 min: info.minValue, max: info.maxValue, defaultValue: info.defaultValue
@@ -157,6 +159,14 @@ extension FilterParameterType {
             return .freeformStringAsData
         case .string:
             return .freeformString
+        case .unspecifiedObject:
+            if self.name == "inputColorSpace" {
+                return .colorSpace
+            }
+            if let description = self.description, description.contains("CGColorSpace") {
+                return .colorSpace
+            }
+            return nil
         default:
             return nil
         }
