@@ -45,6 +45,12 @@ final class FilterExampleProvider {
             return .notAvailable(reason: "CIFilter.io does not currently support capturing affine transform data.")
         case "CICoreMLModelFilter":
             return .notAvailable(reason: "CIFilter.io does not currently support capturing CoreML model data.")
+        case "CIConvolution3X3": fallthrough
+        case "CIConvolution5X5": fallthrough
+        case "CIConvolution7X7": fallthrough
+        case "CIConvolution9Horizontal": fallthrough
+        case "CIConvolution9Vertical":
+            return .notAvailable(reason: "CIFilter.io does not currently support capturing convolutional weight data.")
         default:
             return .available
         }
