@@ -56,7 +56,7 @@ final class VectorInput: UIView {
         return view
     }()
 
-    init(defaultValue: CIVectorCodableWrapper?) {
+    init(defaultValue: CIVectorCodableWrapper?, initialComponents: Int) {
         // TODO: defaultValue is currently unused. We should put it in a BehaviorSubject
         super.init(frame: .zero)
 
@@ -77,8 +77,9 @@ final class VectorInput: UIView {
             print("REMOVE")
         }).disposed(by: bag)
 
-        self.addNumberInput()
-        self.addNumberInput()
+        for _ in 0..<initialComponents {
+            self.addNumberInput()
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

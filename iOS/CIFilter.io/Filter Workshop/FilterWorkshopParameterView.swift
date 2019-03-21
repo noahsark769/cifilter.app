@@ -80,7 +80,9 @@ final class FilterWorkshopParameterView: UIView {
         descriptionLabel.text = parameter.descriptionOrDefault
         informationLabel.text = parameter.type.informationalDescription
 
-        nameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 360).isActive = true
+        let maxWidthAnchor = nameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 360)
+        maxWidthAnchor.priority = .defaultHigh // not required since we want vector inputs widths to take priority
+        maxWidthAnchor.isActive = true
 
         switch type {
         case .colorSpace:
@@ -113,7 +115,9 @@ final class FilterWorkshopParameterView: UIView {
             }).disposed(by: bag)
             stackView.addArrangedSubview(numericInput)
         case let .vector(defaultValue):
-            let vectorInput = VectorInput(defaultValue: defaultValue)
+            let lowercasedName = parameter.name.lowercased()
+            let isRectangle = lowercasedName.contains("extent") || lowercasedName.contains("rectangle")
+            let vectorInput = VectorInput(defaultValue: defaultValue, initialComponents: isRectangle ? 4 : 2)
             vectorInput.valueDidChange.subscribe(onNext: { vector in
                 self.valueDidChangeObservable.onNext(vector)
             }).disposed(by: bag)
