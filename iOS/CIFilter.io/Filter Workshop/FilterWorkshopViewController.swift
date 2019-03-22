@@ -79,7 +79,7 @@ final class FilterWorkshopViewController: UIViewController {
 
     @objc private func didTapShareButton() {
         guard let image = currentImage else { return }
-        let shareController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        let shareController = UIActivityViewController(activityItems: [image.image], applicationActivities: nil)
         shareController.modalPresentationStyle = .popover
         shareController.popoverPresentationController?.barButtonItem = self.shareItem
         self.present(shareController, animated: true)
@@ -106,8 +106,9 @@ extension FilterWorkshopViewController: UIImagePickerControllerDelegate, UINavig
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         // TODO: Errors for these
         guard let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        guard let normalizedImage = originalImage.normalizedRotationImage() else { return }
         guard let currentlySelectingParamName = self.inputImageCurrentlySelecting else { return }
-        self.workshopView.setImage(originalImage, forParameterNamed: currentlySelectingParamName)
+        self.workshopView.setImage(normalizedImage, forParameterNamed: currentlySelectingParamName)
         self.dismiss(animated: true, completion: nil)
     }
 

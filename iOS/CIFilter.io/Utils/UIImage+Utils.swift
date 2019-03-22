@@ -45,4 +45,19 @@ extension UIImage {
         }
         return (UIImage(cgImage: cgImage), wasCropped)
     }
+
+    // https://stackoverflow.com/questions/5427656/ios-uiimagepickercontroller-result-image-orientation-after-upload
+    func normalizedRotationImage() -> UIImage? {
+        if (self.imageOrientation == .up) {
+            return self;
+        }
+
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+        let rect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
+        self.draw(in: rect)
+
+        let normalizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return normalizedImage
+    }
 }
