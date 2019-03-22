@@ -16,7 +16,9 @@ final class FilterCategoryHeaderView: YLTableViewSectionHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
 
-        self.contentView.backgroundColor = .white
+        // https://stackoverflow.com/questions/15604900/uitableviewheaderfooterview-unable-to-change-background-color
+        self.backgroundView = UIView(frame: self.bounds)
+        self.backgroundView?.backgroundColor = .white
 
         self.position = .header
         label.font = .boldSystemFont(ofSize: 22)

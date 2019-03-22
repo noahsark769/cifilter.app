@@ -116,7 +116,7 @@ final class FilterDetailView: UIView {
         super.init(frame: .zero)
 
         addSubview(stackView)
-        stackView.edgesToSuperview()
+        stackView.edgesToSafeArea(of: self)
 
         stackView.addRow(titleView)
         stackView.setInset(forRow: titleView, inset: UIEdgeInsets(top: isCompressed ? 10 : 70, left: 0, bottom: 10, right: 0))

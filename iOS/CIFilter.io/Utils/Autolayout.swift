@@ -68,6 +68,14 @@ extension UIView {
         self.bottomAnchor <=> view.bottomAnchor -- insets.bottom
     }
 
+    func edgesToSafeArea(of view: UIView, insets: UIEdgeInsets = .zero) {
+        self.disableTranslatesAutoresizingMaskIntoConstraints()
+        self.leadingAnchor <=> view.safeAreaLayoutGuide.leadingAnchor ++ insets.left
+        self.trailingAnchor <=> view.safeAreaLayoutGuide.trailingAnchor -- insets.right
+        self.topAnchor <=> view.safeAreaLayoutGuide.topAnchor ++ insets.top
+        self.bottomAnchor <=> view.safeAreaLayoutGuide.bottomAnchor -- insets.bottom
+    }
+
     func edgesToSuperview(insets: UIEdgeInsets = .zero) {
         guard let superview = self.superview else { return }
         self.edges(to: superview, insets: insets)
