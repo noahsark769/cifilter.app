@@ -187,6 +187,5 @@ final class FilterApplicationExporter {
             contents: try! encoder.encode(exportExample),
             attributes: nil
         )
-        print("Export success")
     }
 }

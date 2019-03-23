@@ -8,6 +8,18 @@
 
 import UIKit
 import IQKeyboardManagerSwift
+import Keys
+import Sentry
+import Mixpanel
+
+enum Environment: String {
+    case release = "release"
+    case debug = "debug"
+
+    var analytic: String {
+        return self.rawValue
+    }
+}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,21 +33,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         IQKeyboardManager.shared.enable = true
 
+        // Create a Sentry client and start crash handler
+        do {
+            Client.shared = try Client(dsn: CIFilterIoKeys().sENTRY_DSN)
+            try Client.shared?.startCrashHandler()
+            Client.shared?.tags = [
+                "appVersion": self.appVersion().description,
+                "uuid": UUIDManager.shared.uuid().uuidString,
+                "environment": self.environment().analytic,
+                "sha": self.sha(),
+                "commitNumber": self.commitNumber(),
+                "language": Locale.preferredLanguages.first ?? "unknown",
+                "locale": Locale.current.identifier
+            ]
+            Client.shared?.enableAutomaticBreadcrumbTracking()
+        } catch let error {
+            print("SENTRY ERROR: \(error)")
+            // Wrong DSN or KSCrash not installed
+        }
+
+        Mixpanel.initialize(token: CIFilterIoKeys().mixpanelToken)
+        Mixpanel.mainInstance().registerSuperProperties([
+            "uuid": UUIDManager.shared.uuid().uuidString,
+            "environment": self.environment().analytic,
+            "sha": self.sha(),
+            "commitNumber": self.commitNumber(),
+            "language": Locale.preferredLanguages.first ?? "unknown",
+            "locale": Locale.current.identifier
+        ])
+
         let filterNames = CIFilter.filterNames(inCategory: nil)
         let data: [FilterInfo] = filterNames.compactMap { filterName in
             let filter = CIFilter(name: filterName)!
             let filterInfo = try? FilterInfo(filter: filter)
-//            if filter.name == "CIDepthBlurEffect" {
-////                print(filter.attributes)
-////                print(filter.value)
-//                print("-------------")
-//                filter.setDefaults()
-//                for paramName in filterInfo!.parameters.map({ $0.name }) {
-//                    print(filter.attributes)
-//                    print("\(paramName): \(filter.value(forKey: paramName))")
-//                }
-//                print("-------------")
-//            }
             return filterInfo
         }
 //        print(String(data: try! JSONEncoder().encode(data), encoding: .utf8)!)
@@ -63,7 +93,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         splitViewController.toggleMasterView()
-//        splitViewController.preferredDisplayMode = .primaryOverlay
         return true
     }
 
@@ -73,7 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func sha() -> String {
         guard let sha = Bundle.main.object(forInfoDictionaryKey: "NGGitSha") as? String else {
-            print("WARNING git sha could not be determined")
+            NonFatalManager.shared.log("GitShaCouldNotBeDetermined")
             #if DEBUG
             fatalError()
             #else
@@ -85,10 +114,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func commitNumber() -> String {
         guard let number = Bundle.main.object(forInfoDictionaryKey: "NGCommitNumber") as? String else {
-            print("WARNING commit number could not be determined")
+            NonFatalManager.shared.log("CommitNumberCouldNotBeDetermined")
             fatalError()
         }
         return number
+    }
+
+    func environment() -> Environment {
+        #if DEBUG
+        return .debug
+        #else
+        return .release
+        #endif
     }
 }
 

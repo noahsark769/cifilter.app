@@ -74,6 +74,7 @@ final class FilterWorkshopParametersView: UIStackView {
                     .disposed(by: disposeBag!)
                 paramNamesToImageArtboards[parameter.name] = imageArtboardView
             } else {
+                NonFatalManager.shared.log("UnknownParameterViewType", data: ["parameter_name": parameter.name, "class_type": parameter.classType])
                 print("WARNING don't know how to process parameter type \(parameter.classType)")
                 self.addArrangedSubview(RedView(text: "\(parameter.name): \(parameter.classType)"))
             }

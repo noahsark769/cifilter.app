@@ -37,7 +37,7 @@ final class ColorHexInput: UIView {
 
     func set(text: String) {
         guard self.shouldAllowTextUpdate(to: text) else {
-            // TODO: Log error here, we should never get text that is not a valid color
+            NonFatalManager.shared.log("ColorHexInputReceivedInvalidText", data: ["text": text])
             return
         }
         textView.text = text

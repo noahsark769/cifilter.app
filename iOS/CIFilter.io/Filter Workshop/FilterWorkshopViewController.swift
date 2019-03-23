@@ -54,6 +54,7 @@ final class FilterWorkshopViewController: UIViewController {
         }).disposed(by: bag)
 
         workshopView.didChooseAddImage.subscribe(onNext: { paramName, sourceView in
+            AnalyticsManager.shared.track(event: "tap_choose_image", properties: ["name": self.filter.name, "parameter_name": paramName])
             self.inputImageCurrentlySelecting = paramName
             let vc = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             vc.addAction(UIAlertAction(title: "Take photo", style: .default, handler: { [weak self] _ in
@@ -99,17 +100,28 @@ final class FilterWorkshopViewController: UIViewController {
     override func loadView() {
         self.view = workshopView
         workshopView.set(filter: self.filter)
+        AnalyticsManager.shared.track(event: "filter_workshop", properties: ["name": self.filter.name])
     }
 }
 
 extension FilterWorkshopViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         // TODO: Errors for these
-        guard let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        guard let normalizedImage = originalImage.normalizedRotationImage() else { return }
-        guard let currentlySelectingParamName = self.inputImageCurrentlySelecting else { return }
+        guard let currentlySelectingParamName = self.inputImageCurrentlySelecting else {
+            NonFatalManager.shared.log("NoCurrentlySelectedImageParamFromImagePicker")
+            return
+        }
+        guard let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
+            NonFatalManager.shared.log("NoOriginalImageFromImagePicker", data: ["param_name": currentlySelectingParamName])
+            return
+        }
+        guard let normalizedImage = originalImage.normalizedRotationImage() else {
+            NonFatalManager.shared.log("CouldNotCreateNormalizedImageFromImagePicker", data: ["param_name": currentlySelectingParamName])
+            return
+        }
         self.workshopView.setImage(normalizedImage, forParameterNamed: currentlySelectingParamName)
         self.dismiss(animated: true, completion: nil)
+        AnalyticsManager.shared.track(event: "chose_image", properties: ["name": self.filter.name, "parameter_name": currentlySelectingParamName])
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

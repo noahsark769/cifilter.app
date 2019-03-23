@@ -59,7 +59,6 @@ final class FilterWorkshopContentView: UIView {
 
     func set(filter: FilterInfo) {
         self.filter = filter
-        print(filter.parameters)
         parameterConfiguration = [:]
         stackView.removeAllArrangedSubviews()
         applicator.set(filter: filter)

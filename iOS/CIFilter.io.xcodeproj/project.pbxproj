@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		24F467DEA7F7F3D844749670 /* libPods-CIFilter.ioTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C48797878CD99B8CB9EA772 /* libPods-CIFilter.ioTests.a */; };
-		5F31BFC0D3D97B3DB60EB532 /* libPods-CIFilter.io.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8DF7E2364B4EB94F6C83712 /* libPods-CIFilter.io.a */; };
+		379B921C7F6338D3984BEEA1 /* Pods_CIFilter_io.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7025EAAD7B39B501B039A0E /* Pods_CIFilter_io.framework */; };
+		4E5037D180BE197BC8C8D01B /* Pods_CIFilter_ioTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EBDE2DBDAF2DACCA875113 /* Pods_CIFilter_ioTests.framework */; };
 		A116A0E0220B4CA9005DE07F /* UIColorUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A116A0DF220B4CA9005DE07F /* UIColorUtilsTest.swift */; };
 		A119025B222B31B000FE27A3 /* UIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A119025A222B31B000FE27A3 /* UIImage+Utils.swift */; };
 		A11C522521968BB000045F2E /* FilterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11C522421968BB000045F2E /* FilterListViewController.swift */; };
@@ -26,6 +26,9 @@
 		A128995421DEE3C700BEE395 /* FilterApplicationIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128995321DEE3C600BEE395 /* FilterApplicationIndicator.swift */; };
 		A128995621DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128995521DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift */; };
 		A128995821DEE44F00BEE395 /* ImageWorkshopConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128995721DEE44F00BEE395 /* ImageWorkshopConsoleView.swift */; };
+		A129375C2246B56E000C6329 /* UUIDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A129375B2246B56E000C6329 /* UUIDManager.swift */; };
+		A129375E2246B7CC000C6329 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A129375D2246B7CC000C6329 /* AnalyticsManager.swift */; };
+		A12937602246B90B000C6329 /* NonFatalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A129375F2246B90B000C6329 /* NonFatalManager.swift */; };
 		A12B7AF122299D0C0084AAE6 /* ColorInputDragIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B7AF022299D0C0084AAE6 /* ColorInputDragIndicatorView.swift */; };
 		A12B7AF3222AEDA20084AAE6 /* FilterApplicationExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B7AF2222AEDA20084AAE6 /* FilterApplicationExporter.swift */; };
 		A130BD7D21EC0D1F00E586F6 /* VectorInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130BD7C21EC0D1F00E586F6 /* VectorInput.swift */; };
@@ -79,7 +82,6 @@
 
 /* Begin PBXFileReference section */
 		08FBAE88B5103E03654DA7F2 /* Pods-CIFilter.io.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.io.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io.debug.xcconfig"; sourceTree = "<group>"; };
-		0C48797878CD99B8CB9EA772 /* libPods-CIFilter.ioTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CIFilter.ioTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BC47CD1E0BB2EEB52DDF0D2 /* Pods-CIFilter.ioTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.ioTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.ioTests/Pods-CIFilter.ioTests.release.xcconfig"; sourceTree = "<group>"; };
 		A116A0D5220B4C93005DE07F /* CIFilter.ioTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CIFilter.ioTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A116A0D7220B4C93005DE07F /* CIFilter_ioTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIFilter_ioTests.swift; sourceTree = "<group>"; };
@@ -101,6 +103,9 @@
 		A128995321DEE3C600BEE395 /* FilterApplicationIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterApplicationIndicator.swift; sourceTree = "<group>"; };
 		A128995521DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWorkshopConsoleMessageView.swift; sourceTree = "<group>"; };
 		A128995721DEE44F00BEE395 /* ImageWorkshopConsoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWorkshopConsoleView.swift; sourceTree = "<group>"; };
+		A129375B2246B56E000C6329 /* UUIDManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDManager.swift; sourceTree = "<group>"; };
+		A129375D2246B7CC000C6329 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
+		A129375F2246B90B000C6329 /* NonFatalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFatalManager.swift; sourceTree = "<group>"; };
 		A12B7AF022299D0C0084AAE6 /* ColorInputDragIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorInputDragIndicatorView.swift; sourceTree = "<group>"; };
 		A12B7AF2222AEDA20084AAE6 /* FilterApplicationExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterApplicationExporter.swift; sourceTree = "<group>"; };
 		A130BD7C21EC0D1F00E586F6 /* VectorInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorInput.swift; sourceTree = "<group>"; };
@@ -142,7 +147,8 @@
 		A1D5A8D221B4A32100257B5E /* UIEdgeInsets+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Utils.swift"; sourceTree = "<group>"; };
 		A1D5A8D421B4A64A00257B5E /* UIStackView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Utils.swift"; sourceTree = "<group>"; };
 		A1D5A8D621B4A85A00257B5E /* FilterParameterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterParameterView.swift; sourceTree = "<group>"; };
-		A8DF7E2364B4EB94F6C83712 /* libPods-CIFilter.io.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CIFilter.io.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7025EAAD7B39B501B039A0E /* Pods_CIFilter_io.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIFilter_io.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0EBDE2DBDAF2DACCA875113 /* Pods_CIFilter_ioTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIFilter_ioTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F97FF4CF0C09C59DFDF3D2A3 /* Pods-CIFilter.io.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.io.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io.release.xcconfig"; sourceTree = "<group>"; };
 		FE5D796C946C31D82424702D /* Pods-CIFilter.ioTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.ioTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.ioTests/Pods-CIFilter.ioTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -152,7 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24F467DEA7F7F3D844749670 /* libPods-CIFilter.ioTests.a in Frameworks */,
+				4E5037D180BE197BC8C8D01B /* Pods_CIFilter_ioTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,7 +166,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F31BFC0D3D97B3DB60EB532 /* libPods-CIFilter.io.a in Frameworks */,
+				379B921C7F6338D3984BEEA1 /* Pods_CIFilter_io.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,8 +187,8 @@
 		521EE2C65F91622949C25D8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A8DF7E2364B4EB94F6C83712 /* libPods-CIFilter.io.a */,
-				0C48797878CD99B8CB9EA772 /* libPods-CIFilter.ioTests.a */,
+				A7025EAAD7B39B501B039A0E /* Pods_CIFilter_io.framework */,
+				D0EBDE2DBDAF2DACCA875113 /* Pods_CIFilter_ioTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -262,11 +268,14 @@
 				A1A0D83821BC67C60098168C /* Filter Workshop */,
 				A128994A21DD475900BEE395 /* Standard */,
 				A1D5A8B921AF03ED00257B5E /* Utils */,
+				A129375D2246B7CC000C6329 /* AnalyticsManager.swift */,
 				A1C6621C2196818100826A2B /* AppDelegate.swift */,
 				A1C662232196818300826A2B /* Assets.xcassets */,
 				A1D5A8B221ADB3C100257B5E /* Dictionary+Validation.swift */,
 				A1C662282196818300826A2B /* Info.plist */,
 				A1C662252196818300826A2B /* LaunchScreen.storyboard */,
+				A129375F2246B90B000C6329 /* NonFatalManager.swift */,
+				A129375B2246B56E000C6329 /* UUIDManager.swift */,
 			);
 			path = CIFilter.io;
 			sourceTree = "<group>";
@@ -347,7 +356,7 @@
 				A116A0D1220B4C93005DE07F /* Sources */,
 				A116A0D2220B4C93005DE07F /* Frameworks */,
 				A116A0D3220B4C93005DE07F /* Resources */,
-				000194CF983F7F92BA46EF66 /* [CP] Copy Pods Resources */,
+				4A556ED6263722D33E6EEC36 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -367,8 +376,8 @@
 				A1C662152196818100826A2B /* Sources */,
 				A1C662162196818100826A2B /* Frameworks */,
 				A1C662172196818100826A2B /* Resources */,
-				A1D2225C1C26C1BC0C9CA081 /* [CP] Copy Pods Resources */,
 				A12B7AF4222AF54B0084AAE6 /* ShellScript */,
+				A628FCD28E0073CB86570D21 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -437,28 +446,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		000194CF983F7F92BA46EF66 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-CIFilter.ioTests/Pods-CIFilter.ioTests-resources.sh",
-				"${PODS_ROOT}/IQKeyboardManagerSwift/IQKeyboardManagerSwift/Resources/IQKeyboardManager.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CIFilter.ioTests/Pods-CIFilter.ioTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		23B3E918299932C4122B4876 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -479,6 +466,50 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4A556ED6263722D33E6EEC36 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CIFilter.ioTests/Pods-CIFilter.ioTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AloeStackView/AloeStackView.framework",
+				"${BUILT_PRODUCTS_DIR}/DifferenceKit/DifferenceKit.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Keys/Keys.framework",
+				"${BUILT_PRODUCTS_DIR}/Mixpanel-swift/Mixpanel.framework",
+				"${BUILT_PRODUCTS_DIR}/ReactiveLists/ReactiveLists.framework",
+				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
+				"${BUILT_PRODUCTS_DIR}/YLTableView/YLTableView.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AloeStackView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DifferenceKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Keys.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mixpanel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveLists.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YLTableView.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CIFilter.ioTests/Pods-CIFilter.ioTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4E0E2384EB43E66F70BFB7CE /* [CP] Check Pods Manifest.lock */ = {
@@ -520,7 +551,7 @@
 			shellPath = /bin/sh;
 			shellScript = "git=$(sh /etc/profile; which git)\nnumber_of_commits=$(\"$git\" rev-list HEAD --count)\nsha=$(\"$git\" rev-parse --verify HEAD)\n\ntarget_plist=\"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\ndsym_plist=\"$DWARF_DSYM_FOLDER_PATH/$DWARF_DSYM_FILE_NAME/Contents/Info.plist\"\n\nfor plist in \"$target_plist\" \"$dsym_plist\"; do\nif [ -s \"$plist\" ]; then\n$(/usr/libexec/PlistBuddy -c 'Delete :NGGitSha' \"$plist\" 2>/dev/null)\n$(/usr/libexec/PlistBuddy -c 'Delete :NGCommitNumber' \"$plist\" 2>/dev/null)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $number_of_commits\" \"$plist\" \\\n&& /usr/libexec/PlistBuddy -c \"Add :NGGitSha string $sha\" \"$plist\" \\\n&& /usr/libexec/PlistBuddy -c \"Add :NGCommitNumber string $number_of_commits\" \"$plist\"\nfi\ndone\n";
 		};
-		A1D2225C1C26C1BC0C9CA081 /* [CP] Copy Pods Resources */ = {
+		A628FCD28E0073CB86570D21 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -528,18 +559,40 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io-resources.sh",
-				"${PODS_ROOT}/IQKeyboardManagerSwift/IQKeyboardManagerSwift/Resources/IQKeyboardManager.bundle",
+				"${SRCROOT}/Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AloeStackView/AloeStackView.framework",
+				"${BUILT_PRODUCTS_DIR}/DifferenceKit/DifferenceKit.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Keys/Keys.framework",
+				"${BUILT_PRODUCTS_DIR}/Mixpanel-swift/Mixpanel.framework",
+				"${BUILT_PRODUCTS_DIR}/ReactiveLists/ReactiveLists.framework",
+				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
+				"${BUILT_PRODUCTS_DIR}/YLTableView/YLTableView.framework",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AloeStackView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DifferenceKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Keys.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mixpanel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveLists.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YLTableView.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -557,6 +610,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A129375E2246B7CC000C6329 /* AnalyticsManager.swift in Sources */,
 				A1C6621D2196818100826A2B /* AppDelegate.swift in Sources */,
 				A128994721D41EAC00BEE395 /* AsyncFilterApplicator.swift in Sources */,
 				A1D5A8BB21AF03F700257B5E /* Autolayout.swift in Sources */,
@@ -599,6 +653,7 @@
 				A128993921CFFF7000BEE395 /* ImageChooserView.swift in Sources */,
 				A128995621DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift in Sources */,
 				A128995821DEE44F00BEE395 /* ImageWorkshopConsoleView.swift in Sources */,
+				A12937602246B90B000C6329 /* NonFatalManager.swift in Sources */,
 				A128994321D1A56900BEE395 /* NumericSlider.swift in Sources */,
 				A128994E21DD479100BEE395 /* OutputImageActivityIndicatorView.swift in Sources */,
 				A128995021DD47D900BEE395 /* OutputImageNotGeneratedView.swift in Sources */,
@@ -609,6 +664,7 @@
 				A119025B222B31B000FE27A3 /* UIImage+Utils.swift in Sources */,
 				A130BD8121F0EAC700E586F6 /* UIImageView+Utils.swift in Sources */,
 				A1D5A8D521B4A64A00257B5E /* UIStackView+Utils.swift in Sources */,
+				A129375C2246B56E000C6329 /* UUIDManager.swift in Sources */,
 				A130BD7D21EC0D1F00E586F6 /* VectorInput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

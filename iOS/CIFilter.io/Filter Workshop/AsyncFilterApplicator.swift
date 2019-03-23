@@ -70,7 +70,6 @@ final class AsyncFilterApplicator {
         if stillNeededParameterNames.count > 0 {
             events.onNext(.generationErrored(error: .needsMoreParameters(names: stillNeededParameterNames)))
         } else {
-            print("Generating image with parameters: \(parameterConfiguration)")
             queue.cancelAllOperations()
 
             let blockOperation = BlockOperation()

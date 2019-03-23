@@ -78,7 +78,6 @@ final class FreeformNumberInput: UIView {
 extension FreeformNumberInput: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         guard let number = FreeformNumberInput.numberFormatter.number(from: textView.text) else {
-            print("WARNING FreeformNumberInput did not have valid number!")
             return
         }
         self.publishValue(number)

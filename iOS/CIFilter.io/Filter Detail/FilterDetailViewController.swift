@@ -61,6 +61,7 @@ final class FilterDetailViewController: UIViewController {
             )
             self.splitViewController?.present(navigationController, animated: true, completion: nil)
         })
+        AnalyticsManager.shared.track(event: "filter_detail", properties: ["name": filter.name])
     }
 
     @objc private func workshopViewControllerSelectedDone(_ sender: Any) {
@@ -76,7 +77,7 @@ extension FilterDetailViewController: FilterListViewControllerDelegate {
         // with the filter list VC currently active, but we know the filter list VC's
         // splitViewController will always be non-nil, so we use that
         guard let splitViewController = vc.splitViewController, let navController = self.navigationController else {
-            print("WARNING no split view controller!!")
+            NonFatalManager.shared.log("NoSplitViewControllerSetWhenSelectingFilter", data: ["filter_name": filter.name])
             return
         }
         splitViewController.toggleMasterView()
