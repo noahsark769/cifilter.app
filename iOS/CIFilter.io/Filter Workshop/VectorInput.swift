@@ -74,7 +74,7 @@ final class VectorInput: UIView {
         }).disposed(by: bag)
 
         removeButton.rx.tap.subscribe(onNext: {
-            print("REMOVE")
+            self.removeNumberInput()
         }).disposed(by: bag)
 
         for _ in 0..<initialComponents {
@@ -93,6 +93,15 @@ final class VectorInput: UIView {
         }).disposed(by: bag)
         input.widthAnchor <=> 90
         numberInputsStackView.addArrangedSubview(input)
+    }
+
+    private func removeNumberInput() {
+        guard let lastArrangedSubview = numberInputsStackView.arrangedSubviews.last else {
+            return
+        }
+        numberInputsStackView.removeArrangedSubview(lastArrangedSubview)
+        lastArrangedSubview.removeFromSuperview()
+        self.publishVector()
     }
 
     private func publishVector() {

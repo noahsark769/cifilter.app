@@ -103,11 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func sha() -> String {
         guard let sha = Bundle.main.object(forInfoDictionaryKey: "NGGitSha") as? String else {
             NonFatalManager.shared.log("GitShaCouldNotBeDetermined")
-            #if DEBUG
-            fatalError()
-            #else
             return "unknown"
-            #endif
         }
         return sha
     }
@@ -115,7 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func commitNumber() -> String {
         guard let number = Bundle.main.object(forInfoDictionaryKey: "NGCommitNumber") as? String else {
             NonFatalManager.shared.log("CommitNumberCouldNotBeDetermined")
-            fatalError()
+            return "unknown"
         }
         return number
     }
