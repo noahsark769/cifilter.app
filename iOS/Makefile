@@ -13,3 +13,7 @@ pods-update:
 .PHONY: clean
 clean:
 	rm -rf Pods
+
+.PHONY:
+testflight:
+	bundle exec fastlane testflight
