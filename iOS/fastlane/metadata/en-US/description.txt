@@ -1,0 +1,13 @@
+CIFilter.io is a full Core Image filter utility. Use CIFilter.io to:
+
+- Learn about CoreImage and available CIFilters
+- View documentation for all CIFilters supported on your iOS device
+- Browse and search through more than 200 built-in CIFilters
+- Apply CIFilters to example images
+- Apply CIFilters to your own photos
+- Crop, resize, blur and stretch your photos
+- Apply stylistic effects to your photos
+
+Your purchase of CIFilter.io supports maintenance and development of the app, the website at https://cifilter.io, and other projects like it.
+
+Questions or feature requests? Please reach out on GitHub: https://github.com/noahsark769/CIFilter.io
