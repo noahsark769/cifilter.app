@@ -1,3 +1,5 @@
+<img src="https://github.com/noahsark769/cifilter.io/raw/master/iOS/CIFilter.io/Resources/AppIcon/icon_60pt%403x.png" height="200">
+
 # CIFilter.io
 CIFilter.io is a project which documents parameters and examples for every [CIFilter](https://developer.apple.com/documentation/coreimage/cifilter) available on iOS and macOS as part of [CoreImage](https://developer.apple.com/documentation/coreimage).
 
