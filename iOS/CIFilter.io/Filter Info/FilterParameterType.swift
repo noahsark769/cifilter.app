@@ -59,9 +59,15 @@ private func filterParameterType(forAttributesDict dict: [String: Any], classNam
 }
 
 enum FilterParameterType: Encodable, FilterInformationalStringConvertible  {
+    private enum CodingKeys: CodingKey {
+        case kind
+        case information
+    }
+
     func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(rawType)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(rawType, forKey: .kind)
+        try container.encode(self.informationalDescription, forKey: .information)
     }
 
     case time(info: FilterTimeParameterInfo)
