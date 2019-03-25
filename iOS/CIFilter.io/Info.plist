@@ -23,7 +23,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>To take a photo, please allow CIFilter.io to access your camera.</string>
+	<string>Please allow CIFilter.io to access your camera in order to take photos and use them as input for CIFilters.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>To save images, please allow CIFilter.io to access your photos.</string>
 	<key>UILaunchStoryboardName</key>
