@@ -9,6 +9,7 @@ const Container = styled.div`
     height: 100%;
     overflow-y: scroll;
     padding-bottom: 48px;
+    padding-right: 12px;
 `;
 
 const Description = styled.div`
