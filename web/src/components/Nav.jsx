@@ -62,8 +62,8 @@ const Nav = (props) => {
                 // TODO: Re-enable these links once we have gatsby pages for them
                 <NavLink className="margin-right--md">ABOUT</NavLink>
                 <NavLink className="margin-right--md">SUPPORT</NavLink>
-                <NavLink href="https://itunes.apple.com/us/app/trestle-the-new-sudoku/id1300230302?mt=8"><IoIosAppstore size="24" /></NavLink>
-                */}
+            */}
+                <NavLink className="margin-right--md" href="https://itunes.apple.com/us/app/cifilter-io/id1457458557?mt=8"><IoIosAppstore size="24" /></NavLink>
                 <NavLink className="margin-right--md" href="https://twitter.com/noahsark769"><IoLogoTwitter size="24" /></NavLink>
                 <NavLink className="margin-right--md" href="https://github.com/noahsark769/cifilter.io"><IoLogoGithub size="24" /></NavLink>
             </Other>
