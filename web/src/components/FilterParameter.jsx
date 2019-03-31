@@ -57,6 +57,7 @@ const Info = styled.div`
     font-size: 13px;
     font-style: italic;
     margin-top: 12px;
+    line-height: 20px;
 `;
 
 const FilterParameter = (props) => {

@@ -140,8 +140,8 @@ class FilterSelect extends React.Component {
         })
     }
 
-    handleFilterClick(filterName, categoryName) {
-        this.props.onSelectFilter(filterName);
+    handleFilterClick(filterName, categoryName, fromHash) {
+        this.props.onSelectFilter(filterName, categoryName, fromHash);
         this.setState({
             selectedFilterName: filterName,
             selectedFilterParentCategoryName: categoryName
@@ -174,7 +174,7 @@ class FilterSelect extends React.Component {
             } else {
                 // step to the 0th element of the next category
                 const newCategory = categories[indexOfCurrentCategory + 1];
-                this.handleFilterClick(this.state.groupedFilters.get(newCategory)[0], newCategory);
+                this.handleFilterClick(this.state.groupedFilters.get(newCategory)[0], newCategory, false);
             }
         } else if (indexOfCurrentFilter === 0 && !forward) {
             // we need to step into the last category
@@ -185,12 +185,12 @@ class FilterSelect extends React.Component {
                 // step to the last element of the previous category
                 const newCategory = categories[indexOfCurrentCategory - 1];
                 const newFilterNames = this.state.groupedFilters.get(newCategory)
-                this.handleFilterClick(newFilterNames[newFilterNames.length - 1], newCategory);
+                this.handleFilterClick(newFilterNames[newFilterNames.length - 1], newCategory, false);
             }
         } else {
             // we just need to step
             const newFilterName = currentFilterNames[indexOfCurrentFilter + (forward ? 1 : -1)];
-            this.handleFilterClick(newFilterName, categoryName);
+            this.handleFilterClick(newFilterName, categoryName, false);
         }
 
     }
@@ -211,7 +211,7 @@ class FilterSelect extends React.Component {
                 {filterNames.map(function(filterName) {
                     return <FilterName
                         key={filterName}
-                        onClick={_this.handleFilterClick.bind(_this, filterName, categoryName)}
+                        onClick={_this.handleFilterClick.bind(_this, filterName, categoryName, false)}
                         highlighted={_this.state.selectedFilterName == filterName}
                     >{filterName}</FilterName>
                 })}
@@ -240,7 +240,7 @@ class FilterSelect extends React.Component {
             for (let [categoryName, filterNames] of this.state.groupedFilters[Symbol.iterator]()) {
                 for (let filterName of filterNames) {
                     if (filterName === hash) {
-                        this.handleFilterClick(filterName, categoryName);
+                        this.handleFilterClick(filterName, categoryName, true);
                     }
                 }
             }

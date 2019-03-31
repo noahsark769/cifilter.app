@@ -20,6 +20,11 @@ const Container = styled.div`
     display: flex;
     flex-direction: row;
     height: 100%;
+
+    @media all and (max-width: 600px) {
+        margin-right: 20px;
+        margin-left: 20px;
+    }
 `;
 
 const MOBILE_STATE = {
@@ -31,11 +36,11 @@ class Main extends React.Component {
     state = {
         selectedFilter: null,
         isMobile: false,
-        mobileState: MOBILE_STATE.LIST
+        mobileState: MOBILE_STATE.LIST,
+        hasSetFromHash: false
     }
 
     handleWindowResize() {
-        console.log(`Window resize: ${window.innerWidth}`);
         if (window.innerWidth < 600 && !this.state.isMobile) {
             this.setState({ isMobile: true })
         } else if (window.innerWidth >= 600 && this.state.isMobile) {
@@ -43,12 +48,24 @@ class Main extends React.Component {
         }
     }
 
-    handleFilterSelected(filterName) {
+    handleFilterSelected(filterName, categoryName, fromHash) {
         // TODO: this iterates over 200 filters, make it a map up front :/
+        console.log(`Handling selected from hash ${fromHash}`);
         let newFilter = this.props.pageContext.filters.filter((filter) => filter.name === filterName)[0];
         this.setState({
             selectedFilter: newFilter,
-            mobileState: MOBILE_STATE.DETAIL
+            mobileState: (fromHash && !this.state.hasSetFromHash) || !fromHash ? MOBILE_STATE.DETAIL : this.state.mobileState
+        });
+
+        if (fromHash) {
+            this.setState({ hasSetFromHash: true })
+        }
+    }
+
+    handleMobileBack() {
+        console.log(`MOBILE BACK`);
+        this.setState({
+            mobileState: MOBILE_STATE.LIST
         });
     }
 
@@ -60,7 +77,9 @@ class Main extends React.Component {
                 onSelectFilter={this.handleFilterSelected.bind(this)}
                 className="margin-right--sm" />);
         } else {
-            return (<FilterDetail filter={this.state.selectedFilter} />);
+            return (
+                <FilterDetail filter={this.state.selectedFilter} displaysBack onClickBack={this.handleMobileBack.bind(this)} />
+            );
         }
     }
 
