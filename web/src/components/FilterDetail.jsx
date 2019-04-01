@@ -21,6 +21,7 @@ const Description = styled.div`
 const TitleContainer = styled.div`
     display: flex;
     flex-direction: row;
+    width: 100%;
 `;
 
 const FilterDetail = (props) => {
@@ -33,6 +34,7 @@ const FilterDetail = (props) => {
             <TitleContainer>
                 {props.displaysBack && <a onClick={props.onClickBack} ><IoIosArrowBack size="40" color="#F5BD5D" /></a>}
                 <FilterTitle
+                    style={{flex: "1"}}
                     name={props.filter.name}
                     categories={props.filter.categories}
                     availableMac={props.filter.availableMac}

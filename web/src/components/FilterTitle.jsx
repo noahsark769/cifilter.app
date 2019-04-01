@@ -48,7 +48,7 @@ const macSystemName = (version) => {
 
 const FilterTitle = (props) => {
     return (
-        <div className={props.className}>
+        <div className={props.className} style={props.style}>
             <Title className="margin-bottom--sm">{props.name}</Title>
             <Categories className="padding-bottom--sm margin-bottom--sm">{props.categories.join(", ")}</Categories>
             <AvailableContainer>
