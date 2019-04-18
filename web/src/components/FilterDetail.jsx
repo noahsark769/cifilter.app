@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import FilterTitle from './FilterTitle';
 import FilterParameters from './FilterParameters';
 import FilterExample from './FilterExample';
+import EmptyFilterDetail from './EmptyFilterDetail';
 import { IoIosArrowBack } from "react-icons/io";
 
 const Container = styled.div`
@@ -26,7 +27,9 @@ const TitleContainer = styled.div`
 
 const FilterDetail = (props) => {
     if (!props.filter) {
-        return <Container>Select a CIFilter from the left to get started...</Container>
+        return <Container>
+            <EmptyFilterDetail />
+        </Container>
     }
 
     return (
