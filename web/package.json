@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "author": "Noah Gilmore <noah.w.gilmore@gmail.com>",
   "dependencies": {
+    "babel-plugin-styled-components": "^1.10.0",
     "gatsby": "^2.1.34",
     "gatsby-image": "^2.0.15",
     "gatsby-plugin-favicon": "^3.1.5",
@@ -13,6 +14,7 @@
     "gatsby-plugin-react-helmet": "^3.0.0",
     "gatsby-plugin-sass": "^2.0.4",
     "gatsby-plugin-sharp": "^2.0.7",
+    "gatsby-plugin-styled-components": "^3.0.7",
     "gatsby-source-filesystem": "^2.0.4",
     "gatsby-transformer-sharp": "^2.1.4",
     "node-sass": "^4.10.0",
@@ -21,7 +23,7 @@
     "react-ga": "^2.5.7",
     "react-helmet": "^5.2.0",
     "react-icons": "^3.2.2",
-    "styled-components": "^4.1.1"
+    "styled-components": "^4.2.0"
   },
   "keywords": [],
   "license": "Private",
