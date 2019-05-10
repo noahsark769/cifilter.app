@@ -156,6 +156,10 @@ class FilterSelect extends React.Component {
                 }
             )
         })
+
+        if (this.props.onSearchBarChange) {
+            this.props.onSearchBarChange(newText);
+        }
     }
 
     handleFilterClick(filter, categoryName, fromHash) {
@@ -265,6 +269,10 @@ class FilterSelect extends React.Component {
                 }
             }
         }
+
+        if (this.props.prepopulatedSearchBarText) {
+            this.handleSearchBarChange(this.props.prepopulatedSearchBarText);
+        }
     }
 
     render() {
@@ -272,7 +280,7 @@ class FilterSelect extends React.Component {
         return (
             <Container className={this.props.className}>
                 <SearchBarWrapper>
-                    <SearchBar onChange={this.handleSearchBarChange.bind(this)} />
+                    <SearchBar onChange={this.handleSearchBarChange.bind(this)} initialText={this.props.prepopulatedSearchBarText} />
                 </SearchBarWrapper>  
                 {mapMap(this.state.groupedFilters, function(value, key, map) {
                     return _this.renderEntry(key, value);

@@ -63,7 +63,7 @@ class SearchBar extends React.Component {
         return (
             <Container>
                 <IoIosSearch size="16" className="margin-right--sm"/>
-                <Input ref={this.input} onChange={this.handleChange.bind(this)} />
+                <Input ref={this.input} onChange={this.handleChange.bind(this)} value={this.props.initialText} />
                 {this.state.text.length > 0 &&
                     <CloseButtonWraper>
                         <IoIosCloseCircleOutline

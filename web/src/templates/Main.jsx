@@ -37,7 +37,8 @@ class Main extends React.Component {
         selectedFilter: null,
         isMobile: false,
         mobileState: MOBILE_STATE.LIST,
-        hasSetFromHash: false
+        hasSetFromHash: false,
+        currentSearchText: ""
     }
 
     handleWindowResize() {
@@ -63,9 +64,14 @@ class Main extends React.Component {
     }
 
     handleMobileBack() {
-        console.log(`MOBILE BACK`);
         this.setState({
             mobileState: MOBILE_STATE.LIST
+        });
+    }
+
+    handleSearchBarChange(text) {
+        this.setState({
+            currentSearchText: text
         });
     }
 
@@ -75,6 +81,8 @@ class Main extends React.Component {
             return (<FilterSelect
                 filters={this.props.pageContext.filters}
                 onSelectFilter={this.handleFilterSelected.bind(this)}
+                onSearchBarChange={this.handleSearchBarChange.bind(this)}
+                prepopulatedSearchBarText={this.state.currentSearchText}
                 className="margin-right--sm" />);
         } else {
             return (
@@ -93,6 +101,8 @@ class Main extends React.Component {
             <FilterSelect
                 filters={this.props.pageContext.filters}
                 onSelectFilter={this.handleFilterSelected.bind(this)}
+                onSearchBarChange={this.handleSearchBarChange.bind(this)}
+                prepopulatedSearchBarText={this.state.currentSearchText}
                 className="margin-right--sm" />
             {!this.state.isMobile && <FilterDetail filter={this.state.selectedFilter} />}
         </Container>);
