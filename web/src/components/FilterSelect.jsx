@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import SearchBar from './SearchBar';
+import FilterSelectResult, { MatchType } from './FilterSelectResult';
 
 const SELECT_CATEGORY_NAMES = [
     "CICategoryBlur",
@@ -29,7 +30,22 @@ function intersection(setA, setB) {
     return _intersection;
 }
 
-const groupFilters = (filters, categories, isIncluded) => {
+/**
+ * Returns a MAP of the following structure:
+ *
+ * {
+ *   "category_name": [
+ *     {
+ *       "match_type": MatchType.NAME,
+ *       "filter": { ... }
+ *     }
+ *   ]
+ * }
+ *
+ * The isMatch function takes in a filter and should return a MatchType. MatchType.NONE
+ * will be filtered out.
+ */
+const groupFilters = (filters, categories, isMatch) => {
     let map = new Map();
     let categoriesSet = new Set(categories.concat(["Other"]));
     for (let category of categoriesSet) {
@@ -37,7 +53,8 @@ const groupFilters = (filters, categories, isIncluded) => {
     }
 
     for (let filter of filters) {
-        if (!isIncluded(filter.name)) {
+        let matchType = isMatch(filter);
+        if (matchType === MatchType.NONE) {
             continue
         }
 
@@ -46,11 +63,17 @@ const groupFilters = (filters, categories, isIncluded) => {
             // wonky first-item-of-set syntax...
             let category = categoryIntersection.values().next().value;
             let applicableFilters = map.get(category);
-            applicableFilters.push(filter.name);
+            applicableFilters.push({
+                matchType: matchType,
+                filter: filter
+            });
             map.set(category, applicableFilters)
         } else {
             let uncategorized = map.get("Other");
-            uncategorized.push(filter.name);
+            uncategorized.push({
+                matchType: matchType,
+                filter: filter
+            });
             map.set("Other", uncategorized)
         }
     }
@@ -79,29 +102,6 @@ const Container = styled.div`
     padding-bottom: 48px;
 `;
 
-const FilterName = styled.div`
-    font-size: 14px;
-    color: #a4a4a4;
-    padding: 5px 0 5px 8px;
-    border-left: 2px solid #dddddd;
-    cursor: pointer;
-
-    ${(props) => props.highlighted && css`
-        color: #F5BD5D;
-        border-left: 2px solid #F5BD5D;
-    `};
-
-    &:hover {
-        border-left: 2px solid #a4a4a4;
-        color: #666666;
-
-        ${(props) => props.highlighted && css`
-            color: #F5BD5D;
-            border-left: 2px solid #F5BD5D;
-        `};
-    }
-`;
-
 const Category = styled.div`
     font-weight: bold;
     font-size: 18px;
@@ -124,7 +124,7 @@ class FilterSelect extends React.Component {
         groupedFilters: groupFilters(
             this.props.filters,
             SELECT_CATEGORY_NAMES,
-            (filterName) => true
+            (filter) => MatchType.NAME
         ),
         selectedFilterName: null,
         selectedFilterParentCategoryName: null
@@ -135,18 +135,37 @@ class FilterSelect extends React.Component {
             groupedFilters: groupFilters(
                 this.props.filters,
                 SELECT_CATEGORY_NAMES,
-                (filterName) => filterName.toLowerCase().includes(newText.toLowerCase())
+                (filter) => {
+                    if (filter.name.toLowerCase().includes(newText.toLowerCase())) {
+                        return MatchType.NAME;
+                    }
+                    for (let parameter of filter.parameters) {
+                        if (parameter.name.toLowerCase().includes(newText.toLowerCase())) {
+                            return MatchType.PARAMETER_NAME;
+                        }
+                        if (parameter.description) {
+                            if (parameter.description.toLowerCase().includes(newText.toLowerCase())) {
+                                return MatchType.PARAMETER_VALUE;
+                            }
+                        }
+                    }
+                    if (filter.description.toLowerCase().includes(newText.toLowerCase())) {
+                        return MatchType.DESCRIPTION;
+                    }
+                    return MatchType.NONE;
+                }
             )
         })
     }
 
-    handleFilterClick(filterName, categoryName, fromHash) {
-        this.props.onSelectFilter(filterName, categoryName, fromHash);
+    handleFilterClick(filter, categoryName, fromHash) {
+        console.log(filter);
+        this.props.onSelectFilter(filter.name, categoryName, fromHash);
         this.setState({
-            selectedFilterName: filterName,
+            selectedFilterName: filter.name,
             selectedFilterParentCategoryName: categoryName
         });
-        window.location.hash = filterName
+        window.location.hash = filter.name
     };
 
     // Select either the next (forward == true) or previous (forward == false)
@@ -162,9 +181,9 @@ class FilterSelect extends React.Component {
         const categories = Array.from(this.state.groupedFilters.keys());
         const indexOfCurrentCategory = categories.indexOf(categoryName);
 
-        const currentFilterNames = this.state.groupedFilters.get(categoryName);
+        const currentFilterResults = this.state.groupedFilters.get(categoryName);
+        const currentFilterNames = currentFilterResults.map(filter => filter.name);
         const indexOfCurrentFilter = currentFilterNames.indexOf(filterName);
-
         
         if (indexOfCurrentFilter === currentFilterNames.length - 1 && forward) {
             // we need to step into the next category
@@ -174,7 +193,7 @@ class FilterSelect extends React.Component {
             } else {
                 // step to the 0th element of the next category
                 const newCategory = categories[indexOfCurrentCategory + 1];
-                this.handleFilterClick(this.state.groupedFilters.get(newCategory)[0], newCategory, false);
+                this.handleFilterClick(this.state.groupedFilters.get(newCategory)[0].filter, newCategory, false);
             }
         } else if (indexOfCurrentFilter === 0 && !forward) {
             // we need to step into the last category
@@ -184,7 +203,7 @@ class FilterSelect extends React.Component {
             } else {
                 // step to the last element of the previous category
                 const newCategory = categories[indexOfCurrentCategory - 1];
-                const newFilterNames = this.state.groupedFilters.get(newCategory)
+                const newFilterNames = this.state.groupedFilters.get(newCategory).map(result => result.filter.name);
                 this.handleFilterClick(newFilterNames[newFilterNames.length - 1], newCategory, false);
             }
         } else {
@@ -204,26 +223,27 @@ class FilterSelect extends React.Component {
         }
     }
 
-    renderFilterNames(filterNames, categoryName) {
+    renderFilterResults(filterResults, categoryName) {
         let _this = this;
         return (
             <ul>
-                {filterNames.map(function(filterName) {
-                    return <FilterName
-                        key={filterName}
-                        onClick={_this.handleFilterClick.bind(_this, filterName, categoryName, false)}
-                        highlighted={_this.state.selectedFilterName == filterName}
-                    >{filterName}</FilterName>
+                {filterResults.map(function(filterResult) {
+                    return <FilterSelectResult
+                        key={filterResult.filter.name}
+                        result={filterResult}
+                        onClick={_this.handleFilterClick.bind(_this, filterResult.filter, categoryName, false)}
+                        highlighted={_this.state.selectedFilterName == filterResult.filter.name}
+                    >{filterResult.filter.name}</FilterSelectResult>
                 })}
             </ul>
         );
     }
 
-    renderEntry(categoryName, filterNames) {
+    renderEntry(categoryName, filterResults) {
         return (
             <EntryContainer key={categoryName}>
                 <Category className="margin-bottom--sm">{categoryName}</Category>
-                {this.renderFilterNames(filterNames, categoryName)}
+                {this.renderFilterResults(filterResults, categoryName)}
             </EntryContainer>
         );
     }
@@ -237,10 +257,10 @@ class FilterSelect extends React.Component {
 
         const hash = window.location.hash.replace("#", "");
         if (hash) {
-            for (let [categoryName, filterNames] of this.state.groupedFilters[Symbol.iterator]()) {
-                for (let filterName of filterNames) {
-                    if (filterName === hash) {
-                        this.handleFilterClick(filterName, categoryName, true);
+            for (let [categoryName, filterResults] of this.state.groupedFilters[Symbol.iterator]()) {
+                for (let filterResult of filterResults) {
+                    if (filterResult.filter.name === hash) {
+                        this.handleFilterClick(filterResult.filter, categoryName, true);
                     }
                 }
             }
