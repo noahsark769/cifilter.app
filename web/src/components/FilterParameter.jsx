@@ -61,7 +61,6 @@ const Info = styled.div`
 `;
 
 const FilterParameter = (props) => {
-    console.log(props)
     return (
         <Container>
             <TypeContainer longType={props.longType}>
@@ -70,7 +69,7 @@ const FilterParameter = (props) => {
             </TypeContainer>
             <DescriptionContainer>
                 <Description longType={props.longType} italic={!props.parameter.description}>{props.parameter.description || "No description provided by Core Image."}</Description>
-                {props.parameter.type.information && <Info>Type: {props.parameter.type.information}</Info>}
+                {props.parameter.type.information && <Info>{props.parameter.type.information}</Info>}
             </DescriptionContainer>
         </Container>
     )
