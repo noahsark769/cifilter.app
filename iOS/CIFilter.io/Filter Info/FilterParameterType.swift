@@ -208,7 +208,7 @@ enum FilterParameterType: Encodable, FilterInformationalStringConvertible  {
         case kCIAttributeTypeBoolean:
             self = .boolean(info: try FilterNumberParameterInfo(filterAttributeDict: specificDict))
         case kCIAttributeTypeInteger:
-            throw FilterInfoConstructionError.invalidParameterType
+            self = .integer
         case kCIAttributeTypeCount:
             self = .count(info: try FilterNumberParameterInfo(filterAttributeDict: specificDict))
         case "CIFilter.io_UnkeyedImageType":

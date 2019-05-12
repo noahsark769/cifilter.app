@@ -65,10 +65,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let filterNames = CIFilter.filterNames(inCategory: nil)
         let data: [FilterInfo] = filterNames.compactMap { filterName in
             let filter = CIFilter(name: filterName)!
-            let filterInfo = try? FilterInfo(filter: filter)
+            let filterInfo = try! FilterInfo(filter: filter)
             return filterInfo
         }
-        print(String(data: try! JSONEncoder().encode(data), encoding: .utf8)!)
+//        print(String(data: try! JSONEncoder().encode(data), encoding: .utf8)!)
 
         window = UIWindow()
         let splitViewController = UISplitViewController()
