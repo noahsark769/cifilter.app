@@ -163,7 +163,6 @@ class FilterSelect extends React.Component {
     }
 
     handleFilterClick(filter, categoryName, fromHash) {
-        console.log(filter);
         this.props.onSelectFilter(filter.name, categoryName, fromHash);
         this.setState({
             selectedFilterName: filter.name,
@@ -186,9 +185,9 @@ class FilterSelect extends React.Component {
         const indexOfCurrentCategory = categories.indexOf(categoryName);
 
         const currentFilterResults = this.state.groupedFilters.get(categoryName);
-        const currentFilterNames = currentFilterResults.map(filter => filter.name);
+        const currentFilterNames = currentFilterResults.map(result => result.filter.name);
         const indexOfCurrentFilter = currentFilterNames.indexOf(filterName);
-        
+
         if (indexOfCurrentFilter === currentFilterNames.length - 1 && forward) {
             // we need to step into the next category
             if (indexOfCurrentCategory === categories.length - 1) {
@@ -207,13 +206,13 @@ class FilterSelect extends React.Component {
             } else {
                 // step to the last element of the previous category
                 const newCategory = categories[indexOfCurrentCategory - 1];
-                const newFilterNames = this.state.groupedFilters.get(newCategory).map(result => result.filter.name);
-                this.handleFilterClick(newFilterNames[newFilterNames.length - 1], newCategory, false);
+                const newFilters = this.state.groupedFilters.get(newCategory).map(result => result.filter);
+                this.handleFilterClick(newFilters[newFilters.length - 1], newCategory, false);
             }
         } else {
             // we just need to step
-            const newFilterName = currentFilterNames[indexOfCurrentFilter + (forward ? 1 : -1)];
-            this.handleFilterClick(newFilterName, categoryName, false);
+            const newFilter = currentFilterResults[indexOfCurrentFilter + (forward ? 1 : -1)].filter;
+            this.handleFilterClick(newFilter, categoryName, false);
         }
 
     }
