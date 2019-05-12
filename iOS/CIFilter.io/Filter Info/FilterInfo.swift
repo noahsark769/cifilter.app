@@ -36,7 +36,7 @@ struct FilterInfo: Encodable {
                 $0.starts(with: "input") || $0.starts(with: "output")
             })
         ))
-        for paramKey in keysToCheck {
+        for paramKey in keysToCheck.sorted() {
             if let parameterDict = filterAttributeDict[paramKey] {
                 guard let parameterDict = parameterDict as? [String: Any] else {
                     throw FilterInfoConstructionError.parameterNotDict

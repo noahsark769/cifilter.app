@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let filterInfo = try! FilterInfo(filter: filter)
             return filterInfo
         }
-//        print(String(data: try! JSONEncoder().encode(data), encoding: .utf8)!)
+        print(String(data: try! JSONEncoder().encode(data), encoding: .utf8)!)
 
         window = UIWindow()
         let splitViewController = UISplitViewController()
