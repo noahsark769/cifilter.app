@@ -67,8 +67,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let filter = CIFilter(name: filterName)!
             let filterInfo = try! FilterInfo(filter: filter)
             return filterInfo
+        }.sorted { lhs, rhs in
+            return lhs.name < rhs.name
         }
-        print(String(data: try! JSONEncoder().encode(data), encoding: .utf8)!)
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .sortedKeys
+        print(String(data: try! encoder.encode(data), encoding: .utf8)!)
 
         window = UIWindow()
         let splitViewController = UISplitViewController()
