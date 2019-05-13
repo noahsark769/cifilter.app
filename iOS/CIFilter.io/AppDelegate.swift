@@ -70,9 +70,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }.sorted { lhs, rhs in
             return lhs.name < rhs.name
         }
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .sortedKeys
-        print(String(data: try! encoder.encode(data), encoding: .utf8)!)
+        // let encoder = JSONEncoder()
+        // encoder.outputFormatting = .sortedKeys
+        // print(String(data: try! encoder.encode(data), encoding: .utf8)!)
 
         window = UIWindow()
         let splitViewController = UISplitViewController()
@@ -104,20 +104,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
     }
 
-    func sha() -> String {
-        guard let sha = Bundle.main.object(forInfoDictionaryKey: "NGGitSha") as? String else {
-            NonFatalManager.shared.log("GitShaCouldNotBeDetermined")
-            return "unknown"
+    lazy var buildInformation: BuildInformation = {
+        guard let url = Bundle.main.url(forResource: "buildInformation", withExtension: "json") else {
+            fatalError("Build information could not be determined")
         }
-        return sha
+        let decoder = JSONDecoder()
+        guard let info = try? decoder.decode(BuildInformation.self, from: Data(contentsOf: url)) else {
+            fatalError("Build information could not be decoded")
+        }
+        return info
+    }()
+
+    func sha() -> String {
+        return buildInformation.gitSha
     }
 
     func commitNumber() -> String {
-        guard let number = Bundle.main.object(forInfoDictionaryKey: "NGCommitNumber") as? String else {
-            NonFatalManager.shared.log("CommitNumberCouldNotBeDetermined")
-            return "unknown"
-        }
-        return number
+        return buildInformation.numberOfCommits
     }
 
     func environment() -> Environment {
@@ -133,5 +136,10 @@ extension AppDelegate: UISplitViewControllerDelegate {
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
         return true
     }
+}
+
+struct BuildInformation: Codable {
+    let gitSha: String
+    let numberOfCommits: String
 }
 

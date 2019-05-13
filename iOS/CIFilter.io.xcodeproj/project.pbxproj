@@ -36,6 +36,7 @@
 		A130BD8121F0EAC700E586F6 /* UIImageView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130BD8021F0EAC700E586F6 /* UIImageView+Utils.swift */; };
 		A130BD8321F0F22400E586F6 /* CGPoint+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130BD8221F0F22400E586F6 /* CGPoint+Utils.swift */; };
 		A130BDF322068CCE00E586F6 /* BuiltInImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130BDF222068CCE00E586F6 /* BuiltInImage.swift */; };
+		A1315E2D2288F340006872BD /* buildInformation.json in Resources */ = {isa = PBXBuildFile; fileRef = A1315E2C2288F33F006872BD /* buildInformation.json */; };
 		A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1707F65219A1A0A0010E007 /* FilterInfo.swift */; };
 		A172BAC42221CCFB00182C56 /* ColorHexInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172BAC32221CCFA00182C56 /* ColorHexInput.swift */; };
 		A1A0D83521BC60BA0098168C /* FilterExampleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */; };
@@ -113,6 +114,7 @@
 		A130BD8021F0EAC700E586F6 /* UIImageView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Utils.swift"; sourceTree = "<group>"; };
 		A130BD8221F0F22400E586F6 /* CGPoint+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Utils.swift"; sourceTree = "<group>"; };
 		A130BDF222068CCE00E586F6 /* BuiltInImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInImage.swift; sourceTree = "<group>"; };
+		A1315E2C2288F33F006872BD /* buildInformation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = buildInformation.json; sourceTree = SOURCE_ROOT; };
 		A1707F65219A1A0A0010E007 /* FilterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInfo.swift; sourceTree = "<group>"; };
 		A172BAC32221CCFA00182C56 /* ColorHexInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorHexInput.swift; sourceTree = "<group>"; };
 		A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterExampleProvider.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				A129375D2246B7CC000C6329 /* AnalyticsManager.swift */,
 				A1C6621C2196818100826A2B /* AppDelegate.swift */,
 				A1C662232196818300826A2B /* Assets.xcassets */,
+				A1315E2C2288F33F006872BD /* buildInformation.json */,
 				A1D5A8B221ADB3C100257B5E /* Dictionary+Validation.swift */,
 				A1C662282196818300826A2B /* Info.plist */,
 				A1C662252196818300826A2B /* LaunchScreen.storyboard */,
@@ -440,6 +443,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1C662242196818300826A2B /* Assets.xcassets in Resources */,
+				A1315E2D2288F340006872BD /* buildInformation.json in Resources */,
 				A1C662272196818300826A2B /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -569,7 +573,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "git=$(sh /etc/profile; which git)\nnumber_of_commits=$(\"$git\" rev-list HEAD --count)\nsha=$(\"$git\" rev-parse --verify HEAD)\n\ntarget_plist=\"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\ndsym_plist=\"$DWARF_DSYM_FOLDER_PATH/$DWARF_DSYM_FILE_NAME/Contents/Info.plist\"\n\nfor plist in \"$target_plist\" \"$dsym_plist\"; do\nif [ -s \"$plist\" ]; then\n$(/usr/libexec/PlistBuddy -c 'Delete :NGGitSha' \"$plist\")\n$(/usr/libexec/PlistBuddy -c 'Delete :NGCommitNumber' \"$plist\")\necho \"Adding $sha $number_of_commits to $plist\"\n$(/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $number_of_commits\" \"$plist\") \\\n&& $(/usr/libexec/PlistBuddy -c \"Add :NGGitSha string $sha\" \"$plist\") \\\n&& $(/usr/libexec/PlistBuddy -c \"Set :NGGitSha $sha\" \"$plist\") \\\n&& $(/usr/libexec/PlistBuddy -c \"Add :NGCommitNumber string $number_of_commits\" \"$plist\") \\\n&& $(/usr/libexec/PlistBuddy -c \"Set :NGCommitNumber $number_of_commits\" \"$plist\")\nfi\ndone\n";
+			shellScript = "git=$(sh /etc/profile; which git)\nnumber_of_commits=$(\"$git\" rev-list HEAD --count)\nsha=$(\"$git\" rev-parse --verify HEAD)\necho \"{\\\"gitSha\\\": \\\"$sha\\\", \\\"numberOfCommits\\\": \\\"$number_of_commits\\\"}\" > \"$SRCROOT/buildInformation.json\"\n";
 		};
 		A628FCD28E0073CB86570D21 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
