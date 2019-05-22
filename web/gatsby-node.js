@@ -61,22 +61,25 @@ exports.createPages = ({ graphql, actions }) => {
         const templateComponent = path.resolve(`src/templates/Main.jsx`);
 
         readJsonAsync(path.resolve(`src/data/filters.json`)).then((data) => {
-            combineFilterDataWithExampleData(data).then((editedData) => {
+            combineFilterDataWithExampleData(data).then((filters) => {
                 createPage({
                     path: '/',
                     component: templateComponent,
                     context: {
-                        filters: editedData
+                        filters: filters
                     }
                 });
-                // data.pages.forEach((pageData) => {
-                //     const pagePath = pageData.pagePath;
-                //     createPage({
-                //         path: pagePath,
-                //         component: templateComponent,
-                //         context: pageData,
-                //     })
-                // });
+                filters.forEach((filter) => {
+                    createPage({
+                        path: `/${filter.name}/`,
+                        component: templateComponent,
+                        context: {
+                            filters: filters,
+                            initiallySelectedFilter: filter
+                        },
+                    })
+                    console.log(`Created page for ${filter.name}`);
+                });
             });
             resolve();
         });

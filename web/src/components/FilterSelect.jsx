@@ -168,7 +168,14 @@ class FilterSelect extends React.Component {
             selectedFilterName: filter.name,
             selectedFilterParentCategoryName: categoryName
         });
-        window.location.hash = filter.name
+        window.history.pushState(
+            {
+                selectedFilterName: filter.name,
+                selectedFilterParentCategoryName: categoryName
+            },
+            filter.name,
+            `/${filter.name}/`
+        )
     };
 
     // Select either the next (forward == true) or previous (forward == false)
@@ -264,6 +271,18 @@ class FilterSelect extends React.Component {
                 for (let filterResult of filterResults) {
                     if (filterResult.filter.name === hash) {
                         this.handleFilterClick(filterResult.filter, categoryName, true);
+                    }
+                }
+            }
+        } else if (this.props.prepopulatedFilterName) {
+            for (let [categoryName, filterResults] of this.state.groupedFilters[Symbol.iterator]()) {
+                for (let filterResult of filterResults) {
+                    if (filterResult.filter.name === this.props.prepopulatedFilterName) {
+                        console.log(`Setting stuff from prepopulated filter name ${filterResult.filter.name}`);
+                        this.setState({
+                            selectedFilterName: filterResult.filter.name,
+                            selectedFilterParentCategoryName: categoryName
+                        });
                     }
                 }
             }

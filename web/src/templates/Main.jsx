@@ -41,6 +41,11 @@ class Main extends React.Component {
         currentSearchText: ""
     }
 
+    getSelectedFilter() {
+        console.log(this.props.pageContext);
+        return this.state.selectedFilter || this.props.pageContext.initiallySelectedFilter;
+    }
+
     handleWindowResize() {
         if (window.innerWidth < 600 && !this.state.isMobile) {
             this.setState({ isMobile: true })
@@ -76,22 +81,25 @@ class Main extends React.Component {
     }
 
     renderMobileStateContent() {
-        console.log(this.state.mobileState);
+        let selectedFilter = this.getSelectedFilter()
         if (this.state.mobileState === MOBILE_STATE.LIST) {
             return (<FilterSelect
                 filters={this.props.pageContext.filters}
                 onSelectFilter={this.handleFilterSelected.bind(this)}
                 onSearchBarChange={this.handleSearchBarChange.bind(this)}
                 prepopulatedSearchBarText={this.state.currentSearchText}
+                prepopulatedFilterName={selectedFilter && selectedFilter.name}
                 className="margin-right--sm" />);
         } else {
             return (
-                <FilterDetail filter={this.state.selectedFilter} displaysBack onClickBack={this.handleMobileBack.bind(this)} />
+                <FilterDetail filter={this.getSelectedFilter()} displaysBack onClickBack={this.handleMobileBack.bind(this)} />
             );
         }
     }
 
     renderContent() {
+        let selectedFilter = this.getSelectedFilter()
+        console.log(`Rendering with ${selectedFilter}`);
         if (this.state.isMobile) {
             return (<Container>
                 {this.renderMobileStateContent()}
@@ -103,8 +111,9 @@ class Main extends React.Component {
                 onSelectFilter={this.handleFilterSelected.bind(this)}
                 onSearchBarChange={this.handleSearchBarChange.bind(this)}
                 prepopulatedSearchBarText={this.state.currentSearchText}
+                prepopulatedFilterName={selectedFilter && selectedFilter.name}
                 className="margin-right--sm" />
-            {!this.state.isMobile && <FilterDetail filter={this.state.selectedFilter} />}
+            {!this.state.isMobile && <FilterDetail filter={this.getSelectedFilter()} />}
         </Container>);
     }
 
@@ -126,6 +135,12 @@ class Main extends React.Component {
 
         window.addEventListener('resize', this.handleWindowResize.bind(this))
         this.handleWindowResize();
+
+        if (this.props.pageContext.initiallySelectedFilter) {
+            this.setState({
+                mobileState: MOBILE_STATE.DETAIL
+            });
+        }
     }
 };
 export default Main;
