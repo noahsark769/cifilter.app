@@ -78,7 +78,6 @@ exports.createPages = ({ graphql, actions }) => {
                             initiallySelectedFilter: filter
                         },
                     })
-                    console.log(`Created page for ${filter.name}`);
                 });
             });
             resolve();
