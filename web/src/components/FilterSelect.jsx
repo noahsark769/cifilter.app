@@ -278,7 +278,6 @@ class FilterSelect extends React.Component {
             for (let [categoryName, filterResults] of this.state.groupedFilters[Symbol.iterator]()) {
                 for (let filterResult of filterResults) {
                     if (filterResult.filter.name === this.props.prepopulatedFilterName) {
-                        console.log(`Setting stuff from prepopulated filter name ${filterResult.filter.name}`);
                         this.setState({
                             selectedFilterName: filterResult.filter.name,
                             selectedFilterParentCategoryName: categoryName

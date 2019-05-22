@@ -42,7 +42,6 @@ class Main extends React.Component {
     }
 
     getSelectedFilter() {
-        console.log(this.props.pageContext);
         return this.state.selectedFilter || this.props.pageContext.initiallySelectedFilter;
     }
 
@@ -56,7 +55,6 @@ class Main extends React.Component {
 
     handleFilterSelected(filterName, categoryName, fromHash) {
         // TODO: this iterates over 200 filters, make it a map up front :/
-        console.log(`Handling selected from hash ${fromHash}`);
         let newFilter = this.props.pageContext.filters.filter((filter) => filter.name === filterName)[0];
         this.setState({
             selectedFilter: newFilter,
@@ -99,7 +97,6 @@ class Main extends React.Component {
 
     renderContent() {
         let selectedFilter = this.getSelectedFilter()
-        console.log(`Rendering with ${selectedFilter}`);
         if (this.state.isMobile) {
             return (<Container>
                 {this.renderMobileStateContent()}
