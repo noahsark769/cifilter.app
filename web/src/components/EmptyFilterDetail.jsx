@@ -18,6 +18,10 @@ const P = styled.p`
     line-height: 18px;
     text-align: left;
     width: 100%;
+
+    @media (prefers-color-scheme: dark) {
+        color: #fff;
+    }
 `;
 const LI = styled.li`
     font-size: 14px;
@@ -31,6 +35,10 @@ const LI = styled.li`
         content: "";
         width: 3px;
         display: inline-block;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        color: #fff;
     }
 `;
 

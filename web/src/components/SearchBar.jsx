@@ -8,6 +8,14 @@ const Container = styled.div`
     background-color: white;
     padding: 10px;
 
+    @media (prefers-color-scheme: dark) {
+        background-color: #eee;
+
+        textarea {
+            background-color: #eee;
+        }
+    }
+
     display: flex;
     flex-direction: row;
     align-items: center;

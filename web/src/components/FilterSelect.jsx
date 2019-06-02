@@ -105,6 +105,10 @@ const Container = styled.div`
 const Category = styled.div`
     font-weight: bold;
     font-size: 18px;
+
+    @media (prefers-color-scheme: dark) {
+        color: #fff;
+    }
 `;
 
 const EntryContainer = styled.div`

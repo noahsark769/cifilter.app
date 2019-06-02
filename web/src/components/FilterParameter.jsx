@@ -31,6 +31,10 @@ const Description = styled.div`
     font-size: 16px;
     line-height: 20px;
 
+    @media (prefers-color-scheme: dark) {
+        color: #fff;
+    }
+
     ${(props) => props.longType && css`
         flex: 5;
     `};
@@ -44,12 +48,20 @@ const ParameterName = styled.div`
     font-size: 14px;
     color: #666;
     font-style: italic;
+
+    @media (prefers-color-scheme: dark) {
+        color: #a4a4a4;
+    }
 `;
 
 const ParameterClass = styled.div`
     color: #666;
     font-size: 16px;
     font-family: monospace;
+
+    @media (prefers-color-scheme: dark) {
+        color: #a4a4a4;
+    }
 `;
 
 const Info = styled.div`
@@ -58,6 +70,10 @@ const Info = styled.div`
     font-style: italic;
     margin-top: 12px;
     line-height: 20px;
+
+    @media (prefers-color-scheme: dark) {
+        color: #a4a4a4;
+    }
 `;
 
 const FilterParameter = (props) => {

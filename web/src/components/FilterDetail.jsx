@@ -17,6 +17,10 @@ const Container = styled.div`
 const Description = styled.div`
     font-size: 16px;
     line-height: 22px;
+
+    @media (prefers-color-scheme: dark) {
+        color: #fff;
+    }
 `;
 
 const TitleContainer = styled.div`

@@ -11,6 +11,10 @@ const OuterWrapper = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     height: 100vh;
+
+    @media (prefers-color-scheme: dark) {
+        background-color: #2b2c2f;
+    }
 `;
 
 const Container = styled.div`

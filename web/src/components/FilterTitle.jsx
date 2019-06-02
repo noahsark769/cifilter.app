@@ -4,6 +4,10 @@ import styled, { css } from 'styled-components';
 const Title = styled.div`
     font-size: 38px;
     font-weight: bold;
+
+    @media (prefers-color-scheme: dark) {
+        color: #fff;
+    }
 `;
 
 const AvailableContainer = styled.div`

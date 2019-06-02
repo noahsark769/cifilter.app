@@ -12,6 +12,10 @@ const Title = styled.div`
     font-size: 20px;
     font-weight: bold;
     display: inline-block;
+
+    @media (prefers-color-scheme: dark) {
+        color: #fff;
+    }
 `;
 
 const LogoAndTitle = styled.div`

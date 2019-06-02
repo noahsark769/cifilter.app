@@ -65,9 +65,20 @@ const FilterName = styled.div`
         border-left: 2px solid #a4a4a4;
         color: #666666;
 
+        @media (prefers-color-scheme: dark) {
+            color: #b6b6b6;
+            border-color: #b6b6b6;
+        }
+
         ${(props) => props.highlighted && css`
             color: #F5BD5D;
             border-left: 2px solid #F5BD5D;
+
+            @media (prefers-color-scheme: dark) {
+                // Hack: this is repeated for specificity
+                color: #F5BD5D;
+                border-left: 2px solid #F5BD5D;
+            }
         `};
     }
 `;
