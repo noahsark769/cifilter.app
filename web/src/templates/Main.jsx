@@ -115,10 +115,15 @@ class Main extends React.Component {
     }
 
     render() {
+        let selectedFilter = this.getSelectedFilter();
+        let title = selectedFilter ?
+            `${selectedFilter.name} | Core Image Filter Reference` :
+            "Core Image Filter Reference";
+        console.log(`Rendering initially selected title: ${title}`);
         return (
             <OuterWrapper>
                 <Helmet>
-                    <title>CIFilter Reference</title>
+                    <title>{title}</title>
                 </Helmet>
                 <Nav />
                 {this.renderContent()}

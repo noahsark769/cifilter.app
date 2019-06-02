@@ -175,7 +175,7 @@ class FilterSelect extends React.Component {
             },
             filter.name,
             `/${filter.name}/`
-        )
+        );
     };
 
     // Select either the next (forward == true) or previous (forward == false)
