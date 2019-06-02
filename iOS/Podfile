@@ -17,6 +17,7 @@ def shared_pods
   pod 'IQKeyboardManagerSwift', '~> 6.2.0'
   pod 'Sentry', '~> 4.3.1', :modular_headers => true
   pod 'Mixpanel-swift', '~> 2.5.9'
+  pod 'ReSwift', '~> 4.1.1'
 end
 
 target 'CIFilter.io' do
