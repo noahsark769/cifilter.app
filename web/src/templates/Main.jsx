@@ -119,7 +119,6 @@ class Main extends React.Component {
         let title = selectedFilter ?
             `${selectedFilter.name} | Core Image Filter Reference` :
             "Core Image Filter Reference";
-        console.log(`Rendering initially selected title: ${title}`);
         return (
             <OuterWrapper>
                 <Helmet>
