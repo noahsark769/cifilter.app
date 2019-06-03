@@ -132,6 +132,11 @@ class Main extends React.Component {
                 <Helmet>
                     <title>{title}</title>
                     <meta name="description" content={description} />
+                    <meta name="twitter:card" content="summary" />
+                    <meta name="twitter:creator" content="@cifilterio" />
+                    <meta property="og:title" content={title} />
+                    <meta property="og:description" content={description} />
+                    { selectedFilter && <meta property="og:url" content={`https://cifilter.io/${selectedFilter.name}/`} />}
                     { selectedFilter && <link rel="canonical" href={`https://cifilter.io/${selectedFilter.name}/`} />}
                 </Helmet>
                 <Nav />
