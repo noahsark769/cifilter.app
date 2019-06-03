@@ -10,8 +10,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 import MobileCoreServices
+import ReSwift
 
-final class FilterWorkshopViewController: UIViewController {
+final class FilterWorkshopViewController: UIViewController, StoreSubscriber {
     private let bag = DisposeBag()
     private let applicator = AsyncFilterApplicator()
     private let exporter = FilterApplicationExporter()
@@ -99,14 +100,22 @@ final class FilterWorkshopViewController: UIViewController {
 
     override func loadView() {
         self.view = workshopView
+
+        WorkshopStore.store.subscribe(self) { subscription in subscription }
+
         workshopView.set(filter: self.filter)
         AnalyticsManager.shared.track(event: "filter_workshop", properties: ["name": self.filter.name])
+
+        WorkshopStore.store.dispatch(WorkshopActions.WorkshopDidBecomeReady(filter: self.filter))
+    }
+
+    func newState(state: WorkshopState) {
+        print("Got new state: \(state)")
     }
 }
 
 extension FilterWorkshopViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        // TODO: Errors for these
         guard let currentlySelectingParamName = self.inputImageCurrentlySelecting else {
             NonFatalManager.shared.log("NoCurrentlySelectedImageParamFromImagePicker")
             return

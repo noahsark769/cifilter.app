@@ -37,6 +37,7 @@
 		A130BD8321F0F22400E586F6 /* CGPoint+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130BD8221F0F22400E586F6 /* CGPoint+Utils.swift */; };
 		A130BDF322068CCE00E586F6 /* BuiltInImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130BDF222068CCE00E586F6 /* BuiltInImage.swift */; };
 		A1315E2D2288F340006872BD /* buildInformation.json in Resources */ = {isa = PBXBuildFile; fileRef = A1315E2C2288F33F006872BD /* buildInformation.json */; };
+		A13A8CE122A55DB700633D80 /* WorkshopStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13A8CE022A55DB700633D80 /* WorkshopStore.swift */; };
 		A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1707F65219A1A0A0010E007 /* FilterInfo.swift */; };
 		A172BAC42221CCFB00182C56 /* ColorHexInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172BAC32221CCFA00182C56 /* ColorHexInput.swift */; };
 		A1A0D83521BC60BA0098168C /* FilterExampleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */; };
@@ -115,6 +116,7 @@
 		A130BD8221F0F22400E586F6 /* CGPoint+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Utils.swift"; sourceTree = "<group>"; };
 		A130BDF222068CCE00E586F6 /* BuiltInImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInImage.swift; sourceTree = "<group>"; };
 		A1315E2C2288F33F006872BD /* buildInformation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = buildInformation.json; sourceTree = SOURCE_ROOT; };
+		A13A8CE022A55DB700633D80 /* WorkshopStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkshopStore.swift; sourceTree = "<group>"; };
 		A1707F65219A1A0A0010E007 /* FilterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInfo.swift; sourceTree = "<group>"; };
 		A172BAC32221CCFA00182C56 /* ColorHexInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorHexInput.swift; sourceTree = "<group>"; };
 		A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterExampleProvider.swift; sourceTree = "<group>"; };
@@ -213,9 +215,18 @@
 			path = Standard;
 			sourceTree = "<group>";
 		};
+		A13A8CDF22A55DA600633D80 /* ReSwift */ = {
+			isa = PBXGroup;
+			children = (
+				A13A8CE022A55DB700633D80 /* WorkshopStore.swift */,
+			);
+			path = ReSwift;
+			sourceTree = "<group>";
+		};
 		A1A0D83821BC67C60098168C /* Filter Workshop */ = {
 			isa = PBXGroup;
 			children = (
+				A13A8CDF22A55DA600633D80 /* ReSwift */,
 				A128994621D41EAC00BEE395 /* AsyncFilterApplicator.swift */,
 				A130BDF222068CCE00E586F6 /* BuiltInImage.swift */,
 				A172BAC32221CCFA00182C56 /* ColorHexInput.swift */,
@@ -487,6 +498,7 @@
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Keys/Keys.framework",
 				"${BUILT_PRODUCTS_DIR}/Mixpanel-swift/Mixpanel.framework",
+				"${BUILT_PRODUCTS_DIR}/ReSwift/ReSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveLists/ReactiveLists.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
@@ -504,6 +516,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Keys.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mixpanel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveLists.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
@@ -589,6 +602,7 @@
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Keys/Keys.framework",
 				"${BUILT_PRODUCTS_DIR}/Mixpanel-swift/Mixpanel.framework",
+				"${BUILT_PRODUCTS_DIR}/ReSwift/ReSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveLists/ReactiveLists.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
@@ -606,6 +620,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Keys.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mixpanel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveLists.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
@@ -690,6 +705,7 @@
 				A1D5A8D521B4A64A00257B5E /* UIStackView+Utils.swift in Sources */,
 				A129375C2246B56E000C6329 /* UUIDManager.swift in Sources */,
 				A130BD7D21EC0D1F00E586F6 /* VectorInput.swift in Sources */,
+				A13A8CE122A55DB700633D80 /* WorkshopStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
