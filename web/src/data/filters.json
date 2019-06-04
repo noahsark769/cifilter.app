@@ -120,7 +120,7 @@
       "CICategoryStillImage",
       "CICategoryBuiltIn"
     ],
-    "description": "Performs an affine transform on a source image and then clamps the pixels at the edge of the transformed image, extending them outwards. This filter performs similarly to the “Affine Transform” filter except that it produces an image with infinite extent. You can use this filter when you need to blur an image but you want to avoid a soft, black fringe along the edges.",
+    "description": "Performs an affine transformation on a source image and then clamps the pixels at the edge of the transformed image, extending them outwards. This filter performs similarly to the “Affine Transform” filter except that it produces an image with infinite extent. You can use this filter when you need to blur an image but you want to avoid a soft, black fringe along the edges.",
     "displayName": "Affine Clamp",
     "name": "CIAffineClamp",
     "parameters": [
@@ -156,7 +156,7 @@
       "CICategoryStillImage",
       "CICategoryBuiltIn"
     ],
-    "description": "Applies an affine transform to an image and then tiles the transformed image.",
+    "description": "Applies an affine transformation to an image and then tiles the transformed image.",
     "displayName": "Affine Tile",
     "name": "CIAffineTile",
     "parameters": [
@@ -192,7 +192,7 @@
       "CICategoryStillImage",
       "CICategoryBuiltIn"
     ],
-    "description": "Applies an affine transform to an image. You can scale, translate, or rotate the input image. You can also apply a combination of these operations.",
+    "description": "Applies an affine transformation to an image. You can scale, translate, or rotate the input image. You can also apply a combination of these operations.",
     "displayName": "Affine Transform",
     "name": "CIAffineTransform",
     "parameters": [
@@ -2902,6 +2902,16 @@
     "name": "CICoreMLModelFilter",
     "parameters": [
       {
+        "classType": "NSNumber",
+        "description": "A number to specify which output of a multi-head CoreML model should be used for applying effect on the image.",
+        "displayName": "Head Index",
+        "name": "inputHeadIndex",
+        "type": {
+          "information": "Integer.",
+          "kind": "integer"
+        }
+      },
+      {
         "classType": "CIImage",
         "description": "The image to use as an input image. For filters that also use a background image, this is the foreground image.",
         "displayName": "Image",
@@ -2919,6 +2929,16 @@
         "type": {
           "information": "Machine learning model.",
           "kind": "mlModel"
+        }
+      },
+      {
+        "classType": "NSNumber",
+        "description": "A boolean value to specify that Softmax normalization should be applied to the output of the model.",
+        "displayName": "Softmax Normalization",
+        "name": "inputSoftmaxNormalization",
+        "type": {
+          "information": "Boolean.",
+          "kind": "boolean"
         }
       }
     ],
@@ -3109,6 +3129,16 @@
         "type": {
           "information": "Rectangle. ",
           "kind": "rectangle"
+        }
+      },
+      {
+        "classType": "CIImage",
+        "description": "A matting image.",
+        "displayName": "Hair Image",
+        "name": "inputHairImage",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
         }
       },
       {
@@ -3649,6 +3679,42 @@
       }
     ],
     "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIDivideBlendMode"
+  },
+  {
+    "availableIOS": "13",
+    "availableMac": "10.15",
+    "categories": [
+      "CICategoryColorEffect",
+      "CICategoryNonSquarePixels",
+      "CICategoryStillImage",
+      "CICategoryBuiltIn"
+    ],
+    "description": "Enhance a document image by removing unwanted shadows, whitening the background, and enhancing contrast.",
+    "displayName": "Document Enhancer",
+    "name": "CIDocumentEnhancer",
+    "parameters": [
+      {
+        "classType": "NSNumber",
+        "description": "The amount of enhancement.",
+        "displayName": "Amount",
+        "name": "inputAmount",
+        "type": {
+          "information": "Scalar. Min: 0.0 Max: 10.0",
+          "kind": "scalar"
+        }
+      },
+      {
+        "classType": "CIImage",
+        "description": "The image to use as an input image. For filters that also use a background image, this is the foreground image.",
+        "displayName": "Image",
+        "name": "inputImage",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
+        }
+      }
+    ],
+    "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIDocumentEnhancer"
   },
   {
     "availableIOS": "6",
@@ -5300,6 +5366,82 @@
     "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIHueSaturationValueGradient"
   },
   {
+    "availableIOS": "13",
+    "availableMac": "10.15",
+    "categories": [
+      "CICategoryReduction",
+      "CICategoryVideo",
+      "CICategoryStillImage",
+      "CICategoryBuiltIn"
+    ],
+    "description": "Create a palette of the most common colors found in the image.",
+    "displayName": "KMeans",
+    "name": "CIKMeans",
+    "parameters": [
+      {
+        "classType": "NSNumber",
+        "description": "Specifies how many k-means color clusters should be used.",
+        "displayName": "Count",
+        "name": "inputCount",
+        "type": {
+          "information": "Count. Min: 0 Max: 128",
+          "kind": "count"
+        }
+      },
+      {
+        "classType": "CIVector",
+        "description": "A rectangle that defines the extent of the effect.",
+        "displayName": "Extent",
+        "name": "inputExtent",
+        "type": {
+          "information": "Rectangle. ",
+          "kind": "rectangle"
+        }
+      },
+      {
+        "classType": "CIImage",
+        "description": "The image to use as an input image. For filters that also use a background image, this is the foreground image.",
+        "displayName": "Image",
+        "name": "inputImage",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
+        }
+      },
+      {
+        "classType": "CIImage",
+        "description": "Specifies the color seeds to use for k-means clustering, either passed as an image or an array of colors.",
+        "displayName": "Means",
+        "name": "inputMeans",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
+        }
+      },
+      {
+        "classType": "NSNumber",
+        "description": "Specifies how many k-means passes should be performed.",
+        "displayName": "Passes",
+        "name": "inputPasses",
+        "type": {
+          "information": "Count. Min: 0 Max: 20",
+          "kind": "count"
+        }
+      },
+      {
+        "classType": "NSNumber",
+        "description": "Specifies whether the k-means color palette should be computed in a perceptual color space.",
+        "displayName": "Perceptual",
+        "name": "inputPerceptual",
+        "type": {
+          "information": "Boolean.",
+          "kind": "boolean"
+        }
+      }
+    ],
+    "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIKMeans"
+  },
+  {
     "availableIOS": "9",
     "availableMac": "10.4",
     "categories": [
@@ -6424,7 +6566,7 @@
       "CICategoryStillImage",
       "CICategoryBuiltIn"
     ],
-    "description": "Lightens areas of an image by applying a morphological maximum operation to the image.",
+    "description": "Lightens areas of an image by applying a circular morphological maximum operation to the image.",
     "displayName": "Morphology Maximum",
     "name": "CIMorphologyMaximum",
     "parameters": [
@@ -6460,7 +6602,7 @@
       "CICategoryStillImage",
       "CICategoryBuiltIn"
     ],
-    "description": "Darkens areas of an image by applying a morphological maximum operation to the image.",
+    "description": "Darkens areas of an image by applying a circular morphological maximum operation to the image.",
     "displayName": "Morphology Minimum",
     "name": "CIMorphologyMinimum",
     "parameters": [
@@ -6486,6 +6628,98 @@
       }
     ],
     "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIMorphologyMinimum"
+  },
+  {
+    "availableIOS": "13",
+    "availableMac": "10.15",
+    "categories": [
+      "CICategoryBlur",
+      "CICategoryVideo",
+      "CICategoryStillImage",
+      "CICategoryBuiltIn"
+    ],
+    "description": "Lightens areas of an image by applying a rectangular morphological maximum operation to the image.",
+    "displayName": "Morphology Rectangle Maximum",
+    "name": "CIMorphologyRectangleMaximum",
+    "parameters": [
+      {
+        "classType": "NSNumber",
+        "description": "The height in pixels of the morphological operation.  The value will be rounded to the nearest odd integer.",
+        "displayName": "Height",
+        "name": "inputHeight",
+        "type": {
+          "information": "Integer.",
+          "kind": "integer"
+        }
+      },
+      {
+        "classType": "CIImage",
+        "description": "The image to use as an input image. For filters that also use a background image, this is the foreground image.",
+        "displayName": "Image",
+        "name": "inputImage",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
+        }
+      },
+      {
+        "classType": "NSNumber",
+        "description": "The width in pixels of the morphological operation.  The value will be rounded to the nearest odd integer.",
+        "displayName": "Width",
+        "name": "inputWidth",
+        "type": {
+          "information": "Integer.",
+          "kind": "integer"
+        }
+      }
+    ],
+    "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIMorphologyRectangleMaximum"
+  },
+  {
+    "availableIOS": "13",
+    "availableMac": "10.15",
+    "categories": [
+      "CICategoryBlur",
+      "CICategoryVideo",
+      "CICategoryStillImage",
+      "CICategoryBuiltIn"
+    ],
+    "description": "Darkens areas of an image by applying a rectangular morphological maximum operation to the image.",
+    "displayName": "Morphology Rectangle Minimum",
+    "name": "CIMorphologyRectangleMinimum",
+    "parameters": [
+      {
+        "classType": "NSNumber",
+        "description": "The height in pixels of the morphological operation.  The value will be rounded to the nearest odd integer.",
+        "displayName": "Height",
+        "name": "inputHeight",
+        "type": {
+          "information": "Integer.",
+          "kind": "integer"
+        }
+      },
+      {
+        "classType": "CIImage",
+        "description": "The image to use as an input image. For filters that also use a background image, this is the foreground image.",
+        "displayName": "Image",
+        "name": "inputImage",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
+        }
+      },
+      {
+        "classType": "NSNumber",
+        "description": "The width in pixels of the morphological operation.  The value will be rounded to the nearest odd integer.",
+        "displayName": "Width",
+        "name": "inputWidth",
+        "type": {
+          "information": "Integer.",
+          "kind": "integer"
+        }
+      }
+    ],
+    "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIMorphologyRectangleMinimum"
   },
   {
     "availableIOS": "8.3",
@@ -7227,6 +7461,98 @@
       }
     ],
     "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIPageCurlWithShadowTransition"
+  },
+  {
+    "availableIOS": "13",
+    "availableMac": "10.15",
+    "categories": [
+      "CICategoryColorEffect",
+      "CICategoryVideo",
+      "CICategoryStillImage",
+      "CICategoryBuiltIn"
+    ],
+    "description": "Calculate the mean (x,y) image coordinates of a color palette.",
+    "displayName": "Palette Centroid",
+    "name": "CIPaletteCentroid",
+    "parameters": [
+      {
+        "classType": "CIImage",
+        "description": "The image to use as an input image. For filters that also use a background image, this is the foreground image.",
+        "displayName": "Image",
+        "name": "inputImage",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
+        }
+      },
+      {
+        "classType": "CIImage",
+        "description": "The input color palette, obtained using “CIKMeans“ filter.",
+        "displayName": "Palette Image",
+        "name": "inputPaletteImage",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
+        }
+      },
+      {
+        "classType": "NSNumber",
+        "description": "Specifies whether the color palette should be applied in a perceptual color space.",
+        "displayName": "Perceptual",
+        "name": "inputPerceptual",
+        "type": {
+          "information": "Boolean.",
+          "kind": "boolean"
+        }
+      }
+    ],
+    "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIPaletteCentroid"
+  },
+  {
+    "availableIOS": "13",
+    "availableMac": "10.15",
+    "categories": [
+      "CICategoryColorEffect",
+      "CICategoryVideo",
+      "CICategoryStillImage",
+      "CICategoryBuiltIn"
+    ],
+    "description": "Paint an image from a color palette obtained using “CIKMeans“.",
+    "displayName": "Palettize",
+    "name": "CIPalettize",
+    "parameters": [
+      {
+        "classType": "CIImage",
+        "description": "The image to use as an input image. For filters that also use a background image, this is the foreground image.",
+        "displayName": "Image",
+        "name": "inputImage",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
+        }
+      },
+      {
+        "classType": "CIImage",
+        "description": "The input color palette, obtained using “CIKMeans“ filter.",
+        "displayName": "Palette Image",
+        "name": "inputPaletteImage",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
+        }
+      },
+      {
+        "classType": "NSNumber",
+        "description": "Specifies whether the color palette should be applied in a perceptual color space.",
+        "displayName": "Perceptual",
+        "name": "inputPerceptual",
+        "type": {
+          "information": "Boolean.",
+          "kind": "boolean"
+        }
+      }
+    ],
+    "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIPalettize"
   },
   {
     "availableIOS": "9",
