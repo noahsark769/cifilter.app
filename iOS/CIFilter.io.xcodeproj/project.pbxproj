@@ -115,6 +115,7 @@
 		A130BD8221F0F22400E586F6 /* CGPoint+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Utils.swift"; sourceTree = "<group>"; };
 		A130BDF222068CCE00E586F6 /* BuiltInImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInImage.swift; sourceTree = "<group>"; };
 		A1315E2C2288F33F006872BD /* buildInformation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = buildInformation.json; sourceTree = SOURCE_ROOT; };
+		A13C923722A5E67500B033ED /* CIFilter.io.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CIFilter.io.entitlements; sourceTree = "<group>"; };
 		A1707F65219A1A0A0010E007 /* FilterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInfo.swift; sourceTree = "<group>"; };
 		A172BAC32221CCFA00182C56 /* ColorHexInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorHexInput.swift; sourceTree = "<group>"; };
 		A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterExampleProvider.swift; sourceTree = "<group>"; };
@@ -274,6 +275,7 @@
 				A1C6621C2196818100826A2B /* AppDelegate.swift */,
 				A1C662232196818300826A2B /* Assets.xcassets */,
 				A1315E2C2288F33F006872BD /* buildInformation.json */,
+				A13C923722A5E67500B033ED /* CIFilter.io.entitlements */,
 				A1D5A8B221ADB3C100257B5E /* Dictionary+Validation.swift */,
 				A1C662282196818300826A2B /* Info.plist */,
 				A1C662252196818300826A2B /* LaunchScreen.storyboard */,
@@ -880,8 +882,10 @@
 			baseConfigurationReference = 08FBAE88B5103E03654DA7F2 /* Pods-CIFilter.io.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CIFilter.io/CIFilter.io.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DERIVE_UIKITFORMAC_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = DNTS4MC2Q5;
 				INFOPLIST_FILE = CIFilter.io/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -890,6 +894,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.noahgilmore.cifilterio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_UIKITFORMAC = YES;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -900,7 +905,9 @@
 			baseConfigurationReference = F97FF4CF0C09C59DFDF3D2A3 /* Pods-CIFilter.io.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CIFilter.io/CIFilter.io.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DERIVE_UIKITFORMAC_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = DNTS4MC2Q5;
 				INFOPLIST_FILE = CIFilter.io/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -909,6 +916,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.noahgilmore.cifilterio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_UIKITFORMAC = YES;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
