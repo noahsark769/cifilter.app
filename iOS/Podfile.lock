@@ -11,7 +11,15 @@ PODS:
   - ReactiveLists (0.3.0):
     - DifferenceKit (~> 0.6.0)
   - RxAtomic (4.4.0)
-  - RxSwift (5.0.0)
+  - RxCocoa (5.0.1):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxGesture (3.0.0):
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
+  - RxRelay (5.0.0):
+    - RxSwift (~> 5)
+  - RxSwift (5.0.1)
   - Sentry (4.3.1):
     - Sentry/Core (= 4.3.1)
   - Sentry/Core (4.3.1)
@@ -23,7 +31,9 @@ DEPENDENCIES:
   - Keys (from `Pods/CocoaPodsKeys`)
   - ReactiveLists (~> 0.3.0)
   - RxAtomic (~> 4.4.0)
-  - RxSwift (~> 5.0.0)
+  - RxCocoa (from `https://github.com/noahsark769/RxSwift`, branch `uikitformac-compat`)
+  - RxGesture (~> 3.0.0)
+  - RxSwift (from `https://github.com/noahsark769/RxSwift`, branch `uikitformac-compat`)
   - Sentry (~> 4.3.1)
   - YLTableView (~> 2.2.0)
 
@@ -34,13 +44,28 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - ReactiveLists
     - RxAtomic
-    - RxSwift
+    - RxGesture
+    - RxRelay
     - Sentry
     - YLTableView
 
 EXTERNAL SOURCES:
   Keys:
     :path: Pods/CocoaPodsKeys
+  RxCocoa:
+    :branch: uikitformac-compat
+    :git: https://github.com/noahsark769/RxSwift
+  RxSwift:
+    :branch: uikitformac-compat
+    :git: https://github.com/noahsark769/RxSwift
+
+CHECKOUT OPTIONS:
+  RxCocoa:
+    :commit: 9b8f9dd6225fc0f3cf3a2d77012638c259884cce
+    :git: https://github.com/noahsark769/RxSwift
+  RxSwift:
+    :commit: 9b8f9dd6225fc0f3cf3a2d77012638c259884cce
+    :git: https://github.com/noahsark769/RxSwift
 
 SPEC CHECKSUMS:
   AloeStackView: d22c006da4510db5e220968234174654b5ed6ea5
@@ -49,10 +74,13 @@ SPEC CHECKSUMS:
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   ReactiveLists: 383c6720617abfb9bd47e8e612bfc13e1895eda5
   RxAtomic: eacf60db868c96bfd63320e28619fe29c179656f
-  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
+  RxCocoa: dcceba42244a647ac976575f1b85b48030478ef1
+  RxGesture: 0cd8e37ff9a266e1c31f46bcaed6de1c536bc81e
+  RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
+  RxSwift: 3a0c158ad22a75080a707abd9dc9191149e03522
   Sentry: 5267d493a398663538317e4dcc438c12c66202ed
   YLTableView: c3bcbe16c2a2800765afa1e373a10fbd3174bbfa
 
-PODFILE CHECKSUM: c877eed19e4cb7f6166a3636d851433afd7bc0f1
+PODFILE CHECKSUM: 46a40498466a0ba8022425194d776a30900fd890
 
 COCOAPODS: 1.5.3
