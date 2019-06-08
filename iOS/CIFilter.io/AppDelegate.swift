@@ -10,7 +10,6 @@ import UIKit
 import IQKeyboardManagerSwift
 import Keys
 import Sentry
-import Mixpanel
 
 enum Environment: String {
     case release = "release"
@@ -52,15 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Wrong DSN or KSCrash not installed
         }
 
-        Mixpanel.initialize(token: CIFilterIoKeys().mixpanelToken)
-        Mixpanel.mainInstance().registerSuperProperties([
-            "uuid": UUIDManager.shared.uuid().uuidString,
-            "environment": self.environment().analytic,
-            "sha": self.sha(),
-            "commitNumber": self.commitNumber(),
-            "language": Locale.preferredLanguages.first ?? "unknown",
-            "locale": Locale.current.identifier
-        ])
+        AnalyticsManager.shared.initialize()
 
         let filterNames = CIFilter.filterNames(inCategory: nil)
         let data: [FilterInfo] = filterNames.compactMap { filterName in

@@ -8,9 +8,6 @@ PODS:
     - DifferenceKit/Core
   - IQKeyboardManagerSwift (6.2.0)
   - Keys (1.0.1)
-  - Mixpanel-swift (2.5.9):
-    - Mixpanel-swift/Complete (= 2.5.9)
-  - Mixpanel-swift/Complete (2.5.9)
   - ReactiveLists (0.3.0):
     - DifferenceKit (~> 0.6.0)
   - RxAtomic (4.4.0)
@@ -30,7 +27,6 @@ DEPENDENCIES:
   - AloeStackView (~> 1.0.1)
   - IQKeyboardManagerSwift (~> 6.2.0)
   - Keys (from `Pods/CocoaPodsKeys`)
-  - Mixpanel-swift (~> 2.5.9)
   - ReactiveLists (~> 0.3.0)
   - RxAtomic (~> 4.4.0)
   - RxCocoa (~> 4.4.0)
@@ -44,7 +40,6 @@ SPEC REPOS:
     - AloeStackView
     - DifferenceKit
     - IQKeyboardManagerSwift
-    - Mixpanel-swift
     - ReactiveLists
     - RxAtomic
     - RxCocoa
@@ -62,7 +57,6 @@ SPEC CHECKSUMS:
   DifferenceKit: 824ab6ecd2a20cc658071b2c0c071114cf91e4c9
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
-  Mixpanel-swift: 4a2e061c8b7a5000ed7f72d2a6196884b5de8b49
   ReactiveLists: 383c6720617abfb9bd47e8e612bfc13e1895eda5
   RxAtomic: eacf60db868c96bfd63320e28619fe29c179656f
   RxCocoa: df63ebf7b9a70d6b4eeea407ed5dd4efc8979749
@@ -71,6 +65,6 @@ SPEC CHECKSUMS:
   Sentry: 5267d493a398663538317e4dcc438c12c66202ed
   YLTableView: c3bcbe16c2a2800765afa1e373a10fbd3174bbfa
 
-PODFILE CHECKSUM: 80fe5c83686d7bf0cd0eeec9813d05ae79897421
+PODFILE CHECKSUM: 1a8b0743e3eff970d81e9a99d0f85445fe3030c6
 
 COCOAPODS: 1.5.3
