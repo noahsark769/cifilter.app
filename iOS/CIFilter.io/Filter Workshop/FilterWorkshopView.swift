@@ -28,7 +28,7 @@ final class FilterWorkshopView: UIView {
     init(applicator: AsyncFilterApplicator) {
         self.applicator = applicator
         super.init(frame: .zero)
-        self.backgroundColor = .white
+        self.backgroundColor = .systemBackground
         self.addSubview(scrollView)
 
         scrollView.maximumZoomScale = 20

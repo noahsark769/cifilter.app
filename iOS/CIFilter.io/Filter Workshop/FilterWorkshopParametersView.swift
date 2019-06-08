@@ -9,14 +9,13 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import AloeStackView
 
 private final class RedView: UILabel {
     init(text: String) {
         super.init(frame: .zero)
         self.backgroundColor = .red
         self.heightAnchor <=> 60
-        self.textColor = .white
+        self.textColor = .label
         self.text = text
     }
 

@@ -8,7 +8,6 @@
 
 import UIKit
 import RxSwift
-import AloeStackView
 
 final class FilterWorkshopContentView: UIView {
     private let applicator: AsyncFilterApplicator

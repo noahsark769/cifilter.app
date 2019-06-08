@@ -44,14 +44,14 @@ final class FilterParameterView: UIView {
         addSubview(horizontalStackView)
 
         nameLabel.font = UIFont.italicSystemFont(ofSize: 17)
-        nameLabel.textColor = UIColor(rgb: 0x666666)
+        nameLabel.textColor = .secondaryLabel
         nameLabel.numberOfLines = 1
         nameLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         nameLabel.adjustsFontSizeToFitWidth = true
         nameLabel.minimumScaleFactor = 0.5
 
         classLabel.font = UIFont(name: "Courier New", size: 17)
-        classLabel.textColor = UIColor(rgb: 0x666666)
+        classLabel.textColor = .secondaryLabel
         classLabel.numberOfLines = 1
         classLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         classLabel.adjustsFontSizeToFitWidth = true

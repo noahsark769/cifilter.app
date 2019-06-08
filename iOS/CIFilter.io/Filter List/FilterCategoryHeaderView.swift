@@ -11,7 +11,7 @@ import YLTableView
 
 final class FilterCategoryHeaderView: YLTableViewSectionHeaderFooterView {
     let label = UILabel()
-    private let separator = SeparatorView(color: UIColor(rgb: 0xdddddd))
+    private let separator = SeparatorView(color: UIColor.tertiaryLabel)
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)

@@ -17,7 +17,7 @@ final class AvailableLabel: UIView {
         super.init(frame: .zero)
 
         self.backgroundColor = color
-        self.label.textColor = .white
+        self.label.textColor = .label
         self.label.font = UIFont.boldSystemFont(ofSize: 15)
         self.layer.cornerRadius = 8
 

@@ -12,7 +12,7 @@ import UIKit
  * Small view that indicates that the application of a filter is in progress.
  */
 final class FilterApplicationIndicator: UIView {
-    private let activityIndicator = UIActivityIndicatorView(style: .white)
+    private let activityIndicator = UIActivityIndicatorView(style: .medium)
     init() {
         super.init(frame: .zero)
         self.backgroundColor = Colors.primary.color

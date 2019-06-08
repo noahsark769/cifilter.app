@@ -22,7 +22,7 @@ final class ImageChooserAddView: UIView {
         view.text = "Add"
         view.accessibilityLabel = "Add Image"
         view.font = UIFont.systemFont(ofSize: 30)
-        view.textColor = .white
+        view.textColor = .label
         view.setContentHuggingPriority(.required, for: .vertical)
         return view
     }()
@@ -84,7 +84,7 @@ final class ImageChooserView: UIView {
 
     init() {
         super.init(frame: .zero)
-        self.backgroundColor = UIColor(rgb: 0xf3f3f3)
+        self.backgroundColor = .quaternarySystemFill
 
         addSubview(verticalStackView)
         verticalStackView.edgesToSuperview(insets: UIEdgeInsets(all: artboardPadding))
