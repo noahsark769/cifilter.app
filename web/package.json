@@ -17,6 +17,7 @@
     "gatsby-plugin-styled-components": "^3.0.7",
     "gatsby-source-filesystem": "^2.0.4",
     "gatsby-transformer-sharp": "^2.1.4",
+    "gh-pages": "^2.0.1",
     "node-sass": "^4.10.0",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
