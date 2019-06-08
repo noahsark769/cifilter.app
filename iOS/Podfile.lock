@@ -11,13 +11,7 @@ PODS:
   - ReactiveLists (0.3.0):
     - DifferenceKit (~> 0.6.0)
   - RxAtomic (4.4.0)
-  - RxCocoa (4.4.0):
-    - RxSwift (~> 4.0)
-  - RxGesture (2.1.0):
-    - RxCocoa (~> 4.4.0)
-    - RxSwift (~> 4.4.0)
-  - RxSwift (4.4.0):
-    - RxAtomic (~> 4.4)
+  - RxSwift (5.0.0)
   - Sentry (4.3.1):
     - Sentry/Core (= 4.3.1)
   - Sentry/Core (4.3.1)
@@ -29,9 +23,7 @@ DEPENDENCIES:
   - Keys (from `Pods/CocoaPodsKeys`)
   - ReactiveLists (~> 0.3.0)
   - RxAtomic (~> 4.4.0)
-  - RxCocoa (~> 4.4.0)
-  - RxGesture (~> 2.1.0)
-  - RxSwift (~> 4.4.0)
+  - RxSwift (~> 5.0.0)
   - Sentry (~> 4.3.1)
   - YLTableView (~> 2.2.0)
 
@@ -42,8 +34,6 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - ReactiveLists
     - RxAtomic
-    - RxCocoa
-    - RxGesture
     - RxSwift
     - Sentry
     - YLTableView
@@ -59,12 +49,10 @@ SPEC CHECKSUMS:
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   ReactiveLists: 383c6720617abfb9bd47e8e612bfc13e1895eda5
   RxAtomic: eacf60db868c96bfd63320e28619fe29c179656f
-  RxCocoa: df63ebf7b9a70d6b4eeea407ed5dd4efc8979749
-  RxGesture: 7f6dfb45dbde06e618c24442d38493e3144f2c95
-  RxSwift: 5976ecd04fc2fefd648827c23de5e11157faa973
+  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   Sentry: 5267d493a398663538317e4dcc438c12c66202ed
   YLTableView: c3bcbe16c2a2800765afa1e373a10fbd3174bbfa
 
-PODFILE CHECKSUM: 1a8b0743e3eff970d81e9a99d0f85445fe3030c6
+PODFILE CHECKSUM: c877eed19e4cb7f6166a3636d851433afd7bc0f1
 
 COCOAPODS: 1.5.3
