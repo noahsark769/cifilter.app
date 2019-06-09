@@ -16,7 +16,8 @@ final class NonFatalManager {
     static let shared = NonFatalManager()
 
     #if !targetEnvironment(UIKitForMac)
-    func log(_ identifier: String, data: Properties = [:]) {
+    func log(_ identifier: String, data: [String: Any] = [:]) {
+//    func log(_ identifier: String, data: Properties = [:]) {
         print("WARNING!! \(identifier)")
         var mixpanelData = data
         mixpanelData["identifier"] = identifier

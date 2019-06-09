@@ -124,7 +124,7 @@ final class FreeformTextInput: UIView, UITextViewDelegate {
         view.clipsToBounds = true
         view.font = UIFont(name: "Courier New", size: 17)
         view.textColor = .black
-        view.backgroundColor = .secondarySystemBackground
+        view.backgroundColor = ColorCompatibility.secondarySystemBackground
         view.delegate = self
         return view
     }()

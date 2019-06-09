@@ -18,7 +18,7 @@ final class OutputImageNotGeneratedView: UIView {
         view.font = UIFont.systemFont(ofSize: 30)
         view.text = "The output image will appear here once all parameters are selected."
         view.numberOfLines = 0
-        view.textColor = .label
+        view.textColor = ColorCompatibility.label
         return view
     }()
 

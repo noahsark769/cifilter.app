@@ -43,7 +43,7 @@ final class FilterWorkshopParameterView: UIView {
     private let descriptionLabel: UILabel = {
         let view = UILabel()
         view.font = UIFont.italicSystemFont(ofSize: 14)
-        view.textColor = .secondaryLabel
+        view.textColor = ColorCompatibility.secondaryLabel
         view.numberOfLines = 0
         return view
     }()
@@ -51,7 +51,7 @@ final class FilterWorkshopParameterView: UIView {
     private let informationLabel: UILabel = {
         let view = UILabel()
         view.font = UIFont.systemFont(ofSize: 14)
-        view.textColor = .secondaryLabel
+        view.textColor = ColorCompatibility.secondaryLabel
         view.numberOfLines = 0
         return view
     }()
@@ -59,7 +59,7 @@ final class FilterWorkshopParameterView: UIView {
     private func furtherDetailLabel(text: String) -> UILabel {
         let view = UILabel()
         view.font = UIFont.systemFont(ofSize: 14)
-        view.textColor = .secondaryLabel
+        view.textColor = ColorCompatibility.secondaryLabel
         view.numberOfLines = 0
         view.text = text
         return view

@@ -92,7 +92,7 @@ final class FilterDetailView: UIView {
 
     private let stackView: AloeStackView = {
         let view = AloeStackView()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = ColorCompatibility.systemBackground
         view.rowInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         view.separatorInset = UIEdgeInsets.zero
         return view

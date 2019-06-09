@@ -48,7 +48,7 @@ final class ColorInput: UIView {
         mainStackView.addArrangedSubview(imageView)
         mainStackView.addArrangedSubview(hexInput)
 
-        draggableIndicatorView.indicatorColor = .secondaryLabel
+        draggableIndicatorView.indicatorColor = ColorCompatibility.secondaryLabel
         draggableIndicatorView.cornerRadius = 4
 
         addSubview(draggableIndicatorView)
@@ -102,7 +102,7 @@ final class ColorInput: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        draggableIndicatorView.indicatorColor = .secondaryLabel
+        draggableIndicatorView.indicatorColor = ColorCompatibility.secondaryLabel
 
         if self.dragLocation == ColorInput.nullDragLocation {
             self.dragLocation = imageView.center

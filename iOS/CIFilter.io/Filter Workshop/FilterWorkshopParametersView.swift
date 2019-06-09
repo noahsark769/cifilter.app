@@ -15,7 +15,7 @@ private final class RedView: UILabel {
         super.init(frame: .zero)
         self.backgroundColor = .red
         self.heightAnchor <=> 60
-        self.textColor = .label
+        self.textColor = ColorCompatibility.label
         self.text = text
     }
 

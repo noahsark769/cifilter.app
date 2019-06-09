@@ -34,7 +34,8 @@ final class AnalyticsManager {
     }
 
     #if !targetEnvironment(UIKitForMac)
-    func track(event: String, properties: Properties? = nil) {
+    func track(event: String, properties: [String: Any]? = nil) {
+//    func track(event: String, properties: Properties? = nil) {
         #if DEBUG
         print("Analytic: \(event) \(properties ?? [:])")
         #else

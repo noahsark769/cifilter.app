@@ -20,8 +20,8 @@ final class FilterListNameView: UIView {
 
         [label, border].disableTranslatesAutoresizingMaskIntoConstraints()
 
-        border.backgroundColor = .tertiaryLabel
-        label.textColor = .secondaryLabel
+        border.backgroundColor = ColorCompatibility.tertiaryLabel
+        label.textColor = ColorCompatibility.secondaryLabel
         border.leadingAnchor <=> self.leadingAnchor
         border.topAnchor <=> self.topAnchor
         border.bottomAnchor <=> self.bottomAnchor

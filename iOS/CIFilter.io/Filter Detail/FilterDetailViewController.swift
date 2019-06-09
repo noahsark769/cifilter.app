@@ -21,7 +21,7 @@ final class FilterDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         self.view.addSubview(filterView)
-        self.view.backgroundColor = .systemBackground
+        self.view.backgroundColor = ColorCompatibility.systemBackground
         filterView.disableTranslatesAutoresizingMaskIntoConstraints()
         filterView.topAnchor <=> self.view.topAnchor
         filterView.bottomAnchor <=> self.view.bottomAnchor
