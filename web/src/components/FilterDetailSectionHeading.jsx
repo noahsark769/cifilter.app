@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const FilterDetailSectionHeading = styled.div`
+const FilterDetailSectionHeading = styled.h3`
     font-size: 14px;
     font-weight: bold;
     color: #F5BD5D;
