@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-const Title = styled.div`
+const Title = styled.h1`
     font-size: 38px;
     font-weight: bold;
 
