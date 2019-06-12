@@ -36,22 +36,12 @@ function displayValueFromPropsData(data) {
     }
 }
 
-function shouldDisplayHorizontally(data) {
-    return false;
-    switch (data.type) {
-        case "number": return true;
-        default:
-            return false;
-    }
-}
-
 const FilterExampleParameter = (props) => {
     const displayValue = displayValueFromPropsData(props.data);
-    const isHorizontal = shouldDisplayHorizontally(props.data);
     return (
-        <Container horizontal={isHorizontal} className={props.className}>
-            <Name horizontal={isHorizontal}>{props.data.name}</Name>
-            <Value horizontal={isHorizontal}>{displayValue}</Value>
+        <Container horizontal={false} className={props.className}>
+            <Name horizontal={false}>{props.data.name}</Name>
+            <Value horizontal={false}>{displayValue}</Value>
         </Container>
     );
 };

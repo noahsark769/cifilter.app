@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import SearchBar from './SearchBar';
 import FilterSelectResult, { MatchType } from './FilterSelectResult';
 
@@ -79,7 +79,7 @@ const groupFilters = (filters, categories, isMatch) => {
     }
 
     for (let category of categoriesSet) {
-        if (map.get(category).length == 0) {
+        if (map.get(category).length === 0) {
             map.delete(category);
         }
     }
@@ -246,7 +246,7 @@ class FilterSelect extends React.Component {
                         key={filterResult.filter.name}
                         result={filterResult}
                         onClick={_this.handleFilterClick.bind(_this, filterResult.filter, categoryName, false)}
-                        highlighted={_this.state.selectedFilterName == filterResult.filter.name}
+                        highlighted={_this.state.selectedFilterName === filterResult.filter.name}
                     >{filterResult.filter.name}</FilterSelectResult>
                 })}
             </ul>

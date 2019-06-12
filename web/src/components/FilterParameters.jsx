@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import FilterParameter from './FilterParameter';
 import FilterDetailSectionHeading from './FilterDetailSectionHeading';
 

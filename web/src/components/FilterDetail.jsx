@@ -29,6 +29,22 @@ const TitleContainer = styled.div`
     width: 100%;
 `;
 
+const Button = styled.button`
+    &, &:active, &:focus {
+        margin: 0;
+        padding: 0;
+        -webkit-appearance: none;
+        appearance: none;
+        border: none;
+        background: none;
+        outline: 0;
+
+        display: inline-flex;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+`;
+
 const FilterDetail = (props) => {
     if (!props.filter) {
         return <Container>
@@ -39,7 +55,7 @@ const FilterDetail = (props) => {
     return (
         <Container>
             <TitleContainer>
-                {props.displaysBack && <a onClick={props.onClickBack} ><IoIosArrowBack size="40" color="#F5BD5D" /></a>}
+                {props.displaysBack && <Button onClick={props.onClickBack} ><IoIosArrowBack size="40" color="#F5BD5D" /></Button>}
                 <FilterTitle
                     style={{flex: "1"}}
                     name={props.filter.name}

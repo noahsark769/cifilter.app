@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import FilterExampleImage from './FilterExampleImage';
 import FilterExampleParameter from './FilterExampleParameter';
 import FilterDetailSectionHeading from './FilterDetailSectionHeading';
-import HorizontalImageConfiguration, { WasCropped } from './HorizontalImageConfiguration';
+import HorizontalImageConfiguration from './HorizontalImageConfiguration';
 import { IoIosArrowRoundDown } from 'react-icons/io';
+
+// Note: We have WasCropped, but we don't use it here yet (#42)
 
 const FlexParent = styled.div`
     display: flex;
@@ -50,7 +52,7 @@ const NormalImageConfiguration = (props) => {
             <Container>
                 <Column>
                     {props.imageParameters.map((value) => {
-                        const {name, type, additionalData} = value;
+                        const {name, additionalData} = value;
                         return (<FilterExampleImage
                                     key={name}
                                     name={name}
@@ -85,6 +87,7 @@ const NormalImageConfiguration = (props) => {
 };
 
 const FilterExample = (props) => {
+    console.log(props);
     const outputImageData = props.example.data.parameterValues.filter(
         ({ name }) => name === 'outputImage'
     )[0];
@@ -95,7 +98,7 @@ const FilterExample = (props) => {
     );
 
     let rendered;
-    if (nonImageParameters.length == 0 && imageParameters.length <= 2) {
+    if (nonImageParameters.length === 0 && imageParameters.length <= 2) {
         rendered = (<HorizontalImageConfiguration
             basepath={props.example.basepath}
             outputImageData={outputImageData.additionalData}
