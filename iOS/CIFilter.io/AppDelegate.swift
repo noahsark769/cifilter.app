@@ -43,6 +43,7 @@ class WorkshopSceneDelegate: NSObject, UISceneDelegate {
             print("oh no filter info")
             return
         }
+        scene.title = filterInfo.name
         let vc = FilterWorkshopViewController(filter: filterInfo)
         window = UIWindow(windowScene: scene)
         window?.rootViewController = vc

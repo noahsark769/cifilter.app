@@ -56,26 +56,40 @@ final class FilterWorkshopViewController: UIViewController {
         workshopView.didChooseAddImage.subscribe(onNext: { paramName, sourceView in
             AnalyticsManager.shared.track(event: "tap_choose_image", properties: ["name": self.filter.name, "parameter_name": paramName])
             self.inputImageCurrentlySelecting = paramName
-            let vc = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            vc.addAction(UIAlertAction(title: "Take photo", style: .default, handler: { [weak self] _ in
-                let picker = UIImagePickerController()
-                picker.sourceType = .camera
-                picker.mediaTypes = [kUTTypeImage as String]
-                picker.delegate = self
-                self?.present(picker, animated: true, completion: nil)
-            }))
-            vc.addAction(UIAlertAction(title: "Select from library", style: .default, handler: { [weak self] _ in
-                let picker = UIImagePickerController()
-                picker.sourceType = .photoLibrary
-                picker.mediaTypes = [kUTTypeImage as String]
-                picker.delegate = self
-                self?.present(picker, animated: true, completion: nil)
-            }))
-            vc.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-            vc.popoverPresentationController?.sourceView = sourceView
-            vc.popoverPresentationController?.sourceRect = sourceView.bounds
-            self.present(vc, animated: true, completion: nil)
+            #if targetEnvironment(UIKitForMac)
+            self.presentDocumentBrowserController()
+            #else
+            self.presentImagePickerController(fromSourceView: sourceView)
+            #endif
         }).disposed(by: bag)
+    }
+
+    private func presentImagePickerController(fromSourceView sourceView: UIView) {
+        let vc = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        vc.addAction(UIAlertAction(title: "Take photo", style: .default, handler: { [weak self] _ in
+            let picker = UIImagePickerController()
+            picker.sourceType = .camera
+            picker.mediaTypes = [kUTTypeImage as String]
+            picker.delegate = self
+            self?.present(picker, animated: true, completion: nil)
+        }))
+        vc.addAction(UIAlertAction(title: "Select from library", style: .default, handler: { [weak self] _ in
+            let picker = UIImagePickerController()
+            picker.sourceType = .photoLibrary
+            picker.mediaTypes = [kUTTypeImage as String]
+            picker.delegate = self
+            self?.present(picker, animated: true, completion: nil)
+        }))
+        vc.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        vc.popoverPresentationController?.sourceView = sourceView
+        vc.popoverPresentationController?.sourceRect = sourceView.bounds
+        self.present(vc, animated: true, completion: nil)
+    }
+
+    private func presentDocumentBrowserController() {
+        let vc = UIDocumentPickerViewController(documentTypes: ["public.image"], in: .open)
+        vc.delegate = self
+        self.present(vc, animated: true, completion: nil)
     }
 
     @objc private func didTapShareButton() {
@@ -121,10 +135,27 @@ extension FilterWorkshopViewController: UIImagePickerControllerDelegate, UINavig
         }
         self.workshopView.setImage(normalizedImage, forParameterNamed: currentlySelectingParamName)
         self.dismiss(animated: true, completion: nil)
-        AnalyticsManager.shared.track(event: "chose_image", properties: ["name": self.filter.name, "parameter_name": currentlySelectingParamName])
+
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension FilterWorkshopViewController: UIDocumentPickerDelegate {
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard let currentlySelectingParamName = self.inputImageCurrentlySelecting else {
+            NonFatalManager.shared.log("NoCurrentlySelectedImageParamFromImagePicker")
+            return
+        }
+        guard let first = urls.first else {
+            return
+        }
+        guard let image = UIImage(contentsOfFile: first.path) else {
+            return
+        }
+        self.workshopView.setImage(image, forParameterNamed: currentlySelectingParamName)
+        AnalyticsManager.shared.track(event: "chose_image", properties: ["name": self.filter.name, "parameter_name": currentlySelectingParamName])
     }
 }
