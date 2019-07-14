@@ -20,13 +20,94 @@ enum Environment: String {
     }
 }
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class WorkshopSceneDelegate: NSObject, UISceneDelegate {
+    var filterInfo: FilterInfo! = nil
 
     var window: UIWindow?
 
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        guard let filterName = connectionOptions.userActivities.first?.userInfo?["filterName"] as? String else {
+            return
+        }
+        guard let ciFilter = CIFilter(name: filterName) else {
+            return
+        }
+        filterInfo = try! FilterInfo(filter: ciFilter)
+    }
+
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        guard let scene = scene as? UIWindowScene else {
+            return
+        }
+        guard let filterInfo = filterInfo else {
+            print("oh no filter info")
+            return
+        }
+        let vc = FilterWorkshopViewController(filter: filterInfo)
+        window = UIWindow(windowScene: scene)
+        window?.rootViewController = vc
+        window?.makeKeyAndVisible()
+    }
+}
+
+class SceneDelegate: NSObject, UISceneDelegate {
+    var window: UIWindow?
+
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        guard let scene = scene as? UIWindowScene else {
+            return
+        }
+
+        let filterNames = CIFilter.filterNames(inCategory: nil)
+        let data: [FilterInfo] = filterNames.compactMap { filterName in
+            let filter = CIFilter(name: filterName)!
+            let filterInfo = try! FilterInfo(filter: filter)
+            return filterInfo
+        }.sorted { lhs, rhs in
+            return lhs.name < rhs.name
+        }
+        //        let encoder = JSONEncoder()
+        //        encoder.outputFormatting = .sortedKeys
+        //        print(String(data: try! encoder.encode(data), encoding: .utf8)!)
+
+        window = UIWindow(windowScene: scene)
+        let splitViewController = UISplitViewController()
+        let filterListViewController = FilterListViewController(filterInfos: data)
+        let navController = UINavigationController(rootViewController: filterListViewController)
+        navController.navigationBar.prefersLargeTitles = true
+        let filterDetailViewController = FilterDetailViewController()
+        filterListViewController.delegate = filterDetailViewController
+        filterDetailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
+        filterDetailViewController.navigationItem.leftItemsSupplementBackButton = true
+        filterDetailViewController.navigationItem.largeTitleDisplayMode = .never
+        let detailNavController = UINavigationController(rootViewController: filterDetailViewController)
+        splitViewController.viewControllers = [navController, detailNavController]
+        splitViewController.delegate = self
+
+        window?.rootViewController = splitViewController
+        window?.makeKeyAndVisible()
+        splitViewController.toggleMasterView()
+    }
+}
+
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
     static var shared: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
+    }
+
+    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+
+        if let userActivity = options.userActivities.first, userActivity.activityType == "com.noahgilmore.cifilterio.workshop" {
+            let config = UISceneConfiguration(name: nil, sessionRole: .windowApplication)
+            config.delegateClass = WorkshopSceneDelegate.self
+            return config
+        }
+
+        let config = UISceneConfiguration(name: nil, sessionRole: .windowApplication)
+        config.delegateClass = SceneDelegate.self
+        return config
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -53,41 +134,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         AnalyticsManager.shared.initialize()
 
-        let filterNames = CIFilter.filterNames(inCategory: nil)
-        let data: [FilterInfo] = filterNames.compactMap { filterName in
-            let filter = CIFilter(name: filterName)!
-            let filterInfo = try! FilterInfo(filter: filter)
-            return filterInfo
-        }.sorted { lhs, rhs in
-            return lhs.name < rhs.name
-        }
-//        let encoder = JSONEncoder()
-//        encoder.outputFormatting = .sortedKeys
-//        print(String(data: try! encoder.encode(data), encoding: .utf8)!)
-
-        window = UIWindow()
-        let splitViewController = UISplitViewController()
-        let filterListViewController = FilterListViewController(filterInfos: data)
-        let navController = UINavigationController(rootViewController: filterListViewController)
-        navController.navigationBar.prefersLargeTitles = true
-        let filterDetailViewController = FilterDetailViewController()
-        filterListViewController.delegate = filterDetailViewController
-        filterDetailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
-        filterDetailViewController.navigationItem.leftItemsSupplementBackButton = true
-        filterDetailViewController.navigationItem.largeTitleDisplayMode = .never
-        let detailNavController = UINavigationController(rootViewController: filterDetailViewController)
-        splitViewController.viewControllers = [navController, detailNavController]
-        splitViewController.delegate = self
-
-        window?.rootViewController = splitViewController
-        window?.makeKeyAndVisible()
-
         // preload built in images
         DispatchQueue.global(qos: .default).async {
             print("\(BuiltInImage.all)")
         }
 
-        splitViewController.toggleMasterView()
         return true
     }
 
@@ -123,7 +174,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-extension AppDelegate: UISplitViewControllerDelegate {
+extension SceneDelegate: UISplitViewControllerDelegate {
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
         return true
     }

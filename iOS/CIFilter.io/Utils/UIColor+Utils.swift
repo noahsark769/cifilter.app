@@ -205,12 +205,12 @@ enum ColorCompatibility {
         }
         return UIColor(red: 0.0392156862745098, green: 0.5176470588235295, blue: 1.0, alpha: 1.0)
     }
-    static var systemBrown: UIColor {
-        if #available(iOS 13, *) {
-            return .systemBrown
-        }
-        return UIColor(red: 0.6745098039215687, green: 0.5568627450980392, blue: 0.40784313725490196, alpha: 1.0)
-    }
+//    static var systemBrown: UIColor {
+//        if #available(iOS 13, *) {
+//            return .systemBrown
+//        }
+//        return UIColor(red: 0.6745098039215687, green: 0.5568627450980392, blue: 0.40784313725490196, alpha: 1.0)
+//    }
     static var systemGreen: UIColor {
         if #available(iOS 13, *) {
             return .systemGreen
