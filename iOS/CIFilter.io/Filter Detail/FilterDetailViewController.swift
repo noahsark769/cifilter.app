@@ -16,6 +16,7 @@ final class FilterDetailViewController: UIViewController {
     private let bag = DisposeBag()
     private var presentWorkshopSubscription: Disposable? = nil
     private var filterView: FilterDetailView = FilterDetailView(isCompressed: isCompressed)
+    var filter: FilterInfo! = nil
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -35,6 +36,9 @@ final class FilterDetailViewController: UIViewController {
             filterView.widthAnchor <=> 600
             filterView.centerXAnchor <=> self.view.centerXAnchor
         }
+
+        let interaction = UIContextMenuInteraction(delegate: self)
+        filterView.addInteraction(interaction)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -47,6 +51,7 @@ final class FilterDetailViewController: UIViewController {
 
     func set(filter: FilterInfo) {
         self.title = filter.name
+        self.filter = filter
         filterView.set(filter: filter)
         self.presentWorkshopSubscription?.dispose()
         self.presentWorkshopSubscription = filterView.rx.workshopTap.subscribe(onNext: { [weak self] in
@@ -109,5 +114,18 @@ extension UISplitViewController {
     func toggleMasterView() {
         let barButtonItem = self.displayModeButtonItem
         UIApplication.shared.sendAction(barButtonItem.action!, to: barButtonItem.target, from: nil, for: nil)
+    }
+}
+
+extension FilterDetailViewController: UIContextMenuInteractionDelegate {
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
+            return UIMenu(__title: "", image: nil, identifier: nil, children: [
+                UIAction(__title: "Open in new window", image: UIImage(systemName: "square.and.arrow.up"), identifier: UIAction.Identifier(rawValue: "open"), handler: { action in
+                    self.presentFilterWorkshopInScene(filter: self.filter)
+                })
+            ])
+        })
     }
 }

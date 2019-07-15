@@ -25,8 +25,17 @@ class WorkshopSceneDelegate: NSObject, UISceneDelegate {
 
     var window: UIWindow?
 
+    func stateRestorationActivity(for scene: UIScene) -> NSUserActivity? {
+        let activity = NSUserActivity(activityType: "com.noahgilmore.cifilterio.workshop")
+        activity.userInfo = ["filterName": filterInfo.name]
+        return activity
+    }
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let filterName = connectionOptions.userActivities.first?.userInfo?["filterName"] as? String else {
+        guard let activity = connectionOptions.userActivities.first else {
+            return
+        }
+        guard let filterName = activity.userInfo?["filterName"] as? String else {
             return
         }
         guard let ciFilter = CIFilter(name: filterName) else {

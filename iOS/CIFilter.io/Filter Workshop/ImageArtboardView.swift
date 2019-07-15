@@ -35,6 +35,10 @@ final class ImageArtboardView: UIView {
     private let imageChooserView = ImageChooserView()
     private let activityView = OutputImageActivityIndicatorView()
 
+    private lazy var dragInteraction: UIDragInteraction = {
+        return UIDragInteraction(delegate: self)
+    }()
+
     private let mainStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
@@ -109,23 +113,38 @@ final class ImageArtboardView: UIView {
         if reportOnSubject {
             didChooseImage.onNext(image)
         }
+        self.addInteraction(self.dragInteraction)
     }
 
     func setChoosing() {
+        self.removeInteraction(self.dragInteraction)
         self.activityView.stopAnimating()
         self.eitherView.setEnabled(self.imageChooserView)
         self.editButton.isHidden = true
     }
 
     func setLoading() {
+        self.removeInteraction(self.dragInteraction)
         self.eitherView.setEnabled(self.activityView)
         self.activityView.startAnimating()
         self.editButton.isHidden = true
     }
 
     func setDefault() {
+        self.removeInteraction(self.dragInteraction)
         self.activityView.stopAnimating()
         self.eitherView.setEnabled(self.noImageGeneratedView)
         self.editButton.isHidden = true
+    }
+}
+
+extension ImageArtboardView: UIDragInteractionDelegate {
+    func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
+        guard let image = imageView.image else {
+            return []
+        }
+        return [
+            UIDragItem(itemProvider: NSItemProvider(object: image))
+        ]
     }
 }

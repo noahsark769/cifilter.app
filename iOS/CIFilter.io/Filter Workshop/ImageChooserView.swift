@@ -55,7 +55,7 @@ private let numImagePerArtboardRow = 3
 final class ImageChooserView: UIView {
     static let artboardSize: CGFloat = 650
     private let bag = DisposeBag()
-    private let chooseImageSubject = PublishSubject<UIImage>()
+    fileprivate let chooseImageSubject = PublishSubject<UIImage>()
     lazy var didChooseImage = {
         return ControlEvent<UIImage>(events: chooseImageSubject)
     }()
@@ -81,6 +81,9 @@ final class ImageChooserView: UIView {
     }
 
     private let addView = ImageChooserAddView()
+    private lazy var dropInteraction: UIDropInteraction = {
+        return UIDropInteraction(delegate: self)
+    }()
 
     init() {
         super.init(frame: .zero)
@@ -107,6 +110,9 @@ final class ImageChooserView: UIView {
         addView.didTap.subscribe(onNext: {
             self.didChooseAdd.onNext(self.addView)
         }).disposed(by: bag)
+
+        self.addInteraction(self.dropInteraction)
+        print("HOLAY")
     }
 
     private func newImageView(image: BuiltInImage) -> UIImageView {
@@ -127,5 +133,45 @@ final class ImageChooserView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension ImageChooserView: UIDropInteractionDelegate {
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        // Ensure the drop session has an object of the appropriate type
+        let result = session.canLoadObjects(ofClass: UIImage.self)
+        print("Assking about handlinng items: \(result)")
+        return result
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+        // Propose to the system to copy the item from the source app
+        return UIDropProposal(operation: .copy)
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnter session: UIDropSession) {
+        print("Enter!")
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, concludeDrop session: UIDropSession) {
+        print("Conclude")
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidExit session: UIDropSession) {
+        print("Session exit")
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnd session: UIDropSession) {
+        print("Session ennd")
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
+        // Consume drag items (in this example, of type UIImage).
+        print("Loading objects")
+        session.loadObjects(ofClass: UIImage.self) { imageItems in
+            print("Loaded objects: \(imageItems)")
+            let images = imageItems as! [UIImage]
+            self.chooseImageSubject.onNext(images.first!)
+        }
     }
 }

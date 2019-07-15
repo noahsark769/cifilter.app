@@ -13,13 +13,18 @@ import Keys
 // TODO(UIKitForMac): Mixpanel is commented out, we need to figure out a way to include it
 
 #if !targetEnvironment(UIKitForMac)
-//import Mixpanel
+import Mixpanel
 #endif
 
 final class AnalyticsManager {
     static let shared = AnalyticsManager()
 
     func initialize() {
+        #if os(macOS)
+        print("I'm running on Mac")
+        #else
+        print("I'm NOT running on Mac")
+        #endif
         #if !targetEnvironment(UIKitForMac)
 //            Mixpanel.initialize(token: CIFilterIoKeys().mixpanelToken)
 //            Mixpanel.mainInstance().registerSuperProperties([

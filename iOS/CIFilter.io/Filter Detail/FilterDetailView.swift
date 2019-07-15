@@ -40,6 +40,7 @@ final class NoExampleAvailableView: UIView {
             let string = "No example is available for this filter: \(reason) You can help by contributing to CIFilter.io on github."
             let linkRange = (string as NSString).range(of: "contributing to CIFilter.io on github")
             let attributedString = NSMutableAttributedString(string: string)
+            attributedString.addAttribute(.foregroundColor, value: UIColor.label, range: NSRange(location: 0, length: string.count))
             attributedString.addAttribute(.link, value: URL(string: "https://github.com/noahsark769/CIFilter.io")!, range: linkRange)
             attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: linkRange)
             attributedString.addAttribute(.foregroundColor, value: Colors.availabilityBlue.color, range: linkRange)
@@ -56,7 +57,7 @@ final class FilterDetailView: UIView {
     private let exampleProvider = FilterExampleProvider()
     private let isCompressed: Bool
 
-    fileprivate lazy var tryItButton: UIButton = {
+    private(set) lazy var tryItButton: UIButton = {
         let view = UIButton(type: .custom)
         view.setAttributedTitle(
             NSAttributedString(
