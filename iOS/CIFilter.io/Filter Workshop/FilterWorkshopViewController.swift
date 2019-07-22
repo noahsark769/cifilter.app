@@ -56,7 +56,7 @@ final class FilterWorkshopViewController: UIViewController {
         workshopView.didChooseAddImage.subscribe(onNext: { paramName, sourceView in
             AnalyticsManager.shared.track(event: "tap_choose_image", properties: ["name": self.filter.name, "parameter_name": paramName])
             self.inputImageCurrentlySelecting = paramName
-            #if targetEnvironment(UIKitForMac)
+            #if targetEnvironment(macCatalyst)
             self.presentDocumentBrowserController()
             #else
             self.presentImagePickerController(fromSourceView: sourceView)
