@@ -65,8 +65,8 @@ const FilterDetail = (props) => {
                     className="margin-bottom--md" />
             </TitleContainer>
             <Description>{props.filter.description}</Description>
-            <FilterParameters parameters={props.filter.parameters} />
-            { props.filter.examples && <FilterExample example={props.filter.examples[0]} /> }
+            <FilterParameters parameters={props.filter.parameters} filterName={props.filter.name} />
+            { props.filter.examples && <FilterExample example={props.filter.examples[0]} filterName={props.filter.name} /> }
         </Container>
     )
 };

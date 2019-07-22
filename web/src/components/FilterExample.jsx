@@ -57,6 +57,7 @@ const NormalImageConfiguration = (props) => {
                                     key={name}
                                     name={name}
                                     filename={`${props.basepath}/${additionalData.image}`}
+                                    filterName={props.filterName}
                                     className="margin-bottom--md"
                                 />);
                     })}
@@ -79,6 +80,7 @@ const NormalImageConfiguration = (props) => {
                     <FilterExampleImage
                         name="outputImage"
                         filename={`${props.basepath}/${props.outputImageData.image}`}
+                        filterName={props.filterName}
                     />
                 </OutputImageWrapper>
             </OutputImageContainer>
@@ -87,7 +89,6 @@ const NormalImageConfiguration = (props) => {
 };
 
 const FilterExample = (props) => {
-    console.log(props);
     const outputImageData = props.example.data.parameterValues.filter(
         ({ name }) => name === 'outputImage'
     )[0];
@@ -103,6 +104,7 @@ const FilterExample = (props) => {
             basepath={props.example.basepath}
             outputImageData={outputImageData.additionalData}
             parameterValues={props.example.data.parameterValues}
+            filterName={props.filterName}
             />);
     } else {
         rendered = (<NormalImageConfiguration
@@ -110,12 +112,13 @@ const FilterExample = (props) => {
             outputImageData={outputImageData.additionalData}
             nonImageParameters={nonImageParameters}
             imageParameters={imageParameters}
+            filterName={props.filterName}
             />); 
     }
 
     return (
         <>
-            <FilterDetailSectionHeading>Example</FilterDetailSectionHeading>
+            <FilterDetailSectionHeading>Examples for {props.filterName}</FilterDetailSectionHeading>
             {rendered}
         </>
     );

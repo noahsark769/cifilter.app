@@ -15,7 +15,7 @@ const FilterParameters = (props) => {
     return (
         <div>
             <FilterDetailSectionHeading>
-                {props.parameters.length > 0 ? "Parameters" : "This filter takes no parameters"}
+                {props.parameters.length > 0 ? `Parameters for ${props.filterName}` : `${props.filterName} takes no parameters`}
             </FilterDetailSectionHeading>
             <div>{props.parameters.sort((p1, p2) => p1.name.localeCompare(p2.name)).map(
                 (parameter) => <FilterParameter

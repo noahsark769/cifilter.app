@@ -1,6 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Default Starter',
+    title: `CIFilter.io: Core Image Filter Reference`,
+    siteUrl: `https://cifilter.io`
   },
   plugins: [
     'gatsby-plugin-react-helmet',
@@ -23,6 +24,7 @@ module.exports = {
     `gatsby-plugin-sass`,
     `gatsby-plugin-favicon`,
     `gatsby-plugin-force-trailing-slashes`,
-    `gatsby-plugin-styled-components`
+    `gatsby-plugin-styled-components`,
+    `gatsby-plugin-sitemap`
   ],
 }

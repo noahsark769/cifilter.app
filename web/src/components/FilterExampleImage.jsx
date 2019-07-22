@@ -30,11 +30,13 @@ const ImageContainer = styled.div`
 `;
 
 const FilterExampleImage = (props) => {
+    const alt = props.name === "outputImage" ? `Output image for example of ${props.filterName}` : `Input image for example of ${props.filterName}`;
+    console.log(`Alt is ${alt}`);
     return (
         <div className={props.className}>
             <Name>{props.name}</Name>
             <Wrapper>
-                <ImageContainer><Image filename={props.filename} /></ImageContainer>
+                <ImageContainer><Image filename={props.filename} alt={alt} /></ImageContainer>
             </Wrapper>
         </div>
     )

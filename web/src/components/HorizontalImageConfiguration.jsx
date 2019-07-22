@@ -39,6 +39,7 @@ const HorizontalImageConfiguration = (props) => {
                         <FilterExampleImage
                             name={name}
                             filename={`${props.basepath}/${additionalData.image}`}
+                            filterName={props.filterName}
                         />
                     </Wrapper>);
             })}
@@ -49,6 +50,7 @@ const HorizontalImageConfiguration = (props) => {
                 <FilterExampleImage
                     name="outputImage"
                     filename={`${props.basepath}/${props.outputImageData.image}`}
+                    filterName={props.filterName}
                 />
                 <WasCropped wasCropped={props.outputImageData.wasCropped} />
             </Wrapper>
