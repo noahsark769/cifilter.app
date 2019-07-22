@@ -118,7 +118,7 @@ const FilterExample = (props) => {
 
     return (
         <>
-            <FilterDetailSectionHeading>Examples for {props.filterName}</FilterDetailSectionHeading>
+            <FilterDetailSectionHeading>Examples for <strong>{props.filterName}</strong></FilterDetailSectionHeading>
             {rendered}
         </>
     );
