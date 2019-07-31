@@ -66,7 +66,7 @@ final class FilterDetailViewController: UIViewController {
     }
 
     func presentFilterWorkshop(filter: FilterInfo) {
-        #if targetEnvironment(UIKitForMac)
+        #if targetEnvironment(macCatalyst)
         self.presentFilterWorkshopInScene(filter: filter)
         #else
         self.presentFilterWorkshopModally(filter: filter)
@@ -93,21 +93,21 @@ final class FilterDetailViewController: UIViewController {
     }
 }
 
-extension FilterDetailViewController: FilterListViewControllerDelegate {
-    func filterListViewController(_ vc: FilterListViewController, didTapFilterInfo filter: FilterInfo) {
-        self.set(filter: filter)
-
-        // `self.splitViewController` might be nil here if we're in a horizontally compact environment
-        // with the filter list VC currently active, but we know the filter list VC's
-        // splitViewController will always be non-nil, so we use that
-        guard let splitViewController = vc.splitViewController, let navController = self.navigationController else {
-            NonFatalManager.shared.log("NoSplitViewControllerSetWhenSelectingFilter", data: ["filter_name": filter.name])
-            return
-        }
-        splitViewController.toggleMasterView()
-        splitViewController.showDetailViewController(navController, sender: nil)
-    }
-}
+//extension FilterDetailViewController {
+//    func filterListViewController(_ vc: FilterListViewController, didTapFilterInfo filter: FilterInfo) {
+//        self.set(filter: filter)
+//
+//        // `self.splitViewController` might be nil here if we're in a horizontally compact environment
+//        // with the filter list VC currently active, but we know the filter list VC's
+//        // splitViewController will always be non-nil, so we use that
+//        guard let splitViewController = vc.splitViewController, let navController = self.navigationController else {
+//            NonFatalManager.shared.log("NoSplitViewControllerSetWhenSelectingFilter", data: ["filter_name": filter.name])
+//            return
+//        }
+//        splitViewController.toggleMasterView()
+//        splitViewController.showDetailViewController(navController, sender: nil)
+//    }
+//}
 
 // Hacky stuff as per https://stackoverflow.com/questions/27243158/hiding-the-master-view-controller-with-uisplitviewcontroller-in-ios8
 extension UISplitViewController {

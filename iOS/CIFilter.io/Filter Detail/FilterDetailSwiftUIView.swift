@@ -95,6 +95,6 @@ struct FilterDetailContentView: View {
         return VStack {
             FilterDetailTitleSwiftUIView(title: filterInfo.name, categories: filterInfo.categories)
             Divider()
-        }.frame(width: CGFloat.infinity)
+        }
     }
 }

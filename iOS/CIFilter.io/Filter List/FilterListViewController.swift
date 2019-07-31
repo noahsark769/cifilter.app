@@ -10,6 +10,7 @@ import UIKit
 import ReactiveLists
 import RxSwift
 import RxCocoa
+import Combine
 
 func group(filters: [FilterInfo], into categories: [String]) -> [String: [FilterInfo]] {
     var result: [String: [FilterInfo]] = [:]
@@ -34,10 +35,6 @@ func group(filters: [FilterInfo], into categories: [String]) -> [String: [Filter
     return result
 }
 
-protocol FilterListViewControllerDelegate: class {
-    func filterListViewController(_ vc: FilterListViewController, didTapFilterInfo: FilterInfo)
-}
-
 final class FilterListViewController: UITableViewController {
     static let categoryNames: [String] = [
         "CICategoryBlur",
@@ -57,7 +54,7 @@ final class FilterListViewController: UITableViewController {
         "Other"
     ]
 
-    weak var delegate: FilterListViewControllerDelegate?
+    let didTapFilterInfo = PassthroughSubject<FilterInfo, Never>()
     private let filterInfos: [FilterInfo]
     private var driver: TableViewDriver! = nil
     private let bag = DisposeBag()
@@ -82,7 +79,7 @@ final class FilterListViewController: UITableViewController {
                         didSelect: { [weak self] in
                             guard let `self` = self else { return }
                             self.navigationItem.searchController?.searchBar.resignFirstResponder()
-                            self.delegate?.filterListViewController(self, didTapFilterInfo: filter)
+                            self.didTapFilterInfo.send(filter)
                         }
                     )
                 },

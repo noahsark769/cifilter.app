@@ -11,6 +11,7 @@ import IQKeyboardManagerSwift
 import Keys
 import Sentry
 import SwiftUI
+import Combine
 
 enum Environment: String {
     case release = "release"
@@ -63,6 +64,7 @@ class WorkshopSceneDelegate: NSObject, UISceneDelegate {
 
 class SceneDelegate: NSObject, UISceneDelegate {
     var window: UIWindow?
+    var cancellables = Set<AnyCancellable>()
 
     func sceneDidBecomeActive(_ scene: UIScene) {
         guard let scene = scene as? UIWindowScene else {
@@ -87,15 +89,33 @@ class SceneDelegate: NSObject, UISceneDelegate {
         let navController = UINavigationController(rootViewController: filterListViewController)
         navController.navigationBar.prefersLargeTitles = true
 
-//        let filterDetailViewController = FilterDetailViewController()
-//        filterListViewController.delegate = filterDetailViewController
-//        filterDetailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
-//        filterDetailViewController.navigationItem.leftItemsSupplementBackButton = true
-//        filterDetailViewController.navigationItem.largeTitleDisplayMode = .never
-//        let detailNavController = UINavigationController(rootViewController: filterDetailViewController)
+        if AppDelegate.enableSwiftUI {
+            let detailViewController = UIHostingController(
+                rootView: FilterDetailSwiftUIView(filterInfo: nil)
+            )
+            splitViewController.viewControllers = [navController, detailViewController]
+            filterListViewController.didTapFilterInfo.sink { info in
+                let detailViewController = UIHostingController(
+                    rootView: FilterDetailSwiftUIView(filterInfo: info)
+                )
+                splitViewController.toggleMasterView()
+                splitViewController.showDetailViewController(detailViewController, sender: nil)
+            }.store(in: &self.cancellables)
+        } else {
+            let filterDetailViewController = FilterDetailViewController()
+            filterDetailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
+            filterDetailViewController.navigationItem.leftItemsSupplementBackButton = true
+            filterDetailViewController.navigationItem.largeTitleDisplayMode = .never
+            let detailNavController = UINavigationController(rootViewController: filterDetailViewController)
+            splitViewController.viewControllers = [navController, detailNavController]
 
-        let detailViewController = UIHostingController(rootView: FilterDetailSwiftUIView(filterInfo: nil))
-        splitViewController.viewControllers = [navController, detailViewController]
+            filterListViewController.didTapFilterInfo.sink { info in
+                filterDetailViewController.set(filter: info)
+                splitViewController.toggleMasterView()
+                splitViewController.showDetailViewController(detailNavController, sender: nil)
+            }.store(in: &self.cancellables)
+        }
+
         splitViewController.delegate = self
 
         window?.rootViewController = splitViewController
@@ -106,6 +126,10 @@ class SceneDelegate: NSObject, UISceneDelegate {
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+
+    static var enableSwiftUI: Bool {
+        return false
+    }
 
     static var shared: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
