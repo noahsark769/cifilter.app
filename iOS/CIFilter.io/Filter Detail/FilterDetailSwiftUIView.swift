@@ -9,12 +9,19 @@
 import SwiftUI
 import CoreImage.CIFilterBuiltins
 
+extension Colors: View {
+    var body: some View {
+        Color(uiColor: self.color)
+    }
+}
+
 extension Color {
     init(rgb: Int) {
         self.init(
-            red: Double((rgb >> 16) & 0xFF) / 256,
-            green: Double((rgb >> 8) & 0xFF) / 256,
-            blue: Double((rgb & 0xFF)) / 256
+            red: Double((rgb >> 24) & 0xFF) / 256,
+            green: Double((rgb >> 16) & 0xFF) / 256,
+            blue: Double((rgb >> 8) & 0xFF) / 256,
+            opacity: Double(rgb & 0xFF) / 256
         )
     }
 
@@ -63,7 +70,11 @@ struct FilterDetailSwiftUIView: View {
             someContent: { filterInfo in
                 FilterDetailContentView(filterInfo: filterInfo)
             }, noneContent: {
-                Color.red
+                ZStack {
+                    Colors.primary
+                    Text("Select a filter to view details")
+                        .foregroundColor(.white)
+                }
             }
         )
     }
@@ -84,6 +95,6 @@ struct FilterDetailContentView: View {
         return VStack {
             FilterDetailTitleSwiftUIView(title: filterInfo.name, categories: filterInfo.categories)
             Divider()
-        }
+        }.frame(width: CGFloat.infinity)
     }
 }
