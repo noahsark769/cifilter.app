@@ -64,6 +64,13 @@ extension UIColor {
     }
 
     func toHexString() -> String {
+        let rgb = self.toHex()
+
+        let string = String(format:"#%08x", rgb)
+        return string
+    }
+
+    func toHex() -> Int {
         var r: CGFloat = 0
         var g: CGFloat = 0
         var b: CGFloat = 0
@@ -72,9 +79,7 @@ extension UIColor {
         getRed(&r, green: &g, blue: &b, alpha: &a)
 
         let rgb: Int = (Int)(r*255) << 24 | (Int)(g*255) << 16 | (Int)(b*255) << 8 | (Int)(a*255) << 0
-
-        let string = String(format:"#%08x", rgb)
-        return string
+        return rgb
     }
 }
 
@@ -296,22 +301,6 @@ enum ColorCompatibility {
         return UIColor(red: 0.10980392156862745, green: 0.10980392156862745, blue: 0.11764705882352941, alpha: 1.0)
     }
 }
-
-//enum UIColorCompatibility {
-//    static var label: UIColor {
-//
-//    }
-//    static var secondaryLabel: UIColor { return UIColor(rgb: 0xdddddd) }
-//    static var tertiaryLabel: UIColor { return UIColor(rgb: 0x999999) }
-//
-//    static var systemBackground: UIColor { return .white }
-//    static var secondarySystemBackground: UIColor { return UIColor(rgb: 0xeeeeee) }
-//    static var quaternarySystemFill: UIColor { return UIColor(rgb: 0xdddddd) }
-//}
-//
-//extension UIColor {
-//
-//}
 
 @available(iOS, introduced: 11, obsoleted: 12)
 extension UIActivityIndicatorView.Style {

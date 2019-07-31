@@ -10,6 +10,7 @@ import UIKit
 import IQKeyboardManagerSwift
 import Keys
 import Sentry
+import SwiftUI
 
 enum Environment: String {
     case release = "release"
@@ -85,13 +86,16 @@ class SceneDelegate: NSObject, UISceneDelegate {
         let filterListViewController = FilterListViewController(filterInfos: data)
         let navController = UINavigationController(rootViewController: filterListViewController)
         navController.navigationBar.prefersLargeTitles = true
-        let filterDetailViewController = FilterDetailViewController()
-        filterListViewController.delegate = filterDetailViewController
-        filterDetailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
-        filterDetailViewController.navigationItem.leftItemsSupplementBackButton = true
-        filterDetailViewController.navigationItem.largeTitleDisplayMode = .never
-        let detailNavController = UINavigationController(rootViewController: filterDetailViewController)
-        splitViewController.viewControllers = [navController, detailNavController]
+
+//        let filterDetailViewController = FilterDetailViewController()
+//        filterListViewController.delegate = filterDetailViewController
+//        filterDetailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
+//        filterDetailViewController.navigationItem.leftItemsSupplementBackButton = true
+//        filterDetailViewController.navigationItem.largeTitleDisplayMode = .never
+//        let detailNavController = UINavigationController(rootViewController: filterDetailViewController)
+
+        let detailViewController = UIHostingController(rootView: FilterDetailSwiftUIView(filterInfo: nil))
+        splitViewController.viewControllers = [navController, detailViewController]
         splitViewController.delegate = self
 
         window?.rootViewController = splitViewController
@@ -109,13 +113,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
 
-        if let userActivity = options.userActivities.first, userActivity.activityType == "com.noahgilmore.cifilterio.workshop" {
-            let config = UISceneConfiguration(name: nil, sessionRole: .windowApplication)
+        if let userActivity = options.userActivities.first, userActivity.activityType == "com.noahgilmore.cifilterio.workshop", userActivity.userInfo?["filterName"] != nil {
+            let config = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
             config.delegateClass = WorkshopSceneDelegate.self
             return config
         }
 
-        let config = UISceneConfiguration(name: nil, sessionRole: .windowApplication)
+        let config = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
         config.delegateClass = SceneDelegate.self
         return config
     }

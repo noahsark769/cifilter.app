@@ -69,6 +69,7 @@
 		A1D5A8D321B4A32100257B5E /* UIEdgeInsets+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8D221B4A32100257B5E /* UIEdgeInsets+Utils.swift */; };
 		A1D5A8D521B4A64A00257B5E /* UIStackView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8D421B4A64A00257B5E /* UIStackView+Utils.swift */; };
 		A1D5A8D721B4A85A00257B5E /* FilterParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8D621B4A85A00257B5E /* FilterParameterView.swift */; };
+		A1DA0CDC22F1AAD8001924AD /* FilterDetailSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DA0CDB22F1AAD8001924AD /* FilterDetailSwiftUIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,6 +151,7 @@
 		A1D5A8D221B4A32100257B5E /* UIEdgeInsets+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Utils.swift"; sourceTree = "<group>"; };
 		A1D5A8D421B4A64A00257B5E /* UIStackView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Utils.swift"; sourceTree = "<group>"; };
 		A1D5A8D621B4A85A00257B5E /* FilterParameterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterParameterView.swift; sourceTree = "<group>"; };
+		A1DA0CDB22F1AAD8001924AD /* FilterDetailSwiftUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterDetailSwiftUIView.swift; sourceTree = "<group>"; };
 		A7025EAAD7B39B501B039A0E /* Pods_CIFilter_io.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIFilter_io.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0EBDE2DBDAF2DACCA875113 /* Pods_CIFilter_ioTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIFilter_ioTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F97FF4CF0C09C59DFDF3D2A3 /* Pods-CIFilter.io.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.io.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io.release.xcconfig"; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 			children = (
 				A1D5A8D021B49E5400257B5E /* FilterAvailabilityView.swift */,
 				A1A0D83621BC659B0098168C /* FilterDetailExampleHeaderView.swift */,
+				A1DA0CDB22F1AAD8001924AD /* FilterDetailSwiftUIView.swift */,
 				A1D5A8CC21B4900400257B5E /* FilterDetailTitleView.swift */,
 				A1D5A8CA21B48FDD00257B5E /* FilterDetailView.swift */,
 				A1D5A8CE21B493A200257B5E /* FilterDetailViewController.swift */,
@@ -656,6 +659,7 @@
 				A1D5A8B821AF034A00257B5E /* FilterCategoryHeaderView.swift in Sources */,
 				A1D5A8C821B0FECF00257B5E /* FilterCellModel.swift in Sources */,
 				A1A0D83721BC659B0098168C /* FilterDetailExampleHeaderView.swift in Sources */,
+				A1DA0CDC22F1AAD8001924AD /* FilterDetailSwiftUIView.swift in Sources */,
 				A1D5A8CD21B4900400257B5E /* FilterDetailTitleView.swift in Sources */,
 				A1D5A8CB21B48FDD00257B5E /* FilterDetailView.swift in Sources */,
 				A1D5A8CF21B493A200257B5E /* FilterDetailViewController.swift in Sources */,
@@ -725,7 +729,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 29P3YRFLV5;
 				INFOPLIST_FILE = CIFilter.ioTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -747,7 +751,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 29P3YRFLV5;
 				INFOPLIST_FILE = CIFilter.ioTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

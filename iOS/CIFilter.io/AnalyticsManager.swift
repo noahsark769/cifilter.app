@@ -12,20 +12,15 @@ import Keys
 
 // TODO(UIKitForMac): Mixpanel is commented out, we need to figure out a way to include it
 
-#if !targetEnvironment(UIKitForMac)
-import Mixpanel
+#if !targetEnvironment(macCatalyst)
+//import Mixpanel
 #endif
 
 final class AnalyticsManager {
     static let shared = AnalyticsManager()
 
     func initialize() {
-        #if os(macOS)
-        print("I'm running on Mac")
-        #else
-        print("I'm NOT running on Mac")
-        #endif
-        #if !targetEnvironment(UIKitForMac)
+        #if !targetEnvironment(macCatalyst)
 //            Mixpanel.initialize(token: CIFilterIoKeys().mixpanelToken)
 //            Mixpanel.mainInstance().registerSuperProperties([
 //                "uuid": UUIDManager.shared.uuid().uuidString,
@@ -38,7 +33,7 @@ final class AnalyticsManager {
         #endif
     }
 
-    #if !targetEnvironment(UIKitForMac)
+    #if !targetEnvironment(macCatalyst)
     func track(event: String, properties: [String: Any]? = nil) {
 //    func track(event: String, properties: Properties? = nil) {
         #if DEBUG
