@@ -11,6 +11,7 @@ import ReactiveLists
 import RxSwift
 import RxCocoa
 import Combine
+import SwiftUI
 
 func group(filters: [FilterInfo], into categories: [String]) -> [String: [FilterInfo]] {
     var result: [String: [FilterInfo]] = [:]
@@ -58,6 +59,7 @@ final class FilterListViewController: UITableViewController {
     private let filterInfos: [FilterInfo]
     private var driver: TableViewDriver! = nil
     private let bag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     private let searchSubject = PublishSubject<String?>()
 
     private func generateTableModel(searchText: String?) -> TableViewModel {
@@ -104,6 +106,7 @@ final class FilterListViewController: UITableViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         self.navigationItem.searchController = searchController
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(didTapSettings))
 
         searchSubject.throttle(0.3, scheduler: MainScheduler.instance)
             .distinctUntilChanged()
@@ -116,6 +119,15 @@ final class FilterListViewController: UITableViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc private func didTapSettings() {
+        let view = SettingsView()
+        view.didTapDone.sink(receiveValue: {
+            self.dismiss(animated: true, completion: nil)
+        }).store(in: &cancellables)
+        let controller = UIHostingController(rootView: view)
+        self.present(controller, animated: true, completion: nil)
     }
 }
 
