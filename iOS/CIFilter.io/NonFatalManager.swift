@@ -8,14 +8,14 @@
 
 import Foundation
 import Sentry
-#if !targetEnvironment(UIKitForMac)
+#if !targetEnvironment(macCatalyst)
 //import Mixpanel
 #endif
 
 final class NonFatalManager {
     static let shared = NonFatalManager()
 
-    #if !targetEnvironment(UIKitForMac)
+    #if !targetEnvironment(macCatalyst)
     func log(_ identifier: String, data: [String: Any] = [:]) {
 //    func log(_ identifier: String, data: Properties = [:]) {
         print("WARNING!! \(identifier)")

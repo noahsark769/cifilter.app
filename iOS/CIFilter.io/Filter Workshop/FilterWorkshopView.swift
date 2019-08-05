@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxGesture
+import Combine
 
 final class FilterWorkshopView: UIView {
     // TODO: this is a VERY ugly hack
@@ -23,7 +24,7 @@ final class FilterWorkshopView: UIView {
     }()
     private let consoleView = ImageWorkshopConsoleView()
 
-    var didChooseAddImage: PublishSubject<(String, UIView)> { return contentView.didChooseAddImage }
+    var didChooseAddImage: PassthroughSubject<(String, CGRect), Never> { return contentView.didChooseAddImage }
 
     init(applicator: AsyncFilterApplicator) {
         self.applicator = applicator

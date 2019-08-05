@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Combine
 
 private final class RedView: UILabel {
     init(text: String) {
@@ -24,10 +25,40 @@ private final class RedView: UILabel {
     }
 }
 
+func observableFrom<PublisherType: Publisher>(publisher: PublisherType) -> Observable<PublisherType.Output> {
+    return Observable.create { observer in
+        let cancellable = publisher.sink(receiveCompletion: { completion in
+            switch completion {
+            case let .failure(error):
+                observer.onError(error)
+            case .finished:
+                observer.onCompleted()
+            }
+        }, receiveValue: { value in
+            observer.onNext(value)
+        })
+        return Disposables.create {
+            cancellable.cancel()
+        }
+    }
+}
+
+//extension Publisher {
+//    func forward(to subject: PassthroughSubject<Self.Output, Self.Failure>) -> AnyCancellable {
+//        return self.sink(receiveCompletion: { completion in
+//            subject.send(completion: completion)
+//        }, receiveValue: {
+//            subject.send
+//        })
+//    }
+//}
+
 final class FilterWorkshopParametersView: UIStackView {
-    var disposeBag: DisposeBag? = nil
+    private var disposeBag: DisposeBag? = nil
+    private var cancellables = Set<AnyCancellable>()
+
     let didUpdateFilterParameters = BehaviorSubject<[String: Any]>(value: [:])
-    let didChooseAddImage = PublishSubject<(String, UIView)>()
+    let didChooseAddImage = PassthroughSubject<(String, CGRect), Never>()
     private var paramNamesToImageArtboards: [String: ImageArtboardView] = [:]
     init() {
         super.init(frame: .zero)
@@ -61,16 +92,16 @@ final class FilterWorkshopParametersView: UIStackView {
             } else if parameter.isImageType {
                 let imageArtboardView = ImageArtboardView(name: parameter.name, configuration: .input)
                 self.addArrangedSubview(imageArtboardView)
-                observables.append(imageArtboardView.didChooseImage.map { image in
+                observables.append(observableFrom(publisher: imageArtboardView.didChooseImage.map { image in
                     guard let cgImage = image.cgImage else {
                         fatalError("WARNING could not generate CGImage from chosen UIImage")
                     }
                     return ParameterValue(name: parameter.name, value: CIImage(cgImage: cgImage))
-                })
+                }))
                 imageArtboardView.didChooseAdd
                     .map { (parameter.name, $0) }
                     .subscribe(self.didChooseAddImage)
-                    .disposed(by: disposeBag!)
+                    .store(in: &self.cancellables)
                 paramNamesToImageArtboards[parameter.name] = imageArtboardView
             } else {
                 NonFatalManager.shared.log("UnknownParameterViewType", data: ["parameter_name": parameter.name, "class_type": parameter.classType])

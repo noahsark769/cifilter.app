@@ -9,10 +9,12 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Combine
 import MobileCoreServices
 
 final class FilterWorkshopViewController: UIViewController {
     private let bag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     private let applicator = AsyncFilterApplicator()
     private let exporter = FilterApplicationExporter()
     private lazy var workshopView: FilterWorkshopView = {
@@ -53,18 +55,18 @@ final class FilterWorkshopViewController: UIViewController {
             self.currentGeneratedImageParmaeters = parameters
         }).disposed(by: bag)
 
-        workshopView.didChooseAddImage.subscribe(onNext: { paramName, sourceView in
+        workshopView.didChooseAddImage.sink(receiveValue: { (paramName, sourceRect) in
             AnalyticsManager.shared.track(event: "tap_choose_image", properties: ["name": self.filter.name, "parameter_name": paramName])
             self.inputImageCurrentlySelecting = paramName
             #if targetEnvironment(macCatalyst)
             self.presentDocumentBrowserController()
             #else
-            self.presentImagePickerController(fromSourceView: sourceView)
+            self.presentImagePickerController(fromSourceRect: sourceRect)
             #endif
-        }).disposed(by: bag)
+        }).store(in: &self.cancellables)
     }
 
-    private func presentImagePickerController(fromSourceView sourceView: UIView) {
+    private func presentImagePickerController(fromSourceRect sourceRect: CGRect) {
         let vc = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         vc.addAction(UIAlertAction(title: "Take photo", style: .default, handler: { [weak self] _ in
             let picker = UIImagePickerController()
@@ -81,8 +83,10 @@ final class FilterWorkshopViewController: UIViewController {
             self?.present(picker, animated: true, completion: nil)
         }))
         vc.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        vc.popoverPresentationController?.sourceView = sourceView
-        vc.popoverPresentationController?.sourceRect = sourceView.bounds
+        vc.popoverPresentationController?.sourceView = self.view
+        // We extracted the frame from the global coordinate space in SwiftUI, so now we have to
+        // convert it back
+        vc.popoverPresentationController?.sourceRect = self.view.convert(sourceRect, from: self.view.window!)
         self.present(vc, animated: true, completion: nil)
     }
 

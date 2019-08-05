@@ -7,8 +7,36 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
+import Combine
+
+final class CombineTapGestureRecognizer: UITapGestureRecognizer {
+    private final class Target: NSObject {
+        let didTap = PassthroughSubject<Void, Never>()
+
+        @objc func gestureDidTap() {
+            didTap.send()
+        }
+    }
+
+    private var target: Target! = nil
+    var didTap: PassthroughSubject<Void, Never> {
+        return self.target.didTap
+    }
+
+    init() {
+        let target = Target()
+        super.init(target: target, action: #selector(Target.gestureDidTap))
+        self.target = target
+    }
+}
+
+extension UIView {
+    func addTapHandler() -> PassthroughSubject<Void, Never> {
+        let recognizer = CombineTapGestureRecognizer()
+        self.addGestureRecognizer(recognizer)
+        return recognizer.didTap
+    }
+}
 
 final class ImageArtboardView: UIView {
     enum Configuration {
@@ -18,9 +46,10 @@ final class ImageArtboardView: UIView {
 
     private let configuration: Configuration
     private var eitherView: EitherView!
-    private let bag = DisposeBag()
-    var didChooseImage = PublishSubject<UIImage>()
-    var didChooseAdd: PublishSubject<UIView> {
+    private var cancellables = Set<AnyCancellable>()
+
+    let didChooseImage = PassthroughSubject<UIImage, Never>()
+    var didChooseAdd: PassthroughSubject<CGRect, Never> {
         return imageChooserView.didChooseAdd
     }
 
@@ -82,21 +111,23 @@ final class ImageArtboardView: UIView {
         self.eitherView.setEnabled(self.imageChooserView)
         mainStackView.addArrangedSubview(eitherView)
 
-        imageChooserView.didChooseImage.subscribe(onNext: { image in
+        imageChooserView.didChooseImage.sink(receiveValue: { image in
             self.set(image: image)
-        }).disposed(by: self.bag)
+        }).store(in: &self.cancellables)
 
         imageView.layer.borderColor = UIColor(rgb: 0xdddddd).cgColor
         imageView.layer.borderWidth = 1
 
         nameStackView.addArrangedSubview(editButton)
-        editButton.rx.tap.subscribe(onNext: {
+
+        editButton.addTapHandler().sink {
             self.setChoosing()
-        }).disposed(by: bag)
+        }.store(in: &self.cancellables)
+
         editButton.isHidden = true
         editButton.setContentHuggingPriority(.required, for: .horizontal)
 
-        imageChooserView.didChooseImage.bind(to: self.didChooseImage).disposed(by: bag)
+        imageChooserView.didChooseImage.subscribe(self.didChooseImage).store(in: &self.cancellables)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -111,7 +142,7 @@ final class ImageArtboardView: UIView {
         self.editButton.isHidden = self.configuration != .input
 
         if reportOnSubject {
-            didChooseImage.onNext(image)
+            didChooseImage.send(image)
         }
         self.addInteraction(self.dragInteraction)
     }

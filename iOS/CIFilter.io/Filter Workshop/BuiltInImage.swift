@@ -24,7 +24,9 @@ extension CIImage {
     }
 }
 
-struct BuiltInImage {
+struct BuiltInImage: Identifiable {
+    private(set) var id = UUID()
+
     let image: UIImage
     let imageForImageChooser: UIImage
     private static let checkerboardFilter = CIFilter(name: "CICheckerboardGenerator", parameters: [
