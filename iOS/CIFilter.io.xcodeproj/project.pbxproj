@@ -39,6 +39,7 @@
 		A1315E2D2288F340006872BD /* buildInformation.json in Resources */ = {isa = PBXBuildFile; fileRef = A1315E2C2288F33F006872BD /* buildInformation.json */; };
 		A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1707F65219A1A0A0010E007 /* FilterInfo.swift */; };
 		A172BAC42221CCFB00182C56 /* ColorHexInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172BAC32221CCFA00182C56 /* ColorHexInput.swift */; };
+		A1994D0F22F7E5B600E2C519 /* UserDefaultsConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1994D0E22F7E5B600E2C519 /* UserDefaultsConfig.swift */; };
 		A1A0D83521BC60BA0098168C /* FilterExampleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */; };
 		A1A0D83721BC659B0098168C /* FilterDetailExampleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83621BC659B0098168C /* FilterDetailExampleHeaderView.swift */; };
 		A1A0D83A21BC67ED0098168C /* FilterWorkshopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83921BC67ED0098168C /* FilterWorkshopViewController.swift */; };
@@ -121,6 +122,7 @@
 		A13C923722A5E67500B033ED /* CIFilter.io.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CIFilter.io.entitlements; sourceTree = "<group>"; };
 		A1707F65219A1A0A0010E007 /* FilterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInfo.swift; sourceTree = "<group>"; };
 		A172BAC32221CCFA00182C56 /* ColorHexInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorHexInput.swift; sourceTree = "<group>"; };
+		A1994D0E22F7E5B600E2C519 /* UserDefaultsConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsConfig.swift; sourceTree = "<group>"; };
 		A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterExampleProvider.swift; sourceTree = "<group>"; };
 		A1A0D83621BC659B0098168C /* FilterDetailExampleHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailExampleHeaderView.swift; sourceTree = "<group>"; };
 		A1A0D83921BC67ED0098168C /* FilterWorkshopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterWorkshopViewController.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				A1AA26DF22F7D1E300620FC2 /* SettingsView.swift */,
+				A1994D0E22F7E5B600E2C519 /* UserDefaultsConfig.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -718,6 +721,7 @@
 				A119025B222B31B000FE27A3 /* UIImage+Utils.swift in Sources */,
 				A130BD8121F0EAC700E586F6 /* UIImageView+Utils.swift in Sources */,
 				A1D5A8D521B4A64A00257B5E /* UIStackView+Utils.swift in Sources */,
+				A1994D0F22F7E5B600E2C519 /* UserDefaultsConfig.swift in Sources */,
 				A129375C2246B56E000C6329 /* UUIDManager.swift in Sources */,
 				A130BD7D21EC0D1F00E586F6 /* VectorInput.swift in Sources */,
 			);

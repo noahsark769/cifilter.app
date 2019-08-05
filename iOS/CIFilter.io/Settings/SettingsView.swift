@@ -12,6 +12,24 @@ import Combine
 struct SettingsView: View {
     let didTapDone = PassthroughSubject<Void, Never>()
 
+    @State var swiftUIImageChooser: Bool = UserDefaultsConfig.swiftUIImageChooser {
+        didSet {
+            UserDefaultsConfig.swiftUIImageChooser = swiftUIImageChooser
+        }
+    }
+
+    var debugView: some View {
+        #if DEBUG
+        return Section(header: Text("DEBUG").padding([.top], 20)) {
+            HStack {
+                Toggle(isOn: $swiftUIImageChooser, label: { Text("SwiftUI Image Chooser") })
+            }
+        }
+        #else
+        return EmptyView()
+        #endif
+    }
+
     var body: some View {
         ZStack(alignment: .topTrailing) {
             VStack {
@@ -34,6 +52,7 @@ struct SettingsView: View {
                         }) {
                             Text("Github") }
                         }
+                    self.debugView
                 }.listStyle(GroupedListStyle())
             }.background(Colors.primary)
             Button(action: { self.didTapDone.send() }) {
