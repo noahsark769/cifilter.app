@@ -8,33 +8,66 @@
 
 import UIKit
 import Combine
+import SwiftUI
+
+final class Target: NSObject {
+    let didFire = PassthroughSubject<Void, Never>()
+
+    @objc func fire() {
+        didFire.send()
+    }
+}
 
 final class CombineTapGestureRecognizer: UITapGestureRecognizer {
-    private final class Target: NSObject {
-        let didTap = PassthroughSubject<Void, Never>()
-
-        @objc func gestureDidTap() {
-            didTap.send()
-        }
-    }
-
-    private var target: Target! = nil
-    var didTap: PassthroughSubject<Void, Never> {
-        return self.target.didTap
-    }
+    fileprivate let target: Target
 
     init() {
         let target = Target()
-        super.init(target: target, action: #selector(Target.gestureDidTap))
         self.target = target
+        super.init(target: target, action: #selector(Target.fire))
+    }
+}
+
+final class CombinePanGestureRecognizer: UIPanGestureRecognizer {
+    private var target: Target! = nil
+
+    var strongDelegate: UIGestureRecognizerDelegate? = nil
+
+    init() {
+        let target = Target()
+        super.init(target: target, action: #selector(Target.fire))
+        self.target = target
+    }
+
+    func subscribe(_ receiveValue: @escaping (UIPanGestureRecognizer) -> Void) -> AnyCancellable {
+        return self.target.didFire.sink(receiveValue: {
+            receiveValue(self)
+        })
     }
 }
 
 extension UIView {
-    func addTapHandler() -> PassthroughSubject<Void, Never> {
+    func addTapHandler(numberOfTapsRequired: Int = 1) -> AnyPublisher<UITapGestureRecognizer, Never> {
+        self.isUserInteractionEnabled = true
         let recognizer = CombineTapGestureRecognizer()
+        recognizer.numberOfTapsRequired = numberOfTapsRequired
         self.addGestureRecognizer(recognizer)
-        return recognizer.didTap
+        return recognizer.target.didFire.map { recognizer }.eraseToAnyPublisher()
+    }
+
+    func addPanHandler(
+        configure: (UIPanGestureRecognizer) -> Void = { _ in },
+        delegate: ((UIPanGestureRecognizer) -> UIGestureRecognizerDelegate)? = nil
+    ) -> CombinePanGestureRecognizer {
+        self.isUserInteractionEnabled = true
+        let recognizer = CombinePanGestureRecognizer()
+        if let delegate = delegate?(recognizer) {
+            recognizer.strongDelegate = delegate
+            recognizer.delegate = delegate
+        }
+        configure(recognizer)
+        self.addGestureRecognizer(recognizer)
+        return recognizer
     }
 }
 
@@ -50,7 +83,7 @@ final class ImageArtboardView: UIView {
 
     let didChooseImage = PassthroughSubject<UIImage, Never>()
     var didChooseAdd: PassthroughSubject<CGRect, Never> {
-        return imageChooserView.didChooseAdd
+        return UserDefaultsConfig.swiftUIImageChooser ? swiftUIImageChooserView.didTapAdd : legacyImageChooserView.didChooseAdd
     }
 
     private let nameLabel: UILabel = {
@@ -61,7 +94,11 @@ final class ImageArtboardView: UIView {
     }()
     private let noImageGeneratedView = OutputImageNotGeneratedView()
     private let imageView = UIImageView()
-    private let imageChooserView = ImageChooserView()
+    private let legacyImageChooserView = ImageChooserView()
+
+    private let swiftUIImageChooserView = ImageChooserSwiftUIView()
+    private lazy var swiftUIImageChooserViewController = UIHostingController(rootView: swiftUIImageChooserView)
+
     private let activityView = OutputImageActivityIndicatorView()
 
     private lazy var dragInteraction: UIDragInteraction = {
@@ -89,9 +126,14 @@ final class ImageArtboardView: UIView {
         return view
     }()
 
+    var imageChooserView: UIView {
+        return UserDefaultsConfig.swiftUIImageChooser ? swiftUIImageChooserViewController.view! : legacyImageChooserView
+    }
+
     init(name: String, configuration: Configuration) {
         self.configuration = configuration
         super.init(frame: .zero)
+
         self.eitherView = EitherView(views: [
             imageView, imageChooserView, activityView, noImageGeneratedView
         ])
@@ -108,11 +150,14 @@ final class ImageArtboardView: UIView {
         imageView.setContentHuggingPriority(.required, for: .vertical)
         imageView.setContentHuggingPriority(.required, for: .horizontal)
         nameLabel.setContentHuggingPriority(.required, for: .vertical)
-        self.eitherView.setEnabled(self.imageChooserView)
+        self.eitherView.setEnabled(imageChooserView)
         mainStackView.addArrangedSubview(eitherView)
 
-        imageChooserView.didChooseImage.sink(receiveValue: { image in
+        legacyImageChooserView.didChooseImage.sink(receiveValue: { image in
             self.set(image: image)
+        }).store(in: &self.cancellables)
+        swiftUIImageChooserView.didTapImage.sink(receiveValue: { image in
+            self.set(image: image.image)
         }).store(in: &self.cancellables)
 
         imageView.layer.borderColor = UIColor(rgb: 0xdddddd).cgColor
@@ -120,14 +165,20 @@ final class ImageArtboardView: UIView {
 
         nameStackView.addArrangedSubview(editButton)
 
-        editButton.addTapHandler().sink {
+        editButton.addTapHandler().sink { _ in
             self.setChoosing()
         }.store(in: &self.cancellables)
 
         editButton.isHidden = true
         editButton.setContentHuggingPriority(.required, for: .horizontal)
 
-        imageChooserView.didChooseImage.subscribe(self.didChooseImage).store(in: &self.cancellables)
+        legacyImageChooserView.didChooseImage.subscribe(self.didChooseImage).store(in: &self.cancellables)
+        swiftUIImageChooserView.didTapImage.map(\.image).subscribe(self.didChooseImage).store(in: &self.cancellables)
+
+        if UserDefaultsConfig.swiftUIImageChooser {
+            swiftUIImageChooserViewController.view!.heightAnchor.constraint(equalToConstant: 650).isActive = true
+            swiftUIImageChooserViewController.view!.widthAnchor.constraint(equalToConstant: 650).isActive = true
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

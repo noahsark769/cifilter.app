@@ -9,11 +9,28 @@
 import SwiftUI
 import Combine
 
+struct ButtonFramePreferenceKey: PreferenceKey {
+    typealias Value = CGRect?
+
+    static var defaultValue: CGRect? = nil
+
+    static func reduce(value: inout CGRect?, nextValue: () -> CGRect?) {
+        value = nextValue()
+    }
+}
+
 struct AddImageView: View {
-    let didTap: () -> Void
+    typealias TapCallback = (CGRect) -> Void
+
+    let didTap: TapCallback
+    @State private var currentTapFrame: CGRect? = nil
+
+    init(didTap: @escaping TapCallback) {
+        self.didTap = didTap
+    }
 
     var body: some View {
-        Button(action: didTap) {
+        ZStack {
             HStack(alignment: .lastTextBaseline) {
                 Image(systemName: "square.and.arrow.down")
                     .foregroundColor(.white)
@@ -22,12 +39,24 @@ struct AddImageView: View {
                     .offset(x: -4, y: -4)
                 Text("Add Image")
                     .foregroundColor(.white)
-            }
-        }.padding()
-            .background(
-                RoundedRectangle(cornerRadius: 6)
-                    .foregroundColor(.blue)
-            )
+            }.padding()
+                .background(
+                    GeometryReader { geometry in
+                        RoundedRectangle(cornerRadius: 6)
+                            .foregroundColor(.blue)
+                            .preference(key: ButtonFramePreferenceKey.self, value: geometry.frame(in: .global))
+                    }
+                ).onPreferenceChange(ButtonFramePreferenceKey.self, perform: { frame in
+                    self.currentTapFrame = frame
+                })
+                .onTapGesture {
+                    guard let frame = self.currentTapFrame else {
+                        print ("AHHHH")
+                        return
+                    }
+                    self.didTap(frame)
+                }
+        }
     }
 }
 
@@ -61,13 +90,13 @@ struct BuiltInImageCarouselView: View {
 struct ImageChooserSwiftUIView: View {
     static let size: CGFloat = 650
 
-    let didTapAdd = PassthroughSubject<Void, Never>()
+    let didTapAdd = PassthroughSubject<CGRect, Never>()
     let didTapImage = PassthroughSubject<BuiltInImage, Never>()
 
     var body: some View {
         VStack {
-            AddImageView(didTap: {
-                self.didTapAdd.send()
+            AddImageView(didTap: { rect in
+                self.didTapAdd.send(rect)
             }).frame(maxWidth: .infinity, maxHeight: .infinity)
             BuiltInImageCarouselView(didTapImage: { image in
                 self.didTapImage.send(image)

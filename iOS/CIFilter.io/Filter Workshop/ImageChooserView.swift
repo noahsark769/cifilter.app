@@ -9,12 +9,12 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RxGesture
 import Combine
 
 final class ImageChooserAddView: UIView {
     let didTap = PublishSubject<Void>()
     private let bag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     
     private var plusLabel: UILabel = {
         let view = UILabel()
@@ -37,9 +37,9 @@ final class ImageChooserAddView: UIView {
         plusLabel.translatesAutoresizingMaskIntoConstraints = false
         plusLabel.centerXAnchor <=> self.centerXAnchor
         plusLabel.centerYAnchor <=> self.centerYAnchor
-        self.rx.tapGesture().when(.ended).subscribe({ _ in
+        self.addTapHandler().sink { _ in
             self.didTap.onNext(())
-        }).disposed(by: bag)
+        }.store(in: &self.cancellables)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -54,7 +54,7 @@ private let numImagePerArtboardRow = 3
 final class ImageChooserView: UIView {
     static let artboardSize: CGFloat = 650
 
-    private(set) var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     private let bag = DisposeBag()
 
     let didChooseImage = PassthroughSubject<UIImage, Never>()
@@ -123,9 +123,9 @@ final class ImageChooserView: UIView {
         imageView.layer.borderColor = UIColor(rgb: 0xdddddd).cgColor
         imageView.layer.borderWidth = 1
         imageView.setContentHuggingPriority(.required, for: .horizontal)
-        imageView.rx.tapGesture().when(.ended).subscribe({ tap in
+        imageView.addTapHandler().sink { _ in
             self.didChooseImage.send(image.image)
-        }).disposed(by: self.bag)
+        }.store(in: &self.cancellables)
         return imageView
     }
 

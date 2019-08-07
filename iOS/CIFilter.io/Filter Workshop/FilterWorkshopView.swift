@@ -9,7 +9,6 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RxGesture
 import Combine
 
 final class FilterWorkshopView: UIView {
@@ -19,6 +18,7 @@ final class FilterWorkshopView: UIView {
     private let scrollView = UIScrollView()
     private let applicator: AsyncFilterApplicator
     private let bag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     private lazy var contentView: FilterWorkshopContentView = {
         return FilterWorkshopContentView(applicator: self.applicator)
     }()
@@ -71,21 +71,17 @@ final class FilterWorkshopView: UIView {
             }
         }).disposed(by: bag)
 
-        scrollView.rx.tapGesture { gesture, delegate in
-            gesture.numberOfTapsRequired = 2
-        }.subscribe(onNext: { recognizer in
-            if recognizer.state == .ended {
-                if self.scrollView.zoomScale > self.scrollView.minimumZoomScale {
-                    self.scrollView.setZoomScale(self.scrollView.minimumZoomScale, animated: true)
-                } else {
-                    let location = recognizer.location(in: self.contentView)
-                    let width: CGFloat = ImageChooserView.artboardSize * 1.6
-                    let height: CGFloat = ImageChooserView.artboardSize * 1.6
-                    let rect = CGRect(x: location.x - width / 2, y: location.y - height / 2, width: width, height: height)
-                    self.scrollView.zoom(to: rect, animated: true)
-                }
+        scrollView.addTapHandler(numberOfTapsRequired: 2).sink { recognizer in
+            if self.scrollView.zoomScale > self.scrollView.minimumZoomScale {
+                self.scrollView.setZoomScale(self.scrollView.minimumZoomScale, animated: true)
+            } else {
+                let location = recognizer.location(in: self.contentView)
+                let width: CGFloat = ImageChooserView.artboardSize * 1.6
+                let height: CGFloat = ImageChooserView.artboardSize * 1.6
+                let rect = CGRect(x: location.x - width / 2, y: location.y - height / 2, width: width, height: height)
+                self.scrollView.zoom(to: rect, animated: true)
             }
-        }).disposed(by: bag)
+        }.store(in: &self.cancellables)
 
         needsZoomScaleUpdate = true // we need to update the zoom scale on first layout
     }

@@ -13,7 +13,6 @@ def shared_pods
   pod 'RxAtomic', '~> 4.4.0', :modular_headers => true
   pod 'RxSwift', :git => 'https://github.com/noahsark769/RxSwift', :branch => 'uikitformac-compat', :modular_headers => true
   pod 'RxCocoa', :git => 'https://github.com/noahsark769/RxSwift', :branch => 'uikitformac-compat', :modular_headers => true
-  pod 'RxGesture', '~> 3.0.0', :modular_headers => true
   pod 'IQKeyboardManagerSwift', '~> 6.2.0'
   pod 'Sentry', '~> 4.3.1', :modular_headers => true
 

@@ -12,17 +12,17 @@ import Combine
 struct SettingsView: View {
     let didTapDone = PassthroughSubject<Void, Never>()
 
-    @State var swiftUIImageChooser: Bool = UserDefaultsConfig.swiftUIImageChooser {
-        didSet {
-            UserDefaultsConfig.swiftUIImageChooser = swiftUIImageChooser
-        }
-    }
+    let swiftUIImageChooser = Binding<Bool>(get: {
+        return UserDefaultsConfig.swiftUIImageChooser
+    }, set: { newValue in
+        UserDefaultsConfig.swiftUIImageChooser = newValue
+    })
 
     var debugView: some View {
         #if DEBUG
         return Section(header: Text("DEBUG").padding([.top], 20)) {
             HStack {
-                Toggle(isOn: $swiftUIImageChooser, label: { Text("SwiftUI Image Chooser") })
+                Toggle(isOn: swiftUIImageChooser, label: { Text("SwiftUI Image Chooser") })
             }
         }
         #else

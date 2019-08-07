@@ -14,9 +14,6 @@ PODS:
   - RxCocoa (5.0.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
-  - RxGesture (3.0.0):
-    - RxCocoa (~> 5.0)
-    - RxSwift (~> 5.0)
   - RxRelay (5.0.0):
     - RxSwift (~> 5)
   - RxSwift (5.0.1)
@@ -32,7 +29,6 @@ DEPENDENCIES:
   - ReactiveLists (~> 0.3.0)
   - RxAtomic (~> 4.4.0)
   - RxCocoa (from `https://github.com/noahsark769/RxSwift`, branch `uikitformac-compat`)
-  - RxGesture (~> 3.0.0)
   - RxSwift (from `https://github.com/noahsark769/RxSwift`, branch `uikitformac-compat`)
   - Sentry (~> 4.3.1)
   - YLTableView (~> 2.2.0)
@@ -44,7 +40,6 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - ReactiveLists
     - RxAtomic
-    - RxGesture
     - RxRelay
     - Sentry
     - YLTableView
@@ -75,12 +70,11 @@ SPEC CHECKSUMS:
   ReactiveLists: 383c6720617abfb9bd47e8e612bfc13e1895eda5
   RxAtomic: eacf60db868c96bfd63320e28619fe29c179656f
   RxCocoa: dcceba42244a647ac976575f1b85b48030478ef1
-  RxGesture: 0cd8e37ff9a266e1c31f46bcaed6de1c536bc81e
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 3a0c158ad22a75080a707abd9dc9191149e03522
   Sentry: 5267d493a398663538317e4dcc438c12c66202ed
   YLTableView: c3bcbe16c2a2800765afa1e373a10fbd3174bbfa
 
-PODFILE CHECKSUM: c5cf7e40d99b8ffaa3e4988c18b43a5cbe020879
+PODFILE CHECKSUM: 495c2a488d56b18a5b03693af979978b643f4ca6
 
 COCOAPODS: 1.5.3
