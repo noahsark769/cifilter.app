@@ -60,6 +60,7 @@ final class FilterDetailViewController: UIViewController {
                 target: self,
                 action: #selector(self.workshopViewControllerSelectedDone)
             )
+            navigationController.modalPresentationStyle = .fullScreen
             self.splitViewController?.present(navigationController, animated: true, completion: nil)
         })
         AnalyticsManager.shared.track(event: "filter_detail", properties: ["name": filter.name])
