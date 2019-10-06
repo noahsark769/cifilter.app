@@ -40,7 +40,7 @@ DEPENDENCIES:
   - Sentry (~> 4.3.1)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - AloeStackView
     - ColorCompatibility
     - DifferenceKit
@@ -73,4 +73,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: d36ae3fa752f11216cd5afb9f4fdab0d0df0dfd9
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.8.3
