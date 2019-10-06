@@ -76,6 +76,10 @@ final class FilterWorkshopViewController: UIViewController {
             vc.popoverPresentationController?.sourceRect = sourceView.bounds
             self.present(vc, animated: true, completion: nil)
         }).disposed(by: bag)
+
+        workshopView.didChooseSaveImage.subscribe(onNext: { _ in
+            self.didTapShareButton()
+        }).disposed(by: bag)
     }
 
     @objc private func didTapShareButton() {

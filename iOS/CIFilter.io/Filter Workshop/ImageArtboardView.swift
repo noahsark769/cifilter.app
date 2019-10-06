@@ -23,6 +23,7 @@ final class ImageArtboardView: UIView {
     var didChooseAdd: PublishSubject<UIView> {
         return imageChooserView.didChooseAdd
     }
+    let didChooseSave = PublishSubject<Void>()
 
     private let nameLabel: UILabel = {
         let view = UILabel()
@@ -93,6 +94,10 @@ final class ImageArtboardView: UIView {
         editButton.setContentHuggingPriority(.required, for: .horizontal)
 
         imageChooserView.didChooseImage.bind(to: self.didChooseImage).disposed(by: bag)
+
+        if #available(iOS 13, *) {
+            imageView.addInteraction(UIContextMenuInteraction(delegate: self))
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -103,6 +108,7 @@ final class ImageArtboardView: UIView {
     func set(image: UIImage, reportOnSubject: Bool = false) {
         self.activityView.stopAnimating()
         imageView.image = image
+        imageView.isUserInteractionEnabled = true
         self.eitherView.setEnabled(self.imageView)
         self.editButton.isHidden = self.configuration != .input
 
@@ -127,5 +133,28 @@ final class ImageArtboardView: UIView {
         self.activityView.stopAnimating()
         self.eitherView.setEnabled(self.noImageGeneratedView)
         self.editButton.isHidden = true
+    }
+}
+
+@available(iOS 13, *)
+extension ImageArtboardView: UIContextMenuInteractionDelegate {
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
+
+            var actions: [UIAction] = []
+
+            if self.configuration == .input {
+                actions.append(UIAction(title: "Choose another image", image: UIImage(systemName: "square.and.pencil")) { action in
+                    self.setChoosing()
+                })
+            } else {
+                actions.append(UIAction(title: "Save image", image: UIImage(systemName: "square.and.arrow.up")) { action in
+                    self.didChooseSave.onNext(())
+                })
+            }
+
+            // Create our menu with both the edit menu and the share action
+            return UIMenu(title: "Image options", children: actions)
+        })
     }
 }

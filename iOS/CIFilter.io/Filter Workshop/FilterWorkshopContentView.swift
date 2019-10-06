@@ -22,6 +22,10 @@ final class FilterWorkshopContentView: UIView {
         return imageParametersView.didChooseAddImage
     }
 
+    var didChooseSaveImage: PublishSubject<Void> {
+        return outputImageView.didChooseSave
+    }
+
     private let stackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
