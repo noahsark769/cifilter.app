@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -382,6 +382,7 @@
 				A12B7AF4222AF54B0084AAE6 /* Set Info.plist settings */,
 				A628FCD28E0073CB86570D21 /* [CP] Embed Pods Frameworks */,
 				A12937612246C403000C6329 /* Upload dSYM to Sentry */,
+				A1285481234AA9E5000460BC /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -511,6 +512,23 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		A1285481234AA9E5000460BC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\ngit=$(sh /etc/profile; which git)\nnumber_of_commits=$(\"$git\" rev-list HEAD --count)\nsha=$(\"$git\" rev-parse --verify HEAD)\n\ntarget_plist=\"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\ndsym_plist=\"$DWARF_DSYM_FOLDER_PATH/$DWARF_DSYM_FILE_NAME/Contents/Info.plist\"\n\nfor plist in \"$target_plist\" \"$dsym_plist\"; do\nif [ -f \"$plist\" ]; then\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $number_of_commits\" \"$plist\"\n/usr/libexec/PlistBuddy -c \"Add :NGGitSha string $sha\" \"$plist\"\n/usr/libexec/PlistBuddy -c \"Set :NGGitSha $sha\" \"$plist\"\n/usr/libexec/PlistBuddy -c \"Add :NGCommitNumber string $number_of_commits\" \"$plist\"\n/usr/libexec/PlistBuddy -c \"Set :NGCommitNumber $number_of_commits\" \"$plist\"\nfi\ndone\n";
 		};
 		A12937612246C403000C6329 /* Upload dSYM to Sentry */ = {
 			isa = PBXShellScriptBuildPhase;
