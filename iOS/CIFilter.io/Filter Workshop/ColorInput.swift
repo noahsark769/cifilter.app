@@ -88,7 +88,11 @@ final class ColorInput: UIView {
         }.store(in: &self.cancellables)
 
         self.imageView.addTapHandler().sink { recognizer in
-            // do whatever
+            let supportedStates: [UIGestureRecognizer.State] = [.began, .changed, .ended]
+            guard supportedStates.contains(recognizer.state) else { return }
+            self.dragLocation = recognizer.location(in: self)
+            self.setNeedsLayout()
+            self.reportColorFromDragLocation()
         }.store(in: &self.cancellables)
 
         self.hexInput.valueDidChange.subscribe(onNext: { color in
