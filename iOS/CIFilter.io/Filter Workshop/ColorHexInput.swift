@@ -23,7 +23,7 @@ final class ColorHexInput: UIView {
         view.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .medium)
         view.textColor = ColorCompatibility.label
         view.backgroundColor = ColorCompatibility.secondarySystemBackground
-        view.keyboardType = .numberPad
+        view.keyboardType = .twitter // for the hashtag
         view.delegate = self
         return view
     }()
