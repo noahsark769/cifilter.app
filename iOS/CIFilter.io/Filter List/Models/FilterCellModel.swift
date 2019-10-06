@@ -15,12 +15,14 @@ final class FilterCellModel: TableCellViewModel, DiffableViewModel {
     let cellIdentifier = "FilterListNameCell"
     let rowHeight: CGFloat = UITableView.automaticDimension
     var didSelect: DidSelectClosure? = nil
+    var didSelectJumpToWorkshop: DidSelectClosure? = nil
 
-    private let filter: CIFilter
+    let filter: CIFilter
 
-    init(filter: CIFilter, didSelect: @escaping () -> Void) {
+    init(filter: CIFilter, didSelect: @escaping DidSelectClosure, didSelectJumpToWorkshop: @escaping DidSelectClosure) {
         self.filter = filter
         self.didSelect = didSelect
+        self.didSelectJumpToWorkshop = didSelectJumpToWorkshop
     }
 
     func applyViewModelToCell(_ cell: UITableViewCell) {
