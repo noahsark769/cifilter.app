@@ -10,8 +10,7 @@ import UIKit
 import AloeStackView
 import RxSwift
 import RxCocoa
-
-import UIKit
+import ColorCompatibility
 
 final class NoExampleAvailableView: UIView {
     private let textView = UITextView()
@@ -94,6 +93,7 @@ final class FilterDetailView: UIView {
         let view = AloeStackView()
         view.rowInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         view.separatorInset = UIEdgeInsets.zero
+        view.backgroundColor = ColorCompatibility.systemBackground
         return view
     }()
 
