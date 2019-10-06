@@ -7,20 +7,19 @@
 //
 
 import UIKit
-import YLTableView
+import ColorCompatibility
 
-final class FilterCategoryHeaderView: YLTableViewSectionHeaderFooterView {
+final class FilterCategoryHeaderView: UITableViewHeaderFooterView {
     let label = UILabel()
-    private let separator = SeparatorView(color: UIColor(rgb: 0xdddddd))
+    private let separator = SeparatorView(color: ColorCompatibility.separator)
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
 
         // https://stackoverflow.com/questions/15604900/uitableviewheaderfooterview-unable-to-change-background-color
         self.backgroundView = UIView(frame: self.bounds)
-        self.backgroundView?.backgroundColor = .white
+        self.backgroundView?.backgroundColor = ColorCompatibility.secondarySystemBackground
 
-        self.position = .header
         label.font = .boldSystemFont(ofSize: 22)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.2

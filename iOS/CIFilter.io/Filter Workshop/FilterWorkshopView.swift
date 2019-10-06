@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxGesture
+import ColorCompatibility
 
 final class FilterWorkshopView: UIView {
     // TODO: this is a VERY ugly hack
@@ -28,7 +29,7 @@ final class FilterWorkshopView: UIView {
     init(applicator: AsyncFilterApplicator) {
         self.applicator = applicator
         super.init(frame: .zero)
-        self.backgroundColor = .white
+        self.backgroundColor = ColorCompatibility.systemBackground
         self.addSubview(scrollView)
 
         scrollView.maximumZoomScale = 20

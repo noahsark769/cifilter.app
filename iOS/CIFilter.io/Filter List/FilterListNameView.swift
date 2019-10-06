@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ColorCompatibility
 
 final class FilterListNameView: UIView {
     private let label = UILabel()
@@ -20,8 +21,8 @@ final class FilterListNameView: UIView {
 
         [label, border].disableTranslatesAutoresizingMaskIntoConstraints()
 
-        border.backgroundColor = UIColor(rgb: 0xd6d6d6)
-        label.textColor = UIColor(rgb: 0x999999)
+        border.backgroundColor = ColorCompatibility.opaqueSeparator
+        label.textColor = ColorCompatibility.secondaryLabel
         border.leadingAnchor <=> self.leadingAnchor
         border.topAnchor <=> self.topAnchor
         border.bottomAnchor <=> self.bottomAnchor

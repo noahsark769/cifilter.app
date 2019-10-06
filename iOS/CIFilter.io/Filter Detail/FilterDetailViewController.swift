@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import ColorCompatibility
 
 private let isCompressed = UIScreen.main.bounds.width < 415
 
@@ -21,7 +22,7 @@ final class FilterDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         self.view.addSubview(filterView)
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = ColorCompatibility.systemBackground
         filterView.disableTranslatesAutoresizingMaskIntoConstraints()
         filterView.topAnchor <=> self.view.topAnchor
         filterView.bottomAnchor <=> self.view.bottomAnchor
