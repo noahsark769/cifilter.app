@@ -19,17 +19,17 @@ final class NumericSlider: UIView {
     private let slider = UISlider()
     private let minimumLabel: UILabel = {
         let view = UILabel()
-        view.font = UIFont(name: "Courier New", size: 17)
+        view.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .medium)
         return view
     }()
     private let maximumLabel: UILabel = {
         let view = UILabel()
-        view.font = UIFont(name: "Courier New", size: 17)
+        view.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .medium)
         return view
     }()
     private let valueLabel: UILabel = {
         let view = UILabel()
-        view.font = UIFont(name: "Courier New", size: 17)
+        view.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .medium)
         return view
     }()
 

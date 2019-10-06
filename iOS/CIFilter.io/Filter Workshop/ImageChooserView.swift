@@ -10,8 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxGesture
-
-import UIKit
+import ColorCompatibility
 
 final class ImageChooserAddView: UIView {
     let didTap = PublishSubject<Void>()
@@ -84,7 +83,7 @@ final class ImageChooserView: UIView {
 
     init() {
         super.init(frame: .zero)
-        self.backgroundColor = UIColor(rgb: 0xf3f3f3)
+        self.backgroundColor = ColorCompatibility.systemGray6
 
         addSubview(verticalStackView)
         verticalStackView.edgesToSuperview(insets: UIEdgeInsets(all: artboardPadding))
@@ -116,7 +115,7 @@ final class ImageChooserView: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 4
-        imageView.layer.borderColor = UIColor(rgb: 0xdddddd).cgColor
+        imageView.layer.borderColor = ColorCompatibility.systemGray4.cgColor
         imageView.layer.borderWidth = 1
         imageView.setContentHuggingPriority(.required, for: .horizontal)
         imageView.rx.tapGesture().when(.ended).subscribe({ tap in

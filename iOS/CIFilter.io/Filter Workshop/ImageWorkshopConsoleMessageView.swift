@@ -8,6 +8,8 @@
 
 import UIKit
 
+/// View which displays information to the user in the filter workshop view, for example when a long-running image generation has completed,
+/// or when generation of an image fails.
 final class ImageWorkshopConsoleMessageView: UIView {
     enum MessageType {
         case success

@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import ColorCompatibility
 
 final class FilterWorkshopParameterView: UIView {
     private let bag = DisposeBag()
@@ -35,7 +36,8 @@ final class FilterWorkshopParameterView: UIView {
 
     private let nameLabel: UILabel = {
         let view = UILabel()
-        view.font = UIFont(name: "Courier New", size: 17)
+        view.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .bold)
+        view.textColor = ColorCompatibility.label
         view.numberOfLines = 1
         return view
     }()
@@ -43,7 +45,7 @@ final class FilterWorkshopParameterView: UIView {
     private let descriptionLabel: UILabel = {
         let view = UILabel()
         view.font = UIFont.italicSystemFont(ofSize: 14)
-        view.textColor = UIColor(rgb: 0x666666)
+        view.textColor = ColorCompatibility.label
         view.numberOfLines = 0
         return view
     }()
@@ -51,7 +53,7 @@ final class FilterWorkshopParameterView: UIView {
     private let informationLabel: UILabel = {
         let view = UILabel()
         view.font = UIFont.systemFont(ofSize: 14)
-        view.textColor = UIColor(rgb: 0x666666)
+        view.textColor = ColorCompatibility.label
         view.numberOfLines = 0
         return view
     }()
@@ -59,7 +61,7 @@ final class FilterWorkshopParameterView: UIView {
     private func furtherDetailLabel(text: String) -> UILabel {
         let view = UILabel()
         view.font = UIFont.systemFont(ofSize: 14)
-        view.textColor = UIColor(rgb: 0x666666)
+        view.textColor = ColorCompatibility.label
         view.numberOfLines = 0
         view.text = text
         return view

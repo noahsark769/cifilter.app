@@ -51,7 +51,7 @@ final class FilterParameterView: UIView {
         nameLabel.adjustsFontSizeToFitWidth = true
         nameLabel.minimumScaleFactor = 0.5
 
-        classLabel.font = UIFont(name: "Courier New", size: 17)
+        classLabel.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .medium)
         classLabel.textColor = ColorCompatibility.secondaryLabel
         classLabel.numberOfLines = 1
         classLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
