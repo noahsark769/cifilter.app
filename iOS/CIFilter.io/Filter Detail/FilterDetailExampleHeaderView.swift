@@ -41,24 +41,10 @@ final class FilterDetailExampleHeaderView: UIView {
         super.init(frame: .zero)
 
         addSubview(exampleLabel)
-//        addSubview(tryItButton)
 
         [exampleLabel, tryItButton].disableTranslatesAutoresizingMaskIntoConstraints()
-
-//        tryItButton.topAnchor <=> self.topAnchor
-//        tryItButton.bottomAnchor <=> self.bottomAnchor
-//        tryItButton.trailingAnchor <=> self.trailingAnchor
         exampleLabel.leadingAnchor <=> self.leadingAnchor
-//        tryItButton.centerYAnchor <=> self.centerYAnchor
     }
-
-//    func set(tryHandler: @escaping () -> Void) {
-//        self.tryHandler = tryHandler
-//    }
-//
-//    @objc private func buttonTapped(_ sender: UIControl) {
-//        self.tryHandler?()
-//    }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
