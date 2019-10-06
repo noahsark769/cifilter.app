@@ -9,19 +9,20 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import ColorCompatibility
 
 final class ColorHexInput: UIView {
     let valueDidChange = PublishSubject<UIColor>()
 
     lazy var textView: UITextView = {
         let view = UITextView()
-        view.layer.borderColor = UIColor(rgb: 0xeeeeee).cgColor
+        view.layer.borderColor = ColorCompatibility.separator.cgColor
         view.layer.borderWidth = 1 / UIScreen.main.scale
         view.layer.cornerRadius = 4
         view.clipsToBounds = true
         view.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .medium)
-        view.textColor = .black
-        view.backgroundColor = UIColor(rgb: 0xefefef)
+        view.textColor = ColorCompatibility.label
+        view.backgroundColor = ColorCompatibility.secondarySystemBackground
         view.keyboardType = .numberPad
         view.delegate = self
         return view

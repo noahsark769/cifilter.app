@@ -39,6 +39,7 @@ final class NoExampleAvailableView: UIView {
             let string = "No example is available for this filter: \(reason) You can help by contributing to CIFilter.io on github."
             let linkRange = (string as NSString).range(of: "contributing to CIFilter.io on github")
             let attributedString = NSMutableAttributedString(string: string)
+            attributedString.addAttribute(.foregroundColor, value: ColorCompatibility.label, range: NSRange(location: 0, length: attributedString.length))
             attributedString.addAttribute(.link, value: URL(string: "https://github.com/noahsark769/CIFilter.io")!, range: linkRange)
             attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: linkRange)
             attributedString.addAttribute(.foregroundColor, value: Colors.availabilityBlue.color, range: linkRange)

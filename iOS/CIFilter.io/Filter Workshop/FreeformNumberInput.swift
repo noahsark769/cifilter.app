@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import ColorCompatibility
 
 final class FreeformNumberInput: UIView {
     private static var numberFormatter: NumberFormatter = {
@@ -28,13 +29,13 @@ final class FreeformNumberInput: UIView {
 
     lazy var textView: UITextView = {
         let view = UITextView()
-        view.layer.borderColor = UIColor(rgb: 0xeeeeee).cgColor
+        view.layer.borderColor = ColorCompatibility.separator.cgColor
         view.layer.borderWidth = 1 / UIScreen.main.scale
         view.layer.cornerRadius = 4
         view.clipsToBounds = true
         view.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .medium)
-        view.textColor = .black
-        view.backgroundColor = UIColor(rgb: 0xefefef)
+        view.textColor = ColorCompatibility.label
+        view.backgroundColor = ColorCompatibility.secondarySystemBackground
         view.keyboardType = self.allowsIntegerInputsOnly ? .numberPad : .decimalPad
         view.delegate = self
         return view
@@ -118,13 +119,13 @@ final class FreeformTextInput: UIView, UITextViewDelegate {
 
     lazy var textView: UITextView = {
         let view = UITextView()
-        view.layer.borderColor = UIColor(rgb: 0xeeeeee).cgColor
+        view.layer.borderColor = ColorCompatibility.separator.cgColor
         view.layer.borderWidth = 1 / UIScreen.main.scale
         view.layer.cornerRadius = 4
         view.clipsToBounds = true
         view.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .medium)
-        view.textColor = .black
-        view.backgroundColor = UIColor(rgb: 0xefefef)
+        view.textColor = ColorCompatibility.label
+        view.backgroundColor = ColorCompatibility.secondarySystemBackground
         view.delegate = self
         return view
     }()
