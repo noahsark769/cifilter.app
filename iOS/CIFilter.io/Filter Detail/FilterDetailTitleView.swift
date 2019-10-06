@@ -29,10 +29,13 @@ final class FilterDetailTitleView: UIView {
         titleLabel.numberOfLines = 1
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.2
+        titleLabel.baselineAdjustment = .alignCenters
         categoriesLabel.textColor = UIColor(rgb: 0x989898)
         categoriesLabel.numberOfLines = 0
 
         stackView.edgesToSuperview()
+        titleLabel.setContentHuggingPriority(.required, for: .vertical)
+        titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(categoriesLabel)
     }

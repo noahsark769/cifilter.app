@@ -104,6 +104,10 @@ extension FilterParameterInfo {
 
     var workshopParameterViewType: FilterWorkshopParameterView.ParameterType? {
         switch self.type {
+        case .integer:
+            return .integer(
+                min: nil, max: nil, defaultValue: nil
+            )
         case let .scalar(info):
             return .number(
                 min: info.minValue, max: info.maxValue, defaultValue: info.defaultValue
