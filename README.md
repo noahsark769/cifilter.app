@@ -10,6 +10,8 @@ The project has two components:
 
 The website is publically available and free, and I intend to continue to update it as new filters are added in each new iOS and macOS release. The iOS app is available in this repo as an open source project as well. If you'd like to support this project and others like it, you can download the app from the app store 🙏
 
+More information about the project is available in [this blog post](https://noahgilmore.com/blog/cifilterio/).
+
 ## Reporting issues
 If you find something wrong with the website or app, please report an issue via GitHub.
 
