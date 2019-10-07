@@ -33,7 +33,7 @@ final class FreeformNumberInput: UIView {
         view.layer.borderWidth = 1 / UIScreen.main.scale
         view.layer.cornerRadius = 4
         view.clipsToBounds = true
-        view.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .medium)
+        view.font = UIFont.monospacedBodyFont()
         view.textColor = ColorCompatibility.label
         view.backgroundColor = ColorCompatibility.secondarySystemBackground
         view.keyboardType = self.allowsIntegerInputsOnly ? .numberPad : .decimalPad
@@ -123,7 +123,7 @@ final class FreeformTextInput: UIView, UITextViewDelegate {
         view.layer.borderWidth = 1 / UIScreen.main.scale
         view.layer.cornerRadius = 4
         view.clipsToBounds = true
-        view.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .medium)
+        view.font = UIFont.monospacedBodyFont()
         view.textColor = ColorCompatibility.label
         view.backgroundColor = ColorCompatibility.secondarySystemBackground
         view.delegate = self

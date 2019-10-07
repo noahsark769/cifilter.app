@@ -27,7 +27,7 @@ final class ImageArtboardView: UIView {
 
     private let nameLabel: UILabel = {
         let view = UILabel()
-        view.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .bold)
+        view.font = UIFont.monospacedHeaderFont()
         view.numberOfLines = 1
         return view
     }()

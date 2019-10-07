@@ -12,6 +12,7 @@
 		A116A0E0220B4CA9005DE07F /* UIColorUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A116A0DF220B4CA9005DE07F /* UIColorUtilsTest.swift */; };
 		A119025B222B31B000FE27A3 /* UIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A119025A222B31B000FE27A3 /* UIImage+Utils.swift */; };
 		A11C522521968BB000045F2E /* FilterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11C522421968BB000045F2E /* FilterListViewController.swift */; };
+		A1285486234AB818000460BC /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1285485234AB818000460BC /* UIFont+Extensions.swift */; };
 		A128993921CFFF7000BEE395 /* ImageChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128993821CFFF7000BEE395 /* ImageChooserView.swift */; };
 		A128993D21D047BD00BEE395 /* FilterWorkshopParametersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128993C21D047BD00BEE395 /* FilterWorkshopParametersView.swift */; };
 		A128993F21D058B300BEE395 /* EitherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128993E21D058B300BEE395 /* EitherView.swift */; };
@@ -90,6 +91,7 @@
 		A116A0DF220B4CA9005DE07F /* UIColorUtilsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorUtilsTest.swift; sourceTree = "<group>"; };
 		A119025A222B31B000FE27A3 /* UIImage+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Utils.swift"; sourceTree = "<group>"; };
 		A11C522421968BB000045F2E /* FilterListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListViewController.swift; sourceTree = "<group>"; };
+		A1285485234AB818000460BC /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		A128993821CFFF7000BEE395 /* ImageChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageChooserView.swift; sourceTree = "<group>"; };
 		A128993C21D047BD00BEE395 /* FilterWorkshopParametersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterWorkshopParametersView.swift; sourceTree = "<group>"; };
 		A128993E21D058B300BEE395 /* EitherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EitherView.swift; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 				A1D5A8C221B054A100257B5E /* SeparatorView.swift */,
 				A1D5A8BE21AF0F8200257B5E /* UIColor+Utils.swift */,
 				A1D5A8D221B4A32100257B5E /* UIEdgeInsets+Utils.swift */,
+				A1285485234AB818000460BC /* UIFont+Extensions.swift */,
 				A119025A222B31B000FE27A3 /* UIImage+Utils.swift */,
 				A130BD8021F0EAC700E586F6 /* UIImageView+Utils.swift */,
 				A1D5A8D421B4A64A00257B5E /* UIStackView+Utils.swift */,
@@ -649,6 +652,7 @@
 				A1D5A8C321B054A100257B5E /* SeparatorView.swift in Sources */,
 				A1D5A8BF21AF0F8200257B5E /* UIColor+Utils.swift in Sources */,
 				A1D5A8D321B4A32100257B5E /* UIEdgeInsets+Utils.swift in Sources */,
+				A1285486234AB818000460BC /* UIFont+Extensions.swift in Sources */,
 				A119025B222B31B000FE27A3 /* UIImage+Utils.swift in Sources */,
 				A130BD8121F0EAC700E586F6 /* UIImageView+Utils.swift in Sources */,
 				A1D5A8D521B4A64A00257B5E /* UIStackView+Utils.swift in Sources */,

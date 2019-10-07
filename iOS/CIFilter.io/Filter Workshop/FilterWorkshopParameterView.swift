@@ -36,7 +36,7 @@ final class FilterWorkshopParameterView: UIView {
 
     private let nameLabel: UILabel = {
         let view = UILabel()
-        view.font = UIFont.monospacedSystemFont(ofSize: 17, weight: .bold)
+        view.font = UIFont.monospacedHeaderFont()
         view.textColor = ColorCompatibility.label
         view.numberOfLines = 1
         return view
