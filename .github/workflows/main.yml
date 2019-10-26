@@ -15,12 +15,12 @@ jobs:
         git config --global user.email "ci@noahgilmore.com"
         git config --global user.name "Automated Deployment"
     - name: NPM install
-      run: cd web && npm install
+      run: npm install
     - name: Build and Deploy
       uses: JamesIves/github-pages-deploy-action@db4aacadf4db71778afb0c8a452382184a71d318
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BRANCH: gh-pages
         FOLDER: public
-        BUILD_SCRIPT: cd web && npm run gatsby-build
+        BUILD_SCRIPT: npm run gatsby-build
         CNAME: cifilter.io
