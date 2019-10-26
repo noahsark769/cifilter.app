@@ -15,7 +15,7 @@ jobs:
         git config --global user.email "ci@noahgilmore.com"
         git config --global user.name "Automated Deployment"
     - name: NPM install
-      run: npm install
+      run: cd web && npm install
     - name: Build and Deploy
       uses: JamesIves/github-pages-deploy-action@db4aacadf4db71778afb0c8a452382184a71d318
       env:
