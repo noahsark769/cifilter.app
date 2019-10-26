@@ -15,6 +15,9 @@ $cifilterio-soft-text-color: #333333;
 html, body {
     font-family: $primary-font;
     background-color: $cifilterio-background-color;
+    @media (prefers-color-scheme: dark) {
+        background-color: #2b2c2f;
+    }
     font-weight: 300;
 }
 
