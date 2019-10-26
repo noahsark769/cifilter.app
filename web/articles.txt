@@ -1,6 +1,0 @@
-Things to write articles on:
-
-- CIDepthBlurEffect
-- CIAccordionFoldTransition
-- CIDisintegrateWithMaskTransition
-- This stuff about the shadingImage for transition filters

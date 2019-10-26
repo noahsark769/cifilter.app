@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "name": "cifilter.io",
+  "description": null,
+  "icons": {
+    "60": "/icons-c1084b1a90cb8e205bcd6b9e626ea8df/firefox_app_60x60.png",
+    "128": "/icons-c1084b1a90cb8e205bcd6b9e626ea8df/firefox_app_128x128.png",
+    "512": "/icons-c1084b1a90cb8e205bcd6b9e626ea8df/firefox_app_512x512.png"
+  },
+  "developer": {
+    "name": null,
+    "url": null
+  }
+}
