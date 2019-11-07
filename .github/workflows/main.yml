@@ -22,5 +22,5 @@ jobs:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BRANCH: gh-pages
         FOLDER: public
-        BUILD_SCRIPT: cd web && npm run gatsby-build
+        BUILD_SCRIPT: npm run gatsby-build
         CNAME: cifilter.io
