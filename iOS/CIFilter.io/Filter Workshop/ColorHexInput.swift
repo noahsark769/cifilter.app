@@ -8,7 +8,6 @@
 
 import UIKit
 import RxSwift
-import RxCocoa
 import ColorCompatibility
 
 final class ColorHexInput: UIView {

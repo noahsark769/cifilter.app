@@ -128,7 +128,7 @@ class SceneDelegate: NSObject, UISceneDelegate {
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     static var enableSwiftUI: Bool {
-        return true
+        return false
     }
 
     static var shared: AppDelegate {

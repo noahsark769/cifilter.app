@@ -8,17 +8,15 @@
 
 import UIKit
 import RxSwift
-import RxCocoa
+import Combine
 
 /**
  * A view that allows the user to input a CIVector.
  */
 final class VectorInput: UIView {
-    private let valueDidChangeObservable = PublishSubject<CIVector>()
-    lazy var valueDidChange: ControlEvent<CIVector> = {
-        return ControlEvent(events: valueDidChangeObservable)
-    }()
+    let valueDidChange = PublishSubject<CIVector>()
     private let bag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let mainStackView: UIStackView = {
         let view = UIStackView()
@@ -69,13 +67,13 @@ final class VectorInput: UIView {
         buttonsStackView.addArrangedSubview(addButton)
         buttonsStackView.addArrangedSubview(removeButton)
 
-        addButton.rx.tap.subscribe(onNext: {
+        addButton.addTapHandler().sink { _ in
             self.addNumberInput()
-        }).disposed(by: bag)
+        }.store(in: &self.cancellables)
 
-        removeButton.rx.tap.subscribe(onNext: {
+        removeButton.addTapHandler().sink { _ in
             self.removeNumberInput()
-        }).disposed(by: bag)
+        }.store(in: &self.cancellables)
 
         for _ in 0..<initialComponents {
             self.addNumberInput()
@@ -116,6 +114,6 @@ final class VectorInput: UIView {
             }
             floats.append(CGFloat(value.floatValue))
         }
-        valueDidChangeObservable.onNext(CIVector(floats: floats))
+        valueDidChange.onNext(CIVector(floats: floats))
     }
 }

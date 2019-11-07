@@ -47,7 +47,7 @@ final class AsyncFilterApplicator {
     }
 
     func addSubscription(for observable: Observable<[String: Any]>) {
-        observable.throttle(0.3, scheduler: MainScheduler.instance).subscribe(onNext: { value in
+        observable.debounce(.milliseconds(300), scheduler: MainScheduler.instance).subscribe(onNext: { value in
             self.generateOutputImageIfPossible(parameterConfiguration: value)
         }).disposed(by: bag)
     }

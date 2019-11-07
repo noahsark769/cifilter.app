@@ -9,8 +9,8 @@
 import UIKit
 import AloeStackView
 import RxSwift
-import RxCocoa
 import ColorCompatibility
+import Combine
 
 final class NoExampleAvailableView: UIView {
     private let textView = UITextView()
@@ -56,7 +56,7 @@ final class FilterDetailView: UIView {
     private let exampleProvider = FilterExampleProvider()
     private let isCompressed: Bool
 
-    private(set) lazy var tryItButton: UIButton = {
+    private lazy var tryItButton: UIButton = {
         let view = UIButton(type: .custom)
         view.setAttributedTitle(
             NSAttributedString(
@@ -71,6 +71,10 @@ final class FilterDetailView: UIView {
         )
         view.setTitleColor(UIColor(rgb: 0x80a5b1), for: .normal)
         return view
+    }()
+
+    private(set) lazy var didTapWorkshop: AnyPublisher<UITapGestureRecognizer, Never> = {
+        return self.tryItButton.addTapHandler()
     }()
 
     private let descriptionLabel: UILabel = {
@@ -164,11 +168,5 @@ final class FilterDetailView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension Reactive where Base == FilterDetailView {
-    var workshopTap: ControlEvent<Void> {
-        return self.base.tryItButton.rx.tap
     }
 }

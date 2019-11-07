@@ -8,14 +8,14 @@
 
 import UIKit
 import RxSwift
-import RxCocoa
+import Combine
 import ColorCompatibility
 
 private let isCompressed = UIScreen.main.bounds.width < 415
 
 final class FilterDetailViewController: UIViewController {
     private let bag = DisposeBag()
-    private var presentWorkshopSubscription: Disposable? = nil
+    private var presentWorkshopCancellable: AnyCancellable? = nil
     private var filterView: FilterDetailView = FilterDetailView(isCompressed: isCompressed)
     var filter: FilterInfo! = nil
 
@@ -54,11 +54,10 @@ final class FilterDetailViewController: UIViewController {
         self.title = filter.name
         self.filter = filter
         filterView.set(filter: filter)
-        self.presentWorkshopSubscription?.dispose()
-        self.presentWorkshopSubscription = filterView.rx.workshopTap.subscribe(onNext: { [weak self] in
+        self.presentWorkshopCancellable = filterView.didTapWorkshop.sink { [weak self] _ in
             guard let self = self else { return }
             self.presentFilterWorkshop(filter: filter)
-        })
+        }
         AnalyticsManager.shared.track(event: "filter_detail", properties: ["name": filter.name])
     }
 

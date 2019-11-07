@@ -8,7 +8,6 @@
 
 import UIKit
 import RxSwift
-import RxCocoa
 import Combine
 
 private final class RedView: UILabel {
@@ -42,16 +41,6 @@ func observableFrom<PublisherType: Publisher>(publisher: PublisherType) -> Obser
         }
     }
 }
-
-//extension Publisher {
-//    func forward(to subject: PassthroughSubject<Self.Output, Self.Failure>) -> AnyCancellable {
-//        return self.sink(receiveCompletion: { completion in
-//            subject.send(completion: completion)
-//        }, receiveValue: {
-//            subject.send
-//        })
-//    }
-//}
 
 final class FilterWorkshopParametersView: UIStackView {
     private var disposeBag: DisposeBag? = nil

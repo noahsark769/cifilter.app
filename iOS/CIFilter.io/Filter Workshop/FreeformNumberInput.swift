@@ -8,7 +8,6 @@
 
 import UIKit
 import RxSwift
-import RxCocoa
 import ColorCompatibility
 
 final class FreeformNumberInput: UIView {
@@ -18,10 +17,7 @@ final class FreeformNumberInput: UIView {
         return formatter
     }()
 
-    private let valueDidChangeObservable = PublishSubject<NSNumber>()
-    lazy var valueDidChange: ControlEvent<NSNumber> = {
-        return ControlEvent(events: valueDidChangeObservable)
-    }()
+    let valueDidChange = PublishSubject<NSNumber>()
 
     private(set) var lastValue: NSNumber? = nil
 
@@ -72,7 +68,7 @@ final class FreeformNumberInput: UIView {
 
     private func publishValue(_ value: NSNumber) {
         lastValue = value
-        valueDidChangeObservable.onNext(value)
+        valueDidChange.onNext(value)
     }
 }
 
@@ -112,10 +108,7 @@ extension FreeformNumberInput: UITextViewDelegate {
 }
 
 final class FreeformTextInput: UIView, UITextViewDelegate {
-    private let valueDidChangeObservable = PublishSubject<String>()
-    lazy var valueDidChange: ControlEvent<String> = {
-        return ControlEvent(events: valueDidChangeObservable)
-    }()
+    let valueDidChange = PublishSubject<String>()
 
     lazy var textView: UITextView = {
         let view = UITextView()
@@ -142,7 +135,7 @@ final class FreeformTextInput: UIView, UITextViewDelegate {
     }
 
     private func publishValue(_ value: String) {
-        valueDidChangeObservable.onNext(value)
+        valueDidChange.onNext(value)
     }
 
     func textViewDidChange(_ textView: UITextView) {

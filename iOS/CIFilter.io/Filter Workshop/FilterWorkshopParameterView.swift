@@ -8,11 +8,12 @@
 
 import UIKit
 import RxSwift
-import RxCocoa
 import ColorCompatibility
+import Combine
 
 final class FilterWorkshopParameterView: UIView {
     private let bag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     enum ParameterType {
         case slider(min: Float, max: Float)
         case number(min: Float?, max: Float?, defaultValue: Float?)
@@ -94,9 +95,14 @@ final class FilterWorkshopParameterView: UIView {
         case .boolean:
             let uiSwitch = UISwitch()
             stackView.addArrangedSubview(uiSwitch)
-            let behaviorSubject = BehaviorSubject(value: false)
-            uiSwitch.rx.isOn.subscribe(behaviorSubject).disposed(by: bag)
-            behaviorSubject.map { $0 ? 1 : 0 }.subscribe(self.valueDidChangeObservable).disposed(by: bag)
+            let subject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false)
+            uiSwitch.addControlEventsObserver(events: [.valueChanged]).map { control in
+                guard let control = control as? UISwitch else { return false }
+                return control.isOn
+            }.subscribe(subject).store(in: &self.cancellables)
+            subject.map { $0 ? 1 : 0 }.sink { [weak self] value in
+                self?.valueDidChangeObservable.onNext(value)
+            }.store(in: &self.cancellables)
         case let .slider(min, max):
             let slider = NumericSlider(min: min, max: max)
             slider.widthAnchor <=> 400

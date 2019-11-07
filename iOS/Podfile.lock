@@ -15,11 +15,6 @@ PODS:
   - ReactiveLists (0.3.0):
     - DifferenceKit (~> 0.6.0)
   - RxAtomic (4.4.0)
-  - RxCocoa (5.0.1):
-    - RxRelay (~> 5)
-    - RxSwift (~> 5)
-  - RxRelay (5.0.0):
-    - RxSwift (~> 5)
   - RxSwift (5.0.1)
   - Sentry (4.3.1):
     - Sentry/Core (= 4.3.1)
@@ -33,7 +28,6 @@ DEPENDENCIES:
   - Mixpanel-swift (~> 2.5.9)
   - ReactiveLists (~> 0.3.0)
   - RxAtomic (~> 4.4.0)
-  - RxCocoa (from `https://github.com/noahsark769/RxSwift`, branch `uikitformac-compat`)
   - RxSwift (from `https://github.com/noahsark769/RxSwift`, branch `uikitformac-compat`)
   - Sentry (~> 4.3.1)
 
@@ -46,23 +40,16 @@ SPEC REPOS:
     - Mixpanel-swift
     - ReactiveLists
     - RxAtomic
-    - RxRelay
     - Sentry
 
 EXTERNAL SOURCES:
   Keys:
     :path: Pods/CocoaPodsKeys
-  RxCocoa:
-    :branch: uikitformac-compat
-    :git: https://github.com/noahsark769/RxSwift
   RxSwift:
     :branch: uikitformac-compat
     :git: https://github.com/noahsark769/RxSwift
 
 CHECKOUT OPTIONS:
-  RxCocoa:
-    :commit: 9b8f9dd6225fc0f3cf3a2d77012638c259884cce
-    :git: https://github.com/noahsark769/RxSwift
   RxSwift:
     :commit: 9b8f9dd6225fc0f3cf3a2d77012638c259884cce
     :git: https://github.com/noahsark769/RxSwift
@@ -76,11 +63,9 @@ SPEC CHECKSUMS:
   Mixpanel-swift: 4a2e061c8b7a5000ed7f72d2a6196884b5de8b49
   ReactiveLists: 383c6720617abfb9bd47e8e612bfc13e1895eda5
   RxAtomic: eacf60db868c96bfd63320e28619fe29c179656f
-  RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
-  RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   Sentry: 5267d493a398663538317e4dcc438c12c66202ed
 
-PODFILE CHECKSUM: 6776d375b540309102604becdcf59b1ff878ea02
+PODFILE CHECKSUM: 1f36dcf89d1a2ef659cfadb7973ff179dbbdfc43
 
 COCOAPODS: 1.8.3
