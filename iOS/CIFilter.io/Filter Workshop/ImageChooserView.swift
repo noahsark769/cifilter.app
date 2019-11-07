@@ -9,19 +9,20 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RxGesture
 import ColorCompatibility
+import Combine
 
 final class ImageChooserAddView: UIView {
     let didTap = PublishSubject<Void>()
     private let bag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     
     private var plusLabel: UILabel = {
         let view = UILabel()
         view.text = "Add"
         view.accessibilityLabel = "Add Image"
         view.font = UIFont.systemFont(ofSize: 30)
-        view.textColor = .white
+        view.textColor = ColorCompatibility.label
         view.setContentHuggingPriority(.required, for: .vertical)
         return view
     }()
@@ -37,9 +38,9 @@ final class ImageChooserAddView: UIView {
         plusLabel.translatesAutoresizingMaskIntoConstraints = false
         plusLabel.centerXAnchor <=> self.centerXAnchor
         plusLabel.centerYAnchor <=> self.centerYAnchor
-        self.rx.tapGesture().when(.ended).subscribe({ _ in
+        self.addTapHandler().sink { _ in
             self.didTap.onNext(())
-        }).disposed(by: bag)
+        }.store(in: &self.cancellables)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -53,12 +54,12 @@ private let numImagePerArtboardRow = 3
 
 final class ImageChooserView: UIView {
     static let artboardSize: CGFloat = 650
+
+    private var cancellables = Set<AnyCancellable>()
     private let bag = DisposeBag()
-    private let chooseImageSubject = PublishSubject<UIImage>()
-    lazy var didChooseImage = {
-        return ControlEvent<UIImage>(events: chooseImageSubject)
-    }()
-    var didChooseAdd = PublishSubject<UIView>()
+
+    let didChooseImage = PassthroughSubject<UIImage, Never>()
+    let didChooseAdd = PassthroughSubject<CGRect, Never>()
 
     static var imageSize: CGFloat {
         return (ImageChooserView.artboardSize - (artboardPadding * 2) - (artboardSpacing * 2)) / CGFloat(numImagePerArtboardRow)
@@ -80,6 +81,9 @@ final class ImageChooserView: UIView {
     }
 
     private let addView = ImageChooserAddView()
+    private lazy var dropInteraction: UIDropInteraction = {
+        return UIDropInteraction(delegate: self)
+    }()
 
     init() {
         super.init(frame: .zero)
@@ -104,8 +108,10 @@ final class ImageChooserView: UIView {
         currentStackView.addArrangedSubview(addView)
 
         addView.didTap.subscribe(onNext: {
-            self.didChooseAdd.onNext(self.addView)
+            self.didChooseAdd.send(self.window!.convert(self.addView.bounds, from: self.addView))
         }).disposed(by: bag)
+
+        self.addInteraction(self.dropInteraction)
     }
 
     private func newImageView(image: BuiltInImage) -> UIImageView {
@@ -118,13 +124,47 @@ final class ImageChooserView: UIView {
         imageView.layer.borderColor = ColorCompatibility.systemGray4.cgColor
         imageView.layer.borderWidth = 1
         imageView.setContentHuggingPriority(.required, for: .horizontal)
-        imageView.rx.tapGesture().when(.ended).subscribe({ tap in
-            self.chooseImageSubject.onNext(image.image)
-        }).disposed(by: self.bag)
+        imageView.addTapHandler().sink { _ in
+            self.didChooseImage.send(image.image)
+        }.store(in: &self.cancellables)
         return imageView
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension ImageChooserView: UIDropInteractionDelegate {
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        // Ensure the drop session has an object of the appropriate type
+        let result = session.canLoadObjects(ofClass: UIImage.self)
+        return result
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+        // Propose to the system to copy the item from the source app
+        return UIDropProposal(operation: .copy)
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnter session: UIDropSession) {
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, concludeDrop session: UIDropSession) {
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidExit session: UIDropSession) {
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnd session: UIDropSession) {
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
+        // Consume drag items (in this example, of type UIImage).
+        session.loadObjects(ofClass: UIImage.self) { imageItems in
+
+            let images = imageItems as! [UIImage]
+            self.didChooseImage.send(images.first!)
+        }
     }
 }

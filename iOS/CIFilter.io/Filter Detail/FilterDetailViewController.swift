@@ -17,6 +17,7 @@ final class FilterDetailViewController: UIViewController {
     private let bag = DisposeBag()
     private var presentWorkshopSubscription: Disposable? = nil
     private var filterView: FilterDetailView = FilterDetailView(isCompressed: isCompressed)
+    var filter: FilterInfo! = nil
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -36,6 +37,9 @@ final class FilterDetailViewController: UIViewController {
             filterView.widthAnchor <=> 600
             filterView.centerXAnchor <=> self.view.centerXAnchor
         }
+
+        let interaction = UIContextMenuInteraction(delegate: self)
+        filterView.addInteraction(interaction)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -48,20 +52,12 @@ final class FilterDetailViewController: UIViewController {
 
     func set(filter: FilterInfo) {
         self.title = filter.name
+        self.filter = filter
         filterView.set(filter: filter)
         self.presentWorkshopSubscription?.dispose()
         self.presentWorkshopSubscription = filterView.rx.workshopTap.subscribe(onNext: { [weak self] in
-            guard let `self` = self else { return }
-            let vc = FilterWorkshopViewController(filter: filter)
-            let navigationController = UINavigationController(rootViewController: vc)
-            navigationController.navigationBar.isTranslucent = false
-            vc.navigationItem.leftBarButtonItem = UIBarButtonItem(
-                barButtonSystemItem: .done,
-                target: self,
-                action: #selector(self.workshopViewControllerSelectedDone)
-            )
-            navigationController.modalPresentationStyle = .fullScreen
-            self.splitViewController?.present(navigationController, animated: true, completion: nil)
+            guard let self = self else { return }
+            self.presentFilterWorkshop(filter: filter)
         })
         AnalyticsManager.shared.track(event: "filter_detail", properties: ["name": filter.name])
     }
@@ -69,28 +65,69 @@ final class FilterDetailViewController: UIViewController {
     @objc private func workshopViewControllerSelectedDone(_ sender: Any) {
         self.splitViewController?.dismiss(animated: true, completion: nil)
     }
-}
 
-extension FilterDetailViewController: FilterListViewControllerDelegate {
-    func filterListViewController(_ vc: FilterListViewController, didTapFilterInfo filter: FilterInfo) {
-        self.set(filter: filter)
+    func presentFilterWorkshop(filter: FilterInfo) {
+        #if targetEnvironment(macCatalyst)
+        self.presentFilterWorkshopInScene(filter: filter)
+        #else
+        self.presentFilterWorkshopModally(filter: filter)
+        #endif
+    }
 
-        // `self.splitViewController` might be nil here if we're in a horizontally compact environment
-        // with the filter list VC currently active, but we know the filter list VC's
-        // splitViewController will always be non-nil, so we use that
-        guard let splitViewController = vc.splitViewController, let navController = self.navigationController else {
-            NonFatalManager.shared.log("NoSplitViewControllerSetWhenSelectingFilter", data: ["filter_name": filter.name])
-            return
-        }
-        splitViewController.toggleMasterView()
-        splitViewController.showDetailViewController(navController, sender: nil)
+    func presentFilterWorkshopModally(filter: FilterInfo) {
+        let vc = FilterWorkshopViewController(filter: filter)
+        let navigationController = UINavigationController(rootViewController: vc)
+        navigationController.navigationBar.isTranslucent = false
+        vc.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self,
+            action: #selector(self.workshopViewControllerSelectedDone)
+        )
+        navigationController.modalPresentationStyle = .fullScreen
+        self.splitViewController?.present(navigationController, animated: true, completion: nil)
+    }
+
+    func presentFilterWorkshopInScene(filter: FilterInfo) {
+        let userActivity = NSUserActivity(activityType: "com.noahgilmore.cifilterio.workshop")
+        userActivity.title = filter.name
+        userActivity.userInfo = ["filterName": filter.name]
+        UIApplication.shared.requestSceneSessionActivation(nil, userActivity: userActivity, options: nil, errorHandler: nil)
     }
 }
+
+//extension FilterDetailViewController {
+//    func filterListViewController(_ vc: FilterListViewController, didTapFilterInfo filter: FilterInfo) {
+//        self.set(filter: filter)
+//
+//        // `self.splitViewController` might be nil here if we're in a horizontally compact environment
+//        // with the filter list VC currently active, but we know the filter list VC's
+//        // splitViewController will always be non-nil, so we use that
+//        guard let splitViewController = vc.splitViewController, let navController = self.navigationController else {
+//            NonFatalManager.shared.log("NoSplitViewControllerSetWhenSelectingFilter", data: ["filter_name": filter.name])
+//            return
+//        }
+//        splitViewController.toggleMasterView()
+//        splitViewController.showDetailViewController(navController, sender: nil)
+//    }
+//}
 
 // Hacky stuff as per https://stackoverflow.com/questions/27243158/hiding-the-master-view-controller-with-uisplitviewcontroller-in-ios8
 extension UISplitViewController {
     func toggleMasterView() {
         let barButtonItem = self.displayModeButtonItem
         UIApplication.shared.sendAction(barButtonItem.action!, to: barButtonItem.target, from: nil, for: nil)
+    }
+}
+
+extension FilterDetailViewController: UIContextMenuInteractionDelegate {
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
+            return UIMenu(title: "", image: nil, identifier: nil, children: [
+                UIAction(title: "Open in new window", image: UIImage(systemName: "square.and.arrow.up"), identifier: UIAction.Identifier(rawValue: "open"), handler: { action in
+                    self.presentFilterWorkshopInScene(filter: self.filter)
+                })
+            ])
+        })
     }
 }

@@ -12,7 +12,7 @@ private func filterParameterType(forAttributesDict dict: [String: Any], classNam
     if let parameterTypeString: String = dict.optionalValue(key: kCIAttributeType) {
         return parameterTypeString
     } else {
-        if dict[kCIAttributeDefault] is CGAffineTransform {
+        if dict[kCIAttributeDefault] is CGAffineTransform || className == "NSAffineTransform" {
             return "CIFilter.io_TransformType"
         }
         if className == "NSAttributedString" {

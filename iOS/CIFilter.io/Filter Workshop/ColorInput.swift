@@ -9,8 +9,25 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RxGesture
+import Combine
 import CoreGraphics
+
+final class GestureRecognizerDelegate: NSObject, UIGestureRecognizerDelegate {
+    typealias TwoRecognizersBooleanCallback = (UIGestureRecognizer, UIGestureRecognizer) -> Bool
+
+    let recognizeSimulaneously: TwoRecognizersBooleanCallback
+
+    init(recognizeSimulaneously: @escaping TwoRecognizersBooleanCallback) {
+        self.recognizeSimulaneously = recognizeSimulaneously
+        super.init()
+    }
+
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return self.recognizeSimulaneously(gestureRecognizer, otherGestureRecognizer)
+    }
+
+    static let neverRecognizeSimultaneously = GestureRecognizerDelegate(recognizeSimulaneously: { _, _ in return false })
+}
 
 final class ColorInput: UIView {
     private static let nullDragLocation = CGPoint(x: -1, y: -1)
@@ -26,6 +43,7 @@ final class ColorInput: UIView {
     private var dragLocation: CGPoint = ColorInput.nullDragLocation
     private var lastLocation: CGPoint = .zero
     private let bag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     let valueDidChange = PublishSubject<CIColor>()
 
     init(defaultValue: CIColor) {
@@ -48,15 +66,16 @@ final class ColorInput: UIView {
         mainStackView.addArrangedSubview(imageView)
         mainStackView.addArrangedSubview(hexInput)
 
-        draggableIndicatorView.indicatorColor = UIColor(rgb: 0x333333)
+        draggableIndicatorView.indicatorColor = ColorCompatibility.secondaryLabel
         draggableIndicatorView.cornerRadius = 4
 
         addSubview(draggableIndicatorView)
 
-        self.imageView.rx.panGesture(configuration: { gesture, recognizer in
-            recognizer.simultaneousRecognitionPolicy = .never
-            FilterWorkshopView.globalPanGestureRecognizer.require(toFail: gesture)
-        }).subscribe(onNext: { recognizer in
+        self.imageView.addPanHandler(configure: { recognizer in
+            FilterWorkshopView.globalPanGestureRecognizer.require(toFail: recognizer)
+        }, delegate: { _ in
+            return GestureRecognizerDelegate.neverRecognizeSimultaneously
+        }).subscribe { recognizer in
             if case .began = recognizer.state {
                 self.dragLocation = recognizer.location(in: self.imageView)
                 self.setNeedsLayout()
@@ -66,15 +85,15 @@ final class ColorInput: UIView {
                 self.setNeedsLayout()
                 self.reportColorFromDragLocation()
             }
-        }).disposed(by: bag)
+        }.store(in: &self.cancellables)
 
-        self.imageView.rx.tapGesture().subscribe(onNext: { recognizer in
+        self.imageView.addTapHandler().sink { recognizer in
             let supportedStates: [UIGestureRecognizer.State] = [.began, .changed, .ended]
             guard supportedStates.contains(recognizer.state) else { return }
             self.dragLocation = recognizer.location(in: self)
             self.setNeedsLayout()
             self.reportColorFromDragLocation()
-        }).disposed(by: bag)
+        }.store(in: &self.cancellables)
 
         self.hexInput.valueDidChange.subscribe(onNext: { color in
             let colorLocation = self.imageView.pointOnColorWheel(for: color)
@@ -101,6 +120,8 @@ final class ColorInput: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+
+        draggableIndicatorView.indicatorColor = ColorCompatibility.secondaryLabel
 
         if self.dragLocation == ColorInput.nullDragLocation {
             self.dragLocation = imageView.center

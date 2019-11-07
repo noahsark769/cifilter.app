@@ -10,6 +10,8 @@ import UIKit
 import ReactiveLists
 import RxSwift
 import RxCocoa
+import Combine
+import SwiftUI
 
 func group(filters: [FilterInfo], into categories: [String]) -> [String: [FilterInfo]] {
     var result: [String: [FilterInfo]] = [:]
@@ -108,10 +110,11 @@ final class FilterListViewController: UITableViewController {
         "Other"
     ]
 
-    weak var delegate: FilterListViewControllerDelegate?
+    let didTapFilterInfo = PassthroughSubject<FilterInfo, Never>()
     private let filterInfos: [FilterInfo]
     private var driver: FilterListViewControllerTableViewDriver! = nil
     private let bag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     private let searchSubject = PublishSubject<String?>()
 
     private func generateTableModel(searchText: String?) -> TableViewModel {
@@ -133,7 +136,7 @@ final class FilterListViewController: UITableViewController {
                         didSelect: { [weak self] in
                             guard let `self` = self else { return }
                             self.navigationItem.searchController?.searchBar.resignFirstResponder()
-                            self.delegate?.filterListViewController(self, didTapFilterInfo: filter)
+                            self.didTapFilterInfo.send(filter)
                         },
                         didSelectJumpToWorkshop: { [weak self] in
                             guard let `self` = self else { return }
@@ -176,6 +179,7 @@ final class FilterListViewController: UITableViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         self.navigationItem.searchController = searchController
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(didTapSettings))
 
         searchSubject.throttle(0.3, scheduler: MainScheduler.instance)
             .distinctUntilChanged()
@@ -190,8 +194,18 @@ final class FilterListViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+
     @objc private func workshopViewControllerSelectedDone(_ sender: Any) {
         self.splitViewController?.dismiss(animated: true, completion: nil)
+    }
+
+    @objc private func didTapSettings() {
+        let view = SettingsView()
+        view.didTapDone.sink(receiveValue: {
+            self.dismiss(animated: true, completion: nil)
+        }).store(in: &cancellables)
+        let controller = UIHostingController(rootView: view)
+        self.present(controller, animated: true, completion: nil)
     }
 }
 

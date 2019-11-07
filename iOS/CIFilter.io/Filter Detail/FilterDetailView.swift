@@ -56,7 +56,7 @@ final class FilterDetailView: UIView {
     private let exampleProvider = FilterExampleProvider()
     private let isCompressed: Bool
 
-    fileprivate lazy var tryItButton: UIButton = {
+    private(set) lazy var tryItButton: UIButton = {
         let view = UIButton(type: .custom)
         view.setAttributedTitle(
             NSAttributedString(
@@ -92,6 +92,7 @@ final class FilterDetailView: UIView {
 
     private let stackView: AloeStackView = {
         let view = AloeStackView()
+        view.backgroundColor = ColorCompatibility.systemBackground
         view.rowInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         view.separatorInset = UIEdgeInsets.zero
         view.backgroundColor = ColorCompatibility.systemBackground

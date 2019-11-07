@@ -8,7 +8,7 @@
 
 import UIKit
 import RxSwift
-import AloeStackView
+import Combine
 
 final class FilterWorkshopContentView: UIView {
     private let applicator: AsyncFilterApplicator
@@ -18,11 +18,11 @@ final class FilterWorkshopContentView: UIView {
     private let imageParametersView = FilterWorkshopParametersView()
     private lazy var outputImageView: ImageArtboardView = ImageArtboardView(name: "outputImage", configuration: .output)
 
-    var didChooseAddImage: PublishSubject<(String, UIView)> {
+    var didChooseAddImage: PassthroughSubject<(String, CGRect), Never> {
         return imageParametersView.didChooseAddImage
     }
 
-    var didChooseSaveImage: PublishSubject<Void> {
+    var didChooseSaveImage: PassthroughSubject<Void, Never> {
         return outputImageView.didChooseSave
     }
 

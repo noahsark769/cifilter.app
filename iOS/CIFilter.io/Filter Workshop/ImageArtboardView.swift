@@ -7,8 +7,69 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
+import Combine
+import SwiftUI
+
+final class Target: NSObject {
+    let didFire = PassthroughSubject<Void, Never>()
+
+    @objc func fire() {
+        didFire.send()
+    }
+}
+
+final class CombineTapGestureRecognizer: UITapGestureRecognizer {
+    fileprivate let target: Target
+
+    init() {
+        let target = Target()
+        self.target = target
+        super.init(target: target, action: #selector(Target.fire))
+    }
+}
+
+final class CombinePanGestureRecognizer: UIPanGestureRecognizer {
+    private var target: Target! = nil
+
+    var strongDelegate: UIGestureRecognizerDelegate? = nil
+
+    init() {
+        let target = Target()
+        super.init(target: target, action: #selector(Target.fire))
+        self.target = target
+    }
+
+    func subscribe(_ receiveValue: @escaping (UIPanGestureRecognizer) -> Void) -> AnyCancellable {
+        return self.target.didFire.sink(receiveValue: {
+            receiveValue(self)
+        })
+    }
+}
+
+extension UIView {
+    func addTapHandler(numberOfTapsRequired: Int = 1) -> AnyPublisher<UITapGestureRecognizer, Never> {
+        self.isUserInteractionEnabled = true
+        let recognizer = CombineTapGestureRecognizer()
+        recognizer.numberOfTapsRequired = numberOfTapsRequired
+        self.addGestureRecognizer(recognizer)
+        return recognizer.target.didFire.map { recognizer }.eraseToAnyPublisher()
+    }
+
+    func addPanHandler(
+        configure: (UIPanGestureRecognizer) -> Void = { _ in },
+        delegate: ((UIPanGestureRecognizer) -> UIGestureRecognizerDelegate)? = nil
+    ) -> CombinePanGestureRecognizer {
+        self.isUserInteractionEnabled = true
+        let recognizer = CombinePanGestureRecognizer()
+        if let delegate = delegate?(recognizer) {
+            recognizer.strongDelegate = delegate
+            recognizer.delegate = delegate
+        }
+        configure(recognizer)
+        self.addGestureRecognizer(recognizer)
+        return recognizer
+    }
+}
 
 final class ImageArtboardView: UIView {
     enum Configuration {
@@ -18,12 +79,13 @@ final class ImageArtboardView: UIView {
 
     private let configuration: Configuration
     private var eitherView: EitherView!
-    private let bag = DisposeBag()
-    var didChooseImage = PublishSubject<UIImage>()
-    var didChooseAdd: PublishSubject<UIView> {
-        return imageChooserView.didChooseAdd
+    private var cancellables = Set<AnyCancellable>()
+
+    let didChooseImage = PassthroughSubject<UIImage, Never>()
+    var didChooseAdd: PassthroughSubject<CGRect, Never> {
+        return UserDefaultsConfig.swiftUIImageChooser ? swiftUIImageChooserView.didTapAdd : legacyImageChooserView.didChooseAdd
     }
-    let didChooseSave = PublishSubject<Void>()
+    let didChooseSave = PassthroughSubject<Void, Never>()
 
     private let nameLabel: UILabel = {
         let view = UILabel()
@@ -33,8 +95,16 @@ final class ImageArtboardView: UIView {
     }()
     private let noImageGeneratedView = OutputImageNotGeneratedView()
     private let imageView = UIImageView()
-    private let imageChooserView = ImageChooserView()
+    private let legacyImageChooserView = ImageChooserView()
+
+    private let swiftUIImageChooserView = ImageChooserSwiftUIView()
+    private lazy var swiftUIImageChooserViewController = UIHostingController(rootView: swiftUIImageChooserView)
+
     private let activityView = OutputImageActivityIndicatorView()
+
+    private lazy var dragInteraction: UIDragInteraction = {
+        return UIDragInteraction(delegate: self)
+    }()
 
     private let mainStackView: UIStackView = {
         let view = UIStackView()
@@ -57,9 +127,14 @@ final class ImageArtboardView: UIView {
         return view
     }()
 
+    var imageChooserView: UIView {
+        return UserDefaultsConfig.swiftUIImageChooser ? swiftUIImageChooserViewController.view! : legacyImageChooserView
+    }
+
     init(name: String, configuration: Configuration) {
         self.configuration = configuration
         super.init(frame: .zero)
+
         self.eitherView = EitherView(views: [
             imageView, imageChooserView, activityView, noImageGeneratedView
         ])
@@ -76,27 +151,39 @@ final class ImageArtboardView: UIView {
         imageView.setContentHuggingPriority(.required, for: .vertical)
         imageView.setContentHuggingPriority(.required, for: .horizontal)
         nameLabel.setContentHuggingPriority(.required, for: .vertical)
-        self.eitherView.setEnabled(self.imageChooserView)
+        self.eitherView.setEnabled(imageChooserView)
         mainStackView.addArrangedSubview(eitherView)
 
-        imageChooserView.didChooseImage.subscribe(onNext: { image in
+        legacyImageChooserView.didChooseImage.sink(receiveValue: { image in
             self.set(image: image)
-        }).disposed(by: self.bag)
+        }).store(in: &self.cancellables)
+        swiftUIImageChooserView.didTapImage.sink(receiveValue: { image in
+            self.set(image: image.image)
+        }).store(in: &self.cancellables)
 
         imageView.layer.borderColor = UIColor(rgb: 0xdddddd).cgColor
         imageView.layer.borderWidth = 1
 
         nameStackView.addArrangedSubview(editButton)
-        editButton.rx.tap.subscribe(onNext: {
+
+        editButton.addTapHandler().sink { _ in
             self.setChoosing()
-        }).disposed(by: bag)
+        }.store(in: &self.cancellables)
+
         editButton.isHidden = true
         editButton.setContentHuggingPriority(.required, for: .horizontal)
 
-        imageChooserView.didChooseImage.bind(to: self.didChooseImage).disposed(by: bag)
 
         if #available(iOS 13, *) {
             imageView.addInteraction(UIContextMenuInteraction(delegate: self))
+        }
+
+        legacyImageChooserView.didChooseImage.subscribe(self.didChooseImage).store(in: &self.cancellables)
+        swiftUIImageChooserView.didTapImage.map(\.image).subscribe(self.didChooseImage).store(in: &self.cancellables)
+
+        if UserDefaultsConfig.swiftUIImageChooser {
+            swiftUIImageChooserViewController.view!.heightAnchor.constraint(equalToConstant: 650).isActive = true
+            swiftUIImageChooserViewController.view!.widthAnchor.constraint(equalToConstant: 650).isActive = true
         }
     }
 
@@ -113,23 +200,27 @@ final class ImageArtboardView: UIView {
         self.editButton.isHidden = self.configuration != .input
 
         if reportOnSubject {
-            didChooseImage.onNext(image)
+            didChooseImage.send(image)
         }
+        self.addInteraction(self.dragInteraction)
     }
 
     func setChoosing() {
+        self.removeInteraction(self.dragInteraction)
         self.activityView.stopAnimating()
         self.eitherView.setEnabled(self.imageChooserView)
         self.editButton.isHidden = true
     }
 
     func setLoading() {
+        self.removeInteraction(self.dragInteraction)
         self.eitherView.setEnabled(self.activityView)
         self.activityView.startAnimating()
         self.editButton.isHidden = true
     }
 
     func setDefault() {
+        self.removeInteraction(self.dragInteraction)
         self.activityView.stopAnimating()
         self.eitherView.setEnabled(self.noImageGeneratedView)
         self.editButton.isHidden = true
@@ -149,12 +240,23 @@ extension ImageArtboardView: UIContextMenuInteractionDelegate {
                 })
             } else {
                 actions.append(UIAction(title: "Save image", image: UIImage(systemName: "square.and.arrow.up")) { action in
-                    self.didChooseSave.onNext(())
+                    self.didChooseSave.send()
                 })
             }
 
             // Create our menu with both the edit menu and the share action
             return UIMenu(title: "Image options", children: actions)
         })
+    }
+}
+
+extension ImageArtboardView: UIDragInteractionDelegate {
+    func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
+        guard let image = imageView.image else {
+            return []
+        }
+        return [
+            UIDragItem(itemProvider: NSItemProvider(object: image))
+        ]
     }
 }

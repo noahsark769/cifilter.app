@@ -1,4 +1,4 @@
-platform :ios, '11.0'
+platform :ios, '13.0'
 workspace 'CIFilter.io'
 project 'CIFilter.io.xcodeproj'
 
@@ -10,9 +10,8 @@ def shared_pods
   pod 'ReactiveLists', '~> 0.3.0'
   pod 'AloeStackView', '~> 1.0.1'
   pod 'RxAtomic', '~> 4.4.0', :modular_headers => true
-  pod 'RxSwift', '~> 4.4.0', :modular_headers => true
-  pod 'RxCocoa', '~> 4.4.0', :modular_headers => true
-  pod 'RxGesture', '~> 2.1.0', :modular_headers => true
+  pod 'RxSwift', :git => 'https://github.com/noahsark769/RxSwift', :branch => 'uikitformac-compat', :modular_headers => true
+  pod 'RxCocoa', :git => 'https://github.com/noahsark769/RxSwift', :branch => 'uikitformac-compat', :modular_headers => true
   pod 'IQKeyboardManagerSwift', '~> 6.2.0'
   pod 'Sentry', '~> 4.3.1', :modular_headers => true
   pod 'Mixpanel-swift', '~> 2.5.9'
