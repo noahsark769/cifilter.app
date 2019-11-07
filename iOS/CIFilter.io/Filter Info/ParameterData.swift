@@ -9,7 +9,7 @@
 import Foundation
 import CoreImage
 
-#if targetEnvironment(UIKitForMac)
+#if targetEnvironment(macOS)
 import AppKit // Needed for NSAffineTransform
 #endif
 
@@ -18,7 +18,7 @@ protocol FilterInformationalStringConvertible {
 }
 
 struct FilterTransformParameterInfo: Codable, FilterInformationalStringConvertible {
-    #if !targetEnvironment(UIKitForMac)
+    #if !targetEnvironment(macCatalyst)
     let defaultValue: CGAffineTransform
     let identity: CGAffineTransform
     #endif
@@ -26,7 +26,7 @@ struct FilterTransformParameterInfo: Codable, FilterInformationalStringConvertib
     init(filterAttributeDict: [String: Any]) throws {
         // TODO(UIKitForMac): Write a Decodable wrapper around NSAffineTransform, since it's not
         // Codable
-        #if !targetEnvironment(UIKitForMac)
+        #if !targetEnvironment(macCatalyst)
         defaultValue = try filterAttributeDict.validatedValue(key: kCIAttributeDefault)
         identity = try filterAttributeDict.validatedValue(key: kCIAttributeIdentity)
         #endif
@@ -36,7 +36,7 @@ struct FilterTransformParameterInfo: Codable, FilterInformationalStringConvertib
     }
 
     var informationalDescription: String? {
-        #if targetEnvironment(UIKitForMac)
+        #if targetEnvironment(macCatalyst)
         return nil
         #else
         return "Default: " + String(describing: defaultValue)

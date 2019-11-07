@@ -77,19 +77,18 @@ struct BuiltInImage: Identifiable {
     static let shaded = BuiltInImage(name: "shadedsphere")
     static let paper = BuiltInImage(name: "paper", useCheckerboard: true)
     static let playhouse = BuiltInImage(name: "playhouse", useCheckerboard: true)
-    // TODO(UIKitForMac): This makes everything crash, idk why
-//    static let black = BuiltInImage(name: "black", generator: {
-//        BuiltInImage.constantColorFilter.setDefaults()
-//        BuiltInImage.constantColorFilter.setValue(CIColor.black, forKey: "inputColor")
-//        let ciImage = BuiltInImage.constantColorFilter.outputImage!
-//        return (ciImage, ciImage, CGRect(origin: .zero, size: CGSize(width: 500, height: 500)))
-//    });
-//    static let white = BuiltInImage(name: "white", generator: {
-//        BuiltInImage.constantColorFilter.setDefaults()
-//        BuiltInImage.constantColorFilter.setValue(CIColor.white, forKey: "inputColor")
-//        let ciImage = BuiltInImage.constantColorFilter.outputImage!
-//        return (ciImage, ciImage, CGRect(origin: .zero, size: CGSize(width: 500, height: 500)))
-//    });
+    static let black = BuiltInImage(name: "black", generator: {
+        BuiltInImage.constantColorFilter.setDefaults()
+        BuiltInImage.constantColorFilter.setValue(CIColor.black, forKey: "inputColor")
+        let ciImage = BuiltInImage.constantColorFilter.outputImage!
+        return (ciImage, ciImage, CGRect(origin: .zero, size: CGSize(width: 500, height: 500)))
+    });
+    static let white = BuiltInImage(name: "white", generator: {
+        BuiltInImage.constantColorFilter.setDefaults()
+        BuiltInImage.constantColorFilter.setValue(CIColor.white, forKey: "inputColor")
+        let ciImage = BuiltInImage.constantColorFilter.outputImage!
+        return (ciImage, ciImage, CGRect(origin: .zero, size: CGSize(width: 500, height: 500)))
+    });
     static let gradient = BuiltInImage(name: "gradient", generator: {
         BuiltInImage.linearGradientFilter.setDefaults()
         BuiltInImage.linearGradientFilter.setValue(CIColor(red: 0, green: 0, blue: 0, alpha: 1), forKey: "inputColor0")
@@ -106,9 +105,8 @@ struct BuiltInImage: Identifiable {
         .paper,
         .playhouse,
         .shaded,
-        // TODO(UIKitForMac):
-//        .black,
-//        .white,
+        .black,
+        .white,
         .gradient
     ]
 }
