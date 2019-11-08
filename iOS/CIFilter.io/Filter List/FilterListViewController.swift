@@ -8,7 +8,6 @@
 
 import UIKit
 import ReactiveLists
-import RxSwift
 import Combine
 import SwiftUI
 
@@ -112,9 +111,8 @@ final class FilterListViewController: UITableViewController {
     let didTapFilterInfo = PassthroughSubject<FilterInfo, Never>()
     private let filterInfos: [FilterInfo]
     private var driver: FilterListViewControllerTableViewDriver! = nil
-    private let bag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
-    private let searchSubject = PublishSubject<String?>()
+    private let searchSubject = PassthroughSubject<String?, Never>()
 
     private func generateTableModel(searchText: String?) -> TableViewModel {
         let filteredFilters = filterInfos.filter {
@@ -180,13 +178,13 @@ final class FilterListViewController: UITableViewController {
         self.navigationItem.searchController = searchController
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(didTapSettings))
 
-        searchSubject.throttle(0.3, scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
+        searchSubject.throttle(for: .milliseconds(300), scheduler: RunLoop.main, latest: true)
+            .removeDuplicates()
             .map { $0 ?? "" }
-            .subscribe(onNext: { [weak self] text in
+            .sink { [weak self] text in
                 guard let `self` = self else { return }
                 self.driver.tableViewModel = self.generateTableModel(searchText: text)
-            }).disposed(by: self.bag)
+            }.store(in: &self.cancellables)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -210,6 +208,6 @@ final class FilterListViewController: UITableViewController {
 
 extension FilterListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        searchSubject.onNext(searchController.searchBar.text)
+        searchSubject.send(searchController.searchBar.text)
     }
 }

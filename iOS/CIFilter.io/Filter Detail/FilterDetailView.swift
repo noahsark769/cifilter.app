@@ -8,7 +8,6 @@
 
 import UIKit
 import AloeStackView
-import RxSwift
 import ColorCompatibility
 import Combine
 
