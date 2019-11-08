@@ -40,6 +40,8 @@
 		A1315E2D2288F340006872BD /* buildInformation.json in Resources */ = {isa = PBXBuildFile; fileRef = A1315E2C2288F33F006872BD /* buildInformation.json */; };
 		A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1707F65219A1A0A0010E007 /* FilterInfo.swift */; };
 		A172BAC42221CCFB00182C56 /* ColorHexInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172BAC32221CCFA00182C56 /* ColorHexInput.swift */; };
+		A18D97C22375C5C4009C3DBB /* ControlPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D97C12375C5C4009C3DBB /* ControlPublisher.swift */; };
+		A18D97C42375C5E1009C3DBB /* UITapGestureRecognizer+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D97C32375C5E1009C3DBB /* UITapGestureRecognizer+Combine.swift */; };
 		A1994D0F22F7E5B600E2C519 /* UserDefaultsConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1994D0E22F7E5B600E2C519 /* UserDefaultsConfig.swift */; };
 		A1A0D83521BC60BA0098168C /* FilterExampleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */; };
 		A1A0D83721BC659B0098168C /* FilterDetailExampleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83621BC659B0098168C /* FilterDetailExampleHeaderView.swift */; };
@@ -124,6 +126,8 @@
 		A13C923722A5E67500B033ED /* CIFilter.io.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CIFilter.io.entitlements; sourceTree = "<group>"; };
 		A1707F65219A1A0A0010E007 /* FilterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInfo.swift; sourceTree = "<group>"; };
 		A172BAC32221CCFA00182C56 /* ColorHexInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorHexInput.swift; sourceTree = "<group>"; };
+		A18D97C12375C5C4009C3DBB /* ControlPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPublisher.swift; sourceTree = "<group>"; };
+		A18D97C32375C5E1009C3DBB /* UITapGestureRecognizer+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+Combine.swift"; sourceTree = "<group>"; };
 		A1994D0E22F7E5B600E2C519 /* UserDefaultsConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsConfig.swift; sourceTree = "<group>"; };
 		A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterExampleProvider.swift; sourceTree = "<group>"; };
 		A1A0D83621BC659B0098168C /* FilterDetailExampleHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailExampleHeaderView.swift; sourceTree = "<group>"; };
@@ -344,6 +348,7 @@
 			children = (
 				A1D5A8BA21AF03F700257B5E /* Autolayout.swift */,
 				A130BD8221F0F22400E586F6 /* CGPoint+Utils.swift */,
+				A18D97C12375C5C4009C3DBB /* ControlPublisher.swift */,
 				A128995121DD6D4000BEE395 /* CwlMutex.swift */,
 				A128993E21D058B300BEE395 /* EitherView.swift */,
 				A1D5A8C221B054A100257B5E /* SeparatorView.swift */,
@@ -353,6 +358,7 @@
 				A119025A222B31B000FE27A3 /* UIImage+Utils.swift */,
 				A130BD8021F0EAC700E586F6 /* UIImageView+Utils.swift */,
 				A1D5A8D421B4A64A00257B5E /* UIStackView+Utils.swift */,
+				A18D97C32375C5E1009C3DBB /* UITapGestureRecognizer+Combine.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -642,6 +648,7 @@
 				A130BD7F21EFA22400E586F6 /* ColorInput.swift in Sources */,
 				A12B7AF122299D0C0084AAE6 /* ColorInputDragIndicatorView.swift in Sources */,
 				A128994C21DD477000BEE395 /* Colors.swift in Sources */,
+				A18D97C22375C5C4009C3DBB /* ControlPublisher.swift in Sources */,
 				A128995221DD6D4000BEE395 /* CwlMutex.swift in Sources */,
 				A1D5A8B321ADB3C100257B5E /* Dictionary+Validation.swift in Sources */,
 				A128993F21D058B300BEE395 /* EitherView.swift in Sources */,
@@ -689,6 +696,7 @@
 				A119025B222B31B000FE27A3 /* UIImage+Utils.swift in Sources */,
 				A130BD8121F0EAC700E586F6 /* UIImageView+Utils.swift in Sources */,
 				A1D5A8D521B4A64A00257B5E /* UIStackView+Utils.swift in Sources */,
+				A18D97C42375C5E1009C3DBB /* UITapGestureRecognizer+Combine.swift in Sources */,
 				A1994D0F22F7E5B600E2C519 /* UserDefaultsConfig.swift in Sources */,
 				A129375C2246B56E000C6329 /* UUIDManager.swift in Sources */,
 				A130BD7D21EC0D1F00E586F6 /* VectorInput.swift in Sources */,
