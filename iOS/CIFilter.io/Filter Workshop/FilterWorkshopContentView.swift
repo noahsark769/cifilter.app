@@ -12,6 +12,7 @@ import Combine
 
 final class FilterWorkshopContentView: UIView {
     private let applicator: AsyncFilterApplicator
+    private var cancellables = Set<AnyCancellable>()
     private var bag = DisposeBag()
     private var filter: FilterInfo! = nil
     private let nonImageParametersView = FilterWorkshopParametersView()
@@ -47,7 +48,7 @@ final class FilterWorkshopContentView: UIView {
         [stackView, self].disableTranslatesAutoresizingMaskIntoConstraints()
         stackView.edges(to: self, insets: UIEdgeInsets(all: 100))
 
-        applicator.events.observeOn(MainScheduler.instance).subscribe(onNext: { event in
+        applicator.events.receive(on: RunLoop.main).sink { event in
             switch event {
             case .generationStarted:
                 self.outputImageView.setLoading()
@@ -58,7 +59,7 @@ final class FilterWorkshopContentView: UIView {
                 self.outputImageView.set(image: renderingResult.image)
                 print("Finished setting image")
             }
-        }).disposed(by: bag)
+        }.store(in: &self.cancellables)
     }
 
     func set(filter: FilterInfo) {

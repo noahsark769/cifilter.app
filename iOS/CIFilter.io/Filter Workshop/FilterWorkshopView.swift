@@ -50,7 +50,7 @@ final class FilterWorkshopView: UIView {
 
         FilterWorkshopView.globalPanGestureRecognizer = scrollView.panGestureRecognizer
 
-        applicator.events.observeOn(MainScheduler.instance).subscribe(onNext: { event in
+        applicator.events.receive(on: RunLoop.main).sink { event in
             switch event {
             case .generationStarted:
                 self.consoleView.update(for: .showActivity)
@@ -71,7 +71,7 @@ final class FilterWorkshopView: UIView {
 
                 self.consoleView.update(for: .error(message: "Generation errored. Please submit an issue on github. Error: \(error)", animated: true))
             }
-        }).disposed(by: bag)
+        }.store(in: &self.cancellables)
 
         scrollView.addTapHandler(numberOfTapsRequired: 2).sink { recognizer in
             if self.scrollView.zoomScale > self.scrollView.minimumZoomScale {

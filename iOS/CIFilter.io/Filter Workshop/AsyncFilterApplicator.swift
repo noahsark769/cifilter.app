@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import Combine
 
 struct ParameterValue {
     let name: String
@@ -30,7 +31,7 @@ final class AsyncFilterApplicator {
         case generationErrored(error: Error)
     }
 
-    let events = PublishSubject<Event>()
+    let events = PassthroughSubject<Event, Never>()
     var timeStarted: TimeInterval? = nil
 
     private var bag = DisposeBag()
@@ -54,7 +55,7 @@ final class AsyncFilterApplicator {
 
     func generateOutputImageIfPossible(parameterConfiguration: [String: Any]) {
         guard let filter = self.currentFilter else {
-            events.onNext(.generationErrored(error: .implementationError(message: "No filter name provided")))
+            events.send(.generationErrored(error: .implementationError(message: "No filter name provided")))
             return
         }
         let ciFilter = CIFilter(name: filter.name)!
@@ -68,7 +69,7 @@ final class AsyncFilterApplicator {
             ciFilter.setValue(value, forKey: parameter.name)
         }
         if stillNeededParameterNames.count > 0 {
-            events.onNext(.generationErrored(error: .needsMoreParameters(names: stillNeededParameterNames)))
+            events.send(.generationErrored(error: .needsMoreParameters(names: stillNeededParameterNames)))
         } else {
             queue.cancelAllOperations()
 
@@ -78,7 +79,7 @@ final class AsyncFilterApplicator {
                     return
                 }
                 guard var outputImage = ciFilter.outputImage else {
-                    self.events.onNext(.generationErrored(error: .generationFailed))
+                    self.events.send(.generationErrored(error: .generationFailed))
                     return
                 }
                 let context = CIContext(options: nil)
@@ -90,18 +91,18 @@ final class AsyncFilterApplicator {
                 }
 
                 guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
-                    self.events.onNext(.generationErrored(error: .implementationError(message: "Could not create cgImage from CIContext")))
+                    self.events.send(.generationErrored(error: .implementationError(message: "Could not create cgImage from CIContext")))
                     return
                 }
                 guard !op.isCancelled else { return }
-                self.events.onNext(.generationCompleted(
+                self.events.send(.generationCompleted(
                     image: RenderingResult(image: UIImage(cgImage: cgImage), wasCropped: wasCropped),
                     totalTime: CACurrentMediaTime() - self.timeStarted!,
                     parameters: parameterConfiguration
                 ))
             }
             queue.addOperation(blockOperation)
-            self.events.onNext(.generationStarted)
+            self.events.send(.generationStarted)
             self.timeStarted = CACurrentMediaTime()
         }
     }

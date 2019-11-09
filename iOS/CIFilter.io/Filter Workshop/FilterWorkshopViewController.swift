@@ -7,12 +7,10 @@
 //
 
 import UIKit
-import RxSwift
 import Combine
 import MobileCoreServices
 
 final class FilterWorkshopViewController: UIViewController {
-    private let bag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
     private let applicator = AsyncFilterApplicator()
     private let exporter = FilterApplicationExporter()
@@ -42,7 +40,7 @@ final class FilterWorkshopViewController: UIViewController {
             self.navigationItem.rightBarButtonItem = shareItem
         #endif
 
-        applicator.events.observeOn(MainScheduler.instance).subscribe(onNext: { event in
+        applicator.events.receive(on: RunLoop.main).sink { event in
             guard case let .generationCompleted(image, _, parameters) = event else {
                 self.shareItem.isEnabled = false
                 self.exportItem.isEnabled = false
@@ -52,7 +50,7 @@ final class FilterWorkshopViewController: UIViewController {
             self.exportItem.isEnabled = true
             self.currentImage = image
             self.currentGeneratedImageParmaeters = parameters
-        }).disposed(by: bag)
+        }.store(in: &self.cancellables)
 
         workshopView.didChooseAddImage.sink(receiveValue: { (paramName, view) in
             AnalyticsManager.shared.track(event: "tap_choose_image", properties: ["name": self.filter.name, "parameter_name": paramName])
