@@ -7,15 +7,13 @@
 //
 
 import UIKit
-import RxSwift
 import Combine
 
 /**
  * A view that allows the user to input a CIVector.
  */
-final class VectorInput: UIView {
-    let valueDidChange = PublishSubject<CIVector>()
-    private let bag = DisposeBag()
+final class VectorInput: UIControl, ControlValueReporting {
+    private(set) var value: CIVector? = nil
     private var cancellables = Set<AnyCancellable>()
 
     private let mainStackView: UIStackView = {
@@ -86,9 +84,9 @@ final class VectorInput: UIView {
 
     private func addNumberInput() {
         let input = FreeformNumberInput.createEmptyFloat()
-        input.valueDidChange.subscribe({ _ in
+        input.addValueChangedObserver().sink { _ in
             self.publishVector()
-        }).disposed(by: bag)
+        }.store(in: &self.cancellables)
         input.widthAnchor <=> 90
         numberInputsStackView.addArrangedSubview(input)
     }
@@ -108,12 +106,13 @@ final class VectorInput: UIView {
             guard let input = view as? FreeformNumberInput else {
                 continue
             }
-            guard let value = input.lastValue else {
+            guard let value = input.value else {
                 // If one of the inputs doesn't have a value, don't publish our vector
                 return
             }
             floats.append(CGFloat(value.floatValue))
         }
-        valueDidChange.onNext(CIVector(floats: floats))
+        value = CIVector(floats: floats)
+        self.sendActions(for: .valueChanged)
     }
 }

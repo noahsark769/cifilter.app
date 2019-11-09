@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RxSwift
 import Combine
 import CoreGraphics
 
@@ -28,7 +27,7 @@ final class GestureRecognizerDelegate: NSObject, UIGestureRecognizerDelegate {
     static let neverRecognizeSimultaneously = GestureRecognizerDelegate(recognizeSimulaneously: { _, _ in return false })
 }
 
-final class ColorInput: UIView {
+final class ColorInput: UIControl, ControlValueReporting {
     private static let nullDragLocation = CGPoint(x: -1, y: -1)
     private let mainStackView: UIStackView = {
         let view = UIStackView()
@@ -41,9 +40,8 @@ final class ColorInput: UIView {
     private let draggableIndicatorView = ColorInputDragIndicatorView(sideLength: 40, color: UIColor(rgb: 0x333333))
     private var dragLocation: CGPoint = ColorInput.nullDragLocation
     private var lastLocation: CGPoint = .zero
-    private let bag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
-    let valueDidChange = PublishSubject<CIColor>()
+    private(set) var value = CIColor.black
 
     init(defaultValue: CIColor) {
         // TODO: defaultValue is currently unused
@@ -94,12 +92,12 @@ final class ColorInput: UIView {
             self.reportColorFromDragLocation()
         }.store(in: &self.cancellables)
 
-        self.hexInput.valueDidChange.subscribe(onNext: { color in
+        self.hexInput.addValueChangedObserver().sink { color in
             let colorLocation = self.imageView.pointOnColorWheel(for: color)
             self.dragLocation = colorLocation
             self.setNeedsLayout()
             self.report(color: color)
-        }).disposed(by: bag)
+        }.store(in: &self.cancellables)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -108,7 +106,8 @@ final class ColorInput: UIView {
 
     private func report(color: UIColor) {
         let ciColor = CIColor(color: color)
-        self.valueDidChange.onNext(ciColor)
+        self.value = ciColor
+        self.sendActions(for: .valueChanged)
     }
 
     private func reportColorFromDragLocation() {

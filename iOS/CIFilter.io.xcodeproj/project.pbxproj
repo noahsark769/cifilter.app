@@ -76,6 +76,7 @@
 		A1D5A8D521B4A64A00257B5E /* UIStackView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8D421B4A64A00257B5E /* UIStackView+Utils.swift */; };
 		A1D5A8D721B4A85A00257B5E /* FilterParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8D621B4A85A00257B5E /* FilterParameterView.swift */; };
 		A1DA0CDC22F1AAD8001924AD /* FilterDetailSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DA0CDB22F1AAD8001924AD /* FilterDetailSwiftUIView.swift */; };
+		A1DD09DA23765CCA0054061B /* FreeformTextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DD09D923765CCA0054061B /* FreeformTextInput.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +165,7 @@
 		A1D5A8D421B4A64A00257B5E /* UIStackView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Utils.swift"; sourceTree = "<group>"; };
 		A1D5A8D621B4A85A00257B5E /* FilterParameterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterParameterView.swift; sourceTree = "<group>"; };
 		A1DA0CDB22F1AAD8001924AD /* FilterDetailSwiftUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterDetailSwiftUIView.swift; sourceTree = "<group>"; };
+		A1DD09D923765CCA0054061B /* FreeformTextInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeformTextInput.swift; sourceTree = "<group>"; };
 		A7025EAAD7B39B501B039A0E /* Pods_CIFilter_io.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIFilter_io.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0EBDE2DBDAF2DACCA875113 /* Pods_CIFilter_ioTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIFilter_ioTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F97FF4CF0C09C59DFDF3D2A3 /* Pods-CIFilter.io.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.io.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io.release.xcconfig"; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				A1A0D83B21BEBD960098168C /* FilterWorkshopView.swift */,
 				A1A0D83921BC67ED0098168C /* FilterWorkshopViewController.swift */,
 				A128994421D40A3F00BEE395 /* FreeformNumberInput.swift */,
+				A1DD09D923765CCA0054061B /* FreeformTextInput.swift */,
 				A1A0D83D21BEC1B90098168C /* ImageArtboardView.swift */,
 				A128993821CFFF7000BEE395 /* ImageChooserView.swift */,
 				A128995521DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift */,
@@ -678,6 +681,7 @@
 				A1A0D83C21BEBD960098168C /* FilterWorkshopView.swift in Sources */,
 				A1A0D83A21BC67ED0098168C /* FilterWorkshopViewController.swift in Sources */,
 				A128994521D40A3F00BEE395 /* FreeformNumberInput.swift in Sources */,
+				A1DD09DA23765CCA0054061B /* FreeformTextInput.swift in Sources */,
 				A1A0D83E21BEC1B90098168C /* ImageArtboardView.swift in Sources */,
 				A1AA26DD22F7835300620FC2 /* ImageChooserSwiftUIView.swift in Sources */,
 				A128993921CFFF7000BEE395 /* ImageChooserView.swift in Sources */,

@@ -7,11 +7,10 @@
 //
 
 import UIKit
-import RxSwift
 import ColorCompatibility
 
-final class ColorHexInput: UIView {
-    let valueDidChange = PublishSubject<UIColor>()
+final class ColorHexInput: UIControl, ControlValueReporting {
+    fileprivate(set) var value: UIColor
 
     lazy var textView: UITextView = {
         let view = UITextView()
@@ -29,6 +28,7 @@ final class ColorHexInput: UIView {
 
     init(default: UIColor?) {
         // TODO: default is unused
+        self.value = .black
         super.init(frame: .zero)
         addSubview(textView)
         textView.heightAnchor <=> 36
@@ -55,7 +55,8 @@ extension CharacterSet {
 extension ColorHexInput: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         if let color = UIColor(hexString: textView.text) {
-            valueDidChange.onNext(color)
+            value = color
+            self.sendActions(for: .valueChanged)
         }
     }
 

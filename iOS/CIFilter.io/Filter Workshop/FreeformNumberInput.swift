@@ -7,19 +7,16 @@
 //
 
 import UIKit
-import RxSwift
 import ColorCompatibility
 
-final class FreeformNumberInput: UIView {
+final class FreeformNumberInput: UIControl, ControlValueReporting {
     private static var numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.locale = Locale.current
         return formatter
     }()
 
-    let valueDidChange = PublishSubject<NSNumber>()
-
-    private(set) var lastValue: NSNumber? = nil
+    private(set) var value: NSNumber? = nil
 
     private let allowsIntegerInputsOnly: Bool
 
@@ -67,8 +64,8 @@ final class FreeformNumberInput: UIView {
     }
 
     private func publishValue(_ value: NSNumber) {
-        lastValue = value
-        valueDidChange.onNext(value)
+        self.value = value
+        self.sendActions(for: .valueChanged)
     }
 }
 
@@ -104,41 +101,5 @@ extension FreeformNumberInput: UITextViewDelegate {
         }
 
         return FreeformNumberInput.numberFormatter.number(from: effectiveText) != nil
-    }
-}
-
-final class FreeformTextInput: UIView, UITextViewDelegate {
-    let valueDidChange = PublishSubject<String>()
-
-    lazy var textView: UITextView = {
-        let view = UITextView()
-        view.layer.borderColor = ColorCompatibility.separator.cgColor
-        view.layer.borderWidth = 1 / UIScreen.main.scale
-        view.layer.cornerRadius = 4
-        view.clipsToBounds = true
-        view.font = UIFont.monospacedBodyFont()
-        view.textColor = ColorCompatibility.label
-        view.backgroundColor = ColorCompatibility.secondarySystemBackground
-        view.delegate = self
-        return view
-    }()
-
-    init() {
-        super.init(frame: .zero)
-        addSubview(textView)
-        textView.heightAnchor <=> 36
-        textView.edgesToSuperview()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func publishValue(_ value: String) {
-        valueDidChange.onNext(value)
-    }
-
-    func textViewDidChange(_ textView: UITextView) {
-        self.publishValue(textView.text ?? "")
     }
 }

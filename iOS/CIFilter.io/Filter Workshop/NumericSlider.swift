@@ -7,10 +7,9 @@
 //
 
 import UIKit
-import RxSwift
 
-final class NumericSlider: UIView {
-    let valueDidChange = PublishSubject<Float>()
+final class NumericSlider: UIControl, ControlValueReporting {
+    private(set) var value: Float = 0
 
     private let slider = UISlider()
     private let minimumLabel: UILabel = {
@@ -78,7 +77,8 @@ final class NumericSlider: UIView {
 
         valueLabel.isHidden = slider.value == slider.maximumValue || slider.value == slider.minimumValue
 
-        valueDidChange.onNext(slider.value)
+        value = slider.value
+        self.sendActions(for: .valueChanged)
     }
 
     required init?(coder aDecoder: NSCoder) {

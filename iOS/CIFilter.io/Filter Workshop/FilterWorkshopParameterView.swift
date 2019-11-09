@@ -11,6 +11,12 @@ import RxSwift
 import ColorCompatibility
 import Combine
 
+extension UISwitch: ControlValueReporting {
+    var value: Bool {
+        return self.isOn
+    }
+}
+
 final class FilterWorkshopParameterView: UIView {
     private let bag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
@@ -96,10 +102,9 @@ final class FilterWorkshopParameterView: UIView {
             let uiSwitch = UISwitch()
             stackView.addArrangedSubview(uiSwitch)
             let subject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false)
-            uiSwitch.addControlEventsObserver(events: [.valueChanged]).map { control in
-                guard let control = control as? UISwitch else { return false }
-                return control.isOn
-            }.subscribe(subject).store(in: &self.cancellables)
+            uiSwitch.addValueChangedObserver()
+                .subscribe(subject)
+                .store(in: &self.cancellables)
             subject.map { $0 ? 1 : 0 }.sink { [weak self] value in
                 self?.valueDidChangeObservable.onNext(value)
             }.store(in: &self.cancellables)
@@ -107,47 +112,47 @@ final class FilterWorkshopParameterView: UIView {
             let slider = NumericSlider(min: min, max: max)
             slider.widthAnchor <=> 400
             stackView.addArrangedSubview(slider)
-            slider.valueDidChange.subscribe(onNext: { float in
-                self.valueDidChangeObservable.onNext(float)
-            }).disposed(by: bag)
+            slider.addValueChangedObserver().sink { value in
+                self.valueDidChangeObservable.onNext(value)
+            }.store(in: &self.cancellables)
         case let .number(min, max, defaultValue):
             let numericInput = FreeformNumberInput(min: min, max: max, defaultValue: defaultValue)
-            numericInput.valueDidChange.subscribe(onNext: { float in
-                self.valueDidChangeObservable.onNext(float)
-            }).disposed(by: bag)
+            numericInput.addValueChangedObserver().compactMap { $0 }.sink { value in
+                self.valueDidChangeObservable.onNext(value)
+            }.store(in: &self.cancellables)
             stackView.addArrangedSubview(numericInput)
         case let .integer(min, max, defaultValue):
             let numericInput = FreeformNumberInput(min: min, max: max, defaultValue: defaultValue)
-            numericInput.valueDidChange.subscribe(onNext: { float in
-                self.valueDidChangeObservable.onNext(float)
-            }).disposed(by: bag)
+            numericInput.addValueChangedObserver().compactMap { $0 }.sink { value in
+                self.valueDidChangeObservable.onNext(value)
+            }.store(in: &self.cancellables)
             stackView.addArrangedSubview(numericInput)
         case let .vector(defaultValue):
             let lowercasedName = parameter.name.lowercased()
             let isRectangle = lowercasedName.contains("extent") || lowercasedName.contains("rectangle")
             let vectorInput = VectorInput(defaultValue: defaultValue, initialComponents: isRectangle ? 4 : 2)
-            vectorInput.valueDidChange.subscribe(onNext: { vector in
-                self.valueDidChangeObservable.onNext(vector)
-            }).disposed(by: bag)
+            vectorInput.addValueChangedObserver().compactMap { $0 }.sink { value in
+                self.valueDidChangeObservable.onNext(value)
+            }.store(in: &self.cancellables)
             stackView.addArrangedSubview(vectorInput)
         case let .color(defaultValue):
             let colorInput = ColorInput(defaultValue:defaultValue)
-            colorInput.valueDidChange.subscribe(onNext: { vector in
-                self.valueDidChangeObservable.onNext(vector)
-            }).disposed(by: bag)
+            colorInput.addValueChangedObserver().sink { value in
+                self.valueDidChangeObservable.onNext(value)
+            }.store(in: &self.cancellables)
             stackView.addArrangedSubview(colorInput)
         case .freeformString:
-            let numericInput = FreeformTextInput()
-            numericInput.valueDidChange.subscribe(onNext: { string in
-                self.valueDidChangeObservable.onNext(string)
-            }).disposed(by: bag)
-            stackView.addArrangedSubview(numericInput)
+            let input = FreeformTextInput()
+            input.addValueChangedObserver().compactMap { $0 }.sink { value in
+                self.valueDidChangeObservable.onNext(value)
+            }.store(in: &self.cancellables)
+            stackView.addArrangedSubview(input)
         case .freeformStringAsData:
-            let numericInput = FreeformTextInput()
-            numericInput.valueDidChange.subscribe(onNext: { string in
-                self.valueDidChangeObservable.onNext(string.data(using: .utf8)!)
-            }).disposed(by: bag)
-            stackView.addArrangedSubview(numericInput)
+            let input = FreeformTextInput()
+            input.addValueChangedObserver().compactMap { $0 }.sink { value in
+                self.valueDidChangeObservable.onNext(value)
+            }.store(in: &self.cancellables)
+            stackView.addArrangedSubview(input)
         }
 
         stackView.edgesToSuperview()
