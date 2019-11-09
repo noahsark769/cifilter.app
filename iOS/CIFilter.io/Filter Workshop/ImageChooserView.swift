@@ -7,13 +7,11 @@
 //
 
 import UIKit
-import RxSwift
 import ColorCompatibility
 import Combine
 
 final class ImageChooserAddView: UIView {
-    let didTap = PublishSubject<Void>()
-    private let bag = DisposeBag()
+    let didTap = PassthroughSubject<Void, Never>()
     private var cancellables = Set<AnyCancellable>()
     
     private var plusLabel: UILabel = {
@@ -37,9 +35,10 @@ final class ImageChooserAddView: UIView {
         plusLabel.translatesAutoresizingMaskIntoConstraints = false
         plusLabel.centerXAnchor <=> self.centerXAnchor
         plusLabel.centerYAnchor <=> self.centerYAnchor
-        self.addTapHandler().sink { _ in
-            self.didTap.onNext(())
-        }.store(in: &self.cancellables)
+        self.addTapHandler()
+            .map { _ in }
+            .subscribe(self.didTap)
+            .store(in: &self.cancellables)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -55,7 +54,6 @@ final class ImageChooserView: UIView {
     static let artboardSize: CGFloat = 650
 
     private var cancellables = Set<AnyCancellable>()
-    private let bag = DisposeBag()
 
     let didChooseImage = PassthroughSubject<UIImage, Never>()
     let didChooseAdd = PassthroughSubject<CGRect, Never>()
@@ -106,9 +104,9 @@ final class ImageChooserView: UIView {
         }
         currentStackView.addArrangedSubview(addView)
 
-        addView.didTap.subscribe(onNext: {
+        addView.didTap.sink {
             self.didChooseAdd.send(self.window!.convert(self.addView.bounds, from: self.addView))
-        }).disposed(by: bag)
+        }.store(in: &self.cancellables)
 
         self.addInteraction(self.dropInteraction)
     }
