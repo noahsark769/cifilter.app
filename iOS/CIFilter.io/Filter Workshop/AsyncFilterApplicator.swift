@@ -80,16 +80,15 @@ final class AsyncFilterApplicator {
         if stillNeededParameterNames.count > 0 {
             events.send(.generationErrored(error: .needsMoreParameters(names: stillNeededParameterNames)))
         } else {
-            if filter.name == "CIQRCodeGenerator" {
-                if let correctionLevel = ciFilter.value(forKey: "inputCorrectionLevel") as? String {
-                    if correctionLevel == "" {
-                        return
-                    }
-                    if !["L", "M", "Q", "H"].contains(correctionLevel) {
-                        events.send(.generationErrored(error: .userFacingError(message: "inputCorrectionLevel for CIQRCodeGenerator must be one of: L, M, Q, or Hs")))
-                        return
-                    }
-                }
+            let result = CustomErrorProcessor.process(filterInfo: filter, filter: ciFilter)
+            switch result {
+            case .proceed:
+                break
+            case .doNotProceed:
+                return
+            case let .doNotProceedAndShowError(error):
+                events.send(.generationErrored(error: .userFacingError(message: error)))
+                return
             }
 
             queue.cancelAllOperations()

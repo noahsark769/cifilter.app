@@ -51,6 +51,7 @@
 		A1A0D84021C4AEAA0098168C /* FilterWorkshopContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A0D83F21C4AEAA0098168C /* FilterWorkshopContentView.swift */; };
 		A1AA26DD22F7835300620FC2 /* ImageChooserSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AA26DC22F7835300620FC2 /* ImageChooserSwiftUIView.swift */; };
 		A1AA26E022F7D1E300620FC2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AA26DF22F7D1E300620FC2 /* SettingsView.swift */; };
+		A1B470692391C537004035EF /* CustomErrorProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B470682391C537004035EF /* CustomErrorProcessor.swift */; };
 		A1C15E0F237DCE4B00D14A7E /* CombineLatestCollectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C15E0E237DCE4B00D14A7E /* CombineLatestCollectionTest.swift */; };
 		A1C6621D2196818100826A2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C6621C2196818100826A2B /* AppDelegate.swift */; };
 		A1C662242196818300826A2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1C662232196818300826A2B /* Assets.xcassets */; };
@@ -140,6 +141,7 @@
 		A1A0D83F21C4AEAA0098168C /* FilterWorkshopContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterWorkshopContentView.swift; sourceTree = "<group>"; };
 		A1AA26DC22F7835300620FC2 /* ImageChooserSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageChooserSwiftUIView.swift; sourceTree = "<group>"; };
 		A1AA26DF22F7D1E300620FC2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A1B470682391C537004035EF /* CustomErrorProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomErrorProcessor.swift; sourceTree = "<group>"; };
 		A1C15E0E237DCE4B00D14A7E /* CombineLatestCollectionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineLatestCollectionTest.swift; sourceTree = "<group>"; };
 		A1C662192196818100826A2B /* CIFilter.io.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CIFilter.io.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1C6621C2196818100826A2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				A172BAC32221CCFA00182C56 /* ColorHexInput.swift */,
 				A130BD7E21EFA22400E586F6 /* ColorInput.swift */,
 				A12B7AF022299D0C0084AAE6 /* ColorInputDragIndicatorView.swift */,
+				A1B470682391C537004035EF /* CustomErrorProcessor.swift */,
 				A12B7AF2222AEDA20084AAE6 /* FilterApplicationExporter.swift */,
 				A128995321DEE3C600BEE395 /* FilterApplicationIndicator.swift */,
 				A1A0D83F21C4AEAA0098168C /* FilterWorkshopContentView.swift */,
@@ -660,6 +663,7 @@
 				A128994C21DD477000BEE395 /* Colors.swift in Sources */,
 				A1DD09DC237664ED0054061B /* CombineLatestCollection.swift in Sources */,
 				A18D97C22375C5C4009C3DBB /* ControlPublisher.swift in Sources */,
+				A1B470692391C537004035EF /* CustomErrorProcessor.swift in Sources */,
 				A128995221DD6D4000BEE395 /* CwlMutex.swift in Sources */,
 				A1D5A8B321ADB3C100257B5E /* Dictionary+Validation.swift in Sources */,
 				A128993F21D058B300BEE395 /* EitherView.swift in Sources */,
