@@ -178,7 +178,7 @@ final class FilterListViewController: UITableViewController {
         self.navigationItem.searchController = searchController
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(didTapSettings))
 
-        searchSubject.throttle(for: .milliseconds(300), scheduler: RunLoop.main, latest: true)
+        searchSubject.debounce(for: .milliseconds(300), scheduler: RunLoop.main)
             .removeDuplicates()
             .map { $0 ?? "" }
             .sink { [weak self] text in
