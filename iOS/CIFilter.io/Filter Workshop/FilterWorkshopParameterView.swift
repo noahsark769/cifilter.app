@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RxSwift
 import ColorCompatibility
 import Combine
 
@@ -18,7 +17,6 @@ extension UISwitch: ControlValueReporting {
 }
 
 final class FilterWorkshopParameterView: UIView {
-    private let bag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
     enum ParameterType {
         case slider(min: Float, max: Float)
@@ -32,7 +30,7 @@ final class FilterWorkshopParameterView: UIView {
         case colorSpace
     }
 
-    let valueDidChangeObservable = ReplaySubject<Any>.create(bufferSize: 1)
+    let valueDidChange = CurrentValueSubject<Any?, Never>(nil)
 
     private let stackView: UIStackView = {
         let view = UIStackView()
@@ -74,6 +72,8 @@ final class FilterWorkshopParameterView: UIView {
         return view
     }
 
+    private var valuePublishers: [AnyPublisher<Any?, Never>]?
+
     // TODO: I don't like passing in the parameter info AND the parameter type here. We should either
     // derive parameter type from paramter info OR pass in description, min/max, etc directly instead
     // of parameter info
@@ -96,63 +96,59 @@ final class FilterWorkshopParameterView: UIView {
         switch type {
         case .colorSpace:
             stackView.addArrangedSubview(self.furtherDetailLabel(text: "CIFilter.io does not support selecting color spaces. The device color space will be used."))
-            let behaviorSubject = BehaviorSubject<CGColorSpace>(value: CGColorSpaceCreateDeviceRGB())
-            behaviorSubject.map { $0 as Any }.subscribe(self.valueDidChangeObservable).disposed(by: bag)
+//            let subject = CurrentValueSubject<CGColorSpace, Never>(CGColorSpaceCreateDeviceRGB())
+            valuePublishers = [Just(CGColorSpaceCreateDeviceRGB()).map { $0 as Any }.eraseToAnyPublisher()]
         case .boolean:
             let uiSwitch = UISwitch()
             stackView.addArrangedSubview(uiSwitch)
-            let subject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false)
-            uiSwitch.addValueChangedObserver()
-                .subscribe(subject)
-                .store(in: &self.cancellables)
-            subject.map { $0 ? 1 : 0 }.sink { [weak self] value in
-                self?.valueDidChangeObservable.onNext(value)
-            }.store(in: &self.cancellables)
+//            let subject: CurrentValueSubject<Bool, Never> = CurrentValueSubject(false)
+            valuePublishers = [
+                uiSwitch.addValueChangedObserver()
+                    .map { $0 ? 1 : 0 }
+                    .eraseToAnyPublisher(),
+                Just(false)
+                    .map { $0 ? 1 : 0 }
+                    .eraseToAnyPublisher()
+            ]
         case let .slider(min, max):
             let slider = NumericSlider(min: min, max: max)
             slider.widthAnchor <=> 400
             stackView.addArrangedSubview(slider)
-            slider.addValueChangedObserver().sink { value in
-                self.valueDidChangeObservable.onNext(value)
-            }.store(in: &self.cancellables)
+            valuePublishers = [slider.addValueChangedObserver().map { $0 as Any }.eraseToAnyPublisher()]
         case let .number(min, max, defaultValue):
             let numericInput = FreeformNumberInput(min: min, max: max, defaultValue: defaultValue)
-            numericInput.addValueChangedObserver().compactMap { $0 }.sink { value in
-                self.valueDidChangeObservable.onNext(value)
-            }.store(in: &self.cancellables)
+            valuePublishers = [numericInput.addValueChangedObserver().compactMap {
+                $0 as Any
+            }.eraseToAnyPublisher()]
             stackView.addArrangedSubview(numericInput)
         case let .integer(min, max, defaultValue):
             let numericInput = FreeformNumberInput(min: min, max: max, defaultValue: defaultValue)
-            numericInput.addValueChangedObserver().compactMap { $0 }.sink { value in
-                self.valueDidChangeObservable.onNext(value)
-            }.store(in: &self.cancellables)
+            valuePublishers = [numericInput.addValueChangedObserver().compactMap { $0 as Any }.eraseToAnyPublisher()]
             stackView.addArrangedSubview(numericInput)
         case let .vector(defaultValue):
             let lowercasedName = parameter.name.lowercased()
             let isRectangle = lowercasedName.contains("extent") || lowercasedName.contains("rectangle")
             let vectorInput = VectorInput(defaultValue: defaultValue, initialComponents: isRectangle ? 4 : 2)
-            vectorInput.addValueChangedObserver().compactMap { $0 }.sink { value in
-                self.valueDidChangeObservable.onNext(value)
-            }.store(in: &self.cancellables)
+            valuePublishers = [vectorInput.addValueChangedObserver().compactMap { $0 as Any }.eraseToAnyPublisher()]
             stackView.addArrangedSubview(vectorInput)
         case let .color(defaultValue):
-            let colorInput = ColorInput(defaultValue:defaultValue)
-            colorInput.addValueChangedObserver().sink { value in
-                self.valueDidChangeObservable.onNext(value)
-            }.store(in: &self.cancellables)
+            let colorInput = ColorInput(defaultValue: defaultValue)
+            valuePublishers = [colorInput.addValueChangedObserver().map { $0 as Any }.eraseToAnyPublisher()]
             stackView.addArrangedSubview(colorInput)
         case .freeformString:
             let input = FreeformTextInput()
-            input.addValueChangedObserver().compactMap { $0 }.sink { value in
-                self.valueDidChangeObservable.onNext(value)
-            }.store(in: &self.cancellables)
+            valuePublishers = [input.addValueChangedObserver().compactMap { $0 as Any }.eraseToAnyPublisher()]
             stackView.addArrangedSubview(input)
         case .freeformStringAsData:
             let input = FreeformTextInput()
-            input.addValueChangedObserver().compactMap { $0 }.sink { value in
-                self.valueDidChangeObservable.onNext(value)
-            }.store(in: &self.cancellables)
+            valuePublishers = [input.addValueChangedObserver().compactMap { $0 as Any }.eraseToAnyPublisher()]
             stackView.addArrangedSubview(input)
+        }
+
+        if let publishers = self.valuePublishers {
+            for publisher in publishers {
+                publisher.subscribe(self.valueDidChange).store(in: &self.cancellables)
+            }
         }
 
         stackView.edgesToSuperview()

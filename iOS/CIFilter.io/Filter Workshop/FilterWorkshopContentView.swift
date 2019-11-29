@@ -7,13 +7,11 @@
 //
 
 import UIKit
-import RxSwift
 import Combine
 
 final class FilterWorkshopContentView: UIView {
     private let applicator: AsyncFilterApplicator
     private var cancellables = Set<AnyCancellable>()
-    private var bag = DisposeBag()
     private var filter: FilterInfo! = nil
     private let nonImageParametersView = FilterWorkshopParametersView()
     private let imageParametersView = FilterWorkshopParametersView()
@@ -84,18 +82,20 @@ final class FilterWorkshopContentView: UIView {
         outputImageView.setDefault()
         stackView.addArrangedSubview(outputImageView)
 
-        applicator.addSubscription(for: Observable.combineLatest([
-            nonImageParametersView.didUpdateFilterParameters,
-            imageParametersView.didUpdateFilterParameters
-        ]) { values in
-            var dict: [String: Any] = [:]
-            for parameterMapping in values {
-                for (key, value) in parameterMapping {
-                    dict[key] = value
+        applicator.addSubscription(for:
+            CombineLatestCollection([
+                nonImageParametersView.didUpdateFilterParameters.eraseToAnyPublisher(),
+                imageParametersView.didUpdateFilterParameters.eraseToAnyPublisher()
+            ]).map { values in
+                var dict: [String: Any] = [:]
+                for parameterMapping in values {
+                    for (key, value) in parameterMapping {
+                        dict[key] = value
+                    }
                 }
-            }
-            return dict
-        })
+                return dict
+            }.eraseToAnyPublisher()
+        )
     }
 
     func setImage(_ image: UIImage, forParameterNamed name: String) {

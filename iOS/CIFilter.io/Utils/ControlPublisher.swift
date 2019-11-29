@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import UIKit
 
-final class ControlPublisher<ControlType: UIControl>: Publisher {
+final class ControlPublisher<ControlType: UIControl>: NSObject, Publisher {
     typealias ControlEvent = (control: ControlType, event: UIControl.Event)
     typealias Output = ControlEvent
     typealias Failure = Never
@@ -22,6 +22,7 @@ final class ControlPublisher<ControlType: UIControl>: Publisher {
     }
 
     init(control: ControlType, events: [UIControl.Event]) {
+        super.init()
         for event in events {
             control.addTarget(self, action: #selector(controlAction), for: event)
         }
@@ -36,12 +37,16 @@ final class ControlPublisher<ControlType: UIControl>: Publisher {
         Subscriber,
         ControlPublisher.Failure == S.Failure,
         ControlPublisher.Output == S.Input {
-            subject.receive(subscriber: subscriber)
+            subject.subscribe(subscriber)
+    }
+
+    deinit {
+        print("Control publisher deinit'd")
     }
 }
 
-protocol ControlEventsObserable {}
-extension UIControl: ControlEventsObserable {}
+protocol ControlEventsObservable {}
+extension UIControl: ControlEventsObservable {}
 
 protocol ControlValueReporting {
     associatedtype ValueType
@@ -49,14 +54,18 @@ protocol ControlValueReporting {
     var value: ValueType { get }
 }
 
-extension ControlEventsObserable where Self: UIControl {
+extension ControlEventsObservable where Self: UIControl {
     func addControlEventsObserver(events: [UIControl.Event]) -> AnyPublisher<Self, Never> {
-        return ControlPublisher(control: self, events: events).map { $0.control }.eraseToAnyPublisher()
+        return ControlPublisher(control: self, events: events).map {
+            $0.control
+        }.eraseToAnyPublisher()
     }
 }
 
 extension ControlValueReporting where Self: UIControl {
     func addValueChangedObserver() -> AnyPublisher<ValueType, Never> {
-        return self.addControlEventsObserver(events: [.valueChanged]).map { $0.value }.eraseToAnyPublisher()
+        return self.addControlEventsObserver(events: [.valueChanged]).map {
+            $0.value
+        }.eraseToAnyPublisher()
     }
 }

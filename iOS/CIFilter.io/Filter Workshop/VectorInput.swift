@@ -15,6 +15,7 @@ import Combine
 final class VectorInput: UIControl, ControlValueReporting {
     private(set) var value: CIVector? = nil
     private var cancellables = Set<AnyCancellable>()
+    private var controlEventPublishers: [AnyPublisher<NSNumber?, Never>] = []
 
     private let mainStackView: UIStackView = {
         let view = UIStackView()
@@ -84,11 +85,13 @@ final class VectorInput: UIControl, ControlValueReporting {
 
     private func addNumberInput() {
         let input = FreeformNumberInput.createEmptyFloat()
-        input.addValueChangedObserver().sink { _ in
+        let publisher = input.addValueChangedObserver()
+        publisher.sink { _ in
             self.publishVector()
         }.store(in: &self.cancellables)
         input.widthAnchor <=> 90
         numberInputsStackView.addArrangedSubview(input)
+        controlEventPublishers.append(publisher)
     }
 
     private func removeNumberInput() {
@@ -97,6 +100,7 @@ final class VectorInput: UIControl, ControlValueReporting {
         }
         numberInputsStackView.removeArrangedSubview(lastArrangedSubview)
         lastArrangedSubview.removeFromSuperview()
+        _ = self.controlEventPublishers.removeLast()
         self.publishVector()
     }
 

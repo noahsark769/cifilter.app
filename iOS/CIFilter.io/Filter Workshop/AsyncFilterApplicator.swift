@@ -7,8 +7,9 @@
 //
 
 import Foundation
-import RxSwift
 import Combine
+import CoreImage
+import UIKit
 
 struct ParameterValue {
     let name: String
@@ -34,7 +35,7 @@ final class AsyncFilterApplicator {
     let events = PassthroughSubject<Event, Never>()
     var timeStarted: TimeInterval? = nil
 
-    private var bag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     private var currentFilter: FilterInfo? = nil
     private lazy var queue: OperationQueue = {
         let queue = OperationQueue()
@@ -44,13 +45,13 @@ final class AsyncFilterApplicator {
 
     func set(filter: FilterInfo) {
         self.currentFilter = filter
-        bag = DisposeBag() // dispose all current subscriptions
+        cancellables = [] // dispose all current subscriptions
     }
 
-    func addSubscription(for observable: Observable<[String: Any]>) {
-        observable.debounce(.milliseconds(300), scheduler: MainScheduler.instance).subscribe(onNext: { value in
+    func addSubscription(for publisher: AnyPublisher<[String: Any], Never>) {
+        publisher.debounce(for: .milliseconds(200), scheduler: RunLoop.main).sink { value in
             self.generateOutputImageIfPossible(parameterConfiguration: value)
-        }).disposed(by: bag)
+        }.store(in: &self.cancellables)
     }
 
     func generateOutputImageIfPossible(parameterConfiguration: [String: Any]) {

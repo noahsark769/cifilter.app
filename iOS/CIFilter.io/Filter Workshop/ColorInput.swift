@@ -42,6 +42,7 @@ final class ColorInput: UIControl, ControlValueReporting {
     private var lastLocation: CGPoint = .zero
     private var cancellables = Set<AnyCancellable>()
     private(set) var value = CIColor.black
+    private var hexInputValueChanged: AnyPublisher<ColorHexInput.ValueType, Never>!
 
     init(defaultValue: CIColor) {
         // TODO: defaultValue is currently unused
@@ -92,7 +93,8 @@ final class ColorInput: UIControl, ControlValueReporting {
             self.reportColorFromDragLocation()
         }.store(in: &self.cancellables)
 
-        self.hexInput.addValueChangedObserver().sink { color in
+        hexInputValueChanged = self.hexInput.addValueChangedObserver()
+        hexInputValueChanged.sink { color in
             let colorLocation = self.imageView.pointOnColorWheel(for: color)
             self.dragLocation = colorLocation
             self.setNeedsLayout()

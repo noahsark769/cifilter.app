@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RxSwift
 import Combine
 
 private final class RedView: UILabel {
@@ -24,29 +23,28 @@ private final class RedView: UILabel {
     }
 }
 
-func observableFrom<PublisherType: Publisher>(publisher: PublisherType) -> Observable<PublisherType.Output> {
-    return Observable.create { observer in
-        let cancellable = publisher.sink(receiveCompletion: { completion in
-            switch completion {
-            case let .failure(error):
-                observer.onError(error)
-            case .finished:
-                observer.onCompleted()
-            }
-        }, receiveValue: { value in
-            observer.onNext(value)
-        })
-        return Disposables.create {
-            cancellable.cancel()
-        }
-    }
-}
+//func observableFrom<PublisherType: Publisher>(publisher: PublisherType) -> Observable<PublisherType.Output> {
+//    return Observable.create { observer in
+//        let cancellable = publisher.sink(receiveCompletion: { completion in
+//            switch completion {
+//            case let .failure(error):
+//                observer.onError(error)
+//            case .finished:
+//                observer.onCompleted()
+//            }
+//        }, receiveValue: { value in
+//            observer.onNext(value)
+//        })
+//        return Disposables.create {
+//            cancellable.cancel()
+//        }
+//    }
+//}
 
 final class FilterWorkshopParametersView: UIStackView {
-    private var disposeBag: DisposeBag? = nil
     private var cancellables = Set<AnyCancellable>()
 
-    let didUpdateFilterParameters = BehaviorSubject<[String: Any]>(value: [:])
+    let didUpdateFilterParameters = CurrentValueSubject<[String: Any], Never>([:])
     let didChooseAddImage = PassthroughSubject<(String, CGRect), Never>()
     private var paramNamesToImageArtboards: [String: ImageArtboardView] = [:]
     init() {
@@ -63,9 +61,9 @@ final class FilterWorkshopParametersView: UIStackView {
     func set(parameters: [FilterParameterInfo]) {
         paramNamesToImageArtboards = [:]
         self.removeAllArrangedSubviews()
-        disposeBag = DisposeBag()
+        self.cancellables = Set<AnyCancellable>()
 
-        var observables: [Observable<ParameterValue>] = []
+        var publishers: [AnyPublisher<ParameterValue, Never>] = []
         for parameter in parameters.sorted(by: { first, second in
             return first.name < second.name
         }) {
@@ -74,19 +72,20 @@ final class FilterWorkshopParametersView: UIStackView {
                     type: workshopParameterViewType,
                     parameter: parameter
                 )
-                observables.append(parameterView.valueDidChangeObservable.map {
-                    ParameterValue(name: parameter.name, value: $0)
-                })
+                publishers.append(parameterView.valueDidChange.compactMap {
+                    guard let value = $0 else { return nil }
+                    return ParameterValue(name: parameter.name, value: value)
+                }.eraseToAnyPublisher())
                 self.addArrangedSubview(parameterView)
             } else if parameter.isImageType {
                 let imageArtboardView = ImageArtboardView(name: parameter.name, configuration: .input)
                 self.addArrangedSubview(imageArtboardView)
-                observables.append(observableFrom(publisher: imageArtboardView.didChooseImage.map { image in
+                publishers.append(imageArtboardView.didChooseImage.map { image in
                     guard let cgImage = image.cgImage else {
                         fatalError("WARNING could not generate CGImage from chosen UIImage")
                     }
                     return ParameterValue(name: parameter.name, value: CIImage(cgImage: cgImage))
-                }))
+                }.eraseToAnyPublisher())
                 imageArtboardView.didChooseAdd
                     .map { (parameter.name, $0) }
                     .subscribe(self.didChooseAddImage)
@@ -98,13 +97,13 @@ final class FilterWorkshopParametersView: UIStackView {
                 self.addArrangedSubview(RedView(text: "\(parameter.name): \(parameter.classType)"))
             }
         }
-        Observable.combineLatest(observables) { values in
+        publishers.combineLatest().map { values in
             var dict: [String: Any] = [:]
             for parameterValue in values {
                 dict[parameterValue.name] = parameterValue.value
             }
             return dict
-        }.subscribe(self.didUpdateFilterParameters).disposed(by: disposeBag!)
+        }.subscribe(self.didUpdateFilterParameters).store(in: &self.cancellables)
     }
 
     func setImage(_ image: UIImage, forParameterNamed name: String) {
