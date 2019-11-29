@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RxSwift
 import Combine
 
 final class FilterWorkshopView: UIView {
@@ -16,7 +15,6 @@ final class FilterWorkshopView: UIView {
     private var needsZoomScaleUpdate: Bool = false
     private let scrollView = UIScrollView()
     private let applicator: AsyncFilterApplicator
-    private let bag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
     private lazy var contentView: FilterWorkshopContentView = {
         return FilterWorkshopContentView(applicator: self.applicator)

@@ -14,8 +14,6 @@ PODS:
   - Mixpanel-swift/Complete (2.5.9)
   - ReactiveLists (0.3.0):
     - DifferenceKit (~> 0.6.0)
-  - RxAtomic (4.4.0)
-  - RxSwift (5.0.1)
   - Sentry (4.3.1):
     - Sentry/Core (= 4.3.1)
   - Sentry/Core (4.3.1)
@@ -27,8 +25,6 @@ DEPENDENCIES:
   - Keys (from `Pods/CocoaPodsKeys`)
   - Mixpanel-swift (~> 2.5.9)
   - ReactiveLists (~> 0.3.0)
-  - RxAtomic (~> 4.4.0)
-  - RxSwift (from `https://github.com/noahsark769/RxSwift`, branch `uikitformac-compat`)
   - Sentry (~> 4.3.1)
 
 SPEC REPOS:
@@ -39,20 +35,11 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - Mixpanel-swift
     - ReactiveLists
-    - RxAtomic
     - Sentry
 
 EXTERNAL SOURCES:
   Keys:
     :path: Pods/CocoaPodsKeys
-  RxSwift:
-    :branch: uikitformac-compat
-    :git: https://github.com/noahsark769/RxSwift
-
-CHECKOUT OPTIONS:
-  RxSwift:
-    :commit: 9b8f9dd6225fc0f3cf3a2d77012638c259884cce
-    :git: https://github.com/noahsark769/RxSwift
 
 SPEC CHECKSUMS:
   AloeStackView: d22c006da4510db5e220968234174654b5ed6ea5
@@ -62,10 +49,8 @@ SPEC CHECKSUMS:
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   Mixpanel-swift: 4a2e061c8b7a5000ed7f72d2a6196884b5de8b49
   ReactiveLists: 383c6720617abfb9bd47e8e612bfc13e1895eda5
-  RxAtomic: eacf60db868c96bfd63320e28619fe29c179656f
-  RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   Sentry: 5267d493a398663538317e4dcc438c12c66202ed
 
-PODFILE CHECKSUM: 1f36dcf89d1a2ef659cfadb7973ff179dbbdfc43
+PODFILE CHECKSUM: 99b00d8c8c16519d488b69c8e12d49f3d01ac304
 
 COCOAPODS: 1.8.3
