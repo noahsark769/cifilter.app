@@ -63,11 +63,16 @@ final class FilterWorkshopView: UIView {
             case let .generationErrored(error):
                 self.consoleView.update(for: .hideActivity)
 
-                if case .needsMoreParameters = error {
+                switch error {
+                case .needsMoreParameters:
                     return
+                case let .implementationError(message):
+                    self.consoleView.update(for: .error(message: "Generation errored. Please submit an issue on github. Error: \(message)", animated: true))
+                case let .userFacingError(message):
+                    self.consoleView.update(for: .error(message: message, animated: true))
+                case .generationFailed:
+                    self.consoleView.update(for: .error(message: "Generation errored. Please submit an issue on github.", animated: true))
                 }
-
-                self.consoleView.update(for: .error(message: "Generation errored. Please submit an issue on github. Error: \(error)", animated: true))
             }
         }.store(in: &self.cancellables)
 

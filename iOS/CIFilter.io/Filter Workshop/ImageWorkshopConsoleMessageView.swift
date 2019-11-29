@@ -38,7 +38,7 @@ final class ImageWorkshopConsoleMessageView: UIView {
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         label.text = message
-        label.widthAnchor.constraint(lessThanOrEqualToConstant: 500).isActive = true
+        label.widthAnchor.constraint(lessThanOrEqualToConstant: UIScreen.main.bounds.width * 0.95).isActive = true
     }
 
     required init?(coder aDecoder: NSCoder) {

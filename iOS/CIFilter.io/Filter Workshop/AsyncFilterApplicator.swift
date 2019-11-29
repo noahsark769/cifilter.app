@@ -21,8 +21,16 @@ struct ParameterValue {
  */
 final class AsyncFilterApplicator {
     enum Error: Swift.Error {
-        case generationFailed // Catch-all for CIFilter errors - image could not be generated from filter.outputImage
+        /// Catch-all for CIFilter errors - image could not be generated from filter.outputImage
+        case generationFailed
+
+        /// We caught an error that we want to show the user. Useful for times when trying to generate the output image will crash
+        case userFacingError(message: String)
+
+        /// We caught an error that we shouldn't have - tell the user to report an issue
         case implementationError(message: String)
+
+        /// We need more params for the filter
         case needsMoreParameters(names: [String])
     }
 
@@ -72,6 +80,18 @@ final class AsyncFilterApplicator {
         if stillNeededParameterNames.count > 0 {
             events.send(.generationErrored(error: .needsMoreParameters(names: stillNeededParameterNames)))
         } else {
+            if filter.name == "CIQRCodeGenerator" {
+                if let correctionLevel = ciFilter.value(forKey: "inputCorrectionLevel") as? String {
+                    if correctionLevel == "" {
+                        return
+                    }
+                    if !["L", "M", "Q", "H"].contains(correctionLevel) {
+                        events.send(.generationErrored(error: .userFacingError(message: "inputCorrectionLevel for CIQRCodeGenerator must be one of: L, M, Q, or Hs")))
+                        return
+                    }
+                }
+            }
+
             queue.cancelAllOperations()
 
             let blockOperation = BlockOperation()
@@ -83,6 +103,7 @@ final class AsyncFilterApplicator {
                     self.events.send(.generationErrored(error: .generationFailed))
                     return
                 }
+
                 let context = CIContext(options: nil)
 
                 var wasCropped = false

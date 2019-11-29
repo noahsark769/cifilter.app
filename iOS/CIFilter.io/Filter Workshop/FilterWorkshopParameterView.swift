@@ -141,7 +141,9 @@ final class FilterWorkshopParameterView: UIView {
             stackView.addArrangedSubview(input)
         case .freeformStringAsData:
             let input = FreeformTextInput()
-            valuePublishers = [input.addValueChangedObserver().compactMap { $0 as Any }.eraseToAnyPublisher()]
+            valuePublishers = [input.addValueChangedObserver().compactMap {
+                $0?.data(using: .utf8) as Any
+            }.eraseToAnyPublisher()]
             stackView.addArrangedSubview(input)
         }
 
