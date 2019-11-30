@@ -56,6 +56,8 @@ open class UIHostingView<Content: View>: UIView {
 }
 
 final class ImageArtboardView: UIView {
+    static let artboardSize: CGFloat = 650
+
     enum Configuration {
         case input
         case output

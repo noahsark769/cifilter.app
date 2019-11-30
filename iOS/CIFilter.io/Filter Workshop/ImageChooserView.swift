@@ -51,7 +51,6 @@ private let artboardSpacing: CGFloat = 20
 private let numImagePerArtboardRow = 3
 
 final class ImageChooserView: UIView {
-    static let artboardSize: CGFloat = 650
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -59,7 +58,7 @@ final class ImageChooserView: UIView {
     let didChooseAdd = PassthroughSubject<CGRect, Never>()
 
     static var imageSize: CGFloat {
-        return (ImageChooserView.artboardSize - (artboardPadding * 2) - (artboardSpacing * 2)) / CGFloat(numImagePerArtboardRow)
+        return (ImageArtboardView.artboardSize - (artboardPadding * 2) - (artboardSpacing * 2)) / CGFloat(numImagePerArtboardRow)
     }
 
     private let verticalStackView: UIStackView = {

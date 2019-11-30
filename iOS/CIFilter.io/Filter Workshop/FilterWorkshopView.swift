@@ -81,8 +81,8 @@ final class FilterWorkshopView: UIView {
                 self.scrollView.setZoomScale(self.scrollView.minimumZoomScale, animated: true)
             } else {
                 let location = recognizer.location(in: self.contentView)
-                let width: CGFloat = ImageChooserView.artboardSize * 1.6
-                let height: CGFloat = ImageChooserView.artboardSize * 1.6
+                let width: CGFloat = ImageArtboardView.artboardSize * 1.6
+                let height: CGFloat = ImageArtboardView.artboardSize * 1.6
                 let rect = CGRect(x: location.x - width / 2, y: location.y - height / 2, width: width, height: height)
                 self.scrollView.zoom(to: rect, animated: true)
             }

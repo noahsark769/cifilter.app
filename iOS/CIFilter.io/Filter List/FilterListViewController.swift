@@ -178,6 +178,12 @@ final class FilterListViewController: UITableViewController {
         self.navigationItem.searchController = searchController
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(didTapSettings))
 
+        self.configureNavigationBarForCloseButton()
+        NotificationCenter.default.addObserver(forName: UIScene.willConnectNotification, object: nil, queue: nil) { [weak self] _ in
+            guard let self = self else { return }
+            self.configureNavigationBarForCloseButton()
+        }
+
         searchSubject.debounce(for: .milliseconds(300), scheduler: RunLoop.main)
             .removeDuplicates()
             .map { $0 ?? "" }
@@ -203,6 +209,26 @@ final class FilterListViewController: UITableViewController {
         }).store(in: &cancellables)
         let controller = UIHostingController(rootView: view)
         self.present(controller, animated: true, completion: nil)
+    }
+
+    @objc private func didTapClose() {
+        let controller = UIAlertController(title: "", message: "Close this window?", preferredStyle: .alert)
+        controller.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        controller.addAction(UIAlertAction(title: "Close", style: .destructive, handler: { _ in
+            guard let session = self.view.window?.windowScene?.session else {
+                return
+            }
+            UIApplication.shared.requestSceneSessionDestruction(session, options: nil, errorHandler: nil)
+        }))
+        self.present(controller, animated: true, completion: nil)
+    }
+
+    private func configureNavigationBarForCloseButton() {
+        if UIApplication.shared.connectedScenes.count > 1 {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(didTapClose))
+        } else {
+            self.navigationItem.leftBarButtonItem = nil
+        }
     }
 }
 
