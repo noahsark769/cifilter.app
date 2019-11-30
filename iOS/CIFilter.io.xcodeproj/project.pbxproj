@@ -13,7 +13,6 @@
 		A119025B222B31B000FE27A3 /* UIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A119025A222B31B000FE27A3 /* UIImage+Utils.swift */; };
 		A11C522521968BB000045F2E /* FilterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11C522421968BB000045F2E /* FilterListViewController.swift */; };
 		A1285486234AB818000460BC /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1285485234AB818000460BC /* UIFont+Extensions.swift */; };
-		A128993921CFFF7000BEE395 /* ImageChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128993821CFFF7000BEE395 /* ImageChooserView.swift */; };
 		A128993D21D047BD00BEE395 /* FilterWorkshopParametersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128993C21D047BD00BEE395 /* FilterWorkshopParametersView.swift */; };
 		A128993F21D058B300BEE395 /* EitherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128993E21D058B300BEE395 /* EitherView.swift */; };
 		A128994121D18E6800BEE395 /* FilterWorkshopParameterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A128994021D18E6800BEE395 /* FilterWorkshopParameterView.swift */; };
@@ -103,7 +102,6 @@
 		A119025A222B31B000FE27A3 /* UIImage+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Utils.swift"; sourceTree = "<group>"; };
 		A11C522421968BB000045F2E /* FilterListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListViewController.swift; sourceTree = "<group>"; };
 		A1285485234AB818000460BC /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
-		A128993821CFFF7000BEE395 /* ImageChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageChooserView.swift; sourceTree = "<group>"; };
 		A128993C21D047BD00BEE395 /* FilterWorkshopParametersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterWorkshopParametersView.swift; sourceTree = "<group>"; };
 		A128993E21D058B300BEE395 /* EitherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EitherView.swift; sourceTree = "<group>"; };
 		A128994021D18E6800BEE395 /* FilterWorkshopParameterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterWorkshopParameterView.swift; sourceTree = "<group>"; };
@@ -268,7 +266,6 @@
 				A128994421D40A3F00BEE395 /* FreeformNumberInput.swift */,
 				A1DD09D923765CCA0054061B /* FreeformTextInput.swift */,
 				A1A0D83D21BEC1B90098168C /* ImageArtboardView.swift */,
-				A128993821CFFF7000BEE395 /* ImageChooserView.swift */,
 				A128995521DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift */,
 				A128995721DEE44F00BEE395 /* ImageWorkshopConsoleView.swift */,
 				A128994221D1A56900BEE395 /* NumericSlider.swift */,
@@ -700,7 +697,6 @@
 				A1D309882391F62C00CC92A2 /* ImageArtboardDropIndicatorView.swift in Sources */,
 				A1A0D83E21BEC1B90098168C /* ImageArtboardView.swift in Sources */,
 				A1AA26DD22F7835300620FC2 /* ImageChooserSwiftUIView.swift in Sources */,
-				A128993921CFFF7000BEE395 /* ImageChooserView.swift in Sources */,
 				A128995621DEE43800BEE395 /* ImageWorkshopConsoleMessageView.swift in Sources */,
 				A128995821DEE44F00BEE395 /* ImageWorkshopConsoleView.swift in Sources */,
 				A12937602246B90B000C6329 /* NonFatalManager.swift in Sources */,

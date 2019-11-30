@@ -27,8 +27,8 @@ final class OutputImageNotGeneratedView: UIView {
         self.backgroundColor = Colors.primary.color
         addSubview(label)
         label.edges(to: self, insets: UIEdgeInsets(all: 80))
-        self.widthAnchor <=> ImageChooserView.artboardSize
-        self.heightAnchor <=> ImageChooserView.artboardSize
+        self.widthAnchor <=> ImageArtboardView.artboardSize
+        self.heightAnchor <=> ImageArtboardView.artboardSize
     }
 
     required init?(coder aDecoder: NSCoder) {

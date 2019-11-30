@@ -17,8 +17,8 @@ final class OutputImageActivityIndicatorView: UIView {
         activityView.disableTranslatesAutoresizingMaskIntoConstraints()
         activityView.centerXAnchor <=> self.centerXAnchor
         activityView.centerYAnchor <=> self.centerYAnchor
-        self.widthAnchor <=> ImageChooserView.artboardSize
-        self.heightAnchor <=> ImageChooserView.artboardSize
+        self.widthAnchor <=> ImageArtboardView.artboardSize
+        self.heightAnchor <=> ImageArtboardView.artboardSize
     }
 
     required init?(coder aDecoder: NSCoder) {

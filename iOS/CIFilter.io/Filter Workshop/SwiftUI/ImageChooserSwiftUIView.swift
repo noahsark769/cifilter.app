@@ -51,7 +51,6 @@ struct AddImageView: View {
                 })
                 .onTapGesture {
                     guard let frame = self.currentTapFrame else {
-                        print ("AHHHH")
                         return
                     }
                     self.didTap(frame)
