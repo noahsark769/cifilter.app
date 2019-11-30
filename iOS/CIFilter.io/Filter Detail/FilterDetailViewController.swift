@@ -9,8 +9,16 @@
 import UIKit
 import Combine
 import ColorCompatibility
+import SwiftUI
 
-private let isCompressed = UIScreen.main.bounds.width < 415
+struct NoFilterSelectedView: View {
+    var body: some View {
+        HStack {
+            Image(systemName: "arrow.left")
+            Text("Select a CIFilter from the sidebar")
+        }
+    }
+}
 
 final class FilterDetailViewController: UIViewController {
     private var presentWorkshopCancellable: AnyCancellable? = nil
@@ -18,30 +26,31 @@ final class FilterDetailViewController: UIViewController {
     var filter: FilterInfo! = nil
     var compressedConstraints: [NSLayoutConstraint] = []
     var nonCompressedConstraints: [NSLayoutConstraint] = []
+    private let noFilterSelectedView = UIHostingView(rootView: NoFilterSelectedView())
+    private lazy var eitherView = EitherView(views: [self.filterView, self.noFilterSelectedView])
 
     init() {
         super.init(nibName: nil, bundle: nil)
 
-        self.view.addSubview(filterView)
+        self.view.addSubview(eitherView)
         self.view.backgroundColor = ColorCompatibility.systemBackground
-        filterView.disableTranslatesAutoresizingMaskIntoConstraints()
-        filterView.topAnchor <=> self.view.topAnchor
-        filterView.bottomAnchor <=> self.view.bottomAnchor
+        eitherView.disableTranslatesAutoresizingMaskIntoConstraints()
+        eitherView.topAnchor <=> self.view.topAnchor
+        eitherView.bottomAnchor <=> self.view.bottomAnchor
 
         compressedConstraints = [
             // TODO: set precedence of these operators correctly so we don't need parens
-            (filterView |= self.view) ++ 10,
-            (filterView =| self.view) -- 10
+            (eitherView |= self.view) ++ 10,
+            (eitherView =| self.view) -- 10
         ]
         nonCompressedConstraints = [
             // Constrain to edges, unless that makes it bigger than 600pt
-            filterView.widthAnchor <=> 600,
-            filterView.centerXAnchor <=> self.view.centerXAnchor
+            eitherView.widthAnchor <=> 600,
+            eitherView.centerXAnchor <=> self.view.centerXAnchor
         ]
 
-        let interaction = UIContextMenuInteraction(delegate: self)
-        filterView.addInteraction(interaction)
         self.updateConstraintsForTraitCollection()
+        eitherView.setEnabled(noFilterSelectedView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -53,6 +62,7 @@ final class FilterDetailViewController: UIViewController {
     }
 
     func set(filter: FilterInfo) {
+        eitherView.setEnabled(filterView)
         self.title = filter.name
         self.filter = filter
         filterView.set(filter: filter)
@@ -88,13 +98,6 @@ final class FilterDetailViewController: UIViewController {
         self.splitViewController?.present(navigationController, animated: true, completion: nil)
     }
 
-    func presentFilterWorkshopInScene(filter: FilterInfo) {
-        let userActivity = NSUserActivity(activityType: "com.noahgilmore.cifilterio.workshop")
-        userActivity.title = filter.name
-        userActivity.userInfo = ["filterName": filter.name]
-        UIApplication.shared.requestSceneSessionActivation(nil, userActivity: userActivity, options: nil, errorHandler: nil)
-    }
-
     private func updateConstraintsForTraitCollection() {
         if self.traitCollection.horizontalSizeClass == .compact {
             nonCompressedConstraints.forEach { $0.isActive = false }
@@ -115,18 +118,5 @@ extension UISplitViewController {
     func toggleMasterView() {
         let barButtonItem = self.displayModeButtonItem
         UIApplication.shared.sendAction(barButtonItem.action!, to: barButtonItem.target, from: nil, for: nil)
-    }
-}
-
-extension FilterDetailViewController: UIContextMenuInteractionDelegate {
-    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
-            return UIMenu(title: "", image: nil, identifier: nil, children: [
-                UIAction(title: "Open in new window", image: UIImage(systemName: "square.and.arrow.up"), identifier: UIAction.Identifier(rawValue: "open"), handler: { action in
-                    self.presentFilterWorkshopInScene(filter: self.filter)
-                })
-            ])
-        })
     }
 }
