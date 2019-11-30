@@ -10,6 +10,51 @@ import UIKit
 import Combine
 import SwiftUI
 
+/// A `UIView` subclass capable of hosting a SwiftUI view.
+open class UIHostingView<Content: View>: UIView {
+    private let rootViewHostingController: UIHostingController<Content>
+
+    public var rootView: Content {
+        get {
+            return rootViewHostingController.rootView
+        } set {
+            rootViewHostingController.rootView = newValue
+        }
+    }
+
+    public required init(rootView: Content) {
+        self.rootViewHostingController = UIHostingController(rootView: rootView)
+
+        super.init(frame: .zero)
+
+        rootViewHostingController.view.backgroundColor = .clear
+
+        addSubview(rootViewHostingController.view)
+    }
+
+    public required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override open func layoutSubviews() {
+        super.layoutSubviews()
+
+        rootViewHostingController.view.frame = self.bounds
+    }
+
+    override open func sizeThatFits(_ size: CGSize) -> CGSize {
+        rootViewHostingController.sizeThatFits(in: size)
+    }
+
+    override open func systemLayoutSizeFitting(
+        _ targetSize: CGSize,
+        withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
+        verticalFittingPriority: UILayoutPriority
+    ) -> CGSize {
+        rootViewHostingController.sizeThatFits(in: targetSize)
+    }
+}
+
 final class ImageArtboardView: UIView {
     enum Configuration {
         case input
@@ -74,6 +119,8 @@ final class ImageArtboardView: UIView {
         return UserDefaultsConfig.swiftUIImageChooser ? swiftUIImageChooserViewController.view! : legacyImageChooserView
     }
 
+    private let dashedBorder = CAShapeLayer()
+
     init(name: String, configuration: Configuration) {
         self.configuration = configuration
         super.init(frame: .zero)
@@ -129,7 +176,17 @@ final class ImageArtboardView: UIView {
             swiftUIImageChooserViewController.view!.widthAnchor.constraint(equalToConstant: 650).isActive = true
         }
 
-        self.addInteraction(self.dropInteraction)
+        if self.configuration == .input {
+            self.addInteraction(self.dropInteraction)
+        }
+
+        self.layer.addSublayer(self.dashedBorder)
+        self.dashedBorder.isHidden = true
+        self.dashedBorder.lineWidth = 10
+        self.dashedBorder.strokeColor = ColorCompatibility.label.cgColor
+        self.dashedBorder.fillColor = UIColor.clear.cgColor
+//        self.dashedBorder.lineDashPattern = [2, 1]
+        self.dashedBorder.cornerRadius = 10
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -169,6 +226,12 @@ final class ImageArtboardView: UIView {
         self.activityView.stopAnimating()
         self.eitherView.setEnabled(self.noImageGeneratedView)
         self.editButton.isHidden = true
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.dashedBorder.frame = self.layer.bounds
+        self.dashedBorder.path = CGPath(roundedRect: self.dashedBorder.bounds, cornerWidth: 10, cornerHeight: 10, transform: nil)
     }
 }
 
@@ -219,12 +282,14 @@ extension ImageArtboardView: UIDropInteractionDelegate {
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnter session: UIDropSession) {
+        self.dashedBorder.isHidden = false
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, concludeDrop session: UIDropSession) {
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidExit session: UIDropSession) {
+        self.dashedBorder.isHidden = true
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnd session: UIDropSession) {
@@ -237,5 +302,6 @@ extension ImageArtboardView: UIDropInteractionDelegate {
             let images = imageItems as! [UIImage]
             self.set(image: images.first!, reportOnSubject: true)
         }
+        self.dashedBorder.isHidden = true
     }
 }
