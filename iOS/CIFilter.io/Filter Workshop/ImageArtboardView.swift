@@ -119,7 +119,7 @@ final class ImageArtboardView: UIView {
         return UserDefaultsConfig.swiftUIImageChooser ? swiftUIImageChooserViewController.view! : legacyImageChooserView
     }
 
-    private let dashedBorder = CAShapeLayer()
+    private let dropIndicatorView = UIHostingView(rootView: ImageArtboardDropIndicatorView())
 
     init(name: String, configuration: Configuration) {
         self.configuration = configuration
@@ -180,13 +180,9 @@ final class ImageArtboardView: UIView {
             self.addInteraction(self.dropInteraction)
         }
 
-        self.layer.addSublayer(self.dashedBorder)
-        self.dashedBorder.isHidden = true
-        self.dashedBorder.lineWidth = 10
-        self.dashedBorder.strokeColor = ColorCompatibility.label.cgColor
-        self.dashedBorder.fillColor = UIColor.clear.cgColor
-//        self.dashedBorder.lineDashPattern = [2, 1]
-        self.dashedBorder.cornerRadius = 10
+        self.addSubview(self.dropIndicatorView)
+        self.dropIndicatorView.isHidden = true
+        self.dropIndicatorView.edges(to: self)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -226,12 +222,6 @@ final class ImageArtboardView: UIView {
         self.activityView.stopAnimating()
         self.eitherView.setEnabled(self.noImageGeneratedView)
         self.editButton.isHidden = true
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.dashedBorder.frame = self.layer.bounds
-        self.dashedBorder.path = CGPath(roundedRect: self.dashedBorder.bounds, cornerWidth: 10, cornerHeight: 10, transform: nil)
     }
 }
 
@@ -282,14 +272,14 @@ extension ImageArtboardView: UIDropInteractionDelegate {
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnter session: UIDropSession) {
-        self.dashedBorder.isHidden = false
+        self.dropIndicatorView.isHidden = false
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, concludeDrop session: UIDropSession) {
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidExit session: UIDropSession) {
-        self.dashedBorder.isHidden = true
+        self.dropIndicatorView.isHidden = true
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnd session: UIDropSession) {
@@ -302,6 +292,6 @@ extension ImageArtboardView: UIDropInteractionDelegate {
             let images = imageItems as! [UIImage]
             self.set(image: images.first!, reportOnSubject: true)
         }
-        self.dashedBorder.isHidden = true
+        self.dropIndicatorView.isHidden = true
     }
 }

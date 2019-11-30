@@ -56,6 +56,7 @@
 		A1C6621D2196818100826A2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C6621C2196818100826A2B /* AppDelegate.swift */; };
 		A1C662242196818300826A2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1C662232196818300826A2B /* Assets.xcassets */; };
 		A1C662272196818300826A2B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1C662252196818300826A2B /* LaunchScreen.storyboard */; };
+		A1D309882391F62C00CC92A2 /* ImageArtboardDropIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D309872391F62C00CC92A2 /* ImageArtboardDropIndicatorView.swift */; };
 		A1D5A8AB21ADB31400257B5E /* FilterParameterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8AA21ADB31400257B5E /* FilterParameterInfo.swift */; };
 		A1D5A8AD21ADB33300257B5E /* FilterParameterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8AC21ADB33300257B5E /* FilterParameterType.swift */; };
 		A1D5A8AF21ADB38200257B5E /* CIVectorCodableWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8AE21ADB38200257B5E /* CIVectorCodableWrapper.swift */; };
@@ -148,6 +149,7 @@
 		A1C662232196818300826A2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1C662262196818300826A2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A1C662282196818300826A2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1D309872391F62C00CC92A2 /* ImageArtboardDropIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageArtboardDropIndicatorView.swift; sourceTree = "<group>"; };
 		A1D5A8AA21ADB31400257B5E /* FilterParameterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterParameterInfo.swift; sourceTree = "<group>"; };
 		A1D5A8AC21ADB33300257B5E /* FilterParameterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterParameterType.swift; sourceTree = "<group>"; };
 		A1D5A8AE21ADB38200257B5E /* CIVectorCodableWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIVectorCodableWrapper.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 		A157C80E22F5149E00C4ACFA /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				A1D309872391F62C00CC92A2 /* ImageArtboardDropIndicatorView.swift */,
 				A1AA26DC22F7835300620FC2 /* ImageChooserSwiftUIView.swift */,
 			);
 			path = SwiftUI;
@@ -694,6 +697,7 @@
 				A1A0D83A21BC67ED0098168C /* FilterWorkshopViewController.swift in Sources */,
 				A128994521D40A3F00BEE395 /* FreeformNumberInput.swift in Sources */,
 				A1DD09DA23765CCA0054061B /* FreeformTextInput.swift in Sources */,
+				A1D309882391F62C00CC92A2 /* ImageArtboardDropIndicatorView.swift in Sources */,
 				A1A0D83E21BEC1B90098168C /* ImageArtboardView.swift in Sources */,
 				A1AA26DD22F7835300620FC2 /* ImageChooserSwiftUIView.swift in Sources */,
 				A128993921CFFF7000BEE395 /* ImageChooserView.swift in Sources */,
