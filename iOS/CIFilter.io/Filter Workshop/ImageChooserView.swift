@@ -78,9 +78,6 @@ final class ImageChooserView: UIView {
     }
 
     private let addView = ImageChooserAddView()
-    private lazy var dropInteraction: UIDropInteraction = {
-        return UIDropInteraction(delegate: self)
-    }()
 
     init() {
         super.init(frame: .zero)
@@ -107,8 +104,6 @@ final class ImageChooserView: UIView {
         addView.didTap.sink {
             self.didChooseAdd.send(self.window!.convert(self.addView.bounds, from: self.addView))
         }.store(in: &self.cancellables)
-
-        self.addInteraction(self.dropInteraction)
     }
 
     private func newImageView(image: BuiltInImage) -> UIImageView {
@@ -129,39 +124,5 @@ final class ImageChooserView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension ImageChooserView: UIDropInteractionDelegate {
-    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
-        // Ensure the drop session has an object of the appropriate type
-        let result = session.canLoadObjects(ofClass: UIImage.self)
-        return result
-    }
-
-    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
-        // Propose to the system to copy the item from the source app
-        return UIDropProposal(operation: .copy)
-    }
-
-    func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnter session: UIDropSession) {
-    }
-
-    func dropInteraction(_ interaction: UIDropInteraction, concludeDrop session: UIDropSession) {
-    }
-
-    func dropInteraction(_ interaction: UIDropInteraction, sessionDidExit session: UIDropSession) {
-    }
-
-    func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnd session: UIDropSession) {
-    }
-
-    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
-        // Consume drag items (in this example, of type UIImage).
-        session.loadObjects(ofClass: UIImage.self) { imageItems in
-
-            let images = imageItems as! [UIImage]
-            self.didChooseImage.send(images.first!)
-        }
     }
 }

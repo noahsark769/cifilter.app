@@ -66,6 +66,10 @@ final class ImageArtboardView: UIView {
         return view
     }()
 
+    private lazy var dropInteraction: UIDropInteraction = {
+        return UIDropInteraction(delegate: self)
+    }()
+
     var imageChooserView: UIView {
         return UserDefaultsConfig.swiftUIImageChooser ? swiftUIImageChooserViewController.view! : legacyImageChooserView
     }
@@ -124,6 +128,8 @@ final class ImageArtboardView: UIView {
             swiftUIImageChooserViewController.view!.heightAnchor.constraint(equalToConstant: 650).isActive = true
             swiftUIImageChooserViewController.view!.widthAnchor.constraint(equalToConstant: 650).isActive = true
         }
+
+        self.addInteraction(self.dropInteraction)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -197,5 +203,39 @@ extension ImageArtboardView: UIDragInteractionDelegate {
         return [
             UIDragItem(itemProvider: NSItemProvider(object: image))
         ]
+    }
+}
+
+extension ImageArtboardView: UIDropInteractionDelegate {
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        // Ensure the drop session has an object of the appropriate type
+        let result = session.canLoadObjects(ofClass: UIImage.self)
+        return result
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+        // Propose to the system to copy the item from the source app
+        return UIDropProposal(operation: .copy)
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnter session: UIDropSession) {
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, concludeDrop session: UIDropSession) {
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidExit session: UIDropSession) {
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnd session: UIDropSession) {
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
+        // Consume drag items (in this example, of type UIImage).
+        session.loadObjects(ofClass: UIImage.self) { imageItems in
+
+            let images = imageItems as! [UIImage]
+            self.set(image: images.first!, reportOnSubject: true)
+        }
     }
 }
