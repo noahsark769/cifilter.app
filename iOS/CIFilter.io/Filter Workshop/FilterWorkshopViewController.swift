@@ -55,11 +55,7 @@ final class FilterWorkshopViewController: UIViewController {
         workshopView.didChooseAddImage.sink(receiveValue: { (paramName, view) in
             AnalyticsManager.shared.track(event: "tap_choose_image", properties: ["name": self.filter.name, "parameter_name": paramName])
             self.inputImageCurrentlySelecting = paramName
-            #if targetEnvironment(macCatalyst)
-            self.presentDocumentBrowserController()
-            #else
             self.presentImagePickerController(fromSourceRect: view)
-            #endif
         }).store(in: &self.cancellables)
     }
 
@@ -84,12 +80,6 @@ final class FilterWorkshopViewController: UIViewController {
         // We extracted the frame from the global coordinate space in SwiftUI, so now we have to
         // convert it back
         vc.popoverPresentationController?.sourceRect = self.view.convert(sourceRect, from: self.view.window!)
-        self.present(vc, animated: true, completion: nil)
-    }
-
-    private func presentDocumentBrowserController() {
-        let vc = UIDocumentPickerViewController(documentTypes: ["public.image"], in: .open)
-        vc.delegate = self
         self.present(vc, animated: true, completion: nil)
     }
 

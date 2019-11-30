@@ -78,11 +78,7 @@ final class FilterDetailViewController: UIViewController {
     }
 
     func presentFilterWorkshop(filter: FilterInfo) {
-        #if targetEnvironment(macCatalyst)
-        self.presentFilterWorkshopInScene(filter: filter)
-        #else
         self.presentFilterWorkshopModally(filter: filter)
-        #endif
     }
 
     func presentFilterWorkshopModally(filter: FilterInfo) {
