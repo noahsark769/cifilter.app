@@ -41,7 +41,8 @@ final class FilterExampleProvider {
         case "CIMeshGenerator":
             return .notAvailable(reason: "CIFilter.io does not currently support capturing mesh array data.")
         case "CIAffineTransform": fallthrough
-        case "CIAffineClamp":
+        case "CIAffineClamp": fallthrough
+        case "CIAffineTile":
             return .notAvailable(reason: "CIFilter.io does not currently support capturing affine transform data.")
         case "CICoreMLModelFilter":
             return .notAvailable(reason: "CIFilter.io does not currently support capturing CoreML model data.")
