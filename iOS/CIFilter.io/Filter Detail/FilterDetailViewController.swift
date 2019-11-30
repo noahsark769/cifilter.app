@@ -14,8 +14,10 @@ private let isCompressed = UIScreen.main.bounds.width < 415
 
 final class FilterDetailViewController: UIViewController {
     private var presentWorkshopCancellable: AnyCancellable? = nil
-    private var filterView: FilterDetailView = FilterDetailView(isCompressed: isCompressed)
+    private var filterView: FilterDetailView = FilterDetailView()
     var filter: FilterInfo! = nil
+    var compressedConstraints: [NSLayoutConstraint] = []
+    var nonCompressedConstraints: [NSLayoutConstraint] = []
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -26,18 +28,20 @@ final class FilterDetailViewController: UIViewController {
         filterView.topAnchor <=> self.view.topAnchor
         filterView.bottomAnchor <=> self.view.bottomAnchor
 
-        // Constrain to edges, unless that makes it bigger than 600pt
-        if isCompressed {
+        compressedConstraints = [
             // TODO: set precedence of these operators correctly so we don't need parens
-            (filterView |= self.view) ++ 10
+            (filterView |= self.view) ++ 10,
             (filterView =| self.view) -- 10
-        } else {
-            filterView.widthAnchor <=> 600
+        ]
+        nonCompressedConstraints = [
+            // Constrain to edges, unless that makes it bigger than 600pt
+            filterView.widthAnchor <=> 600,
             filterView.centerXAnchor <=> self.view.centerXAnchor
-        }
+        ]
 
         let interaction = UIContextMenuInteraction(delegate: self)
         filterView.addInteraction(interaction)
+        self.updateConstraintsForTraitCollection()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -89,6 +93,20 @@ final class FilterDetailViewController: UIViewController {
         userActivity.title = filter.name
         userActivity.userInfo = ["filterName": filter.name]
         UIApplication.shared.requestSceneSessionActivation(nil, userActivity: userActivity, options: nil, errorHandler: nil)
+    }
+
+    private func updateConstraintsForTraitCollection() {
+        if self.traitCollection.horizontalSizeClass == .compact {
+            nonCompressedConstraints.forEach { $0.isActive = false }
+            compressedConstraints.forEach { $0.isActive = true }
+        } else {
+            nonCompressedConstraints.forEach { $0.isActive = true }
+            compressedConstraints.forEach { $0.isActive = false }
+        }
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        self.updateConstraintsForTraitCollection()
     }
 }
 

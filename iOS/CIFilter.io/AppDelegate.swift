@@ -22,51 +22,12 @@ enum Environment: String {
     }
 }
 
-class WorkshopSceneDelegate: NSObject, UISceneDelegate {
-    var filterInfo: FilterInfo! = nil
-
-    var window: UIWindow?
-
-    func stateRestorationActivity(for scene: UIScene) -> NSUserActivity? {
-        let activity = NSUserActivity(activityType: "com.noahgilmore.cifilterio.workshop")
-        activity.userInfo = ["filterName": filterInfo.name]
-        return activity
-    }
-
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let activity = connectionOptions.userActivities.first else {
-            return
-        }
-        guard let filterName = activity.userInfo?["filterName"] as? String else {
-            return
-        }
-        guard let ciFilter = CIFilter(name: filterName) else {
-            return
-        }
-        filterInfo = try! FilterInfo(filter: ciFilter)
-    }
-
-    func sceneDidBecomeActive(_ scene: UIScene) {
-        guard let scene = scene as? UIWindowScene else {
-            return
-        }
-        guard let filterInfo = filterInfo else {
-            print("oh no filter info")
-            return
-        }
-        scene.title = filterInfo.name
-        let vc = FilterWorkshopViewController(filter: filterInfo)
-        window = UIWindow(windowScene: scene)
-        window?.rootViewController = vc
-        window?.makeKeyAndVisible()
-    }
-}
-
 class SceneDelegate: NSObject, UISceneDelegate {
     var window: UIWindow?
     var cancellables = Set<AnyCancellable>()
 
-    func sceneDidBecomeActive(_ scene: UIScene) {
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+
         guard let scene = scene as? UIWindowScene else {
             return
         }
@@ -136,13 +97,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-
-        if let userActivity = options.userActivities.first, userActivity.activityType == "com.noahgilmore.cifilterio.workshop", userActivity.userInfo?["filterName"] != nil {
-            let config = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
-            config.delegateClass = WorkshopSceneDelegate.self
-            return config
-        }
-
         let config = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
         config.delegateClass = SceneDelegate.self
         return config

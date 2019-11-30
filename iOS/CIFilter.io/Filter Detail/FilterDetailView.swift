@@ -53,7 +53,6 @@ final class FilterDetailView: UIView {
     private let titleView = FilterDetailTitleView()
     private let availabilityView = FilterAvailabilityView()
     private let exampleProvider = FilterExampleProvider()
-    private let isCompressed: Bool
 
     private lazy var tryItButton: UIButton = {
         let view = UIButton(type: .custom)
@@ -116,15 +115,15 @@ final class FilterDetailView: UIView {
         return view
     }()
 
-    init(isCompressed: Bool) {
-        self.isCompressed = isCompressed
+    init() {
         super.init(frame: .zero)
 
         addSubview(stackView)
         stackView.edgesToSafeArea(of: self)
 
         stackView.addRow(titleView)
-        stackView.setInset(forRow: titleView, inset: UIEdgeInsets(top: isCompressed ? 10 : 70, left: 0, bottom: 10, right: 0))
+
+        self.updateInsetsForTraitCollection()
 
         stackView.automaticallyHidesLastSeparator = true
         stackView.hidesSeparatorsByDefault = true
@@ -138,6 +137,14 @@ final class FilterDetailView: UIView {
 
         stackView.addRow(exampleStackView)
         stackView.setInset(forRow: exampleStackView, inset: UIEdgeInsets(top: 20, left: 0, bottom: 60, right: 0))
+    }
+
+    private func updateInsetsForTraitCollection() {
+        stackView.setInset(forRow: titleView, inset: UIEdgeInsets(top: self.traitCollection.horizontalSizeClass == .compact ? 10 : 70, left: 0, bottom: 10, right: 0))
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        self.updateInsetsForTraitCollection()
     }
 
     func set(filter: FilterInfo) {
