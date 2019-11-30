@@ -67,7 +67,7 @@ final class ImageArtboardView: UIView {
 
     let didChooseImage = PassthroughSubject<UIImage, Never>()
     var didChooseAdd: PassthroughSubject<CGRect, Never> {
-        return UserDefaultsConfig.swiftUIImageChooser ? swiftUIImageChooserView.didTapAdd : legacyImageChooserView.didChooseAdd
+        return swiftUIImageChooserView.didTapAdd
     }
     let didChooseSave = PassthroughSubject<Void, Never>()
 
@@ -79,7 +79,6 @@ final class ImageArtboardView: UIView {
     }()
     private let noImageGeneratedView = OutputImageNotGeneratedView()
     private let imageView = UIImageView()
-    private let legacyImageChooserView = ImageChooserView()
 
     private let swiftUIImageChooserView = ImageChooserSwiftUIView()
     private lazy var swiftUIImageChooserViewController = UIHostingController(rootView: swiftUIImageChooserView)
@@ -116,7 +115,7 @@ final class ImageArtboardView: UIView {
     }()
 
     var imageChooserView: UIView {
-        return UserDefaultsConfig.swiftUIImageChooser ? swiftUIImageChooserViewController.view! : legacyImageChooserView
+        return swiftUIImageChooserViewController.view!
     }
 
     private let dropIndicatorView = UIHostingView(rootView: ImageArtboardDropIndicatorView())
@@ -144,9 +143,6 @@ final class ImageArtboardView: UIView {
         self.eitherView.setEnabled(imageChooserView)
         mainStackView.addArrangedSubview(eitherView)
 
-        legacyImageChooserView.didChooseImage.sink(receiveValue: { image in
-            self.set(image: image)
-        }).store(in: &self.cancellables)
         swiftUIImageChooserView.didTapImage.sink(receiveValue: { image in
             self.set(image: image.image)
         }).store(in: &self.cancellables)
@@ -168,13 +164,10 @@ final class ImageArtboardView: UIView {
             imageView.addInteraction(UIContextMenuInteraction(delegate: self))
         }
 
-        legacyImageChooserView.didChooseImage.subscribe(self.didChooseImage).store(in: &self.cancellables)
         swiftUIImageChooserView.didTapImage.map(\.image).subscribe(self.didChooseImage).store(in: &self.cancellables)
 
-        if UserDefaultsConfig.swiftUIImageChooser {
-            swiftUIImageChooserViewController.view!.heightAnchor.constraint(equalToConstant: 650).isActive = true
-            swiftUIImageChooserViewController.view!.widthAnchor.constraint(equalToConstant: 650).isActive = true
-        }
+        swiftUIImageChooserViewController.view!.heightAnchor.constraint(equalToConstant: 650).isActive = true
+        swiftUIImageChooserViewController.view!.widthAnchor.constraint(equalToConstant: 650).isActive = true
 
         if self.configuration == .input {
             self.addInteraction(self.dropInteraction)

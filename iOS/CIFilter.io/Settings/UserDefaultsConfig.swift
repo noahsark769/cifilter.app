@@ -29,6 +29,5 @@ struct UserDefault<T> {
 }
 
 struct UserDefaultsConfig {
-    @UserDefault("swiftUIImageChooser", defaultValue: false)
-    static var swiftUIImageChooser: Bool
+    // No user defaults here at this time
 }
