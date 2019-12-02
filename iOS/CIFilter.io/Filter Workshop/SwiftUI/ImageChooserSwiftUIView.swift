@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Combine
+import ColorCompatibility
 
 struct ButtonFramePreferenceKey: PreferenceKey {
     typealias Value = CGRect?
@@ -102,7 +103,7 @@ struct ImageChooserSwiftUIView: View {
             })
         }.frame(width: Self.size, height: Self.size)
         .clipped()
-            .background(Color(uiColor: .systemGray6))
+            .background(Color(ColorCompatibility.systemGray6))
             .cornerRadius(12)
     }
 }
