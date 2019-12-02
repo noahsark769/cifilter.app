@@ -11,7 +11,6 @@ import Combine
 
 struct SettingsView: View {
     let didTapDone = PassthroughSubject<Void, Never>()
-    @ObservedObject var sliderObservation = GradientSliderObservation(value: 0.7)
 
     var debugView: some View {
         #if DEBUG
@@ -28,7 +27,6 @@ struct SettingsView: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             VStack {
-                GradientSliderView(value: self.$sliderObservation.value, width: 400, height: 40, sliderWidth: 20)
                 HStack(alignment: .lastTextBaseline) {
                     Text("CIFilter.io")
                         .font(Font.title.bold())
@@ -42,12 +40,25 @@ struct SettingsView: View {
                     Section(header: Text("LINKS").padding([.top], 20)) {
                         Button(action: {
                             UIApplication.shared.open(URL(string: "https://twitter.com/cifilterio")!)
-                        }) { Text("Twitter") }
+                        }) {
+                            Text("Twitter")
+                        }
                         Button(action: {
                             UIApplication.shared.open(URL(string: "https://github.com/noahsark769/cifilter.io")!)
                         }) {
-                            Text("Github") }
+                            Text("Github")
                         }
+                        Button(action: {
+                            UIApplication.shared.open(URL(string: "https://itunes.apple.com/us/app/cifilter-io/id1457458557?mt=8")!)
+                        }) {
+                            Text("Rate on App Store")
+                        }
+                        Button(action: {
+                            UIApplication.shared.open(URL(string: "https://github.com/noahsark769/cifilter.io/issues")!)
+                        }) {
+                            Text("Report a Bug")
+                        }
+                    }
                     self.debugView
                 }.listStyle(GroupedListStyle())
             }.background(Colors.primary)
