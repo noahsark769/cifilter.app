@@ -11,6 +11,7 @@ import Combine
 
 struct SettingsView: View {
     let didTapDone = PassthroughSubject<Void, Never>()
+    @ObservedObject var sliderObservation = GradientSliderObservation(value: 0.7)
 
     var debugView: some View {
         #if DEBUG
@@ -27,6 +28,7 @@ struct SettingsView: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             VStack {
+                GradientSliderView(value: self.$sliderObservation.value, width: 400, height: 40, sliderWidth: 20)
                 HStack(alignment: .lastTextBaseline) {
                     Text("CIFilter.io")
                         .font(Font.title.bold())

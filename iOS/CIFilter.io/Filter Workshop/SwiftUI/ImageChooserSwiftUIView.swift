@@ -101,7 +101,6 @@ struct ImageChooserSwiftUIView: View {
                 self.didTapImage.send(image)
             })
         }.frame(width: Self.size, height: Self.size)
-//            .border(Color.gray, width: 1, cornerRadius: 12)
         .clipped()
             .background(Color(uiColor: .systemGray6))
             .cornerRadius(12)

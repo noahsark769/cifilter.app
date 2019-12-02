@@ -9,6 +9,26 @@
 import UIKit
 import Combine
 import CoreGraphics
+import SwiftUI
+
+struct GradientSliderHarness: View {
+    @ObservedObject var sliderObservation = GradientSliderObservation(value: 1)
+
+    var body: some View {
+        GradientSliderView(
+            value: self.$sliderObservation.value,
+            width: 300, height: 40, sliderWidth: 20
+        )
+    }
+}
+
+final class GradientSliderObservation: ObservableObject {
+    @Published var value: CGFloat
+
+    init(value: CGFloat) {
+        self.value = value
+    }
+}
 
 final class GestureRecognizerDelegate: NSObject, UIGestureRecognizerDelegate {
     typealias TwoRecognizersBooleanCallback = (UIGestureRecognizer, UIGestureRecognizer) -> Bool
@@ -32,7 +52,7 @@ final class ColorInput: UIControl, ControlValueReporting {
     private let mainStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
-        view.spacing = 5
+        view.spacing = 20
         return view
     }()
     private let hexInput: ColorHexInput
@@ -43,25 +63,22 @@ final class ColorInput: UIControl, ControlValueReporting {
     private var cancellables = Set<AnyCancellable>()
     private(set) var value = CIColor.black
     private var hexInputValueChanged: AnyPublisher<ColorHexInput.ValueType, Never>!
+    private let lightnessSliderHarness = GradientSliderHarness()
+    private lazy var lightnessSlider = UIHostingView(rootView: self.lightnessSliderHarness)
 
     init(defaultValue: CIColor) {
         // TODO: defaultValue is currently unused
         self.hexInput = ColorHexInput(default: UIColor(ciColor: defaultValue))
         super.init(frame: .zero)
-        let filter = CIFilter(name: "CIHueSaturationValueGradient", parameters: [
-            "inputColorSpace": CGColorSpaceCreateDeviceRGB(),
-            "inputDither": NSNumber(floatLiteral: 0),
-            "inputRadius": NSNumber(integerLiteral: 200),
-            "inputSoftness": NSNumber(integerLiteral: 0),
-            "inputValue": NSNumber(integerLiteral: 1)
-        ])!
-        let image = UIImage(ciImage: filter.outputImage!)
         imageView.contentMode = .scaleAspectFit
-        imageView.image = image
+        imageView.image = self.generateColorwheel(lightnessValue: 1)
+
+        lightnessSlider.heightAnchor.constraint(equalToConstant: 40).isActive = true
 
         addSubview(mainStackView)
         mainStackView.edgesToSuperview()
         mainStackView.addArrangedSubview(imageView)
+        mainStackView.addArrangedSubview(lightnessSlider)
         mainStackView.addArrangedSubview(hexInput)
 
         draggableIndicatorView.indicatorColor = ColorCompatibility.secondaryLabel
@@ -100,10 +117,30 @@ final class ColorInput: UIControl, ControlValueReporting {
             self.setNeedsLayout()
             self.report(color: color)
         }.store(in: &self.cancellables)
+
+        self.lightnessSliderHarness.sliderObservation.$value
+            .debounce(for: .milliseconds(80), scheduler: RunLoop.main)
+            .sink { [weak self] value in
+                guard let self = self else { return }
+                self.imageView.image = self.generateColorwheel(lightnessValue: value)
+                self.setNeedsLayout()
+                self.reportColorFromDragLocation()
+            }.store(in: &self.cancellables)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func generateColorwheel(lightnessValue: CGFloat) -> UIImage {
+        let filter = CIFilter(name: "CIHueSaturationValueGradient", parameters: [
+            "inputColorSpace": CGColorSpaceCreateDeviceRGB(),
+            "inputDither": 0,
+            "inputRadius": 200,
+            "inputSoftness": 0,
+            "inputValue": lightnessValue
+        ])!
+        return UIImage(ciImage: filter.outputImage!)
     }
 
     private func report(color: UIColor) {

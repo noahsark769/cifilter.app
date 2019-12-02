@@ -37,6 +37,7 @@
 		A130BD8321F0F22400E586F6 /* CGPoint+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130BD8221F0F22400E586F6 /* CGPoint+Utils.swift */; };
 		A130BDF322068CCE00E586F6 /* BuiltInImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130BDF222068CCE00E586F6 /* BuiltInImage.swift */; };
 		A1315E2D2288F340006872BD /* buildInformation.json in Resources */ = {isa = PBXBuildFile; fileRef = A1315E2C2288F33F006872BD /* buildInformation.json */; };
+		A15B7D0B2394A27D0053C979 /* GradientSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15B7D0A2394A27D0053C979 /* GradientSliderView.swift */; };
 		A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1707F65219A1A0A0010E007 /* FilterInfo.swift */; };
 		A172BAC42221CCFB00182C56 /* ColorHexInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172BAC32221CCFA00182C56 /* ColorHexInput.swift */; };
 		A18D97C22375C5C4009C3DBB /* ControlPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D97C12375C5C4009C3DBB /* ControlPublisher.swift */; };
@@ -127,6 +128,7 @@
 		A130BDF222068CCE00E586F6 /* BuiltInImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInImage.swift; sourceTree = "<group>"; };
 		A1315E2C2288F33F006872BD /* buildInformation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = buildInformation.json; sourceTree = SOURCE_ROOT; };
 		A13C923722A5E67500B033ED /* CIFilter.io.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CIFilter.io.entitlements; sourceTree = "<group>"; };
+		A15B7D0A2394A27D0053C979 /* GradientSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientSliderView.swift; sourceTree = "<group>"; };
 		A1707F65219A1A0A0010E007 /* FilterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInfo.swift; sourceTree = "<group>"; };
 		A172BAC32221CCFA00182C56 /* ColorHexInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorHexInput.swift; sourceTree = "<group>"; };
 		A18D97C12375C5C4009C3DBB /* ControlPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPublisher.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 		A157C80E22F5149E00C4ACFA /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				A15B7D0A2394A27D0053C979 /* GradientSliderView.swift */,
 				A1D309872391F62C00CC92A2 /* ImageArtboardDropIndicatorView.swift */,
 				A1AA26DC22F7835300620FC2 /* ImageChooserSwiftUIView.swift */,
 			);
@@ -694,6 +697,7 @@
 				A1A0D83A21BC67ED0098168C /* FilterWorkshopViewController.swift in Sources */,
 				A128994521D40A3F00BEE395 /* FreeformNumberInput.swift in Sources */,
 				A1DD09DA23765CCA0054061B /* FreeformTextInput.swift in Sources */,
+				A15B7D0B2394A27D0053C979 /* GradientSliderView.swift in Sources */,
 				A1D309882391F62C00CC92A2 /* ImageArtboardDropIndicatorView.swift in Sources */,
 				A1A0D83E21BEC1B90098168C /* ImageArtboardView.swift in Sources */,
 				A1AA26DD22F7835300620FC2 /* ImageChooserSwiftUIView.swift in Sources */,
