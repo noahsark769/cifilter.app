@@ -73,10 +73,6 @@ final class FilterDetailViewController: UIViewController {
         AnalyticsManager.shared.track(event: "filter_detail", properties: ["name": filter.name])
     }
 
-    @objc private func workshopViewControllerSelectedDone(_ sender: Any) {
-        self.splitViewController?.dismiss(animated: true, completion: nil)
-    }
-
     func presentFilterWorkshop(filter: FilterInfo) {
         self.presentFilterWorkshopModally(filter: filter)
     }
@@ -85,11 +81,6 @@ final class FilterDetailViewController: UIViewController {
         let vc = FilterWorkshopViewController(filter: filter)
         let navigationController = UINavigationController(rootViewController: vc)
         navigationController.navigationBar.isTranslucent = false
-        vc.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .done,
-            target: self,
-            action: #selector(self.workshopViewControllerSelectedDone)
-        )
         navigationController.modalPresentationStyle = .fullScreen
         self.splitViewController?.present(navigationController, animated: true, completion: nil)
     }

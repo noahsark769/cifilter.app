@@ -140,11 +140,6 @@ final class FilterListViewController: UITableViewController {
                             let vc = FilterWorkshopViewController(filter: filter)
                             let navigationController = UINavigationController(rootViewController: vc)
                             navigationController.navigationBar.isTranslucent = false
-                            vc.navigationItem.leftBarButtonItem = UIBarButtonItem(
-                                barButtonSystemItem: .done,
-                                target: self,
-                                action: #selector(self.workshopViewControllerSelectedDone)
-                            )
                             navigationController.modalPresentationStyle = .fullScreen
                             self.splitViewController?.present(navigationController, animated: true, completion: nil)
                         }
@@ -179,6 +174,11 @@ final class FilterListViewController: UITableViewController {
 
         self.configureNavigationBarForCloseButton()
         NotificationCenter.default.addObserver(forName: UIScene.willConnectNotification, object: nil, queue: nil) { [weak self] _ in
+            guard let self = self else { return }
+            self.configureNavigationBarForCloseButton()
+        }
+
+        NotificationCenter.default.addObserver(forName: UIScene.didDisconnectNotification, object: nil, queue: nil) { [weak self] _ in
             guard let self = self else { return }
             self.configureNavigationBarForCloseButton()
         }

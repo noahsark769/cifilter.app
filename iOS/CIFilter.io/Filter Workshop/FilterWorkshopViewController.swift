@@ -34,6 +34,12 @@ final class FilterWorkshopViewController: UIViewController {
         self.exportItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(didTapExportButton))
         self.exportItem.isEnabled = false
 
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self,
+            action: #selector(self.selectedDone)
+        )
+
         #if DEBUG
             self.navigationItem.rightBarButtonItems = [exportItem, shareItem]
         #else
@@ -57,6 +63,10 @@ final class FilterWorkshopViewController: UIViewController {
             self.inputImageCurrentlySelecting = paramName
             self.presentImagePickerController(fromSourceRect: view)
         }).store(in: &self.cancellables)
+    }
+
+    @objc private func selectedDone() {
+        self.dismiss(animated: true, completion: nil)
     }
 
     private func presentImagePickerController(fromSourceRect sourceRect: CGRect) {
