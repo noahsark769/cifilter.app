@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ColorCompatibility
 
 final class FilterDetailTitleView: UIView {
     private let titleLabel = UILabel()

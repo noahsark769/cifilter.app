@@ -8,6 +8,7 @@
 
 import SwiftUI
 import CoreImage.CIFilterBuiltins
+import ColorCompatibility
 
 extension Colors: View {
     var body: some View {

@@ -10,6 +10,8 @@ import UIKit
 import Combine
 import CoreGraphics
 import SwiftUI
+import CoreImage.CIFilterBuiltins
+import ColorCompatibility
 
 struct GradientSliderHarness: View {
     @ObservedObject var sliderObservation = GradientSliderObservation(value: 1)
@@ -17,7 +19,7 @@ struct GradientSliderHarness: View {
     var body: some View {
         GradientSliderView(
             value: self.$sliderObservation.value,
-            width: 300, height: 40, sliderWidth: 20
+            width: 250, height: 40, sliderWidth: 20
         )
     }
 }
@@ -114,11 +116,13 @@ final class ColorInput: UIControl, ControlValueReporting {
         hexInputValueChanged.sink { color in
             let colorLocation = self.imageView.pointOnColorWheel(for: color)
             self.dragLocation = colorLocation
+            self.lightnessSliderHarness.sliderObservation.value = color.brightness
             self.setNeedsLayout()
             self.report(color: color)
         }.store(in: &self.cancellables)
 
         self.lightnessSliderHarness.sliderObservation.$value
+            .removeDuplicates()
             .debounce(for: .milliseconds(80), scheduler: RunLoop.main)
             .sink { [weak self] value in
                 guard let self = self else { return }
@@ -133,13 +137,12 @@ final class ColorInput: UIControl, ControlValueReporting {
     }
 
     private func generateColorwheel(lightnessValue: CGFloat) -> UIImage {
-        let filter = CIFilter(name: "CIHueSaturationValueGradient", parameters: [
-            "inputColorSpace": CGColorSpaceCreateDeviceRGB(),
-            "inputDither": 0,
-            "inputRadius": 200,
-            "inputSoftness": 0,
-            "inputValue": lightnessValue
-        ])!
+        let filter = CIFilter.hueSaturationValueGradient()
+        filter.colorSpace = CGColorSpaceCreateDeviceRGB()
+        filter.dither = 0
+        filter.radius = 200
+        filter.softness = 0
+        filter.value = Float(lightnessValue)
         return UIImage(ciImage: filter.outputImage!)
     }
 
@@ -149,9 +152,11 @@ final class ColorInput: UIControl, ControlValueReporting {
         self.sendActions(for: .valueChanged)
     }
 
-    private func reportColorFromDragLocation() {
+    private func reportColorFromDragLocation(settingHexInput: Bool = true) {
         let color = self.imageView.getPixelColorAt(point: self.dragLocation)
-        self.hexInput.set(text: color.toHexString())
+        if settingHexInput {
+            self.hexInput.set(text: color.toHexString())
+        }
         self.report(color: color)
     }
 

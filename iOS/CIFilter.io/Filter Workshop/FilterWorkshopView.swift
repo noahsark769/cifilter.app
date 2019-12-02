@@ -8,6 +8,7 @@
 
 import UIKit
 import Combine
+import ColorCompatibility
 
 final class FilterWorkshopView: UIView {
     // TODO: this is a VERY ugly hack

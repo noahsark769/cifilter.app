@@ -8,6 +8,7 @@
 
 import UIKit
 import Combine
+import ColorCompatibility
 
 private final class RedView: UILabel {
     init(text: String) {
@@ -22,24 +23,6 @@ private final class RedView: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-//func observableFrom<PublisherType: Publisher>(publisher: PublisherType) -> Observable<PublisherType.Output> {
-//    return Observable.create { observer in
-//        let cancellable = publisher.sink(receiveCompletion: { completion in
-//            switch completion {
-//            case let .failure(error):
-//                observer.onError(error)
-//            case .finished:
-//                observer.onCompleted()
-//            }
-//        }, receiveValue: { value in
-//            observer.onNext(value)
-//        })
-//        return Disposables.create {
-//            cancellable.cancel()
-//        }
-//    }
-//}
 
 final class FilterWorkshopParametersView: UIStackView {
     private var cancellables = Set<AnyCancellable>()

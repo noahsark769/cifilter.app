@@ -163,8 +163,7 @@ final class FilterListViewController: UITableViewController {
         self.tableView.separatorStyle = .none
 
         driver = FilterListViewControllerTableViewDriver(
-            tableView: self.tableView,
-            tableViewModel: generateTableModel(searchText: nil)
+            tableView: self.tableView
         )
         if #available(iOS 13, *) {
             let configurator = FilterListViewControllerContextMenuConfigurator()
@@ -185,12 +184,13 @@ final class FilterListViewController: UITableViewController {
         }
 
         searchSubject.debounce(for: .milliseconds(300), scheduler: RunLoop.main)
-            .removeDuplicates()
             .map { $0 ?? "" }
+            .removeDuplicates()
             .sink { [weak self] text in
                 guard let `self` = self else { return }
                 self.driver.tableViewModel = self.generateTableModel(searchText: text)
             }.store(in: &self.cancellables)
+        searchSubject.send(nil) // populate initial list
     }
 
     required init?(coder aDecoder: NSCoder) {

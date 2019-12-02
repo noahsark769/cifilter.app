@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import ColorCompatibility
 
 final class FreeformTextInput: UIControl, UITextViewDelegate, ControlValueReporting {
     private(set) var value: String? = nil

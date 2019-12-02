@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ColorCompatibility
 
 /**
  * A view that displays a message telling the user that an image has not been generated for this

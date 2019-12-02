@@ -45,8 +45,15 @@ struct GradientSliderView: View {
 
     var body: some View {
         ZStack(alignment: .leading) {
-            Image(uiImage: image)
-                .gesture(gesture)
+            HStack(spacing: self.sliderWidth / 2 + 10) {
+                Image(uiImage: image)
+                    .gesture(gesture)
+                VStack(alignment: .leading) {
+                    Text("\(Int(self.value * 100))%")
+                    Text("Lightness")
+                }.font(.caption)
+                Spacer()
+            }
             RoundedRectangle(cornerRadius: 5)
                 .stroke(Color.gray, lineWidth: 5)
                 .overlay(
