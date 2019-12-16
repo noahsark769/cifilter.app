@@ -32,20 +32,6 @@ extension RenderingResult {
 }
 
 extension UIImage {
-    static func renderingFrom(ciImage: CIImage, maximumExtent: CGRect) -> (UIImage, Bool)? {
-        let context = CIContext()
-        var imageToRender = ciImage
-        var wasCropped = false
-        if imageToRender.extent.isInfinite {
-            imageToRender = imageToRender.cropped(to: maximumExtent)
-            wasCropped = true
-        }
-        guard let cgImage = context.createCGImage(ciImage, from: ciImage.extent) else {
-            return nil
-        }
-        return (UIImage(cgImage: cgImage), wasCropped)
-    }
-
     // https://stackoverflow.com/questions/5427656/ios-uiimagepickercontroller-result-image-orientation-after-upload
     func normalizedRotationImage() -> UIImage? {
         if (self.imageOrientation == .up) {

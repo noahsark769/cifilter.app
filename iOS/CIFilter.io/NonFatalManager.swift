@@ -29,6 +29,7 @@ final class NonFatalManager {
         }
     }
 
+    // pecker:ignore (this is only used in release builds)
     func breadcrumb(_ category: String, data: [String: Any]? = nil) {
         let sentry = Client.shared!
         print("Breadcrumb: \(category)")

@@ -76,6 +76,7 @@ final class FilterListViewControllerContextMenuConfigurator: AbstractContextMenu
 final class FilterListViewControllerTableViewDriver: TableViewDriver {
     var configurator: AbstractContextMenuTableViewConfigurator?
 
+    // pecker:ignore (https://github.com/woshiccm/Pecker/issues/27)
     @available(iOS 13.0, *)
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
@@ -83,10 +84,6 @@ final class FilterListViewControllerTableViewDriver: TableViewDriver {
             return self.configurator?.makeContextMenu(indexPath: indexPath)
         })
     }
-}
-
-protocol FilterListViewControllerDelegate: class {
-    func filterListViewController(_ vc: FilterListViewController, didTapFilterInfo: FilterInfo)
 }
 
 final class FilterListViewController: UITableViewController {

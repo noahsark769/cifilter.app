@@ -35,12 +35,4 @@ final class AnalyticsManager {
         NonFatalManager.shared.breadcrumb("analytic_\(event)", data: properties)
         #endif
     }
-
-    func track(event: String, properties: [String: Any]? = nil) {
-        #if DEBUG
-        print("Analytic: \(event) \(properties ?? [:])")
-        #else
-        NonFatalManager.shared.breadcrumb("analytic_\(event)", data: properties)
-        #endif
-    }
 }

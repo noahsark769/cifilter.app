@@ -47,14 +47,6 @@ extension NSLayoutConstraint {
     }
 }
 
-infix operator ^^: AdditionPrecedence
-extension NSLayoutConstraint {
-    @discardableResult static func ^^(left: NSLayoutConstraint, right: UILayoutPriority) -> NSLayoutConstraint {
-        left.priority = right
-        return left
-    }
-}
-
 extension UIView {
     func disableTranslatesAutoresizingMaskIntoConstraints() {
         self.translatesAutoresizingMaskIntoConstraints = false

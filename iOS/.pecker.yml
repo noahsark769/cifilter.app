@@ -1,0 +1,12 @@
+reporter: "xcode"
+
+disabled_rules:
+  - skip_public
+  
+excluded: # paths to ignore during detecting. Takes precedence over `included`.
+  - Carthage
+  - Pods
+
+blacklist_symbols: # symbols to ignore during detecting, contains class, struct, enum, etc.
+  - AppDelegate
+  - viewDidLoad
