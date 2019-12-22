@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Combine
+import CoreImage.CIFilterBuiltins
 
 extension CIImage {
     func checkerboarded() -> CIImage {
@@ -24,6 +26,98 @@ extension CIImage {
     }
 }
 
+final class BuiltInImageManager {
+    enum LoadingState {
+        case loading
+        case loaded(image: BuiltInImage)
+    }
+
+    enum ImageType: String, CaseIterable, Identifiable {
+        case knighted
+        case liberty
+        case paper
+        case playhouse
+        case shaded
+        case black
+        case white
+        case gradient
+
+        var id: String {
+            return self.rawValue
+        }
+    }
+
+    static let shared = BuiltInImageManager()
+
+    let knighted = CurrentValueSubject<LoadingState, Never>(.loading)
+    let liberty = CurrentValueSubject<LoadingState, Never>(.loading)
+    let shaded = CurrentValueSubject<LoadingState, Never>(.loading)
+    let black = CurrentValueSubject<LoadingState, Never>(.loading)
+    let white = CurrentValueSubject<LoadingState, Never>(.loading)
+    let gradient = CurrentValueSubject<LoadingState, Never>(.loading)
+    let paper = CurrentValueSubject<LoadingState, Never>(.loading)
+    let playhouse = CurrentValueSubject<LoadingState, Never>(.loading)
+
+    func subject(forType type: ImageType) -> CurrentValueSubject<LoadingState, Never> {
+        switch type {
+        case .knighted: return self.knighted
+        case .liberty: return self.liberty
+        case .shaded: return self.shaded
+        case .black: return self.black
+        case .white: return self.white
+        case .gradient: return self.gradient
+        case .paper: return self.paper
+        case .playhouse: return self.playhouse
+        }
+    }
+
+    private func loadImageOnMainThread(type: ImageType, name: String, useCheckerboard: Bool) {
+        DispatchQueue.main.async {
+            let builtInImage = BuiltInImage(name: name, useCheckerboard: useCheckerboard)
+            self.subject(forType: type).send(.loaded(image: builtInImage))
+        }
+    }
+
+    private func loadImageInBackground(type: ImageType, generator: @escaping () -> (CIImage, CIImage, CGRect)) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let builtInImage = BuiltInImage(generator: generator)
+            self.subject(forType: type).send(.loaded(image: builtInImage))
+        }
+    }
+
+    func loadImages() {
+        self.loadImageOnMainThread(type: .knighted, name: "knighted", useCheckerboard: false)
+        self.loadImageOnMainThread(type: .liberty, name: "liberty", useCheckerboard: false)
+        self.loadImageOnMainThread(type: .shaded, name: "shadedsphere", useCheckerboard: false)
+        self.loadImageOnMainThread(type: .paper, name: "paper", useCheckerboard: true)
+        self.loadImageOnMainThread(type: .playhouse, name: "playhouse", useCheckerboard: true)
+
+        self .loadImageInBackground(type: .black) {
+            let contstantColorFilter = CIFilter(name: "CIConstantColorGenerator")!
+            contstantColorFilter.setValue(CIColor.black, forKey: "inputColor")
+            let ciImage = contstantColorFilter.outputImage!
+            return (ciImage, ciImage, CGRect(origin: .zero, size: CGSize(width: 500, height: 500)))
+        }
+
+        self.loadImageInBackground(type: .white) {
+            let contstantColorFilter = CIFilter(name: "CIConstantColorGenerator")!
+            contstantColorFilter.setValue(CIColor.white, forKey: "inputColor")
+            let ciImage = contstantColorFilter.outputImage!
+            return (ciImage, ciImage, CGRect(origin: .zero, size: CGSize(width: 500, height: 500)))
+        }
+
+        self.loadImageInBackground(type: .gradient) {
+            let linearGradientFilter = CIFilter.linearGradient()
+            linearGradientFilter.color0 = CIColor(red: 0, green: 0, blue: 0, alpha: 1)
+            linearGradientFilter.color1 = CIColor(red: 0, green: 0, blue: 0, alpha: 0)
+            linearGradientFilter.point0 = CGPoint(x: 0, y: 250)
+            linearGradientFilter.point1 = CGPoint(x: 500, y: 250)
+            let ciImage = linearGradientFilter.outputImage!
+            return (ciImage, ciImage.checkerboarded(), CGRect(origin: .zero, size: CGSize(width: 500, height: 500)))
+        }
+    }
+}
+
 struct BuiltInImage: Identifiable {
     private(set) var id = UUID()
 
@@ -35,12 +129,9 @@ struct BuiltInImage: Identifiable {
         "inputColor1": CIColor(color: UIColor(rgb: 0xeeeeee)),
         "inputCenter": CIVector(x: 0, y: 0),
         "inputSharpness": 1
-        ])!
-    private static let sourceOverCompositingFilter = CIFilter(name: "CISourceOverCompositing")!
-    private static let constantColorFilter = CIFilter(name: "CIConstantColorGenerator")!
-    private static let linearGradientFilter = CIFilter(name: "CISmoothLinearGradient")!
+    ])!
 
-    private init(name: String, useCheckerboard: Bool = false) {
+    fileprivate init(name: String, useCheckerboard: Bool = false) {
         let uiImage = UIImage(named: name)!
         image = uiImage
         if useCheckerboard {
@@ -56,7 +147,8 @@ struct BuiltInImage: Identifiable {
         }
     }
 
-    private init(name: String, generator: () -> (CIImage, CIImage, CGRect)) {
+    // TODO: name is currently an unused parameter
+    fileprivate init(generator: () -> (CIImage, CIImage, CGRect)) {
         let context = CIContext()
         let (ciImage, ciImageForImageChooser, extent) = generator()
         guard let cgImage = context.createCGImage(ciImage, from: extent) else {
@@ -71,42 +163,4 @@ struct BuiltInImage: Identifiable {
         let imageForChooser = UIImage(cgImage: cgImageForChooser)
         self.imageForImageChooser = imageForChooser
     }
-
-    static let knighted = BuiltInImage(name: "knighted")
-    static let liberty = BuiltInImage(name: "liberty")
-    static let shaded = BuiltInImage(name: "shadedsphere")
-    static let paper = BuiltInImage(name: "paper", useCheckerboard: true)
-    static let playhouse = BuiltInImage(name: "playhouse", useCheckerboard: true)
-    static let black = BuiltInImage(name: "black", generator: {
-        BuiltInImage.constantColorFilter.setDefaults()
-        BuiltInImage.constantColorFilter.setValue(CIColor.black, forKey: "inputColor")
-        let ciImage = BuiltInImage.constantColorFilter.outputImage!
-        return (ciImage, ciImage, CGRect(origin: .zero, size: CGSize(width: 500, height: 500)))
-    });
-    static let white = BuiltInImage(name: "white", generator: {
-        BuiltInImage.constantColorFilter.setDefaults()
-        BuiltInImage.constantColorFilter.setValue(CIColor.white, forKey: "inputColor")
-        let ciImage = BuiltInImage.constantColorFilter.outputImage!
-        return (ciImage, ciImage, CGRect(origin: .zero, size: CGSize(width: 500, height: 500)))
-    });
-    static let gradient = BuiltInImage(name: "gradient", generator: {
-        BuiltInImage.linearGradientFilter.setDefaults()
-        BuiltInImage.linearGradientFilter.setValue(CIColor(red: 0, green: 0, blue: 0, alpha: 1), forKey: "inputColor0")
-        BuiltInImage.linearGradientFilter.setValue(CIColor(red: 0, green: 0, blue: 0, alpha: 0), forKey: "inputColor1")
-        BuiltInImage.linearGradientFilter.setValue(CIVector(x: 0, y: 250), forKey: "inputPoint0")
-        BuiltInImage.linearGradientFilter.setValue(CIVector(x: 500, y: 250), forKey: "inputPoint1")
-        let ciImage = BuiltInImage.linearGradientFilter.outputImage!
-        return (ciImage, ciImage.checkerboarded(), CGRect(origin: .zero, size: CGSize(width: 500, height: 500)))
-    });
-
-    static let all: [BuiltInImage] = [
-        .knighted,
-        .liberty,
-        .paper,
-        .playhouse,
-        .shaded,
-        .black,
-        .white,
-        .gradient
-    ]
 }

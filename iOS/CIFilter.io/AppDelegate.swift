@@ -126,10 +126,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         AnalyticsManager.shared.initialize()
 
-        // preload built in images
-        DispatchQueue.global(qos: .default).async {
-            print("\(BuiltInImage.all)")
-        }
+        BuiltInImageManager.shared.loadImages()
 
         return true
     }
