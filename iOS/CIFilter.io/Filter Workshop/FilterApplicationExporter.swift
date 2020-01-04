@@ -171,6 +171,8 @@ final class FilterApplicationExporter {
                 result.append(ExportParameterValue(name: key, double: Double(float)))
             case let data as Data:
                 result.append(ExportParameterValue(name: key, utf8EncodedData: data))
+            case let string as String:
+                result.append(ExportParameterValue(name: key, string: string))
             default:
                 fatalError("Could not map value of type \(type(of: value)): \(value)")
             }
