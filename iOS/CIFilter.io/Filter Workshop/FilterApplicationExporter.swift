@@ -64,6 +64,10 @@ struct ExportColor: ExportType {
     }
 }
 
+struct ExportString: ExportType {
+    let value: String
+}
+
 struct ExportParameterValue: Encodable {
     let type: String
     let name: String
@@ -99,6 +103,14 @@ extension ExportParameterValue {
 
     init(name: String, vector: CIVector) {
         self.init(type: "vector", name: name, additionalData: AnyEncodable(ExportVector(value: CIVectorCodableWrapper(vector: vector))))
+    }
+
+    init(name: String, string: String) {
+        self.init(type: "string", name: name, additionalData: AnyEncodable(ExportString(value: string)))
+    }
+
+    init(name: String, utf8EncodedData data: Data) {
+        self.init(name: name, string: String(data: data, encoding: .utf8)!)
     }
 }
 
@@ -157,6 +169,8 @@ final class FilterApplicationExporter {
                 result.append(ExportParameterValue(name: key, double: double))
             case let float as Float:
                 result.append(ExportParameterValue(name: key, double: Double(float)))
+            case let data as Data:
+                result.append(ExportParameterValue(name: key, utf8EncodedData: data))
             default:
                 fatalError("Could not map value of type \(type(of: value)): \(value)")
             }

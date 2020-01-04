@@ -31,6 +31,7 @@ function displayValueFromPropsData(data) {
         case "number": return data.additionalData.value;
         case "color": return data.additionalData;
         case "vector": return data.additionalData.value.join(", ");
+        case "string": return data.additionalData.value;
         default:
             console.error(`Unrecognized filter parameter type ${data.type}`);
     }
