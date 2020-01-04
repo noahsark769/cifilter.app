@@ -27,6 +27,13 @@ enum CustomErrorProcessor {
                 }
             }
         }
+        if filterInfo.name == "CIAztecCodeGenerator" {
+            if let compactStyle = filter.value(forKey: "inputCompactStyle") as? NSNumber {
+                if compactStyle != 0 && compactStyle != 1 {
+                    return .doNotProceedAndShowError(error: "inputCompactStyle for CIAztecCodeGenerator must be one of: 0, 1")
+                }
+            }
+        }
         return .proceed
     }
 }
