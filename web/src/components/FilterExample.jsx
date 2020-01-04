@@ -14,6 +14,10 @@ const FlexParent = styled.div`
     flex-direction: ${props => props.column ? "column" : "row"};
 `;
 
+const FlexOne = styled.div`
+    flex: 1;
+`;
+
 const Container = styled.div`
     display: flex;
     flex-direction: row;
@@ -48,12 +52,7 @@ const OutputImageWrapper = styled.div`
 `;
 
 const NormalImageConfiguration = (props) => {
-    let nonImageParameterArrays;
-    if (props.imageParameters.length > 0) {
-        nonImageParameterArrays = [props.nonImageParameters];
-    } else {
-        nonImageParameterArrays = chunk(props.nonImageParameters, 2);
-    }
+    const nonImageParameterArrays = chunk(props.nonImageParameters, 2);
     return (
         <FlexParent column>
             <Container>
@@ -71,17 +70,36 @@ const NormalImageConfiguration = (props) => {
                         })}
                     </Column>
                 }
-                {nonImageParameterArrays.map((nonImageParameters, index) => {
-                    return <Column key={index}>
-                        {nonImageParameters.map((value) => {
-                            return (<FilterExampleParameter
-                                        key={value.name}
-                                        data={value}
-                                        className="margin-bottom--md"
-                                    />);
+                { props.imageParameters.length > 0 &&
+                    <Column>
+                        {props.nonImageParameters.map((value) => {
+                            return <FilterExampleParameter
+                                    key={value.name}
+                                    data={value}
+                                    className="margin-bottom--md"
+                                />
                         })}
                     </Column>
-                })}
+                }
+                { props.imageParameters.length === 0 &&
+                    <Column>
+                        {nonImageParameterArrays.map((nonImageParameters, index) => {
+                            return <FlexParent row key={index}>
+                                {nonImageParameters.map((value) => {
+                                    return (
+                                        <FlexOne>
+                                            <FilterExampleParameter
+                                                    key={value.name}
+                                                    data={value}
+                                                    className="margin-bottom--md"
+                                                />
+                                        </FlexOne>
+                                    );
+                                })}
+                            </FlexParent>
+                        })}
+                    </Column>
+                }
             </Container>
             <ArrowContainer>
                 <IoIosArrowRoundDown size={50} color="#999" />
