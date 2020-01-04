@@ -5,6 +5,7 @@ import FilterExampleParameter from './FilterExampleParameter';
 import FilterDetailSectionHeading from './FilterDetailSectionHeading';
 import HorizontalImageConfiguration from './HorizontalImageConfiguration';
 import { IoIosArrowRoundDown } from 'react-icons/io';
+import chunk from 'lodash.chunk';
 
 // Note: We have WasCropped, but we don't use it here yet (#42)
 
@@ -47,30 +48,40 @@ const OutputImageWrapper = styled.div`
 `;
 
 const NormalImageConfiguration = (props) => {
+    let nonImageParameterArrays;
+    if (props.imageParameters.length > 0) {
+        nonImageParameterArrays = [props.nonImageParameters];
+    } else {
+        nonImageParameterArrays = chunk(props.nonImageParameters, 2);
+    }
     return (
         <FlexParent column>
             <Container>
-                <Column>
-                    {props.imageParameters.map((value) => {
-                        const {name, additionalData} = value;
-                        return (<FilterExampleImage
-                                    key={name}
-                                    name={name}
-                                    filename={`${props.basepath}/${additionalData.image}`}
-                                    filterName={props.filterName}
-                                    className="margin-bottom--md"
-                                />);
-                    })}
-                </Column>
-                <Column>
-                    {props.nonImageParameters.map((value) => {
-                        return (<FilterExampleParameter
-                                    key={value.name}
-                                    data={value}
-                                    className="margin-bottom--md"
-                                />);
-                    })}
-                </Column>
+                { props.imageParameters.length > 0 &&
+                    <Column>
+                        {props.imageParameters.map((value) => {
+                            const {name, additionalData} = value;
+                            return (<FilterExampleImage
+                                        key={name}
+                                        name={name}
+                                        filename={`${props.basepath}/${additionalData.image}`}
+                                        filterName={props.filterName}
+                                        className="margin-bottom--md"
+                                    />);
+                        })}
+                    </Column>
+                }
+                {nonImageParameterArrays.map((nonImageParameters, index) => {
+                    return <Column key={index}>
+                        {nonImageParameters.map((value) => {
+                            return (<FilterExampleParameter
+                                        key={value.name}
+                                        data={value}
+                                        className="margin-bottom--md"
+                                    />);
+                        })}
+                    </Column>
+                })}
             </Container>
             <ArrowContainer>
                 <IoIosArrowRoundDown size={50} color="#999" />
