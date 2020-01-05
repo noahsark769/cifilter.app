@@ -24,6 +24,10 @@ const Value = styled.div`
         flex: 1;
         text-align: right;
     `}
+
+    @media (prefers-color-scheme: dark) {
+        color: #b6b6b6;
+    }
 `;
 
 function displayValueFromPropsData(data) {
