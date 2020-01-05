@@ -124,8 +124,7 @@ class Main extends React.Component {
             `${selectedFilter.name} | Core Image Filter Reference` :
             "Core Image Filter Reference";
         let numFilters = this.props.pageContext.filters.length;
-        let description = selectedFilter ?
-            `View documentation for the ${selectedFilter.name} Core Image filter on CIFilter.io` :
+        let description = selectedFilter ? selectedFilter.description :
             `View documentation for ${numFilters} built-in Core Image CIFilter classes on CIFilter.io`
         return (
             <OuterWrapper>
