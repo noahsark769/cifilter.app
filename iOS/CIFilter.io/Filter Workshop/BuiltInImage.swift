@@ -41,6 +41,8 @@ final class BuiltInImageManager {
         case black
         case white
         case gradient
+        case skiBackground
+        case skiText
 
         var id: String {
             return self.rawValue
@@ -57,6 +59,8 @@ final class BuiltInImageManager {
     let gradient = CurrentValueSubject<LoadingState, Never>(.loading)
     let paper = CurrentValueSubject<LoadingState, Never>(.loading)
     let playhouse = CurrentValueSubject<LoadingState, Never>(.loading)
+    let skiBackground = CurrentValueSubject<LoadingState, Never>(.loading)
+    let skiText = CurrentValueSubject<LoadingState, Never>(.loading)
 
     func subject(forType type: ImageType) -> CurrentValueSubject<LoadingState, Never> {
         switch type {
@@ -68,6 +72,8 @@ final class BuiltInImageManager {
         case .gradient: return self.gradient
         case .paper: return self.paper
         case .playhouse: return self.playhouse
+        case .skiBackground: return self.skiBackground
+        case .skiText: return self.skiText
         }
     }
 
@@ -91,6 +97,8 @@ final class BuiltInImageManager {
         self.loadImageOnMainThread(type: .shaded, name: "shadedsphere", useCheckerboard: false)
         self.loadImageOnMainThread(type: .paper, name: "paper", useCheckerboard: true)
         self.loadImageOnMainThread(type: .playhouse, name: "playhouse", useCheckerboard: true)
+        self.loadImageOnMainThread(type: .skiBackground, name: "ski-background", useCheckerboard: true)
+        self.loadImageOnMainThread(type: .skiText, name: "ski-text", useCheckerboard: true)
 
         self .loadImageInBackground(type: .black) {
             let contstantColorFilter = CIFilter(name: "CIConstantColorGenerator")!

@@ -60,4 +60,25 @@ class CombineLatestCollectionTest: XCTestCase {
         cancellable.cancel()
         passthroughCancellable.cancel()
     }
+
+    func testCompletingSubscription() {
+        let just = Just("A")
+        let subject = PassthroughSubject<String, Never>()
+
+        var values: [String] = []
+        let cancellable = [
+            just.eraseToAnyPublisher(),
+            subject.eraseToAnyPublisher()
+        ].combineLatest().sink { value in
+            values.append(value.joined())
+        }
+
+        subject.send("B")
+        subject.send("C")
+        subject.send("D")
+
+        XCTAssertEqual(values, ["AB", "AC", "AD"])
+
+        cancellable.cancel()
+    }
 }

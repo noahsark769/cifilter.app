@@ -96,8 +96,11 @@ final class FilterWorkshopParameterView: UIView {
         switch type {
         case .colorSpace:
             stackView.addArrangedSubview(self.furtherDetailLabel(text: "CIFilter.io does not support selecting color spaces. The device color space will be used."))
-//            let subject = CurrentValueSubject<CGColorSpace, Never>(CGColorSpaceCreateDeviceRGB())
-            valuePublishers = [Just(CGColorSpaceCreateDeviceRGB()).map { $0 as Any }.eraseToAnyPublisher()]
+            valuePublishers = [
+                CurrentValueSubject<CGColorSpace, Never>(CGColorSpaceCreateDeviceRGB())
+                    .map { $0 as Any }
+                    .eraseToAnyPublisher()
+            ]
         case .boolean:
             let uiSwitch = UISwitch()
             stackView.addArrangedSubview(uiSwitch)
@@ -106,7 +109,7 @@ final class FilterWorkshopParameterView: UIView {
                 uiSwitch.addValueChangedObserver()
                     .map { $0 ? 1 : 0 }
                     .eraseToAnyPublisher(),
-                Just(false)
+                CurrentValueSubject<Bool, Never>(false)
                     .map { $0 ? 1 : 0 }
                     .eraseToAnyPublisher()
             ]

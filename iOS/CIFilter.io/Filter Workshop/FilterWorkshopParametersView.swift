@@ -28,6 +28,7 @@ final class FilterWorkshopParametersView: UIStackView {
     private var cancellables = Set<AnyCancellable>()
 
     let didUpdateFilterParameters = CurrentValueSubject<[String: Any], Never>([:])
+
     let didChooseAddImage = PassthroughSubject<(String, CGRect), Never>()
     private var paramNamesToImageArtboards: [String: ImageArtboardView] = [:]
     init() {

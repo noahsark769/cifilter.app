@@ -81,8 +81,7 @@ extension CombineLatestCollection {
 
         fileprivate func initializeSubscribers() {
             subscribers = publishers.enumerated().map { index, publisher in
-
-                publisher
+                return publisher
                     .sink(receiveCompletion: { [weak self] completion in
                         guard let self = self else { return }
                         self.lock.lock()
