@@ -1,9 +1,9 @@
 .PHONY: bundle
-bundle:
+bundle: Gemfile Gemfile.lock
 	bundle install --path vendor/bundle
 
 .PHONY: pods
-pods:
+pods: bundle Podfile Podfile.lock
 	bundle exec pod install
 
 .PHONY: pods-update
