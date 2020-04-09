@@ -30,7 +30,7 @@ jobs:
     - name: Report npm version
       run: npm --version
     - name: Clean node modules
-      run: cd web && m -rf node_modules
+      run: cd web && rm -rf node_modules
     - name: Clean gatsby cache
       run: cd web && rm -rf .cache
     - name: Clean npm cache
