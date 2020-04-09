@@ -23,7 +23,10 @@ const Container = styled.div`
 
     display: flex;
     flex-direction: row;
-    height: 100%;
+
+    // This (in combination with flex-grow: 1) makes the div take up the remaining
+    // space of the screen (from OuterWrapper) that is not taken up by the Nav.
+    overflow: auto;
 
     @media all and (max-width: 600px) {
         margin-right: 20px;
