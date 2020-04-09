@@ -41,6 +41,8 @@ jobs:
       run: cd web && npm rebuild
     - name: npm run gatsby-build
       run: cd web && npm run gatsby-build
+    - name: Copy built artifacts to root directory
+      run: cp -r web/public ./public
     - name: Build and Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
