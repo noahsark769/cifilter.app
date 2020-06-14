@@ -39,10 +39,6 @@ final class ControlPublisher<ControlType: UIControl>: NSObject, Publisher {
         ControlPublisher.Output == S.Input {
             subject.subscribe(subscriber)
     }
-
-    deinit {
-        print("Control publisher deinit'd")
-    }
 }
 
 protocol ControlEventsObservable {}

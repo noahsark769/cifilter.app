@@ -7,7 +7,7 @@ source 'https://github.com/CocoaPods/Specs'
 use_frameworks!
 
 def shared_pods
-  pod 'ReactiveLists', '~> 0.3.0'
+  pod 'ReactiveLists', '~> 0.6.0'
   pod 'AloeStackView', '~> 1.0.1'
   pod 'IQKeyboardManagerSwift', '~> 6.5.4'
   pod 'Sentry', '~> 4.4.3', :modular_headers => true

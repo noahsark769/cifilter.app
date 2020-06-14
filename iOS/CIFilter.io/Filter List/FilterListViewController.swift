@@ -124,6 +124,7 @@ final class FilterListViewController: UITableViewController {
             guard let filters = groupedFilters[key] else { return nil }
             guard filters.count > 0 else { return nil }
             return TableSectionViewModel(
+                diffingKey: "filter-section-key-\(key)",
                 cellViewModels: filters.map { filter in
                     return FilterCellModel(
                         filter: CIFilter(name: filter.name)!,

@@ -1,19 +1,19 @@
 PODS:
   - AloeStackView (1.0.1)
   - ColorCompatibility (1.0.0)
-  - DifferenceKit (0.6.0):
-    - DifferenceKit/Core (= 0.6.0)
-    - DifferenceKit/UIKitExtension (= 0.6.0)
-  - DifferenceKit/Core (0.6.0)
-  - DifferenceKit/UIKitExtension (0.6.0):
+  - DifferenceKit (1.1.5):
+    - DifferenceKit/Core (= 1.1.5)
+    - DifferenceKit/UIKitExtension (= 1.1.5)
+  - DifferenceKit/Core (1.1.5)
+  - DifferenceKit/UIKitExtension (1.1.5):
     - DifferenceKit/Core
   - IQKeyboardManagerSwift (6.5.4)
   - Keys (1.0.1)
   - Mixpanel-swift (2.5.9):
     - Mixpanel-swift/Complete (= 2.5.9)
   - Mixpanel-swift/Complete (2.5.9)
-  - ReactiveLists (0.3.0):
-    - DifferenceKit (~> 0.6.0)
+  - ReactiveLists (0.6.0):
+    - DifferenceKit (~> 1.1.0)
   - Sentry (4.4.3):
     - Sentry/Core (= 4.4.3)
   - Sentry/Core (4.4.3)
@@ -24,7 +24,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift (~> 6.5.4)
   - Keys (from `Pods/CocoaPodsKeys`)
   - Mixpanel-swift (~> 2.5.9)
-  - ReactiveLists (~> 0.3.0)
+  - ReactiveLists (~> 0.6.0)
   - Sentry (~> 4.4.3)
 
 SPEC REPOS:
@@ -44,13 +44,13 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AloeStackView: d22c006da4510db5e220968234174654b5ed6ea5
   ColorCompatibility: 2762fea4195ed88bfb15eeca3ca5de73bb4a9380
-  DifferenceKit: 824ab6ecd2a20cc658071b2c0c071114cf91e4c9
+  DifferenceKit: 516f12e336ed65a3a0665847b5c3cb5cad4bd4ea
   IQKeyboardManagerSwift: 2dde0fc70110e8eac7ccce2a46fdbec6a850b414
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   Mixpanel-swift: 4a2e061c8b7a5000ed7f72d2a6196884b5de8b49
-  ReactiveLists: 383c6720617abfb9bd47e8e612bfc13e1895eda5
+  ReactiveLists: 5fc279ea612365fe742a821ab5a0b5b20a69545b
   Sentry: 14bdd673870e8cf64932b149fad5bbbf39a9b390
 
-PODFILE CHECKSUM: f66439f5b1b41942c559bd44c78146f6f194ae93
+PODFILE CHECKSUM: 624b3c4c154adadf82f8b4ee7a63b323cc478be7
 
 COCOAPODS: 1.8.3
