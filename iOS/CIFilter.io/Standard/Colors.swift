@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 enum Colors {
     case primary
@@ -23,5 +24,9 @@ enum Colors {
         case .borderGray: return UIColor(rgb: 0xAFAFAF)
         case .successGreen: return UIColor(rgb: 0x8DCA83)
         }
+    }
+
+    var swiftUIColor: Color {
+        return Color(self.color)
     }
 }

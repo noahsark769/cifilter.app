@@ -9,15 +9,44 @@
 import SwiftUI
 import Combine
 
+// From https://noahgilmore.com/blog/userdefaults-editor-swiftui/
+extension Binding {
+    init<RootType>(
+        keyPath: ReferenceWritableKeyPath<RootType, Value>,
+        object: RootType
+    ) {
+        self.init(
+            get: { object[keyPath: keyPath] },
+            set: { object[keyPath: keyPath] = $0}
+        )
+    }
+}
+
+struct UserDefaultsConfigToggleItemView: View {
+    @ObservedObject var defaultsConfig = UserDefaultsConfig.shared
+    let path: ReferenceWritableKeyPath<UserDefaultsConfig, Bool>
+    let name: String
+
+    var body: some View {
+        HStack {
+            Toggle(isOn: Binding(
+                keyPath: self.path,
+                object: self.defaultsConfig
+            )) {
+                Text(name)
+            }
+            Spacer()
+        }
+    }
+}
+
 struct SettingsView: View {
     let didTapDone = PassthroughSubject<Void, Never>()
 
     var debugView: some View {
         #if DEBUG
         return Section(header: Text("DEBUG").padding([.top], 20)) {
-            HStack {
-                Text("Nothing here right now")
-            }
+            UserDefaultsConfigToggleItemView(path: \.enableSwiftUIFilterDetail, name: "Filter Detail SwiftUI")
         }
         #else
         return EmptyView()

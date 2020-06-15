@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 @propertyWrapper
 struct UserDefault<T> {
@@ -28,6 +29,15 @@ struct UserDefault<T> {
     }
 }
 
-struct UserDefaultsConfig {
+final class UserDefaultsConfig: ObservableObject {
+    static let shared = UserDefaultsConfig()
+    let objectWillChange = PassthroughSubject<Void, Never>()
+
     // No user defaults here at this time
+    @UserDefault("com.noahgilmore.cifiltio.enableSwiftUI", defaultValue: false)
+    var enableSwiftUIFilterDetail: Bool {
+        willSet {
+            objectWillChange.send()
+        }
+    }
 }

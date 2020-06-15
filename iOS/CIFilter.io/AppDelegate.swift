@@ -50,7 +50,7 @@ class SceneDelegate: NSObject, UISceneDelegate {
         let navController = UINavigationController(rootViewController: filterListViewController)
         navController.navigationBar.prefersLargeTitles = true
 
-        if AppDelegate.enableSwiftUI {
+        if UserDefaultsConfig.shared.enableSwiftUIFilterDetail {
             let detailViewController = UIHostingController(
                 rootView: FilterDetailSwiftUIView(filterInfo: nil)
             )
@@ -59,6 +59,7 @@ class SceneDelegate: NSObject, UISceneDelegate {
                 let detailViewController = UIHostingController(
                     rootView: FilterDetailSwiftUIView(filterInfo: info)
                 )
+                detailViewController.navigationItem.largeTitleDisplayMode = .never
                 splitViewController.toggleMasterView()
                 splitViewController.showDetailViewController(detailViewController, sender: nil)
             }.store(in: &self.cancellables)
@@ -87,11 +88,6 @@ class SceneDelegate: NSObject, UISceneDelegate {
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    static var enableSwiftUI: Bool {
-        return false
-    }
-
     static var shared: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
