@@ -54,7 +54,10 @@ final class FilterWorkshopContentView: UIView {
                 print("Generation errored! \(error)")
             case let .generationCompleted(renderingResult, _, _):
                 print("Generation completed!!")
-                self.outputImageView.set(image: renderingResult.image)
+                let image = CIImage(image: renderingResult.image).map {
+                    UIImage(ciImage: $0.checkerboarded())
+                } ?? renderingResult.image
+                self.outputImageView.set(image: image)
                 print("Finished setting image")
             }
         }.store(in: &self.cancellables)

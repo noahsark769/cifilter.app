@@ -22,7 +22,14 @@ extension CIImage {
         let sourceOverCompositingFilter = CIFilter(name: "CISourceOverCompositing")!
         sourceOverCompositingFilter.setValue(checkerboardFilter.outputImage!, forKey: kCIInputBackgroundImageKey)
         sourceOverCompositingFilter.setValue(self, forKey: kCIInputImageKey)
-        return sourceOverCompositingFilter.outputImage!
+        let outputImage = sourceOverCompositingFilter.outputImage!
+        return outputImage.cropped(to: self.extent)
+    }
+
+    func croppedIfNeeded(to size: CGSize) -> CIImage {
+        let width = min(self.extent.width, size.height)
+        let height = min(self.extent.height, size.height)
+        return self.cropped(to: CGRect(x: 0, y: 0, width: width, height: height))
     }
 }
 

@@ -9,6 +9,7 @@
 import UIKit
 import Combine
 import MobileCoreServices
+import Mixpanel
 
 final class FilterWorkshopViewController: UIViewController {
     private var cancellables = Set<AnyCancellable>()
@@ -95,7 +96,27 @@ final class FilterWorkshopViewController: UIViewController {
 
     @objc private func didTapShareButton() {
         guard let image = currentImage else { return }
-        let shareController = UIActivityViewController(activityItems: [image.image], applicationActivities: nil)
+
+        let items: [Any]
+
+        if let data = image.image.pngData() {
+            items = [data]
+        } else {
+            // TODO: Move this to the analytics manager
+            var params: Properties = [:]
+            if let currentParams = self.currentGeneratedImageParmaeters {
+                for (key, value) in currentParams {
+                    if let value = value as? MixpanelType {
+                        params[key] = value
+                    }
+                }
+            }
+            params["filterName"] = self.filter.name
+            NonFatalManager.shared.log("unable_to_create_png_image", data: params)
+            items = [image.image]
+        }
+
+        let shareController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         shareController.modalPresentationStyle = .popover
         shareController.popoverPresentationController?.barButtonItem = self.shareItem
         self.present(shareController, animated: true)
