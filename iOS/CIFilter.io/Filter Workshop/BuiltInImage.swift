@@ -22,7 +22,8 @@ extension CIImage {
         let sourceOverCompositingFilter = CIFilter(name: "CISourceOverCompositing")!
         sourceOverCompositingFilter.setValue(checkerboardFilter.outputImage!, forKey: kCIInputBackgroundImageKey)
         sourceOverCompositingFilter.setValue(self, forKey: kCIInputImageKey)
-        return sourceOverCompositingFilter.outputImage!
+        let outputImage = sourceOverCompositingFilter.outputImage!
+        return outputImage.cropped(to: self.extent)
     }
 }
 
