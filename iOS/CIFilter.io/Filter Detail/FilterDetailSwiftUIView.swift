@@ -132,17 +132,21 @@ struct FilterParameterSwiftUIView: View {
     let parameter: FilterParameterInfo
 
     var body: some View {
-        GeometryReader { geometry in
-            HStack(spacing: Self.spacing) {
-                VStack {
-                    Text(self.parameter.name)
-                    Text(self.parameter.classType)
-                }
-                .frame(width: (geometry.size.width - Self.spacing) / 2)
-                Text(self.parameter.description ?? "No description provided by CoreImage")
-                    .frame(width: (geometry.size.width - Self.spacing) / 2)
+        HStack(spacing: Self.spacing) {
+            VStack(alignment: .leading) {
+                Text(self.parameter.name)
+                Text(self.parameter.classType)
             }
-        }
+//                .layoutPriority(2)
+            .frame(minWidth: 0, maxWidth: .infinity)
+
+            VStack(alignment: .leading) {
+                Text(self.parameter.description ?? "No description provided by CoreImage")
+//                .layoutPriority(1)
+            }
+                .frame(minWidth: 0, maxWidth: .infinity)
+
+        }.frame(minWidth: 0, maxWidth: .infinity)
     }
 }
 
@@ -162,8 +166,10 @@ struct FilterDetailContentView: View {
                 Text(filterInfo.description ?? "No description provided by CoreImage")
                     .padding([.bottom], 20)
                 Section(header: Text("PARAMETERS").bold().foregroundColor(Colors.primary.swiftUIColor)) {
-                    ForEach(filterInfo.parameters, id: \.name) { parameter in
-                        FilterParameterSwiftUIView(parameter: parameter)
+                    VStack(spacing: 10) {
+                        ForEach(filterInfo.parameters, id: \.name) { parameter in
+                            FilterParameterSwiftUIView(parameter: parameter)
+                        }
                     }
                 }
             }.padding(10)
