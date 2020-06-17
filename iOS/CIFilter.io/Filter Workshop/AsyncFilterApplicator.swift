@@ -67,7 +67,6 @@ final class AsyncFilterApplicator {
             events.send(.generationErrored(error: .implementationError(message: "No filter name provided")))
             return
         }
-        print("Generating output image for \(filter.name) with: \(parameterConfiguration)")
         let ciFilter = CIFilter(name: filter.name)!
         var stillNeededParameterNames = [String]()
 

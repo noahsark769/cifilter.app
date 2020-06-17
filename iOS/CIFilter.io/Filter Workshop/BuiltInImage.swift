@@ -25,12 +25,6 @@ extension CIImage {
         let outputImage = sourceOverCompositingFilter.outputImage!
         return outputImage.cropped(to: self.extent)
     }
-
-    func croppedIfNeeded(to size: CGSize) -> CIImage {
-        let width = min(self.extent.width, size.height)
-        let height = min(self.extent.height, size.height)
-        return self.cropped(to: CGRect(x: 0, y: 0, width: width, height: height))
-    }
 }
 
 final class BuiltInImageManager {
