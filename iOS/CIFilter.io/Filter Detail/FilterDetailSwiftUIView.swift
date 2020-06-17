@@ -137,12 +137,10 @@ struct FilterParameterSwiftUIView: View {
                 Text(self.parameter.name)
                 Text(self.parameter.classType)
             }
-//                .layoutPriority(2)
             .frame(minWidth: 0, maxWidth: .infinity)
 
             VStack(alignment: .leading) {
                 Text(self.parameter.description ?? "No description provided by CoreImage")
-//                .layoutPriority(1)
             }
                 .frame(minWidth: 0, maxWidth: .infinity)
 
