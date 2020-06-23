@@ -1339,7 +1339,7 @@
     "parameters": [
       {
         "classType": "AVCameraCalibrationData",
-        "description": "AVCameraCalibrationData for the correction.  Will be set from the inputImage if available and can be overridden here.",
+        "description": "AVCameraCalibrationData for the correction. Will be set from the inputImage if available and can be overridden here.",
         "displayName": "Calibration Data object of type AVCameraCalibrationData",
         "name": "inputAVCameraCalibrationData",
         "type": {
@@ -1674,6 +1674,44 @@
       }
     ],
     "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CICode128BarcodeGenerator"
+  },
+  {
+    "availableIOS": "14",
+    "availableMac": "10.16",
+    "categories": [
+      "CICategoryColorAdjustment",
+      "CICategoryVideo",
+      "CICategoryInterlaced",
+      "CICategoryNonSquarePixels",
+      "CICategoryStillImage",
+      "CICategoryBuiltIn"
+    ],
+    "description": "Produces an image that is the absolute value of the color difference between two images. The alpha channel of the result will be the product of the two image alpha channels.",
+    "displayName": "Color Absolute Difference",
+    "name": "CIColorAbsoluteDifference",
+    "parameters": [
+      {
+        "classType": "CIImage",
+        "description": "The first input image for differencing.",
+        "displayName": "Image",
+        "name": "inputImage",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
+        }
+      },
+      {
+        "classType": "CIImage",
+        "description": "The second input image for differencing.",
+        "displayName": "Image2",
+        "name": "inputImage2",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
+        }
+      }
+    ],
+    "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIColorAbsoluteDifference"
   },
   {
     "availableIOS": "5",
@@ -2486,6 +2524,71 @@
     "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIColorPosterize"
   },
   {
+    "availableIOS": "14",
+    "availableMac": "10.16",
+    "categories": [
+      "CICategoryColorAdjustment",
+      "CICategoryVideo",
+      "CICategoryInterlaced",
+      "CICategoryNonSquarePixels",
+      "CICategoryStillImage",
+      "CICategoryBuiltIn"
+    ],
+    "description": "Produces a binarized image from an image and a threshold value. The red, green and blue channels of the resulting image will be one if its value is greater than the threshold and zero otherwise.",
+    "displayName": "Color Threshold",
+    "name": "CIColorThreshold",
+    "parameters": [
+      {
+        "classType": "CIImage",
+        "description": "The image to use as an input image. For filters that also use a background image, this is the foreground image.",
+        "displayName": "Image",
+        "name": "inputImage",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
+        }
+      },
+      {
+        "classType": "NSNumber",
+        "displayName": "Threshold",
+        "name": "inputThreshold",
+        "type": {
+          "information": "Scalar. ",
+          "kind": "scalar"
+        }
+      }
+    ],
+    "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIColorThreshold"
+  },
+  {
+    "availableIOS": "14",
+    "availableMac": "10.16",
+    "categories": [
+      "CICategoryColorAdjustment",
+      "CICategoryVideo",
+      "CICategoryInterlaced",
+      "CICategoryNonSquarePixels",
+      "CICategoryStillImage",
+      "CICategoryBuiltIn"
+    ],
+    "description": "Produces a binarized image from an image with finite extent. The threshold is calculated from the image histogram using Otsu’s method. The red, green and blue channels of the resulting image will be one if its value is greater than the threshold and zero otherwise.",
+    "displayName": "Color Threshold Otsu",
+    "name": "CIColorThresholdOtsu",
+    "parameters": [
+      {
+        "classType": "CIImage",
+        "description": "The image to use as an input image. For filters that also use a background image, this is the foreground image.",
+        "displayName": "Image",
+        "name": "inputImage",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
+        }
+      }
+    ],
+    "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIColorThresholdOtsu"
+  },
+  {
     "availableIOS": "9",
     "availableMac": "10.5",
     "categories": [
@@ -3133,7 +3236,7 @@
       },
       {
         "classType": "CIImage",
-        "description": "A matting image.",
+        "description": "A segmentation matte image that corresponds to people’s hair.",
         "displayName": "Hair Image",
         "name": "inputHairImage",
         "type": {
@@ -4475,6 +4578,32 @@
     "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIFourfoldTranslatedTile"
   },
   {
+    "availableIOS": "13",
+    "availableMac": "10.15",
+    "categories": [
+      "CICategoryStylize",
+      "CICategoryVideo",
+      "CICategoryStillImage",
+      "CICategoryBuiltIn"
+    ],
+    "description": "Applies multichannel 5 by 5 Gabor gradient filter to an image. The resulting image has maximum horizontal gradient in the red channel and the maximum vertical gradient in the green channel. The gradient values can be positive or negative.",
+    "displayName": "Gabor Gradients",
+    "name": "CIGaborGradients",
+    "parameters": [
+      {
+        "classType": "CIImage",
+        "description": "The image to use as an input image. For filters that also use a background image, this is the foreground image.",
+        "displayName": "Image",
+        "name": "inputImage",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
+        }
+      }
+    ],
+    "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIGaborGradients"
+  },
+  {
     "availableIOS": "5",
     "availableMac": "10.4",
     "categories": [
@@ -5496,6 +5625,234 @@
       }
     ],
     "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIKaleidoscope"
+  },
+  {
+    "availableIOS": "13",
+    "availableMac": "10.15",
+    "categories": [
+      "CICategoryGeometryAdjustment",
+      "CICategoryVideo",
+      "CICategoryStillImage",
+      "CICategoryBuiltIn"
+    ],
+    "description": "Apply keystone correction to an image with combined horizontal and vertical guides",
+    "displayName": "Combined Keystone Correction",
+    "name": "CIKeystoneCorrectionCombined",
+    "parameters": [
+      {
+        "classType": "CIVector",
+        "description": "The bottom left coordinate of the guide.",
+        "displayName": "Bottom Left",
+        "name": "inputBottomLeft",
+        "type": {
+          "information": "Position. ",
+          "kind": "position"
+        }
+      },
+      {
+        "classType": "CIVector",
+        "description": "The bottom right coordinate of the guide.",
+        "displayName": "Bottom Right",
+        "name": "inputBottomRight",
+        "type": {
+          "information": "Position. ",
+          "kind": "position"
+        }
+      },
+      {
+        "classType": "NSNumber",
+        "description": "35mm equivalent focal length of the input image.",
+        "displayName": "Focal Length",
+        "name": "inputFocalLength",
+        "type": {
+          "information": "Scalar. ",
+          "kind": "scalar"
+        }
+      },
+      {
+        "classType": "CIImage",
+        "description": "The image to process.",
+        "displayName": "Image",
+        "name": "inputImage",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
+        }
+      },
+      {
+        "classType": "CIVector",
+        "description": "The top left coordinate of the guide.",
+        "displayName": "Top Left",
+        "name": "inputTopLeft",
+        "type": {
+          "information": "Position. ",
+          "kind": "position"
+        }
+      },
+      {
+        "classType": "CIVector",
+        "description": "The top right coordinate of the guide.",
+        "displayName": "Top Right",
+        "name": "inputTopRight",
+        "type": {
+          "information": "Position. ",
+          "kind": "position"
+        }
+      }
+    ],
+    "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIKeystoneCorrectionCombined"
+  },
+  {
+    "availableIOS": "13",
+    "availableMac": "10.15",
+    "categories": [
+      "CICategoryGeometryAdjustment",
+      "CICategoryVideo",
+      "CICategoryStillImage",
+      "CICategoryBuiltIn"
+    ],
+    "description": "Apply horizontal keystone correction to an image with guides",
+    "displayName": "Horizontal Keystone Correction",
+    "name": "CIKeystoneCorrectionHorizontal",
+    "parameters": [
+      {
+        "classType": "CIVector",
+        "description": "The bottom left coordinate of the guide.",
+        "displayName": "Bottom Left",
+        "name": "inputBottomLeft",
+        "type": {
+          "information": "Position. ",
+          "kind": "position"
+        }
+      },
+      {
+        "classType": "CIVector",
+        "description": "The bottom right coordinate of the guide.",
+        "displayName": "Bottom Right",
+        "name": "inputBottomRight",
+        "type": {
+          "information": "Position. ",
+          "kind": "position"
+        }
+      },
+      {
+        "classType": "NSNumber",
+        "description": "35mm equivalent focal length of the input image.",
+        "displayName": "Focal Length",
+        "name": "inputFocalLength",
+        "type": {
+          "information": "Scalar. ",
+          "kind": "scalar"
+        }
+      },
+      {
+        "classType": "CIImage",
+        "description": "The image to process.",
+        "displayName": "Image",
+        "name": "inputImage",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
+        }
+      },
+      {
+        "classType": "CIVector",
+        "description": "The top left coordinate of the guide.",
+        "displayName": "Top Left",
+        "name": "inputTopLeft",
+        "type": {
+          "information": "Position. ",
+          "kind": "position"
+        }
+      },
+      {
+        "classType": "CIVector",
+        "description": "The top right coordinate of the guide.",
+        "displayName": "Top Right",
+        "name": "inputTopRight",
+        "type": {
+          "information": "Position. ",
+          "kind": "position"
+        }
+      }
+    ],
+    "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIKeystoneCorrectionHorizontal"
+  },
+  {
+    "availableIOS": "13",
+    "availableMac": "10.15",
+    "categories": [
+      "CICategoryGeometryAdjustment",
+      "CICategoryVideo",
+      "CICategoryStillImage",
+      "CICategoryBuiltIn"
+    ],
+    "description": "Apply vertical keystone correction to an image with guides",
+    "displayName": "Vertical Keystone Correction",
+    "name": "CIKeystoneCorrectionVertical",
+    "parameters": [
+      {
+        "classType": "CIVector",
+        "description": "The bottom left coordinate of the guide.",
+        "displayName": "Bottom Left",
+        "name": "inputBottomLeft",
+        "type": {
+          "information": "Position. ",
+          "kind": "position"
+        }
+      },
+      {
+        "classType": "CIVector",
+        "description": "The bottom right coordinate of the guide.",
+        "displayName": "Bottom Right",
+        "name": "inputBottomRight",
+        "type": {
+          "information": "Position. ",
+          "kind": "position"
+        }
+      },
+      {
+        "classType": "NSNumber",
+        "description": "35mm equivalent focal length of the input image.",
+        "displayName": "Focal Length",
+        "name": "inputFocalLength",
+        "type": {
+          "information": "Scalar. ",
+          "kind": "scalar"
+        }
+      },
+      {
+        "classType": "CIImage",
+        "description": "The image to process.",
+        "displayName": "Image",
+        "name": "inputImage",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
+        }
+      },
+      {
+        "classType": "CIVector",
+        "description": "The top left coordinate of the guide.",
+        "displayName": "Top Left",
+        "name": "inputTopLeft",
+        "type": {
+          "information": "Position. ",
+          "kind": "position"
+        }
+      },
+      {
+        "classType": "CIVector",
+        "description": "The top right coordinate of the guide.",
+        "displayName": "Top Right",
+        "name": "inputTopRight",
+        "type": {
+          "information": "Position. ",
+          "kind": "position"
+        }
+      }
+    ],
+    "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIKeystoneCorrectionVertical"
   },
   {
     "availableIOS": "11",
@@ -6644,7 +7001,7 @@
     "parameters": [
       {
         "classType": "NSNumber",
-        "description": "The height in pixels of the morphological operation.  The value will be rounded to the nearest odd integer.",
+        "description": "The height in pixels of the morphological operation. The value will be rounded to the nearest odd integer.",
         "displayName": "Height",
         "name": "inputHeight",
         "type": {
@@ -6664,7 +7021,7 @@
       },
       {
         "classType": "NSNumber",
-        "description": "The width in pixels of the morphological operation.  The value will be rounded to the nearest odd integer.",
+        "description": "The width in pixels of the morphological operation. The value will be rounded to the nearest odd integer.",
         "displayName": "Width",
         "name": "inputWidth",
         "type": {
@@ -6690,7 +7047,7 @@
     "parameters": [
       {
         "classType": "NSNumber",
-        "description": "The height in pixels of the morphological operation.  The value will be rounded to the nearest odd integer.",
+        "description": "The height in pixels of the morphological operation. The value will be rounded to the nearest odd integer.",
         "displayName": "Height",
         "name": "inputHeight",
         "type": {
@@ -6710,7 +7067,7 @@
       },
       {
         "classType": "NSNumber",
-        "description": "The width in pixels of the morphological operation.  The value will be rounded to the nearest odd integer.",
+        "description": "The width in pixels of the morphological operation. The value will be rounded to the nearest odd integer.",
         "displayName": "Width",
         "name": "inputWidth",
         "type": {
@@ -7696,6 +8053,72 @@
     "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIPerspectiveCorrection"
   },
   {
+    "availableIOS": "13",
+    "availableMac": "10.15",
+    "categories": [
+      "CICategoryGeometryAdjustment",
+      "CICategoryVideo",
+      "CICategoryStillImage",
+      "CICategoryBuiltIn"
+    ],
+    "description": "Apply a homogenous rotation transform to an image.",
+    "displayName": "Perspective Rotate",
+    "name": "CIPerspectiveRotate",
+    "parameters": [
+      {
+        "classType": "NSNumber",
+        "description": "35mm equivalent focal length of the input image.",
+        "displayName": "Focal Length",
+        "name": "inputFocalLength",
+        "type": {
+          "information": "Scalar. ",
+          "kind": "scalar"
+        }
+      },
+      {
+        "classType": "CIImage",
+        "description": "The image to process.",
+        "displayName": "Image",
+        "name": "inputImage",
+        "type": {
+          "information": "Image.",
+          "kind": "image"
+        }
+      },
+      {
+        "classType": "NSNumber",
+        "description": "Pitch angle in radians.",
+        "displayName": "Pitch",
+        "name": "inputPitch",
+        "type": {
+          "information": "Angle. ",
+          "kind": "angle"
+        }
+      },
+      {
+        "classType": "NSNumber",
+        "description": "Roll angle in radians.",
+        "displayName": "Roll",
+        "name": "inputRoll",
+        "type": {
+          "information": "Angle. ",
+          "kind": "angle"
+        }
+      },
+      {
+        "classType": "NSNumber",
+        "description": "Yaw angle in radians.",
+        "displayName": "Yaw",
+        "name": "inputYaw",
+        "type": {
+          "information": "Angle. ",
+          "kind": "angle"
+        }
+      }
+    ],
+    "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIPerspectiveRotate"
+  },
+  {
     "availableIOS": "6",
     "availableMac": "10.4",
     "categories": [
@@ -7911,7 +8334,7 @@
       "CICategoryBuiltIn",
       "CICategoryXMPSerializable"
     ],
-    "description": "Apply a ‘Chrome’ style effect to an image.",
+    "description": "Apply a “Chrome” style effect to an image.",
     "displayName": "Photo Effect Chrome",
     "name": "CIPhotoEffectChrome",
     "parameters": [
@@ -7940,7 +8363,7 @@
       "CICategoryBuiltIn",
       "CICategoryXMPSerializable"
     ],
-    "description": "Apply a ‘Fade’ style effect to an image",
+    "description": "Apply a “Fade” style effect to an image",
     "displayName": "Photo Effect Fade",
     "name": "CIPhotoEffectFade",
     "parameters": [
@@ -7969,7 +8392,7 @@
       "CICategoryBuiltIn",
       "CICategoryXMPSerializable"
     ],
-    "description": "Apply a ‘Instant’ style effect to an image",
+    "description": "Apply a “Instant” style effect to an image",
     "displayName": "Photo Effect Instant",
     "name": "CIPhotoEffectInstant",
     "parameters": [
@@ -7998,7 +8421,7 @@
       "CICategoryBuiltIn",
       "CICategoryXMPSerializable"
     ],
-    "description": "Apply a ‘Mono’ style effect to an image",
+    "description": "Apply a “Mono” style effect to an image",
     "displayName": "Photo Effect Mono",
     "name": "CIPhotoEffectMono",
     "parameters": [
@@ -8027,7 +8450,7 @@
       "CICategoryBuiltIn",
       "CICategoryXMPSerializable"
     ],
-    "description": "Apply a ‘Noir’ style effect to an image",
+    "description": "Apply a “Noir” style effect to an image",
     "displayName": "Photo Effect Noir",
     "name": "CIPhotoEffectNoir",
     "parameters": [
@@ -8056,7 +8479,7 @@
       "CICategoryBuiltIn",
       "CICategoryXMPSerializable"
     ],
-    "description": "Apply a ‘Process’ style effect to an image",
+    "description": "Apply a “Process” style effect to an image",
     "displayName": "Photo Effect Process",
     "name": "CIPhotoEffectProcess",
     "parameters": [
@@ -8085,7 +8508,7 @@
       "CICategoryBuiltIn",
       "CICategoryXMPSerializable"
     ],
-    "description": "Apply a ‘Tonal’ style effect to an image",
+    "description": "Apply a “Tonal” style effect to an image",
     "displayName": "Photo Effect Tonal",
     "name": "CIPhotoEffectTonal",
     "parameters": [
@@ -8114,7 +8537,7 @@
       "CICategoryBuiltIn",
       "CICategoryXMPSerializable"
     ],
-    "description": "Apply a ‘Transfer’ style effect to an image",
+    "description": "Apply a “Transfer” style effect to an image",
     "displayName": "Photo Effect Transfer",
     "name": "CIPhotoEffectTransfer",
     "parameters": [
@@ -8530,6 +8953,51 @@
     "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIRippleTransition"
   },
   {
+    "availableIOS": "13",
+    "availableMac": "10.15",
+    "categories": [
+      "CICategoryGenerator",
+      "CICategoryStillImage",
+      "CICategoryBuiltIn"
+    ],
+    "description": "Generates a rounded rectangle image with the specified extent, corner radius, and color.",
+    "displayName": "Rounded Rectangle Generator",
+    "name": "CIRoundedRectangleGenerator",
+    "parameters": [
+      {
+        "classType": "CIColor",
+        "description": "A color.",
+        "displayName": "Color",
+        "name": "inputColor",
+        "type": {
+          "information": "Color. Has default value.",
+          "kind": "color"
+        }
+      },
+      {
+        "classType": "CIVector",
+        "description": "A rectangle that defines the extent of the effect.",
+        "displayName": "Extent",
+        "name": "inputExtent",
+        "type": {
+          "information": "Rectangle. ",
+          "kind": "rectangle"
+        }
+      },
+      {
+        "classType": "NSNumber",
+        "description": "The distance from the center of the effect.",
+        "displayName": "Radius",
+        "name": "inputRadius",
+        "type": {
+          "information": "Distance. Min: 0.0",
+          "kind": "distance"
+        }
+      }
+    ],
+    "referenceDocumentation": "http://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIRoundedRectangleGenerator"
+  },
+  {
     "availableIOS": "9",
     "availableMac": "10.5",
     "categories": [
@@ -8628,7 +9096,7 @@
       "CICategoryStillImage",
       "CICategoryBuiltIn"
     ],
-    "description": "Produces an image that forces the image sampling to ‘nearest’ mode instead of the default ‘linear’ mode. This filter can be used to alter the behavior of filters that alter the geometry of an image. The output of this filter should be passed as the input to the geometry filter. For example, passing the output of this filter to CIAffineTransform can be used to produce a pixelated upsampled image.",
+    "description": "Produces an image that forces the image sampling to “nearest” mode instead of the default “linear” mode. This filter can be used to alter the behavior of filters that alter the geometry of an image. The output of this filter should be passed as the input to the geometry filter. For example, passing the output of this filter to CIAffineTransform can be used to produce a pixelated upsampled image.",
     "displayName": "Sample Nearest",
     "name": "CISampleNearest",
     "parameters": [
@@ -10019,7 +10487,7 @@
       "CICategoryStillImage",
       "CICategoryBuiltIn"
     ],
-    "description": "Apply a ‘Thermal’ style effect to an image",
+    "description": "Apply a “Thermal” style effect to an image",
     "displayName": "Thermal",
     "name": "CIThermal",
     "parameters": [
@@ -10711,7 +11179,7 @@
       "CICategoryStillImage",
       "CICategoryBuiltIn"
     ],
-    "description": "Apply a ‘XRay’ style effect to an image",
+    "description": "Apply a “XRay” style effect to an image",
     "displayName": "X-Ray",
     "name": "CIXRay",
     "parameters": [
