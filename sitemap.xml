@@ -36,6 +36,7 @@
 <url> <loc>https://cifilter.io/CICircularWrap/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIClamp/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CICode128BarcodeGenerator/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cifilter.io/CIColorAbsoluteDifference/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIColorBlendMode/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIColorBurnBlendMode/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIColorClamp/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -52,6 +53,8 @@
 <url> <loc>https://cifilter.io/CIColorMonochrome/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIColorPolynomial/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIColorPosterize/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cifilter.io/CIColorThreshold/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cifilter.io/CIColorThresholdOtsu/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIColumnAverage/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIComicEffect/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIConstantColorGenerator/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -90,6 +93,7 @@
 <url> <loc>https://cifilter.io/CIFourfoldReflectedTile/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIFourfoldRotatedTile/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIFourfoldTranslatedTile/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cifilter.io/CIGaborGradients/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIGammaAdjust/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIGaussianBlur/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIGaussianGradient/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -110,6 +114,9 @@
 <url> <loc>https://cifilter.io/CIHueSaturationValueGradient/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIKMeans/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIKaleidoscope/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cifilter.io/CIKeystoneCorrectionCombined/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cifilter.io/CIKeystoneCorrectionHorizontal/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cifilter.io/CIKeystoneCorrectionVertical/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CILabDeltaE/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CILanczosScaleTransform/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CILenticularHaloGenerator/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -152,6 +159,7 @@
 <url> <loc>https://cifilter.io/CIPalettize/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIParallelogramTile/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIPerspectiveCorrection/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cifilter.io/CIPerspectiveRotate/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIPerspectiveTile/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIPerspectiveTransform/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIPerspectiveTransformWithExtent/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -171,6 +179,7 @@
 <url> <loc>https://cifilter.io/CIRadialGradient/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIRandomGenerator/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIRippleTransition/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://cifilter.io/CIRoundedRectangleGenerator/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CIRowAverage/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CISRGBToneCurveToLinear/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://cifilter.io/CISaliencyMapFilter/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
