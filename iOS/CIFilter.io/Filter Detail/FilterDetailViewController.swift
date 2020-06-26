@@ -10,7 +10,7 @@ import UIKit
 import Combine
 import ColorCompatibility
 import SwiftUI
-import SwiftUIX
+//import SwiftUIX
 
 struct NoFilterSelectedView: View {
     var body: some View {
@@ -18,6 +18,19 @@ struct NoFilterSelectedView: View {
             Image(systemName: "arrow.left")
             Text("Select a CIFilter from the sidebar")
         }
+    }
+}
+
+final class FilterWorkshopNavigationController: UINavigationController {
+    override init(rootViewController: UIViewController) {
+        super.init(rootViewController: rootViewController)
+
+        self.navigationBar.isTranslucent = false
+        self.modalPresentationStyle = .fullScreen
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -80,9 +93,7 @@ final class FilterDetailViewController: UIViewController {
 
     func presentFilterWorkshopModally(filter: FilterInfo) {
         let vc = FilterWorkshopViewController(filter: filter)
-        let navigationController = UINavigationController(rootViewController: vc)
-        navigationController.navigationBar.isTranslucent = false
-        navigationController.modalPresentationStyle = .fullScreen
+        let navigationController = FilterWorkshopNavigationController(rootViewController: vc)
         self.splitViewController?.present(navigationController, animated: true, completion: nil)
     }
 

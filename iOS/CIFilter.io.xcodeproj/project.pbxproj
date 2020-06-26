@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -39,7 +39,6 @@
 		A1315E2D2288F340006872BD /* buildInformation.json in Resources */ = {isa = PBXBuildFile; fileRef = A1315E2C2288F33F006872BD /* buildInformation.json */; };
 		A15B7D0B2394A27D0053C979 /* GradientSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15B7D0A2394A27D0053C979 /* GradientSliderView.swift */; };
 		A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1707F65219A1A0A0010E007 /* FilterInfo.swift */; };
-		A170BC8B23AE8B6200EF7806 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = A170BC8A23AE8B6200EF7806 /* SwiftPackageProductDependency */; };
 		A172BAC42221CCFB00182C56 /* ColorHexInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172BAC32221CCFA00182C56 /* ColorHexInput.swift */; };
 		A18D97C22375C5C4009C3DBB /* ControlPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D97C12375C5C4009C3DBB /* ControlPublisher.swift */; };
 		A18D97C42375C5E1009C3DBB /* UITapGestureRecognizer+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D97C32375C5E1009C3DBB /* UITapGestureRecognizer+Combine.swift */; };
@@ -194,7 +193,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A170BC8B23AE8B6200EF7806 /* BuildFile in Frameworks */,
 				379B921C7F6338D3984BEEA1 /* Pods_CIFilter_io.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -445,9 +443,6 @@
 			dependencies = (
 			);
 			name = CIFilter.io;
-			packageProductDependencies = (
-				A170BC8A23AE8B6200EF7806 /* SwiftPackageProductDependency */,
-			);
 			productName = CIFilter.io;
 			productReference = A1C662192196818100826A2B /* CIFilter.io.app */;
 			productType = "com.apple.product-type.application";
@@ -480,9 +475,6 @@
 				Base,
 			);
 			mainGroup = A1C662102196818100826A2B;
-			packageReferences = (
-				A170BC8923AE8B6200EF7806 /* RemoteSwiftPackageReference */,
-			);
 			productRefGroup = A1C6621A2196818100826A2B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -995,25 +987,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		A170BC8923AE8B6200EF7806 /* RemoteSwiftPackageReference */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		A170BC8A23AE8B6200EF7806 /* SwiftPackageProductDependency */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A170BC8923AE8B6200EF7806 /* RemoteSwiftPackageReference */;
-			productName = SwiftUIX;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A1C662112196818100826A2B /* Project object */;
 }

@@ -117,9 +117,26 @@ final class FilterWorkshopViewController: UIViewController {
         }
 
         let shareController = UIActivityViewController(activityItems: items, applicationActivities: nil)
-        shareController.modalPresentationStyle = .popover
-        shareController.popoverPresentationController?.barButtonItem = self.shareItem
-        self.present(shareController, animated: true)
+
+        if self.traitCollection.userInterfaceIdiom == .pad {
+            shareController.modalPresentationStyle = .popover
+            shareController.popoverPresentationController?.barButtonItem = self.shareItem
+            self.present(shareController, animated: true)
+        } else {
+            shareController.modalPresentationStyle = .automatic
+
+            // Work around an issue with UIActivityViewController where it automatically dismisses
+            // the modally presented view controller:
+            // https://github.com/noahsark769/NGUIActivityViewControllerDismissalExample
+            let intermediaryController = UIViewController()
+            intermediaryController.modalPresentationStyle = .overFullScreen
+            shareController.completionWithItemsHandler = { _, _, _, _ in
+                intermediaryController.dismiss(animated: false, completion: nil)
+            }
+            self.present(intermediaryController, animated: false, completion: {
+                intermediaryController.present(shareController, animated: true, completion: nil)
+            })
+        }
     }
 
     @objc private func didTapExportButton() {

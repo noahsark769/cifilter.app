@@ -12,7 +12,7 @@ import CoreGraphics
 import SwiftUI
 import CoreImage.CIFilterBuiltins
 import ColorCompatibility
-import SwiftUIX
+//import SwiftUIX
 
 struct GradientSliderHarness: View {
     @ObservedObject var sliderObservation = GradientSliderObservation(value: 1)
