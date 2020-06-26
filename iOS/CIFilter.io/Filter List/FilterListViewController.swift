@@ -136,9 +136,7 @@ final class FilterListViewController: UITableViewController {
                         didSelectJumpToWorkshop: { [weak self] in
                             guard let `self` = self else { return }
                             let vc = FilterWorkshopViewController(filter: filter)
-                            let navigationController = UINavigationController(rootViewController: vc)
-                            navigationController.navigationBar.isTranslucent = false
-                            navigationController.modalPresentationStyle = .fullScreen
+                            let navigationController = FilterWorkshopNavigationController(rootViewController: vc)
                             self.splitViewController?.present(navigationController, animated: true, completion: nil)
                         }
                     )

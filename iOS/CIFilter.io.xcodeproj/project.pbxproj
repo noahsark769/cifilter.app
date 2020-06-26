@@ -3,12 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		379B921C7F6338D3984BEEA1 /* Pods_CIFilter_io.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7025EAAD7B39B501B039A0E /* Pods_CIFilter_io.framework */; };
 		4E5037D180BE197BC8C8D01B /* Pods_CIFilter_ioTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EBDE2DBDAF2DACCA875113 /* Pods_CIFilter_ioTests.framework */; };
+		A10424FA24A6478E001F29B0 /* HostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10424F924A6478E001F29B0 /* HostingView.swift */; };
+		A10424FC24A647EF001F29B0 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10424FB24A647EF001F29B0 /* ActivityIndicator.swift */; };
 		A116A0E0220B4CA9005DE07F /* UIColorUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A116A0DF220B4CA9005DE07F /* UIColorUtilsTest.swift */; };
 		A119025B222B31B000FE27A3 /* UIImage+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A119025A222B31B000FE27A3 /* UIImage+Utils.swift */; };
 		A11C522521968BB000045F2E /* FilterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11C522421968BB000045F2E /* FilterListViewController.swift */; };
@@ -39,7 +41,6 @@
 		A1315E2D2288F340006872BD /* buildInformation.json in Resources */ = {isa = PBXBuildFile; fileRef = A1315E2C2288F33F006872BD /* buildInformation.json */; };
 		A15B7D0B2394A27D0053C979 /* GradientSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15B7D0A2394A27D0053C979 /* GradientSliderView.swift */; };
 		A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1707F65219A1A0A0010E007 /* FilterInfo.swift */; };
-		A170BC8B23AE8B6200EF7806 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = A170BC8A23AE8B6200EF7806 /* SwiftPackageProductDependency */; };
 		A172BAC42221CCFB00182C56 /* ColorHexInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172BAC32221CCFA00182C56 /* ColorHexInput.swift */; };
 		A18D97C22375C5C4009C3DBB /* ControlPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D97C12375C5C4009C3DBB /* ControlPublisher.swift */; };
 		A18D97C42375C5E1009C3DBB /* UITapGestureRecognizer+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18D97C32375C5E1009C3DBB /* UITapGestureRecognizer+Combine.swift */; };
@@ -97,6 +98,8 @@
 /* Begin PBXFileReference section */
 		08FBAE88B5103E03654DA7F2 /* Pods-CIFilter.io.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.io.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io.debug.xcconfig"; sourceTree = "<group>"; };
 		6BC47CD1E0BB2EEB52DDF0D2 /* Pods-CIFilter.ioTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.ioTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.ioTests/Pods-CIFilter.ioTests.release.xcconfig"; sourceTree = "<group>"; };
+		A10424F924A6478E001F29B0 /* HostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingView.swift; sourceTree = "<group>"; };
+		A10424FB24A647EF001F29B0 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		A116A0D5220B4C93005DE07F /* CIFilter.ioTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CIFilter.ioTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A116A0D7220B4C93005DE07F /* CIFilter_ioTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIFilter_ioTests.swift; sourceTree = "<group>"; };
 		A116A0D9220B4C93005DE07F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -194,7 +197,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A170BC8B23AE8B6200EF7806 /* BuildFile in Frameworks */,
 				379B921C7F6338D3984BEEA1 /* Pods_CIFilter_io.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -362,12 +364,14 @@
 		A1D5A8B921AF03ED00257B5E /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				A10424FB24A647EF001F29B0 /* ActivityIndicator.swift */,
 				A1D5A8BA21AF03F700257B5E /* Autolayout.swift */,
 				A130BD8221F0F22400E586F6 /* CGPoint+Utils.swift */,
 				A1DD09DB237664ED0054061B /* CombineLatestCollection.swift */,
 				A18D97C12375C5C4009C3DBB /* ControlPublisher.swift */,
 				A128995121DD6D4000BEE395 /* CwlMutex.swift */,
 				A128993E21D058B300BEE395 /* EitherView.swift */,
+				A10424F924A6478E001F29B0 /* HostingView.swift */,
 				A1D5A8C221B054A100257B5E /* SeparatorView.swift */,
 				A1D5A8BE21AF0F8200257B5E /* UIColor+Utils.swift */,
 				A1D5A8D221B4A32100257B5E /* UIEdgeInsets+Utils.swift */,
@@ -445,9 +449,6 @@
 			dependencies = (
 			);
 			name = CIFilter.io;
-			packageProductDependencies = (
-				A170BC8A23AE8B6200EF7806 /* SwiftPackageProductDependency */,
-			);
 			productName = CIFilter.io;
 			productReference = A1C662192196818100826A2B /* CIFilter.io.app */;
 			productType = "com.apple.product-type.application";
@@ -480,9 +481,6 @@
 				Base,
 			);
 			mainGroup = A1C662102196818100826A2B;
-			packageReferences = (
-				A170BC8923AE8B6200EF7806 /* RemoteSwiftPackageReference */,
-			);
 			productRefGroup = A1C6621A2196818100826A2B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -661,6 +659,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10424FC24A647EF001F29B0 /* ActivityIndicator.swift in Sources */,
 				A129375E2246B7CC000C6329 /* AnalyticsManager.swift in Sources */,
 				A1C6621D2196818100826A2B /* AppDelegate.swift in Sources */,
 				A128994721D41EAC00BEE395 /* AsyncFilterApplicator.swift in Sources */,
@@ -706,6 +705,7 @@
 				A128994521D40A3F00BEE395 /* FreeformNumberInput.swift in Sources */,
 				A1DD09DA23765CCA0054061B /* FreeformTextInput.swift in Sources */,
 				A15B7D0B2394A27D0053C979 /* GradientSliderView.swift in Sources */,
+				A10424FA24A6478E001F29B0 /* HostingView.swift in Sources */,
 				A1D309882391F62C00CC92A2 /* ImageArtboardDropIndicatorView.swift in Sources */,
 				A1A0D83E21BEC1B90098168C /* ImageArtboardView.swift in Sources */,
 				A1AA26DD22F7835300620FC2 /* ImageChooserSwiftUIView.swift in Sources */,
@@ -995,25 +995,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		A170BC8923AE8B6200EF7806 /* RemoteSwiftPackageReference */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		A170BC8A23AE8B6200EF7806 /* SwiftPackageProductDependency */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A170BC8923AE8B6200EF7806 /* RemoteSwiftPackageReference */;
-			productName = SwiftUIX;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A1C662112196818100826A2B /* Project object */;
 }

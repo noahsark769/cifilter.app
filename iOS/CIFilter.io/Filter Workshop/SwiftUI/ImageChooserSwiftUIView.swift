@@ -9,7 +9,6 @@
 import SwiftUI
 import Combine
 import ColorCompatibility
-import SwiftUIX
 
 struct ButtonFramePreferenceKey: PreferenceKey {
     typealias Value = CGRect?
@@ -73,8 +72,7 @@ struct BuiltInImageCarouselItemView: View {
         guard case .loading = self.loadingState else {
             return nil
         }
-        return ActivityIndicator()
-            .style(.medium)
+        return ActivityIndicator(style: .medium)
             .frame(
                 width: Self.imageSize,
                 height: Self.imageSize

@@ -12,7 +12,6 @@ import CoreGraphics
 import SwiftUI
 import CoreImage.CIFilterBuiltins
 import ColorCompatibility
-import SwiftUIX
 
 struct GradientSliderHarness: View {
     @ObservedObject var sliderObservation = GradientSliderObservation(value: 1)
@@ -67,7 +66,7 @@ final class ColorInput: UIControl, ControlValueReporting {
     private(set) var value = CIColor.black
     private var hexInputValueChanged: AnyPublisher<ColorHexInput.ValueType, Never>!
     private let lightnessSliderHarness = GradientSliderHarness()
-    private lazy var lightnessSlider = UIHostingView(rootView: self.lightnessSliderHarness)
+    private lazy var lightnessSlider = HostingView(rootView: self.lightnessSliderHarness)
 
     init(defaultValue: CIColor) {
         // TODO: defaultValue is currently unused

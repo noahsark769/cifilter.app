@@ -9,7 +9,6 @@
 import UIKit
 import Combine
 import SwiftUI
-import SwiftUIX
 
 final class ImageArtboardView: UIView {
     static let artboardSize: CGFloat = 650
@@ -75,8 +74,8 @@ final class ImageArtboardView: UIView {
     var imageChooserView: UIView {
         return swiftUIImageChooserViewController.view!
     }
-
-    private let dropIndicatorView = UIHostingView(rootView: ImageArtboardDropIndicatorView())
+    
+    private let dropIndicatorView = HostingView(rootView: ImageArtboardDropIndicatorView())
 
     init(name: String, configuration: Configuration) {
         self.configuration = configuration
