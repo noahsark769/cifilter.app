@@ -40,9 +40,9 @@ class SceneDelegate: NSObject, UISceneDelegate {
         }.sorted { lhs, rhs in
             return lhs.name < rhs.name
         }
-                let encoder = JSONEncoder()
-                encoder.outputFormatting = .sortedKeys
-                print(String(data: try! encoder.encode(data), encoding: .utf8)!)
+//        let encoder = JSONEncoder()
+//        encoder.outputFormatting = .sortedKeys
+//        print(String(data: try! encoder.encode(data), encoding: .utf8)!)
 
         window = UIWindow(windowScene: scene)
         let splitViewController = UISplitViewController()

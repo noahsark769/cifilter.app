@@ -10,7 +10,6 @@ import UIKit
 import Combine
 import ColorCompatibility
 import SwiftUI
-//import SwiftUIX
 
 struct NoFilterSelectedView: View {
     var body: some View {
@@ -40,7 +39,7 @@ final class FilterDetailViewController: UIViewController {
     var filter: FilterInfo! = nil
     var compressedConstraints: [NSLayoutConstraint] = []
     var nonCompressedConstraints: [NSLayoutConstraint] = []
-    private let noFilterSelectedView = UIHostingView(rootView: NoFilterSelectedView())
+    private let noFilterSelectedView = HostingView(rootView: NoFilterSelectedView())
     private lazy var eitherView = EitherView(views: [self.filterView, self.noFilterSelectedView])
 
     init() {
