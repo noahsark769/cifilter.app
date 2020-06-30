@@ -8,9 +8,10 @@
 
 import UIKit
 import ReactiveLists
+import SwiftUI
 
 final class FilterCellModel: TableCellViewModel, DiffableViewModel {
-    var registrationInfo = ViewRegistrationInfo(classType: FilterListNameCell.self)
+    var registrationInfo = ViewRegistrationInfo(classType: HostingCell<FilterListNameView>.self)
     var accessibilityFormat: CellAccessibilityFormat = "FilterListNameCell"
     let cellIdentifier = "FilterListNameCell"
     let rowHeight: CGFloat = UITableView.automaticDimension
@@ -26,8 +27,9 @@ final class FilterCellModel: TableCellViewModel, DiffableViewModel {
     }
 
     func applyViewModelToCell(_ cell: UITableViewCell) {
-        guard let cell = cell as? FilterListNameCell else { return }
-        cell.set(text: "\(self.filter.name)")
+        guard let cell = cell as? HostingCell<FilterListNameView> else { return }
+        cell.rootView = FilterListNameView(name: self.filter.name, description: self.filter.description)
+//        cell.set(text: "\(self.filter.name)")
     }
 
     var diffingKey: String {
