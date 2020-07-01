@@ -10,21 +10,21 @@ import UIKit
 import ColorCompatibility
 import SwiftUI
 
-struct FilterListNameView: View {
-    let name: String
-    let description: String
-
-    var body: some View {
-        HStack(alignment: .center, spacing: 10) {
-            Rectangle()
-                .fill(Color(.opaqueSeparator))
-                .frame(width: 2)
-            Text(self.name).foregroundColor(Color(.secondaryLabel))
-                .padding([.top, .bottom], 10)
-            Spacer()
-        }.padding([.leading, .trailing], 10)
-    }
-}
+//struct FilterListNameView: View {
+//    let name: String
+//    let description: String
+//
+//    var body: some View {
+//        HStack(alignment: .center, spacing: 10) {
+//            Rectangle()
+//                .fill(Color(.opaqueSeparator))
+//                .frame(width: 2)
+//            Text(self.name).foregroundColor(Color(.secondaryLabel))
+//                .padding([.top, .bottom], 10)
+//            Spacer()
+//        }.padding([.leading, .trailing], 10)
+//    }
+//}
 
 //final class FilterListNameView: UIView {
 //    private let label = UILabel()
