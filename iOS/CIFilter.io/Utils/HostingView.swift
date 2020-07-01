@@ -11,7 +11,7 @@ import UIKit
 import SwiftUI
 
 open class HostingView<Content: View>: UIView {
-    private var rootViewHostingController: UIHostingController<Content>
+    private let rootViewHostingController: UIHostingController<Content>
 
     public var rootView: Content {
         get {
