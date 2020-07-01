@@ -19,7 +19,7 @@ extension TableCellViewModel where Self: View {
         return String(describing: HostingCell<Self>.self)
     }
 
-    var rowHeight: CGFloat {
+    var rowHeight: CGFloat? {
         return UITableView.automaticDimension
     }
 
@@ -29,27 +29,12 @@ extension TableCellViewModel where Self: View {
     }
 }
 
-struct FilterCellModel: TableCellViewModel, DiffableViewModel, View {
-//    var registrationInfo = ViewRegistrationInfo(classType: HostingCell<FilterListNameView>.self)
-    var accessibilityFormat: CellAccessibilityFormat = "FilterListNameCell"
-//    let cellIdentifier = "FilterListNameCell"
-//    let rowHeight: CGFloat = UITableView.automaticDimension
+struct FilterCellModelView: TableCellViewModel, DiffableViewModel, View {
+    var accessibilityFormat: CellAccessibilityFormat = "FilterCellModelView"
 
-    let filter: CIFilter
+    let filter: FilterInfo
     let didSelect: DidSelectClosure?
     let didSelectJumpToWorkshop: DidSelectClosure?
-
-//    init(filter: CIFilter, didSelect: @escaping DidSelectClosure, didSelectJumpToWorkshop: @escaping DidSelectClosure) {
-//        self.filter = filter
-//        self.didSelect = didSelect
-//        self.didSelectJumpToWorkshop = didSelectJumpToWorkshop
-//    }
-
-//    func applyViewModelToCell(_ cell: UITableViewCell) {
-//        guard let cell = cell as? HostingCell<FilterListNameView> else { return }
-//        cell.rootView = FilterListNameView(name: self.filter.name, description: self.filter.description)
-////        cell.set(text: "\(self.filter.name)")
-//    }
 
     var diffingKey: String {
         return self.filter.name
@@ -60,9 +45,17 @@ struct FilterCellModel: TableCellViewModel, DiffableViewModel, View {
             Rectangle()
                 .fill(Color(.opaqueSeparator))
                 .frame(width: 2)
-            Text(self.filter.name).foregroundColor(Color(.secondaryLabel))
-                .padding([.top, .bottom], 10)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(self.filter.name)
+                Text(self.filter.description ?? "No description provided by CoreImage")
+                    .font(.caption)
+                    .foregroundColor(Color(.secondaryLabel))
+                    .lineLimit(1)
+            }
+            .padding([.top, .bottom], 10)
             Spacer()
-        }.padding([.leading, .trailing], 10)
+        }
+        .padding([.leading, .trailing], 10)
+        .edgesIgnoringSafeArea(.all)
     }
 }

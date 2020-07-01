@@ -50,7 +50,7 @@ final class FilterListViewControllerContextMenuConfigurator: AbstractContextMenu
             fatalError("Table View Model has an invalid configuration!")
         }
 
-        guard let model = cellViewModel as? FilterCellModel else {
+        guard let model = cellViewModel as? FilterCellModelView else {
             fatalError("Expected filter cell model")
         }
 
@@ -126,8 +126,8 @@ final class FilterListViewController: UITableViewController {
             return TableSectionViewModel(
                 diffingKey: "filter-section-key-\(key)",
                 cellViewModels: filters.map { filter in
-                    return FilterCellModel(
-                        filter: CIFilter(name: filter.name)!,
+                    return FilterCellModelView(
+                        filter: filter,
                         didSelect: { [weak self] in
                             guard let `self` = self else { return }
                             self.navigationItem.searchController?.searchBar.resignFirstResponder()
