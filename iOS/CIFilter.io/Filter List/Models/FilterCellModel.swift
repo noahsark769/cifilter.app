@@ -8,29 +8,35 @@
 
 import UIKit
 import ReactiveLists
+import SwiftUI
 
-final class FilterCellModel: TableCellViewModel, DiffableViewModel {
-    var registrationInfo = ViewRegistrationInfo(classType: FilterListNameCell.self)
-    var accessibilityFormat: CellAccessibilityFormat = "FilterListNameCell"
-    let cellIdentifier = "FilterListNameCell"
-    let rowHeight: CGFloat = UITableView.automaticDimension
-    var didSelect: DidSelectClosure? = nil
-    var didSelectJumpToWorkshop: DidSelectClosure? = nil
+struct FilterCellModelView: TableCellViewModel, DiffableViewModel, View {
+    var accessibilityFormat: CellAccessibilityFormat = "FilterCellModelView"
 
-    let filter: CIFilter
-
-    init(filter: CIFilter, didSelect: @escaping DidSelectClosure, didSelectJumpToWorkshop: @escaping DidSelectClosure) {
-        self.filter = filter
-        self.didSelect = didSelect
-        self.didSelectJumpToWorkshop = didSelectJumpToWorkshop
-    }
-
-    func applyViewModelToCell(_ cell: UITableViewCell) {
-        guard let cell = cell as? FilterListNameCell else { return }
-        cell.set(text: "\(self.filter.name)")
-    }
+    let filter: FilterInfo
+    let didSelect: DidSelectClosure?
+    let didSelectJumpToWorkshop: DidSelectClosure?
 
     var diffingKey: String {
         return self.filter.name
+    }
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 10) {
+            Rectangle()
+                .fill(Color(.opaqueSeparator))
+                .frame(width: 2)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(self.filter.name)
+                Text(self.filter.description ?? "No description provided by CoreImage")
+                    .font(.caption)
+                    .foregroundColor(Color(.secondaryLabel))
+                    .lineLimit(1)
+            }
+            .padding([.top, .bottom], 10)
+            Spacer()
+        }
+        .padding([.leading, .trailing], 10)
+        .edgesIgnoringSafeArea(.all)
     }
 }

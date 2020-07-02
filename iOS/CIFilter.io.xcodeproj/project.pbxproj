@@ -39,6 +39,8 @@
 		A130BD8321F0F22400E586F6 /* CGPoint+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130BD8221F0F22400E586F6 /* CGPoint+Utils.swift */; };
 		A130BDF322068CCE00E586F6 /* BuiltInImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A130BDF222068CCE00E586F6 /* BuiltInImage.swift */; };
 		A1315E2D2288F340006872BD /* buildInformation.json in Resources */ = {isa = PBXBuildFile; fileRef = A1315E2C2288F33F006872BD /* buildInformation.json */; };
+		A15247B524ACE75F0082F8E6 /* HostingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15247B424ACE75F0082F8E6 /* HostingCell.swift */; };
+		A15247B724ACE80B0082F8E6 /* TableViewModel+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15247B624ACE80B0082F8E6 /* TableViewModel+SwiftUI.swift */; };
 		A15B7D0B2394A27D0053C979 /* GradientSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15B7D0A2394A27D0053C979 /* GradientSliderView.swift */; };
 		A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1707F65219A1A0A0010E007 /* FilterInfo.swift */; };
 		A172BAC42221CCFB00182C56 /* ColorHexInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172BAC32221CCFA00182C56 /* ColorHexInput.swift */; };
@@ -67,9 +69,7 @@
 		A1D5A8B521ADB3ED00257B5E /* ParameterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8B421ADB3ED00257B5E /* ParameterData.swift */; };
 		A1D5A8B821AF034A00257B5E /* FilterCategoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8B721AF034A00257B5E /* FilterCategoryHeaderView.swift */; };
 		A1D5A8BB21AF03F700257B5E /* Autolayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8BA21AF03F700257B5E /* Autolayout.swift */; };
-		A1D5A8BD21AF0E8D00257B5E /* FilterListNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8BC21AF0E8D00257B5E /* FilterListNameView.swift */; };
 		A1D5A8BF21AF0F8200257B5E /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8BE21AF0F8200257B5E /* UIColor+Utils.swift */; };
-		A1D5A8C121AF107D00257B5E /* FilterListNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8C021AF107D00257B5E /* FilterListNameCell.swift */; };
 		A1D5A8C321B054A100257B5E /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8C221B054A100257B5E /* SeparatorView.swift */; };
 		A1D5A8C621B0FEB400257B5E /* FilterHeaderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8C521B0FEB400257B5E /* FilterHeaderModel.swift */; };
 		A1D5A8C821B0FECF00257B5E /* FilterCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D5A8C721B0FECF00257B5E /* FilterCellModel.swift */; };
@@ -132,6 +132,8 @@
 		A130BDF222068CCE00E586F6 /* BuiltInImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuiltInImage.swift; sourceTree = "<group>"; };
 		A1315E2C2288F33F006872BD /* buildInformation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = buildInformation.json; sourceTree = SOURCE_ROOT; };
 		A13C923722A5E67500B033ED /* CIFilter.io.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CIFilter.io.entitlements; sourceTree = "<group>"; };
+		A15247B424ACE75F0082F8E6 /* HostingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingCell.swift; sourceTree = "<group>"; };
+		A15247B624ACE80B0082F8E6 /* TableViewModel+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TableViewModel+SwiftUI.swift"; sourceTree = "<group>"; };
 		A15B7D0A2394A27D0053C979 /* GradientSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientSliderView.swift; sourceTree = "<group>"; };
 		A1707F65219A1A0A0010E007 /* FilterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInfo.swift; sourceTree = "<group>"; };
 		A172BAC32221CCFA00182C56 /* ColorHexInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorHexInput.swift; sourceTree = "<group>"; };
@@ -162,9 +164,7 @@
 		A1D5A8B421ADB3ED00257B5E /* ParameterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterData.swift; sourceTree = "<group>"; };
 		A1D5A8B721AF034A00257B5E /* FilterCategoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCategoryHeaderView.swift; sourceTree = "<group>"; };
 		A1D5A8BA21AF03F700257B5E /* Autolayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autolayout.swift; sourceTree = "<group>"; };
-		A1D5A8BC21AF0E8D00257B5E /* FilterListNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListNameView.swift; sourceTree = "<group>"; };
 		A1D5A8BE21AF0F8200257B5E /* UIColor+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Utils.swift"; sourceTree = "<group>"; };
-		A1D5A8C021AF107D00257B5E /* FilterListNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListNameCell.swift; sourceTree = "<group>"; };
 		A1D5A8C221B054A100257B5E /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
 		A1D5A8C521B0FEB400257B5E /* FilterHeaderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterHeaderModel.swift; sourceTree = "<group>"; };
 		A1D5A8C721B0FECF00257B5E /* FilterCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCellModel.swift; sourceTree = "<group>"; };
@@ -354,8 +354,6 @@
 			children = (
 				A1D5A8C421B0FEA600257B5E /* Models */,
 				A1D5A8B721AF034A00257B5E /* FilterCategoryHeaderView.swift */,
-				A1D5A8C021AF107D00257B5E /* FilterListNameCell.swift */,
-				A1D5A8BC21AF0E8D00257B5E /* FilterListNameView.swift */,
 				A11C522421968BB000045F2E /* FilterListViewController.swift */,
 			);
 			path = "Filter List";
@@ -371,8 +369,10 @@
 				A18D97C12375C5C4009C3DBB /* ControlPublisher.swift */,
 				A128995121DD6D4000BEE395 /* CwlMutex.swift */,
 				A128993E21D058B300BEE395 /* EitherView.swift */,
+				A15247B424ACE75F0082F8E6 /* HostingCell.swift */,
 				A10424F924A6478E001F29B0 /* HostingView.swift */,
 				A1D5A8C221B054A100257B5E /* SeparatorView.swift */,
+				A15247B624ACE80B0082F8E6 /* TableViewModel+SwiftUI.swift */,
 				A1D5A8BE21AF0F8200257B5E /* UIColor+Utils.swift */,
 				A1D5A8D221B4A32100257B5E /* UIEdgeInsets+Utils.swift */,
 				A1285485234AB818000460BC /* UIFont+Extensions.swift */,
@@ -691,8 +691,6 @@
 				A1D5A8C621B0FEB400257B5E /* FilterHeaderModel.swift in Sources */,
 				A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */,
 				A1D5A8B121ADB3A800257B5E /* FilterInfoConstructionError.swift in Sources */,
-				A1D5A8C121AF107D00257B5E /* FilterListNameCell.swift in Sources */,
-				A1D5A8BD21AF0E8D00257B5E /* FilterListNameView.swift in Sources */,
 				A11C522521968BB000045F2E /* FilterListViewController.swift in Sources */,
 				A1D5A8AB21ADB31400257B5E /* FilterParameterInfo.swift in Sources */,
 				A1D5A8AD21ADB33300257B5E /* FilterParameterType.swift in Sources */,
@@ -705,6 +703,7 @@
 				A128994521D40A3F00BEE395 /* FreeformNumberInput.swift in Sources */,
 				A1DD09DA23765CCA0054061B /* FreeformTextInput.swift in Sources */,
 				A15B7D0B2394A27D0053C979 /* GradientSliderView.swift in Sources */,
+				A15247B524ACE75F0082F8E6 /* HostingCell.swift in Sources */,
 				A10424FA24A6478E001F29B0 /* HostingView.swift in Sources */,
 				A1D309882391F62C00CC92A2 /* ImageArtboardDropIndicatorView.swift in Sources */,
 				A1A0D83E21BEC1B90098168C /* ImageArtboardView.swift in Sources */,
@@ -718,6 +717,7 @@
 				A1D5A8B521ADB3ED00257B5E /* ParameterData.swift in Sources */,
 				A1D5A8C321B054A100257B5E /* SeparatorView.swift in Sources */,
 				A1AA26E022F7D1E300620FC2 /* SettingsView.swift in Sources */,
+				A15247B724ACE80B0082F8E6 /* TableViewModel+SwiftUI.swift in Sources */,
 				A1D5A8BF21AF0F8200257B5E /* UIColor+Utils.swift in Sources */,
 				A1D5A8D321B4A32100257B5E /* UIEdgeInsets+Utils.swift in Sources */,
 				A1285486234AB818000460BC /* UIFont+Extensions.swift in Sources */,

@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import SwiftUI
 
-// From SwiftUIX
 open class HostingView<Content: View>: UIView {
     private let rootViewHostingController: UIHostingController<Content>
 
@@ -19,6 +18,7 @@ open class HostingView<Content: View>: UIView {
             return rootViewHostingController.rootView
         } set {
             rootViewHostingController.rootView = newValue
+            self.setNeedsLayout()
         }
     }
 
@@ -26,31 +26,16 @@ open class HostingView<Content: View>: UIView {
         self.rootViewHostingController = UIHostingController(rootView: rootView)
 
         super.init(frame: .zero)
-
-        rootViewHostingController.view.backgroundColor = .clear
-
-        addSubview(rootViewHostingController.view)
+        self.setupController()
     }
 
     public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override open func layoutSubviews() {
-        super.layoutSubviews()
-
-        rootViewHostingController.view.frame = self.bounds
-    }
-
-    override open func sizeThatFits(_ size: CGSize) -> CGSize {
-        rootViewHostingController.sizeThatFits(in: size)
-    }
-
-    override open func systemLayoutSizeFitting(
-        _ targetSize: CGSize,
-        withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
-        verticalFittingPriority: UILayoutPriority
-    ) -> CGSize {
-        rootViewHostingController.sizeThatFits(in: targetSize)
+    private func setupController() {
+        rootViewHostingController.view.backgroundColor = .clear
+        addSubview(rootViewHostingController.view)
+        rootViewHostingController.view.edges(to: self)
     }
 }
