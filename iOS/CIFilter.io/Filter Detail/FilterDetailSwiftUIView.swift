@@ -180,6 +180,21 @@ struct FilterDetailContentView: View {
                     VStack(alignment: .leading, spacing: 0) {
                         ForEach(filterInfo.parameters, id: \.name) { parameter in
                             FilterParameterSwiftUIView(parameter: parameter)
+                                .contextMenu {
+                                    Button(action: {
+                                        UIPasteboard.general.string = parameter.name
+                                    }) {
+                                        Text("Copy name")
+                                        Image(systemName: "doc.on.doc")
+                                    }
+
+                                    Button(action: {
+                                        UIPasteboard.general.string = parameter.description
+                                    }) {
+                                        Text("Copy description")
+                                        Image(systemName: "doc.on.doc.fill")
+                                    }
+                                }
                         }
                     }.padding(.top, 8)
                 }
