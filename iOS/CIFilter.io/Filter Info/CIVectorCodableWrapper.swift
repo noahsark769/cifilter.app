@@ -19,7 +19,7 @@ extension CIVector {
     }
 }
 
-struct CIVectorCodableWrapper {
+struct CIVectorCodableWrapper: Equatable {
     let vector: CIVector
 }
 

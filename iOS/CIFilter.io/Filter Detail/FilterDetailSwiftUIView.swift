@@ -69,8 +69,10 @@ struct FilterDetailSwiftUIView: View {
                     Text("Select a filter to view details")
                         .foregroundColor(Color(.label))
                 }
+                .edgesIgnoringSafeArea([.top])
             }
-        ).navigationBarTitle(Text(filterInfo?.name ?? ""), displayMode: .inline)
+        )
+        .navigationBarTitle(Text(filterInfo?.name ?? ""), displayMode: .inline)
     }
 }
 
@@ -157,6 +159,8 @@ struct FilterDetailContentView: View {
     let filterInfo: FilterInfo
     let didTapTryIt: () -> Void
 
+//    @SwiftUI.Environment(\.horizontalSizeClass) var horizontalSizeClass
+
     var body: some View {
         ScrollView([.vertical]) {
             VStack(alignment: .leading) {
@@ -188,7 +192,9 @@ struct FilterDetailContentView: View {
                     .buttonStyle(TryItButtonStyle())
                     Spacer()
                 }
-            }.padding(10)
+            }
+            .padding(10)
+//            .frame(maxWidth: horizontalSizeClass == .compact ? .infinity : 600)
         }
     }
 }

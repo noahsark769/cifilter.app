@@ -13,7 +13,7 @@ import Sentry
 import SwiftUI
 import Combine
 
-enum Environment: String {
+enum AppEnvironment: String {
     case release = "release"
     case debug = "debug"
 
@@ -54,19 +54,23 @@ class SceneDelegate: NSObject, UISceneDelegate {
             let detailViewController = UIHostingController(
                 rootView: FilterDetailSwiftUIView(filterInfo: nil, didTapTryIt: { })
             )
-            splitViewController.viewControllers = [navController, detailViewController]
+            detailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
+            detailViewController.navigationItem.leftItemsSupplementBackButton = true
+            detailViewController.navigationItem.largeTitleDisplayMode = .never
+            let detailNavController = UINavigationController(rootViewController: detailViewController)
+            splitViewController.viewControllers = [navController, detailNavController]
             filterListViewController.didTapFilterInfo.sink { info in
-                let detailViewController = UIHostingController(
-                    rootView: FilterDetailSwiftUIView(filterInfo: info, didTapTryIt: { [weak splitViewController] in
+                detailViewController.rootView = FilterDetailSwiftUIView(
+                    filterInfo: info,
+                    didTapTryIt: { [weak splitViewController] in
                         guard let splitViewController = splitViewController else { return }
                         let vc = FilterWorkshopViewController(filter: info)
                         let navigationController = FilterWorkshopNavigationController(rootViewController: vc)
                         splitViewController.present(navigationController, animated: true, completion: nil)
-                    })
+                    }
                 )
-                detailViewController.navigationItem.largeTitleDisplayMode = .never
                 splitViewController.toggleMasterView()
-                splitViewController.showDetailViewController(detailViewController, sender: nil)
+                splitViewController.showDetailViewController(detailNavController, sender: nil)
             }.store(in: &self.cancellables)
         } else {
             let filterDetailViewController = FilterDetailViewController()
@@ -155,7 +159,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return buildInformation.numberOfCommits
     }
 
-    func environment() -> Environment {
+    func environment() -> AppEnvironment {
         #if DEBUG
         return .debug
         #else

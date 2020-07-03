@@ -58,7 +58,7 @@ private func filterParameterType(forAttributesDict dict: [String: Any], classNam
     }
 }
 
-enum FilterParameterType: Encodable, FilterInformationalStringConvertible  {
+enum FilterParameterType: Encodable, FilterInformationalStringConvertible, Equatable  {
     private enum CodingKeys: CodingKey {
         case kind
         case information
