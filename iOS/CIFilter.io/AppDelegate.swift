@@ -52,12 +52,17 @@ class SceneDelegate: NSObject, UISceneDelegate {
 
         if UserDefaultsConfig.shared.enableSwiftUIFilterDetail {
             let detailViewController = UIHostingController(
-                rootView: FilterDetailSwiftUIView(filterInfo: nil)
+                rootView: FilterDetailSwiftUIView(filterInfo: nil, didTapTryIt: { })
             )
             splitViewController.viewControllers = [navController, detailViewController]
             filterListViewController.didTapFilterInfo.sink { info in
                 let detailViewController = UIHostingController(
-                    rootView: FilterDetailSwiftUIView(filterInfo: info)
+                    rootView: FilterDetailSwiftUIView(filterInfo: info, didTapTryIt: { [weak splitViewController] in
+                        guard let splitViewController = splitViewController else { return }
+                        let vc = FilterWorkshopViewController(filter: info)
+                        let navigationController = FilterWorkshopNavigationController(rootViewController: vc)
+                        splitViewController.present(navigationController, animated: true, completion: nil)
+                    })
                 )
                 detailViewController.navigationItem.largeTitleDisplayMode = .never
                 splitViewController.toggleMasterView()
