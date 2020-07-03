@@ -61,13 +61,13 @@ struct FilterDetailSwiftUIView: View {
             someContent: { filterInfo in
                 FilterDetailContentView(
                     filterInfo: filterInfo,
+                    exampleState: FilterExampleProvider().state(forFilterName: filterInfo.name),
                     didTapTryIt: self.didTapTryIt
                 )
             }, noneContent: {
                 ZStack {
                     Colors.primary
-                    Text("Select a filter to view details")
-                        .foregroundColor(Color(.label))
+                    NoFilterSelectedView()
                 }
                 .edgesIgnoringSafeArea(.all)
             }
@@ -159,6 +159,7 @@ struct TryItButtonStyle: ButtonStyle {
 
 struct FilterDetailContentView: View {
     let filterInfo: FilterInfo
+    let exampleState: FilterExampleState
     let didTapTryIt: () -> Void
 
     @SwiftUI.Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -199,15 +200,19 @@ struct FilterDetailContentView: View {
                     }.padding(.top, 8)
                 }
 
-                HStack(alignment: .center) {
-                    Spacer()
-                    Button(action: {
-                        self.didTapTryIt()
-                    }, label: {
-                        Text("Try It!")
-                    })
-                    .buttonStyle(TryItButtonStyle())
-                    Spacer()
+                if exampleState.isAvailable {
+                    HStack(alignment: .center) {
+                        Spacer()
+                        Button(action: {
+                            self.didTapTryIt()
+                        }, label: {
+                            Text("Try It!")
+                        })
+                        .buttonStyle(TryItButtonStyle())
+                        Spacer()
+                    }
+                } else {
+                    NoExampleAvailable(exampleState: exampleState)
                 }
             }
             .padding(10)

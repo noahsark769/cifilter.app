@@ -10,6 +10,40 @@ import UIKit
 import AloeStackView
 import ColorCompatibility
 import Combine
+import SwiftUI
+
+//struct NoExampleAvailable: UIViewRepresentable {
+//    let exampleState: FilterExampleState
+//
+//    func makeUIView(context: Context) -> NoExampleAvailableView {
+//        let view = NoExampleAvailableView()
+//        view.configure(with: exampleState)
+//        view.layoutIfNeeded()
+//        return view
+//    }
+//
+//    func updateUIView(_ uiView: NoExampleAvailableView, context: Context) {
+//        uiView.configure(with: exampleState)
+//        uiView.layoutIfNeeded()
+//    }
+//}
+
+struct NoExampleAvailable: View {
+    let exampleState: FilterExampleState
+
+    var body: some View {
+        if case .notAvailable(let reason) = exampleState {
+            return VStack(alignment: .leading, spacing: 10) {
+                Text("No example is available for this filter: \(reason) You can help by contributing to CIFilter.io on GitHub.")
+                Button("View on GitHub") {
+                    UIApplication.shared.open(URL(string: "https://github.com/noahsark769/CIFilter.io")!, options: [:], completionHandler: nil)
+                }
+            }.erase()
+        } else {
+            return EmptyView().erase()
+        }
+    }
+}
 
 final class NoExampleAvailableView: UIView {
     private let textView = UITextView()
