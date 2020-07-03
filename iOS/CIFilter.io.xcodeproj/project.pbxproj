@@ -41,6 +41,7 @@
 		A1315E2D2288F340006872BD /* buildInformation.json in Resources */ = {isa = PBXBuildFile; fileRef = A1315E2C2288F33F006872BD /* buildInformation.json */; };
 		A15247B524ACE75F0082F8E6 /* HostingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15247B424ACE75F0082F8E6 /* HostingCell.swift */; };
 		A15247B724ACE80B0082F8E6 /* TableViewModel+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15247B624ACE80B0082F8E6 /* TableViewModel+SwiftUI.swift */; };
+		A15A9B8024AFB15800564F59 /* Color+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15A9B7F24AFB15800564F59 /* Color+Utils.swift */; };
 		A15B7D0B2394A27D0053C979 /* GradientSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15B7D0A2394A27D0053C979 /* GradientSliderView.swift */; };
 		A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1707F65219A1A0A0010E007 /* FilterInfo.swift */; };
 		A172BAC42221CCFB00182C56 /* ColorHexInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172BAC32221CCFA00182C56 /* ColorHexInput.swift */; };
@@ -134,6 +135,7 @@
 		A13C923722A5E67500B033ED /* CIFilter.io.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CIFilter.io.entitlements; sourceTree = "<group>"; };
 		A15247B424ACE75F0082F8E6 /* HostingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingCell.swift; sourceTree = "<group>"; };
 		A15247B624ACE80B0082F8E6 /* TableViewModel+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TableViewModel+SwiftUI.swift"; sourceTree = "<group>"; };
+		A15A9B7F24AFB15800564F59 /* Color+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Utils.swift"; sourceTree = "<group>"; };
 		A15B7D0A2394A27D0053C979 /* GradientSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientSliderView.swift; sourceTree = "<group>"; };
 		A1707F65219A1A0A0010E007 /* FilterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInfo.swift; sourceTree = "<group>"; };
 		A172BAC32221CCFA00182C56 /* ColorHexInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorHexInput.swift; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 				A10424FB24A647EF001F29B0 /* ActivityIndicator.swift */,
 				A1D5A8BA21AF03F700257B5E /* Autolayout.swift */,
 				A130BD8221F0F22400E586F6 /* CGPoint+Utils.swift */,
+				A15A9B7F24AFB15800564F59 /* Color+Utils.swift */,
 				A1DD09DB237664ED0054061B /* CombineLatestCollection.swift */,
 				A18D97C12375C5C4009C3DBB /* ControlPublisher.swift */,
 				A128995121DD6D4000BEE395 /* CwlMutex.swift */,
@@ -667,6 +670,7 @@
 				A130BDF322068CCE00E586F6 /* BuiltInImage.swift in Sources */,
 				A130BD8321F0F22400E586F6 /* CGPoint+Utils.swift in Sources */,
 				A1D5A8AF21ADB38200257B5E /* CIVectorCodableWrapper.swift in Sources */,
+				A15A9B8024AFB15800564F59 /* Color+Utils.swift in Sources */,
 				A172BAC42221CCFB00182C56 /* ColorHexInput.swift in Sources */,
 				A130BD7F21EFA22400E586F6 /* ColorInput.swift in Sources */,
 				A12B7AF122299D0C0084AAE6 /* ColorInputDragIndicatorView.swift in Sources */,

@@ -7,29 +7,6 @@
 //
 
 import SwiftUI
-import CoreImage.CIFilterBuiltins
-import ColorCompatibility
-
-extension Colors: View {
-    var body: some View {
-        Color(uiColor: self.color)
-    }
-}
-
-extension Color {
-    init(rgb: Int) {
-        self.init(
-            red: Double((rgb >> 24) & 0xFF) / 256,
-            green: Double((rgb >> 16) & 0xFF) / 256,
-            blue: Double((rgb >> 8) & 0xFF) / 256,
-            opacity: Double(rgb & 0xFF) / 256
-        )
-    }
-
-    init(uiColor: UIColor) {
-        self.init(rgb: uiColor.toHex())
-    }
-}
 
 struct FilterDetailTitleSwiftUIView: View {
     let title: String
@@ -45,7 +22,7 @@ struct FilterDetailTitleSwiftUIView: View {
                 .padding([.bottom], 10)
             Text(categories.joined(separator: ", "))
                 .foregroundColor(
-                    Color(uiColor: ColorCompatibility.secondaryLabel)
+                    Color(uiColor: .secondaryLabel)
                 )
                 .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
@@ -159,6 +136,7 @@ struct FilterDetailContentView: View {
                 HStack {
                     Spacer()
                     AvailableView(text: filterInfo.availableIOS, type: .ios)
+                    Spacer()
                     AvailableView(text: filterInfo.availableMac, type: .macos)
                 }.padding([.bottom], 20)
                 Text(filterInfo.description ?? "No description provided by CoreImage")
@@ -172,5 +150,11 @@ struct FilterDetailContentView: View {
                 }
             }.padding(10)
         }
+    }
+}
+
+struct FilterDetailSwiftUIView_Previews: PreviewProvider {
+    static var previews: some View {
+        FilterDetailSwiftUIView(filterInfo: try! FilterInfo(filter: CIFilter(name: "CIBoxBlur")!))
     }
 }

@@ -30,3 +30,9 @@ enum Colors {
         return Color(self.color)
     }
 }
+
+extension Colors: View {
+    var body: some View {
+        Color(uiColor: self.color)
+    }
+}
