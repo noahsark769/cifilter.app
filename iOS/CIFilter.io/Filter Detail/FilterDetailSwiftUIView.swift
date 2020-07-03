@@ -69,7 +69,7 @@ struct FilterDetailSwiftUIView: View {
                     Text("Select a filter to view details")
                         .foregroundColor(Color(.label))
                 }
-                .edgesIgnoringSafeArea([.top])
+                .edgesIgnoringSafeArea(.all)
             }
         )
         .navigationBarTitle(Text(filterInfo?.name ?? ""), displayMode: .inline)
@@ -142,6 +142,8 @@ struct FilterParameterSwiftUIView: View {
 }
 
 struct TryItButtonStyle: ButtonStyle {
+    @State var hasAppeared: Bool = false
+
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
             .padding([.leading, .trailing], 20)
@@ -151,7 +153,7 @@ struct TryItButtonStyle: ButtonStyle {
             .scaleEffect(configuration.isPressed ? 0.95: 1)
             .foregroundColor(.white)
             .cornerRadius(6)
-            .animation(.spring())
+            .animation(.spring(), value: configuration.isPressed)
     }
 }
 
@@ -159,7 +161,7 @@ struct FilterDetailContentView: View {
     let filterInfo: FilterInfo
     let didTapTryIt: () -> Void
 
-//    @SwiftUI.Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @SwiftUI.Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     var body: some View {
         ScrollView([.vertical]) {
@@ -194,7 +196,8 @@ struct FilterDetailContentView: View {
                 }
             }
             .padding(10)
-//            .frame(maxWidth: horizontalSizeClass == .compact ? .infinity : 600)
+            .padding(.top, 30)
+            .frame(maxWidth: horizontalSizeClass == .compact ? .infinity : 600)
         }
     }
 }
