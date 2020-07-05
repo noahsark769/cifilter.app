@@ -12,22 +12,6 @@ import ColorCompatibility
 import Combine
 import SwiftUI
 
-//struct NoExampleAvailable: UIViewRepresentable {
-//    let exampleState: FilterExampleState
-//
-//    func makeUIView(context: Context) -> NoExampleAvailableView {
-//        let view = NoExampleAvailableView()
-//        view.configure(with: exampleState)
-//        view.layoutIfNeeded()
-//        return view
-//    }
-//
-//    func updateUIView(_ uiView: NoExampleAvailableView, context: Context) {
-//        uiView.configure(with: exampleState)
-//        uiView.layoutIfNeeded()
-//    }
-//}
-
 struct NoExampleAvailable: View {
     let exampleState: FilterExampleState
 
