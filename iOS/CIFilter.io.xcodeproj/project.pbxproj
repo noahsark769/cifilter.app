@@ -613,7 +613,7 @@
 		};
 		A12B7AF4222AF54B0084AAE6 /* Set Info.plist settings */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -625,7 +625,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "git=$(sh /etc/profile; which git)\nnumber_of_commits=$(\"$git\" rev-list HEAD --count)\nsha=$(\"$git\" rev-parse --verify HEAD)\necho \"{\\\"gitSha\\\": \\\"$sha\\\", \\\"numberOfCommits\\\": \\\"$number_of_commits\\\"}\" > \"$SRCROOT/buildInformation.json\"\n";
 		};

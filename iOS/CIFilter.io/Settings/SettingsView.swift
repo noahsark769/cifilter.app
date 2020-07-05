@@ -41,6 +41,7 @@ struct UserDefaultsConfigToggleItemView: View {
 }
 
 struct SettingsView: View {
+    @State private var showingFullBuildNumber = false
     let didTapDone = PassthroughSubject<Void, Never>()
 
     var debugView: some View {
@@ -61,10 +62,18 @@ struct SettingsView: View {
                         .font(Font.title.bold())
                     Text("v\(AppDelegate.shared.appVersion())")
                         .font(.body)
+                        .onTapGesture {
+                            self.showingFullBuildNumber = true
+                        }
                 }.foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding([.top], 60)
                     .padding([.bottom], 10)
+                if self.showingFullBuildNumber {
+                    Text("\(AppDelegate.shared.commitNumber()) - \(AppDelegate.shared.sha())")
+                        .foregroundColor(.white)
+                        .padding(.vertical, 10)
+                }
                 List {
                     Section(header: Text("LINKS").padding([.top], 20)) {
                         Button(action: {
