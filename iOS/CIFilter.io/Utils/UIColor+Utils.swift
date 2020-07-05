@@ -93,9 +93,3 @@ extension UIColor {
         }
     }
 }
-
-@available(iOS, introduced: 11, obsoleted: 12)
-extension UIActivityIndicatorView.Style {
-    static var medium: UIActivityIndicatorView.Style { return .white }
-    static var large: UIActivityIndicatorView.Style { return .whiteLarge }
-}

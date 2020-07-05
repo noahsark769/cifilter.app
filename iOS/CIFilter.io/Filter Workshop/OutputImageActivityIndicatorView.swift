@@ -9,7 +9,7 @@
 import UIKit
 
 final class OutputImageActivityIndicatorView: UIView {
-    private let activityView = UIActivityIndicatorView(style: .whiteLarge)
+    private let activityView = UIActivityIndicatorView(style: .large)
     init() {
         super.init(frame: .zero)
         self.backgroundColor = Colors.primary.color

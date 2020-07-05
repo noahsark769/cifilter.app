@@ -35,7 +35,7 @@ extension ActivityIndicator: UIViewRepresentable {
     public typealias UIViewType = UIActivityIndicatorView
 
     public func makeUIView(context: Context) -> UIViewType {
-        UIActivityIndicatorView(style: .white)
+        UIActivityIndicatorView(style: .medium)
     }
 
     public func updateUIView(_ uiView: UIViewType, context: Context) {
@@ -80,9 +80,9 @@ extension UIActivityIndicatorView.Style {
     public init(_ style: ActivityIndicator.Style) {
         switch style {
             case .medium:
-                self = .white
+                self = .medium
             case .large:
-                self = .whiteLarge
+                self = .large
         }
     }
 }
