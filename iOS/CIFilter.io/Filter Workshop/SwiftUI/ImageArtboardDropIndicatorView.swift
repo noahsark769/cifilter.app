@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import ColorCompatibility
 
 struct ImageArtboardDropIndicatorView: View {
     var body: some View {
@@ -21,7 +20,7 @@ struct ImageArtboardDropIndicatorView: View {
             }
             Spacer()
         }.background(
-            Color(ColorCompatibility.systemBackground).opacity(0.7)
+            Color(.systemBackground).opacity(0.7)
         )
     }
 }

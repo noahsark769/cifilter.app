@@ -7,20 +7,19 @@
 //
 
 import UIKit
-import ColorCompatibility
 
 final class ColorHexInput: UIControl, ControlValueReporting {
     fileprivate(set) var value: UIColor
 
     lazy var textView: UITextView = {
         let view = UITextView()
-        view.layer.borderColor = ColorCompatibility.separator.cgColor
+        view.layer.borderColor = UIColor.separator.cgColor
         view.layer.borderWidth = 1 / UIScreen.main.scale
         view.layer.cornerRadius = 4
         view.clipsToBounds = true
         view.font = UIFont.monospacedBodyFont()
-        view.textColor = ColorCompatibility.label
-        view.backgroundColor = ColorCompatibility.secondarySystemBackground
+        view.textColor = .label
+        view.backgroundColor = .secondarySystemBackground
         view.keyboardType = .twitter // for the hashtag
         view.delegate = self
         return view

@@ -8,20 +8,19 @@
 
 import Foundation
 import UIKit
-import ColorCompatibility
 
 final class FreeformTextInput: UIControl, UITextViewDelegate, ControlValueReporting {
     private(set) var value: String? = nil
 
     lazy var textView: UITextView = {
         let view = UITextView()
-        view.layer.borderColor = ColorCompatibility.separator.cgColor
+        view.layer.borderColor = UIColor.separator.cgColor
         view.layer.borderWidth = 1 / UIScreen.main.scale
         view.layer.cornerRadius = 4
         view.clipsToBounds = true
         view.font = UIFont.monospacedBodyFont()
-        view.textColor = ColorCompatibility.label
-        view.backgroundColor = ColorCompatibility.secondarySystemBackground
+        view.textColor = .label
+        view.backgroundColor = .secondarySystemBackground
         view.delegate = self
         return view
     }()

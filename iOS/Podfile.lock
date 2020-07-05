@@ -1,6 +1,5 @@
 PODS:
   - AloeStackView (1.0.1)
-  - ColorCompatibility (1.0.0)
   - DifferenceKit (1.1.5):
     - DifferenceKit/Core (= 1.1.5)
     - DifferenceKit/UIKitExtension (= 1.1.5)
@@ -20,7 +19,6 @@ PODS:
 
 DEPENDENCIES:
   - AloeStackView (~> 1.0.1)
-  - ColorCompatibility (~> 1.0.0)
   - IQKeyboardManagerSwift (~> 6.5.4)
   - Keys (from `Pods/CocoaPodsKeys`)
   - Mixpanel-swift (~> 2.5.9)
@@ -30,7 +28,6 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - AloeStackView
-    - ColorCompatibility
     - DifferenceKit
     - IQKeyboardManagerSwift
     - Mixpanel-swift
@@ -43,7 +40,6 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AloeStackView: d22c006da4510db5e220968234174654b5ed6ea5
-  ColorCompatibility: 2762fea4195ed88bfb15eeca3ca5de73bb4a9380
   DifferenceKit: 516f12e336ed65a3a0665847b5c3cb5cad4bd4ea
   IQKeyboardManagerSwift: 2dde0fc70110e8eac7ccce2a46fdbec6a850b414
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
@@ -51,6 +47,6 @@ SPEC CHECKSUMS:
   ReactiveLists: 5fc279ea612365fe742a821ab5a0b5b20a69545b
   Sentry: 14bdd673870e8cf64932b149fad5bbbf39a9b390
 
-PODFILE CHECKSUM: 624b3c4c154adadf82f8b4ee7a63b323cc478be7
+PODFILE CHECKSUM: 0d20fc3d216e02b1b992bf61857d2173a6ecbf04
 
 COCOAPODS: 1.8.3

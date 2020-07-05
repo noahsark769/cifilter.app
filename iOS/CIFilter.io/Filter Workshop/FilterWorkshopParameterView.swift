@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ColorCompatibility
 import Combine
 
 extension UISwitch: ControlValueReporting {
@@ -42,7 +41,7 @@ final class FilterWorkshopParameterView: UIView {
     private let nameLabel: UILabel = {
         let view = UILabel()
         view.font = UIFont.monospacedHeaderFont()
-        view.textColor = ColorCompatibility.label
+        view.textColor = .label
         view.numberOfLines = 1
         return view
     }()
@@ -50,7 +49,7 @@ final class FilterWorkshopParameterView: UIView {
     private let descriptionLabel: UILabel = {
         let view = UILabel()
         view.font = UIFont.italicSystemFont(ofSize: 14)
-        view.textColor = ColorCompatibility.label
+        view.textColor = .label
         view.numberOfLines = 0
         return view
     }()
@@ -58,7 +57,7 @@ final class FilterWorkshopParameterView: UIView {
     private let informationLabel: UILabel = {
         let view = UILabel()
         view.font = UIFont.systemFont(ofSize: 14)
-        view.textColor = ColorCompatibility.label
+        view.textColor = .label
         view.numberOfLines = 0
         return view
     }()
@@ -66,7 +65,7 @@ final class FilterWorkshopParameterView: UIView {
     private func furtherDetailLabel(text: String) -> UILabel {
         let view = UILabel()
         view.font = UIFont.systemFont(ofSize: 14)
-        view.textColor = ColorCompatibility.label
+        view.textColor = .label
         view.numberOfLines = 0
         view.text = text
         return view

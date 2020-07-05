@@ -8,7 +8,6 @@
 
 import UIKit
 import AloeStackView
-import ColorCompatibility
 import Combine
 import SwiftUI
 
@@ -56,7 +55,7 @@ final class NoExampleAvailableView: UIView {
             let string = "No example is available for this filter: \(reason) You can help by contributing to CIFilter.io on github."
             let linkRange = (string as NSString).range(of: "contributing to CIFilter.io on github")
             let attributedString = NSMutableAttributedString(string: string)
-            attributedString.addAttribute(.foregroundColor, value: ColorCompatibility.label, range: NSRange(location: 0, length: attributedString.length))
+            attributedString.addAttribute(.foregroundColor, value: UIColor.label, range: NSRange(location: 0, length: attributedString.length))
             attributedString.addAttribute(.link, value: URL(string: "https://github.com/noahsark769/CIFilter.io")!, range: linkRange)
             attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: linkRange)
             attributedString.addAttribute(.foregroundColor, value: Colors.availabilityBlue.color, range: linkRange)
@@ -112,10 +111,10 @@ final class FilterDetailView: UIView {
 
     private let stackView: AloeStackView = {
         let view = AloeStackView()
-        view.backgroundColor = ColorCompatibility.systemBackground
+        view.backgroundColor = .systemBackground
         view.rowInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         view.separatorInset = UIEdgeInsets.zero
-        view.backgroundColor = ColorCompatibility.systemBackground
+        view.backgroundColor = .systemBackground
         return view
     }()
 

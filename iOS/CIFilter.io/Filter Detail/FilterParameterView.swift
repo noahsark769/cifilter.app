@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ColorCompatibility
 
 extension FilterInfo {
     var hasLongParameterNames: Bool {
@@ -45,14 +44,14 @@ final class FilterParameterView: UIView {
         addSubview(horizontalStackView)
 
         nameLabel.font = UIFont.italicSystemFont(ofSize: 17)
-        nameLabel.textColor = ColorCompatibility.secondaryLabel
+        nameLabel.textColor = .secondaryLabel
         nameLabel.numberOfLines = 1
         nameLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         nameLabel.adjustsFontSizeToFitWidth = true
         nameLabel.minimumScaleFactor = 0.5
 
         classLabel.font = UIFont.monospacedBodyFont()
-        classLabel.textColor = ColorCompatibility.tertiaryLabel
+        classLabel.textColor = .tertiaryLabel
         classLabel.numberOfLines = 1
         classLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         classLabel.adjustsFontSizeToFitWidth = true

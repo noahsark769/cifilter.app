@@ -8,14 +8,13 @@
 
 import UIKit
 import Combine
-import ColorCompatibility
 
 private final class RedView: UILabel {
     init(text: String) {
         super.init(frame: .zero)
         self.backgroundColor = .red
         self.heightAnchor <=> 60
-        self.textColor = ColorCompatibility.label
+        self.textColor = .label
         self.text = text
     }
 

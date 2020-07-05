@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ColorCompatibility
 
 /**
  * A view that displays a message telling the user that an image has not been generated for this
@@ -19,7 +18,7 @@ final class OutputImageNotGeneratedView: UIView {
         view.font = UIFont.systemFont(ofSize: 30)
         view.text = "The output image will appear here once all parameters are selected."
         view.numberOfLines = 0
-        view.textColor = ColorCompatibility.label
+        view.textColor = .label
         return view
     }()
 

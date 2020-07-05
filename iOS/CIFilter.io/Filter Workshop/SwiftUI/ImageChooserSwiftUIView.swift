@@ -8,7 +8,6 @@
 
 import SwiftUI
 import Combine
-import ColorCompatibility
 
 struct ButtonFramePreferenceKey: PreferenceKey {
     typealias Value = CGRect?
@@ -77,7 +76,7 @@ struct BuiltInImageCarouselItemView: View {
                 width: Self.imageSize,
                 height: Self.imageSize
             )
-            .background(Color(ColorCompatibility.systemGray5))
+            .background(Color(.systemGray5))
             .clipShape(RoundedRectangle(cornerRadius: 6))
             .erase()
     }
@@ -140,7 +139,7 @@ struct ImageChooserSwiftUIView: View {
             })
         }.frame(width: Self.size, height: Self.size)
         .clipped()
-            .background(Color(ColorCompatibility.systemGray6))
+            .background(Color(.systemGray6))
             .cornerRadius(12)
     }
 }

@@ -8,7 +8,6 @@
 
 import UIKit
 import Combine
-import ColorCompatibility
 import SwiftUI
 
 struct NoFilterSelectedView: View {
@@ -46,7 +45,7 @@ final class FilterDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         self.view.addSubview(eitherView)
-        self.view.backgroundColor = ColorCompatibility.systemBackground
+        self.view.backgroundColor = .systemBackground
         eitherView.disableTranslatesAutoresizingMaskIntoConstraints()
         eitherView.topAnchor <=> self.view.topAnchor
         eitherView.bottomAnchor <=> self.view.bottomAnchor

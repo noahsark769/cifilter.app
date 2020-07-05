@@ -11,7 +11,6 @@ import Combine
 import CoreGraphics
 import SwiftUI
 import CoreImage.CIFilterBuiltins
-import ColorCompatibility
 
 struct GradientSliderHarness: View {
     @ObservedObject var sliderObservation = GradientSliderObservation(value: 1)
@@ -83,7 +82,7 @@ final class ColorInput: UIControl, ControlValueReporting {
         mainStackView.addArrangedSubview(lightnessSlider)
         mainStackView.addArrangedSubview(hexInput)
 
-        draggableIndicatorView.indicatorColor = ColorCompatibility.secondaryLabel
+        draggableIndicatorView.indicatorColor = .secondaryLabel
         draggableIndicatorView.cornerRadius = 4
 
         addSubview(draggableIndicatorView)
@@ -163,7 +162,7 @@ final class ColorInput: UIControl, ControlValueReporting {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        draggableIndicatorView.indicatorColor = ColorCompatibility.secondaryLabel
+        draggableIndicatorView.indicatorColor = .secondaryLabel
 
         if self.dragLocation == ColorInput.nullDragLocation {
             self.dragLocation = imageView.center

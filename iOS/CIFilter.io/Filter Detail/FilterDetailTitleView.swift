@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ColorCompatibility
 
 final class FilterDetailTitleView: UIView {
     private let titleLabel = UILabel()
@@ -31,7 +30,7 @@ final class FilterDetailTitleView: UIView {
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.2
         titleLabel.baselineAdjustment = .alignCenters
-        categoriesLabel.textColor = ColorCompatibility.secondaryLabel
+        categoriesLabel.textColor = .secondaryLabel
         categoriesLabel.numberOfLines = 0
 
         stackView.edgesToSuperview()
