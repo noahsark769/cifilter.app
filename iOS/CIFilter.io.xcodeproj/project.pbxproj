@@ -442,7 +442,10 @@
 				A1C662152196818100826A2B /* Sources */,
 				A1C662162196818100826A2B /* Frameworks */,
 				A1C662172196818100826A2B /* Resources */,
+				A12B7AF4222AF54B0084AAE6 /* Set Info.plist settings */,
 				A628FCD28E0073CB86570D21 /* [CP] Embed Pods Frameworks */,
+				A12937612246C403000C6329 /* Upload dSYM to Sentry */,
+				A1285481234AA9E5000460BC /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -572,6 +575,59 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		A1285481234AA9E5000460BC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\ngit=$(sh /etc/profile; which git)\nnumber_of_commits=$(\"$git\" rev-list HEAD --count)\nsha=$(\"$git\" rev-parse --verify HEAD)\n\ntarget_plist=\"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\ndsym_plist=\"$DWARF_DSYM_FOLDER_PATH/$DWARF_DSYM_FILE_NAME/Contents/Info.plist\"\n\nfor plist in \"$target_plist\" \"$dsym_plist\"; do\nif [ -f \"$plist\" ]; then\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $number_of_commits\" \"$plist\"\n/usr/libexec/PlistBuddy -c \"Add :NGGitSha string $sha\" \"$plist\"\n/usr/libexec/PlistBuddy -c \"Set :NGGitSha $sha\" \"$plist\"\n/usr/libexec/PlistBuddy -c \"Add :NGCommitNumber string $number_of_commits\" \"$plist\"\n/usr/libexec/PlistBuddy -c \"Set :NGCommitNumber $number_of_commits\" \"$plist\"\nfi\ndone\n";
+		};
+		A12937612246C403000C6329 /* Upload dSYM to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Upload dSYM to Sentry";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = ". ~/.bash_profile\nif which sentry-cli >/dev/null; then\nexport SENTRY_ORG=cifilterio\nexport SENTRY_PROJECT=cifilterio\nexport pod_version=`bundle exec pod --version`\nexport AUTH_TOKEN=`bundle exec pod keys get SentryAuthToken CIFilter.io`\nexport SENTRY_AUTH_TOKEN=$AUTH_TOKEN\nERROR=$(sentry-cli upload-dsym 2>&1 >/dev/null)\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\n";
+		};
+		A12B7AF4222AF54B0084AAE6 /* Set Info.plist settings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Set Info.plist settings";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "git=$(sh /etc/profile; which git)\nnumber_of_commits=$(\"$git\" rev-list HEAD --count)\nsha=$(\"$git\" rev-parse --verify HEAD)\necho \"{\\\"gitSha\\\": \\\"$sha\\\", \\\"numberOfCommits\\\": \\\"$number_of_commits\\\"}\" > \"$SRCROOT/buildInformation.json\"\n";
 		};
 		A628FCD28E0073CB86570D21 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
