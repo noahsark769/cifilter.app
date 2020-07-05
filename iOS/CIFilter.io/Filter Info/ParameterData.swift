@@ -13,7 +13,7 @@ protocol FilterInformationalStringConvertible {
     var informationalDescription: String? { get }
 }
 
-struct FilterTransformParameterInfo: Codable, FilterInformationalStringConvertible {
+struct FilterTransformParameterInfo: Codable, FilterInformationalStringConvertible, Equatable {
     let defaultValue: CGAffineTransform
     let identity: CGAffineTransform
 
@@ -30,7 +30,7 @@ struct FilterTransformParameterInfo: Codable, FilterInformationalStringConvertib
     }
 }
 
-struct FilterVectorParameterInfo: Codable, FilterInformationalStringConvertible {
+struct FilterVectorParameterInfo: Codable, FilterInformationalStringConvertible, Equatable {
     let defaultValue: CIVectorCodableWrapper?
     let identity: CIVectorCodableWrapper?
 
@@ -68,7 +68,7 @@ struct FilterVectorParameterInfo: Codable, FilterInformationalStringConvertible 
     }
 }
 
-struct FilterDataParameterInfo: Codable, FilterInformationalStringConvertible {
+struct FilterDataParameterInfo: Codable, FilterInformationalStringConvertible, Equatable {
     let defaultValue: Data?
     let identity: Data?
 
@@ -86,7 +86,7 @@ struct FilterDataParameterInfo: Codable, FilterInformationalStringConvertible {
     }
 }
 
-struct FilterColorParameterInfo: Encodable, FilterInformationalStringConvertible {
+struct FilterColorParameterInfo: Encodable, FilterInformationalStringConvertible, Equatable {
     let defaultValue: CIColor
     let identity: CIColor?
 
@@ -110,7 +110,7 @@ struct FilterColorParameterInfo: Encodable, FilterInformationalStringConvertible
     }
 }
 
-struct FilterUnspecifiedObjectParameterInfo: Encodable, FilterInformationalStringConvertible {
+struct FilterUnspecifiedObjectParameterInfo: Encodable, FilterInformationalStringConvertible, Equatable {
     let defaultValue: NSObject?
 
     init(filterAttributeDict: [String: Any]) throws {
@@ -130,7 +130,7 @@ struct FilterUnspecifiedObjectParameterInfo: Encodable, FilterInformationalStrin
     }
 }
 
-struct FilterStringParameterInfo: Codable, FilterInformationalStringConvertible {
+struct FilterStringParameterInfo: Codable, FilterInformationalStringConvertible, Equatable {
     let defaultValue: String?
 
     init(filterAttributeDict: [String: Any]) throws {
@@ -146,7 +146,7 @@ struct FilterStringParameterInfo: Codable, FilterInformationalStringConvertible 
     }
 }
 
-struct FilterNumberParameterInfo<T: Codable>: Codable, FilterInformationalStringConvertible {
+struct FilterNumberParameterInfo<T: Codable & Equatable>: Codable, FilterInformationalStringConvertible, Equatable {
     let minValue: T?
     let maxValue: T?
     let defaultValue: T?
@@ -175,7 +175,7 @@ struct FilterNumberParameterInfo<T: Codable>: Codable, FilterInformationalString
     }
 }
 
-struct FilterTimeParameterInfo: Codable, FilterInformationalStringConvertible {
+struct FilterTimeParameterInfo: Codable, FilterInformationalStringConvertible, Equatable {
     let numberInfo: FilterNumberParameterInfo<Float>
     let identity: Float
 

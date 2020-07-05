@@ -7,29 +7,6 @@
 //
 
 import SwiftUI
-import CoreImage.CIFilterBuiltins
-import ColorCompatibility
-
-extension Colors: View {
-    var body: some View {
-        Color(uiColor: self.color)
-    }
-}
-
-extension Color {
-    init(rgb: Int) {
-        self.init(
-            red: Double((rgb >> 24) & 0xFF) / 256,
-            green: Double((rgb >> 16) & 0xFF) / 256,
-            blue: Double((rgb >> 8) & 0xFF) / 256,
-            opacity: Double(rgb & 0xFF) / 256
-        )
-    }
-
-    init(uiColor: UIColor) {
-        self.init(rgb: uiColor.toHex())
-    }
-}
 
 struct FilterDetailTitleSwiftUIView: View {
     let title: String
@@ -45,7 +22,7 @@ struct FilterDetailTitleSwiftUIView: View {
                 .padding([.bottom], 10)
             Text(categories.joined(separator: ", "))
                 .foregroundColor(
-                    Color(uiColor: ColorCompatibility.secondaryLabel)
+                    Color(uiColor: .secondaryLabel)
                 )
                 .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
@@ -76,20 +53,26 @@ struct OptionalContent<SomeViewType: View, NoneViewType: View, OptionalType>: Vi
 
 struct FilterDetailSwiftUIView: View {
     let filterInfo: FilterInfo?
+    let didTapTryIt: () -> Void
 
     var body: some View {
         OptionalContent(
             value: filterInfo,
             someContent: { filterInfo in
-                FilterDetailContentView(filterInfo: filterInfo)
+                FilterDetailContentView(
+                    filterInfo: filterInfo,
+                    exampleState: FilterExampleProvider().state(forFilterName: filterInfo.name),
+                    didTapTryIt: self.didTapTryIt
+                )
             }, noneContent: {
                 ZStack {
                     Colors.primary
-                    Text("Select a filter to view details")
-                        .foregroundColor(Color(.label))
+                    NoFilterSelectedView()
                 }
+                .edgesIgnoringSafeArea(.all)
             }
-        ).navigationBarTitle(Text(filterInfo?.name ?? ""), displayMode: .inline)
+        )
+        .navigationBarTitle(Text(filterInfo?.name ?? ""), displayMode: .inline)
     }
 }
 
@@ -132,24 +115,54 @@ struct FilterParameterSwiftUIView: View {
     let parameter: FilterParameterInfo
 
     var body: some View {
-        HStack(spacing: Self.spacing) {
-            VStack(alignment: .leading) {
-                Text(self.parameter.name)
-                Text(self.parameter.classType)
+        VStack(alignment: .leading) {
+            Text("\(self.parameter.name) (\(self.parameter.classType))")
+                .font(.system(.caption, design: .monospaced))
+                .foregroundColor(.black)
+                .padding(8)
+                .background(Colors.primary)
+                .cornerRadius(6)
+                .padding([.leading], 8)
+                .zIndex(1)
+
+            HStack {
+                Text(self.parameter.description ?? "No description provided by CoreImage")
+                    .multilineTextAlignment(.leading)
+                    .padding(16)
+                    .padding(.top, 12)
+                Spacer(minLength: 0)
             }
             .frame(minWidth: 0, maxWidth: .infinity)
+            .background(Color(UIColor.secondarySystemBackground))
+            .cornerRadius(6)
+            .offset(y: -16)
+            .zIndex(0)
+        }
+    }
+}
 
-            VStack(alignment: .leading) {
-                Text(self.parameter.description ?? "No description provided by CoreImage")
-            }
-                .frame(minWidth: 0, maxWidth: .infinity)
+struct TryItButtonStyle: ButtonStyle {
+    @State var hasAppeared: Bool = false
 
-        }.frame(minWidth: 0, maxWidth: .infinity)
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .padding([.leading, .trailing], 20)
+            .padding([.top, .bottom], 10)
+            .frame(minWidth: 200)
+            .background(Colors.primary)
+            .scaleEffect(configuration.isPressed ? 0.95: 1)
+            .foregroundColor(.white)
+            .cornerRadius(6)
+            .animation(.spring(), value: configuration.isPressed)
     }
 }
 
 struct FilterDetailContentView: View {
     let filterInfo: FilterInfo
+    let exampleState: FilterExampleState
+    let didTapTryIt: () -> Void
+
+    @SwiftUI.Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     var body: some View {
         ScrollView([.vertical]) {
@@ -161,16 +174,61 @@ struct FilterDetailContentView: View {
                     AvailableView(text: filterInfo.availableIOS, type: .ios)
                     AvailableView(text: filterInfo.availableMac, type: .macos)
                 }.padding([.bottom], 20)
-                Text(filterInfo.description ?? "No description provided by CoreImage")
+                Text(filterInfo.description ?? "No description provided by CoreImage.")
                     .padding([.bottom], 20)
+
                 Section(header: Text("PARAMETERS").bold().foregroundColor(Colors.primary.swiftUIColor)) {
-                    VStack(spacing: 10) {
+                    VStack(alignment: .leading, spacing: 0) {
                         ForEach(filterInfo.parameters, id: \.name) { parameter in
                             FilterParameterSwiftUIView(parameter: parameter)
+                                .contextMenu {
+                                    Button(action: {
+                                        UIPasteboard.general.string = parameter.name
+                                    }) {
+                                        Text("Copy name")
+                                        Image(systemName: "doc.on.doc")
+                                    }
+
+                                    Button(action: {
+                                        UIPasteboard.general.string = parameter.description
+                                    }) {
+                                        Text("Copy description")
+                                        Image(systemName: "doc.on.doc.fill")
+                                    }
+                                }
                         }
-                    }
+                    }.padding(.top, 8)
                 }
-            }.padding(10)
+
+                if exampleState.isAvailable {
+                    HStack(alignment: .center) {
+                        Spacer()
+                        Button(action: {
+                            self.didTapTryIt()
+                        }, label: {
+                            Text("Try It!")
+                        })
+                        .buttonStyle(TryItButtonStyle())
+                        Spacer()
+                    }
+                } else {
+                    NoExampleAvailable(exampleState: exampleState)
+                }
+            }
+            .padding(10)
+            .padding(.top, 30)
+            .frame(maxWidth: horizontalSizeClass == .compact ? .infinity : 600)
+        }
+    }
+}
+
+struct FilterDetailSwiftUIView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            FilterDetailSwiftUIView(filterInfo: try! FilterInfo(filter: CIFilter(name: "CIDepthBlurEffect")!), didTapTryIt: { })
+                .previewDevice("iPhone X")
+            FilterDetailSwiftUIView(filterInfo: try! FilterInfo(filter: CIFilter(name: "CIBoxBlur")!), didTapTryIt: { })
+            .previewDevice("iPad8,1")
         }
     }
 }

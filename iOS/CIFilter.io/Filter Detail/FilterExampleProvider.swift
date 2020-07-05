@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum FilterExampleState {
+enum FilterExampleState: Equatable {
     case available
     case notAvailable(reason: String)
 

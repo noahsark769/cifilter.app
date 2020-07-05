@@ -9,7 +9,7 @@
 import Foundation
 import CoreImage
 
-struct FilterParameterInfo: Encodable {
+struct FilterParameterInfo: Encodable, Equatable {
     let classType: String
     let description: String?
     let displayName: String

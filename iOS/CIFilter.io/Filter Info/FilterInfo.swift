@@ -9,7 +9,7 @@
 import Foundation
 import CoreImage
 
-struct FilterInfo: Encodable {
+struct FilterInfo: Encodable, Equatable {
     let categories: [String]
     let availableMac: String
     let availableIOS: String
