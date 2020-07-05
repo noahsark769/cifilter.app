@@ -50,42 +50,27 @@ class SceneDelegate: NSObject, UISceneDelegate {
         let navController = UINavigationController(rootViewController: filterListViewController)
         navController.navigationBar.prefersLargeTitles = true
 
-        if UserDefaultsConfig.shared.enableSwiftUIFilterDetail {
-            let detailViewController = UIHostingController(
-                rootView: FilterDetailSwiftUIView(filterInfo: nil, didTapTryIt: { })
+        let detailViewController = UIHostingController(
+            rootView: FilterDetailSwiftUIView(filterInfo: nil, didTapTryIt: { })
+        )
+        detailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
+        detailViewController.navigationItem.leftItemsSupplementBackButton = true
+        detailViewController.navigationItem.largeTitleDisplayMode = .never
+        let detailNavController = UINavigationController(rootViewController: detailViewController)
+        splitViewController.viewControllers = [navController, detailNavController]
+        filterListViewController.didTapFilterInfo.sink { info in
+            detailViewController.rootView = FilterDetailSwiftUIView(
+                filterInfo: info,
+                didTapTryIt: { [weak splitViewController] in
+                    guard let splitViewController = splitViewController else { return }
+                    let vc = FilterWorkshopViewController(filter: info)
+                    let navigationController = FilterWorkshopNavigationController(rootViewController: vc)
+                    splitViewController.present(navigationController, animated: true, completion: nil)
+                }
             )
-            detailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
-            detailViewController.navigationItem.leftItemsSupplementBackButton = true
-            detailViewController.navigationItem.largeTitleDisplayMode = .never
-            let detailNavController = UINavigationController(rootViewController: detailViewController)
-            splitViewController.viewControllers = [navController, detailNavController]
-            filterListViewController.didTapFilterInfo.sink { info in
-                detailViewController.rootView = FilterDetailSwiftUIView(
-                    filterInfo: info,
-                    didTapTryIt: { [weak splitViewController] in
-                        guard let splitViewController = splitViewController else { return }
-                        let vc = FilterWorkshopViewController(filter: info)
-                        let navigationController = FilterWorkshopNavigationController(rootViewController: vc)
-                        splitViewController.present(navigationController, animated: true, completion: nil)
-                    }
-                )
-                splitViewController.toggleMasterView()
-                splitViewController.showDetailViewController(detailNavController, sender: nil)
-            }.store(in: &self.cancellables)
-        } else {
-            let filterDetailViewController = FilterDetailViewController()
-            filterDetailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
-            filterDetailViewController.navigationItem.leftItemsSupplementBackButton = true
-            filterDetailViewController.navigationItem.largeTitleDisplayMode = .never
-            let detailNavController = UINavigationController(rootViewController: filterDetailViewController)
-            splitViewController.viewControllers = [navController, detailNavController]
-
-            filterListViewController.didTapFilterInfo.sink { info in
-                filterDetailViewController.set(filter: info)
-                splitViewController.toggleMasterView()
-                splitViewController.showDetailViewController(detailNavController, sender: nil)
-            }.store(in: &self.cancellables)
-        }
+            splitViewController.toggleMasterView()
+            splitViewController.showDetailViewController(detailNavController, sender: nil)
+        }.store(in: &self.cancellables)
 
         splitViewController.delegate = self
 

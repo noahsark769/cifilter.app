@@ -47,7 +47,7 @@ struct SettingsView: View {
     var debugView: some View {
         #if DEBUG
         return Section(header: Text("DEBUG").padding([.top], 20)) {
-            UserDefaultsConfigToggleItemView(path: \.enableSwiftUIFilterDetail, name: "Filter Detail SwiftUI")
+            Text("This would be a UserDefaultsConfigToggleItemView if there were any toggleable flags")
         }
         #else
         return EmptyView()
