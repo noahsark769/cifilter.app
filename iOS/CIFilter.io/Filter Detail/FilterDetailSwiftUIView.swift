@@ -216,7 +216,7 @@ struct FilterDetailContentView: View {
                 }
             }
             .padding(10)
-            .padding(.top, 30)
+            .padding(.top, horizontalSizeClass == .compact ? 0 : 30)
             .frame(maxWidth: horizontalSizeClass == .compact ? .infinity : 600)
         }
     }

@@ -118,25 +118,26 @@ final class FilterWorkshopViewController: UIViewController {
 
         let shareController = UIActivityViewController(activityItems: items, applicationActivities: nil)
 
-        if self.traitCollection.userInterfaceIdiom == .pad {
-            shareController.modalPresentationStyle = .popover
-            shareController.popoverPresentationController?.barButtonItem = self.shareItem
-            self.present(shareController, animated: true)
-        } else {
-            shareController.modalPresentationStyle = .automatic
-
-            // Work around an issue with UIActivityViewController where it automatically dismisses
-            // the modally presented view controller:
-            // https://github.com/noahsark769/NGUIActivityViewControllerDismissalExample
-            let intermediaryController = UIViewController()
-            intermediaryController.modalPresentationStyle = .overFullScreen
-            shareController.completionWithItemsHandler = { _, _, _, _ in
-                intermediaryController.dismiss(animated: false, completion: nil)
-            }
-            self.present(intermediaryController, animated: false, completion: {
-                intermediaryController.present(shareController, animated: true, completion: nil)
-            })
+        // Work around an issue with UIActivityViewController where it automatically dismisses
+        // the modally presented view controller:
+        // https://github.com/noahsark769/NGUIActivityViewControllerDismissalExample
+        let intermediaryController = UIViewController()
+        shareController.completionWithItemsHandler = { _, _, _, _ in
+            intermediaryController.dismiss(animated: false, completion: nil)
         }
+
+        if self.traitCollection.userInterfaceIdiom == .pad {
+            intermediaryController.modalPresentationStyle = .popover
+            intermediaryController.popoverPresentationController?.barButtonItem = self.shareItem
+            shareController.popoverPresentationController?.barButtonItem = self.shareItem
+            intermediaryController.preferredContentSize = shareController.preferredContentSize
+        } else {
+            intermediaryController.modalPresentationStyle = .overFullScreen
+        }
+
+        self.present(intermediaryController, animated: false, completion: {
+            intermediaryController.present(shareController, animated: true, completion: nil)
+        })
     }
 
     @objc private func didTapExportButton() {
