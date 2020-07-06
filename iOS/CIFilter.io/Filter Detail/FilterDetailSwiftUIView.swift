@@ -8,6 +8,22 @@
 
 import SwiftUI
 
+// https://swiftui.gallery/uploads/code/ShareSheet.html
+struct ActivityView: UIViewControllerRepresentable {
+    let activityItems: [Any]
+    let applicationActivities: [UIActivity]?
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityView>) -> UIActivityViewController {
+        return UIActivityViewController(activityItems: activityItems,
+                                        applicationActivities: applicationActivities)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController,
+                                context: UIViewControllerRepresentableContext<ActivityView>) {
+
+    }
+}
+
 struct FilterDetailTitleSwiftUIView: View {
     let title: String
     let categories: [String]
@@ -54,6 +70,7 @@ struct OptionalContent<SomeViewType: View, NoneViewType: View, OptionalType>: Vi
 struct FilterDetailSwiftUIView: View {
     let filterInfo: FilterInfo?
     let didTapTryIt: () -> Void
+    let didTapShare: () -> Void
 
     var body: some View {
         OptionalContent(
@@ -62,7 +79,8 @@ struct FilterDetailSwiftUIView: View {
                 FilterDetailContentView(
                     filterInfo: filterInfo,
                     exampleState: FilterExampleProvider().state(forFilterName: filterInfo.name),
-                    didTapTryIt: self.didTapTryIt
+                    didTapTryIt: self.didTapTryIt,
+                    didTapShare: self.didTapShare
                 )
             }, noneContent: {
                 ZStack {
@@ -161,6 +179,7 @@ struct FilterDetailContentView: View {
     let filterInfo: FilterInfo
     let exampleState: FilterExampleState
     let didTapTryIt: () -> Void
+    let didTapShare: () -> Void
 
     @SwiftUI.Environment(\.horizontalSizeClass) var horizontalSizeClass
 
@@ -219,15 +238,21 @@ struct FilterDetailContentView: View {
             .padding(.top, horizontalSizeClass == .compact ? 0 : 30)
             .frame(maxWidth: horizontalSizeClass == .compact ? .infinity : 600)
         }
+        .navigationBarItems(trailing: Button(action: {
+            self.didTapShare()
+        }, label: {
+            Image(systemName: "square.and.arrow.up")
+                .accessibility(label: Text("Share"))
+        }))
     }
 }
 
 struct FilterDetailSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            FilterDetailSwiftUIView(filterInfo: try! FilterInfo(filter: CIFilter(name: "CIDepthBlurEffect")!), didTapTryIt: { })
+            FilterDetailSwiftUIView(filterInfo: try! FilterInfo(filter: CIFilter(name: "CIDepthBlurEffect")!), didTapTryIt: { }, didTapShare: { })
                 .previewDevice("iPhone X")
-            FilterDetailSwiftUIView(filterInfo: try! FilterInfo(filter: CIFilter(name: "CIBoxBlur")!), didTapTryIt: { })
+            FilterDetailSwiftUIView(filterInfo: try! FilterInfo(filter: CIFilter(name: "CIBoxBlur")!), didTapTryIt: { }, didTapShare: { })
             .previewDevice("iPad8,1")
         }
     }

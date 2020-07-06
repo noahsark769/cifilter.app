@@ -50,12 +50,7 @@ class SceneDelegate: NSObject, UISceneDelegate {
         let navController = UINavigationController(rootViewController: filterListViewController)
         navController.navigationBar.prefersLargeTitles = true
 
-        let detailViewController = UIHostingController(
-            rootView: FilterDetailSwiftUIView(filterInfo: nil, didTapTryIt: { })
-        )
-        detailViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
-        detailViewController.navigationItem.leftItemsSupplementBackButton = true
-        detailViewController.navigationItem.largeTitleDisplayMode = .never
+        let detailViewController = FilterDetailViewController(splitViewController: splitViewController)
         let detailNavController = UINavigationController(rootViewController: detailViewController)
         splitViewController.viewControllers = [navController, detailNavController]
         filterListViewController.didTapFilterInfo.sink { info in
@@ -66,6 +61,9 @@ class SceneDelegate: NSObject, UISceneDelegate {
                     let vc = FilterWorkshopViewController(filter: info)
                     let navigationController = FilterWorkshopNavigationController(rootViewController: vc)
                     splitViewController.present(navigationController, animated: true, completion: nil)
+                },
+                didTapShare: {
+                    detailViewController.presentShareSheet(filterInfo: info)
                 }
             )
             splitViewController.toggleMasterView()

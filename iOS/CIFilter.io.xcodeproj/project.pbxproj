@@ -81,6 +81,7 @@
 		A1DA0CDC22F1AAD8001924AD /* FilterDetailSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DA0CDB22F1AAD8001924AD /* FilterDetailSwiftUIView.swift */; };
 		A1DD09DA23765CCA0054061B /* FreeformTextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DD09D923765CCA0054061B /* FreeformTextInput.swift */; };
 		A1DD09DC237664ED0054061B /* CombineLatestCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DD09DB237664ED0054061B /* CombineLatestCollection.swift */; };
+		A1EA971924B270E70004DA9E /* FilterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EA971824B270E70004DA9E /* FilterDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +175,7 @@
 		A1DA0CDB22F1AAD8001924AD /* FilterDetailSwiftUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterDetailSwiftUIView.swift; sourceTree = "<group>"; };
 		A1DD09D923765CCA0054061B /* FreeformTextInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeformTextInput.swift; sourceTree = "<group>"; };
 		A1DD09DB237664ED0054061B /* CombineLatestCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineLatestCollection.swift; sourceTree = "<group>"; };
+		A1EA971824B270E70004DA9E /* FilterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailViewController.swift; sourceTree = "<group>"; };
 		A7025EAAD7B39B501B039A0E /* Pods_CIFilter_io.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIFilter_io.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0EBDE2DBDAF2DACCA875113 /* Pods_CIFilter_ioTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIFilter_ioTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F97FF4CF0C09C59DFDF3D2A3 /* Pods-CIFilter.io.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIFilter.io.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIFilter.io/Pods-CIFilter.io.release.xcconfig"; sourceTree = "<group>"; };
@@ -394,6 +396,7 @@
 			isa = PBXGroup;
 			children = (
 				A1DA0CDB22F1AAD8001924AD /* FilterDetailSwiftUIView.swift */,
+				A1EA971824B270E70004DA9E /* FilterDetailViewController.swift */,
 				A1A0D83421BC60BA0098168C /* FilterExampleProvider.swift */,
 				A1D5A8D621B4A85A00257B5E /* FilterParameterView.swift */,
 				A1D5A8CE21B493A200257B5E /* FilterWorkshopNavigationController.swift */,
@@ -677,6 +680,7 @@
 				A1D5A8B821AF034A00257B5E /* FilterCategoryHeaderView.swift in Sources */,
 				A1D5A8C821B0FECF00257B5E /* FilterCellModel.swift in Sources */,
 				A1DA0CDC22F1AAD8001924AD /* FilterDetailSwiftUIView.swift in Sources */,
+				A1EA971924B270E70004DA9E /* FilterDetailViewController.swift in Sources */,
 				A1A0D83521BC60BA0098168C /* FilterExampleProvider.swift in Sources */,
 				A1D5A8C621B0FEB400257B5E /* FilterHeaderModel.swift in Sources */,
 				A1707F66219A1A0A0010E007 /* FilterInfo.swift in Sources */,
