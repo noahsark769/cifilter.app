@@ -31,12 +31,13 @@ struct FilterCellModelView: TableCellViewModel, DiffableViewModel, View {
                 Text(self.filter.description ?? "No description provided by CoreImage")
                     .font(.caption)
                     .foregroundColor(Color(.secondaryLabel))
-                    .lineLimit(1)
+                    .lineLimit(nil)
             }
             .padding([.top, .bottom], 10)
             Spacer()
         }
         .padding([.leading, .trailing], 10)
-        .edgesIgnoringSafeArea(.all)
+        .edgesIgnoringSafeArea(.bottom)
+        .fixedSize(horizontal: false, vertical: true)
     }
 }

@@ -152,6 +152,8 @@ final class FilterListViewController: UITableViewController {
         self.title = "Filters"
         self.definesPresentationContext = true
         self.tableView.separatorStyle = .none
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = UITableView.automaticDimension
 
         driver = FilterListViewControllerTableViewDriver(
             tableView: self.tableView

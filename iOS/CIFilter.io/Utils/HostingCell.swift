@@ -15,7 +15,14 @@ final class HostingCell<Content: View>: UITableViewCell {
 
     var rootView: Content? {
         get { hostingView.rootView }
-        set { hostingView.rootView = newValue }
+        set {
+            hostingView.rootView = newValue
+            hostingView.setNeedsLayout()
+            hostingView.layoutIfNeeded()
+            self.setNeedsLayout()
+            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
+        }
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -23,10 +30,26 @@ final class HostingCell<Content: View>: UITableViewCell {
 
 
         self.contentView.addSubview(hostingView)
-        hostingView.edgesToSuperview()
+        hostingView.translatesAutoresizingMaskIntoConstraints = false
+        hostingView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor).isActive = true
+        let trailing = hostingView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)
+        trailing.priority = .required
+        trailing.isActive = true
+        hostingView.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
+        let bottom = hostingView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
+        bottom.priority = .required
+        bottom.isActive = true
+
+        hostingView.setContentHuggingPriority(.required, for: .vertical)
+        hostingView.setContentHuggingPriority(.required, for: .horizontal)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.contentView.layoutIfNeeded()
     }
 }

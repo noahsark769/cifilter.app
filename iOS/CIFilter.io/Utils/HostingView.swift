@@ -18,7 +18,11 @@ open class HostingView<Content: View>: UIView {
             return rootViewHostingController.rootView
         } set {
             rootViewHostingController.rootView = newValue
+            rootViewHostingController.view.setNeedsLayout()
+            rootViewHostingController.view.layoutIfNeeded()
             self.setNeedsLayout()
+            self.setNeedsUpdateConstraints()
+            self.invalidateIntrinsicContentSize()
         }
     }
 
@@ -27,6 +31,8 @@ open class HostingView<Content: View>: UIView {
 
         super.init(frame: .zero)
         self.setupController()
+        self.setNeedsLayout()
+        self.setNeedsUpdateConstraints()
     }
 
     public required init?(coder: NSCoder) {
@@ -37,5 +43,8 @@ open class HostingView<Content: View>: UIView {
         rootViewHostingController.view.backgroundColor = .clear
         addSubview(rootViewHostingController.view)
         rootViewHostingController.view.edges(to: self)
+        rootViewHostingController.view.setContentHuggingPriority(.required, for: .vertical)
+        rootViewHostingController.view.setContentHuggingPriority(.required, for: .horizontal)
+        self.invalidateIntrinsicContentSize()
     }
 }
