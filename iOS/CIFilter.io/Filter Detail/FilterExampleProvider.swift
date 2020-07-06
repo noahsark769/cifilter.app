@@ -10,7 +10,11 @@ import Foundation
 
 enum FilterExampleState: Equatable {
     case available
-    case notAvailable(reason: String)
+    case notAvailable(reason: String, associatedLink: URL?)
+
+    static func notAvailable(reason: String) -> FilterExampleState {
+        return .notAvailable(reason: reason, associatedLink: nil)
+    }
 
     var isAvailable: Bool {
         switch self {
@@ -52,6 +56,14 @@ final class FilterExampleProvider {
         case "CIConvolution9Horizontal": fallthrough
         case "CIConvolution9Vertical":
             return .notAvailable(reason: "CIFilter.io does not currently support capturing convolutional weight data.")
+        case "CIKMeans":
+            // There's a bug with CIKMeans that only affects iOS 13. CIKMeans was introduced in iOS
+            // 13, so until this bug gets solved or I understand how to work around it
+            if ProcessInfo().operatingSystemVersion.majorVersion == 13 {
+                return .notAvailable(reason: "CIKMeans has a bug in iOS 13 that results in crashes.", associatedLink: URL(string: "https://stackoverflow.com/questions/61891134/coreimage-cikmeans-cifilter-exception")!)
+            } else {
+                return .available
+            }
         default:
             return .available
         }
