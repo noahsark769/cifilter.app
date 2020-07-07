@@ -128,6 +128,7 @@ final class FilterListViewController: UITableViewController {
                 cellViewModels: filters.map { filter in
                     return FilterCellModelView(
                         filter: filter,
+                        parentController: self,
                         didSelect: { [weak self] in
                             guard let `self` = self else { return }
                             self.navigationItem.searchController?.searchBar.resignFirstResponder()
@@ -152,6 +153,8 @@ final class FilterListViewController: UITableViewController {
         self.title = "Filters"
         self.definesPresentationContext = true
         self.tableView.separatorStyle = .none
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = UITableView.automaticDimension
 
         driver = FilterListViewControllerTableViewDriver(
             tableView: self.tableView

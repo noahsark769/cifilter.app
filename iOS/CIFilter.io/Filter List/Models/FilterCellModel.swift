@@ -10,10 +10,11 @@ import UIKit
 import ReactiveLists
 import SwiftUI
 
-struct FilterCellModelView: TableCellViewModel, DiffableViewModel, View {
+struct FilterCellModelView: SwiftUITableCellModel, DiffableViewModel, View {
     var accessibilityFormat: CellAccessibilityFormat = "FilterCellModelView"
 
     let filter: FilterInfo
+    let parentController: UIViewController
     let didSelect: DidSelectClosure?
     let didSelectJumpToWorkshop: DidSelectClosure?
 
@@ -28,15 +29,18 @@ struct FilterCellModelView: TableCellViewModel, DiffableViewModel, View {
                 .frame(width: 2)
             VStack(alignment: .leading, spacing: 4) {
                 Text(self.filter.name)
+                    .lineLimit(1)
                 Text(self.filter.description ?? "No description provided by CoreImage")
                     .font(.caption)
                     .foregroundColor(Color(.secondaryLabel))
-                    .lineLimit(1)
+                    .lineLimit(nil)
+                    .layoutPriority(1)
             }
             .padding([.top, .bottom], 10)
             Spacer()
         }
         .padding([.leading, .trailing], 10)
-        .edgesIgnoringSafeArea(.all)
+        .edgesIgnoringSafeArea(.bottom)
+        .fixedSize(horizontal: false, vertical: true)
     }
 }
