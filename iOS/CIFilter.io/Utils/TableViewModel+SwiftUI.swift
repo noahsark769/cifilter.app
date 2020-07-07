@@ -10,7 +10,11 @@ import Foundation
 import ReactiveLists
 import SwiftUI
 
-extension TableCellViewModel where Self: View {
+protocol SwiftUITableCellModel: TableCellViewModel {
+    var parentController: UIViewController { get }
+}
+
+extension SwiftUITableCellModel where Self: View {
     var registrationInfo: ViewRegistrationInfo {
         return ViewRegistrationInfo(classType: HostingCell<Self>.self)
     }
@@ -27,6 +31,6 @@ extension TableCellViewModel where Self: View {
         guard let cell = cell as? HostingCell<Self> else {
             return
         }
-        cell.rootView = self
+        cell.set(rootView: self, parentController: self.parentController)
     }
 }

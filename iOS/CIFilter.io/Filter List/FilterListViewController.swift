@@ -128,6 +128,7 @@ final class FilterListViewController: UITableViewController {
                 cellViewModels: filters.map { filter in
                     return FilterCellModelView(
                         filter: filter,
+                        parentController: self,
                         didSelect: { [weak self] in
                             guard let `self` = self else { return }
                             self.navigationItem.searchController?.searchBar.resignFirstResponder()
