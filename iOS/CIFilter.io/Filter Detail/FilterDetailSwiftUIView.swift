@@ -243,6 +243,8 @@ struct FilterDetailContentView: View {
         }, label: {
             Image(systemName: "square.and.arrow.up")
                 .accessibility(label: Text("Share"))
+                .imageScale(.large)
+                .contentShape(Rectangle())
         }))
     }
 }
