@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Combine
+import MessageUI
 
 // From https://noahgilmore.com/blog/userdefaults-editor-swiftui/
 extension Binding {
@@ -40,8 +41,65 @@ struct UserDefaultsConfigToggleItemView: View {
     }
 }
 
+// https://stackoverflow.com/questions/56784722/swiftui-send-email
+struct MailView: UIViewControllerRepresentable {
+    @Binding var isShowing: Bool
+    let recipients: [String]
+    let completion: (Result<MFMailComposeResult, Error>) -> Void
+
+    class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
+        @Binding var isShowing: Bool
+        let completion: (Result<MFMailComposeResult, Error>) -> Void
+
+        init(
+            isShowing: Binding<Bool>,
+            completion: @escaping (Result<MFMailComposeResult, Error>) -> Void
+        ) {
+            self._isShowing = isShowing
+            self.completion = completion
+        }
+
+        func mailComposeController(
+            _ controller: MFMailComposeViewController,
+            didFinishWith result: MFMailComposeResult,
+            error: Error?
+        ) {
+            defer {
+                self.isShowing = false
+            }
+            if let error = error {
+                self.completion(.failure(error))
+                return
+            }
+            self.completion(.success(result))
+        }
+    }
+
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(
+            isShowing: $isShowing,
+            completion: completion
+        )
+    }
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<MailView>) -> MFMailComposeViewController {
+        let vc = MFMailComposeViewController()
+        vc.mailComposeDelegate = context.coordinator
+        vc.setToRecipients(self.recipients)
+        return vc
+    }
+
+    func updateUIViewController(
+        _ uiViewController: MFMailComposeViewController,
+        context: UIViewControllerRepresentableContext<MailView>
+    ) {
+        // do nothing
+    }
+}
+
 struct SettingsView: View {
     @State private var showingFullBuildNumber = false
+    @State private var isShowingMail = false
     let didTapDone = PassthroughSubject<Void, Never>()
 
     var debugView: some View {
@@ -96,6 +154,15 @@ struct SettingsView: View {
                         }) {
                             Text("Report a Bug")
                         }
+                        Button(action: {
+                            if MFMailComposeViewController.canSendMail() {
+                                self.isShowingMail = true
+                            } else {
+                                UIApplication.shared.open(URL(string: "mailto:support@cifilter.io")!)
+                            }
+                        }) {
+                            Text("Contact Support")
+                        }
                     }
                     self.debugView
                 }.listStyle(GroupedListStyle())
@@ -107,7 +174,11 @@ struct SettingsView: View {
                     .padding([.top], 12)
                     .padding([.trailing], 14)
             }
-        }
+        }.sheet(isPresented: self.$isShowingMail, content: {
+            MailView(isShowing: self.$isShowingMail, recipients: ["support@cifilter.io"], completion: { _ in
+                // do nothing
+            })
+        })
     }
 }
 
