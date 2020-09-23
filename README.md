@@ -46,5 +46,10 @@ npm install
 make develop
 ```
 
+### Building for older devices
+The CIFilter.io app intends to support only the current version of iOS. However, if you'd like to build the app yourself using the commit compatible with a given iOS version, you can use the following branches:
+
+- iOS 12: `compatibility/ios-12`
+
 ## Questions?
 Don't hesitate to reach out [on Twitter](https://twitter.com/noahsark769) 👋
