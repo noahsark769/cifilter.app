@@ -1677,7 +1677,7 @@
   },
   {
     "availableIOS": "14",
-    "availableMac": "10.16",
+    "availableMac": "11.0",
     "categories": [
       "CICategoryColorAdjustment",
       "CICategoryVideo",
@@ -2525,7 +2525,7 @@
   },
   {
     "availableIOS": "14",
-    "availableMac": "10.16",
+    "availableMac": "11.0",
     "categories": [
       "CICategoryColorAdjustment",
       "CICategoryVideo",
@@ -2562,7 +2562,7 @@
   },
   {
     "availableIOS": "14",
-    "availableMac": "10.16",
+    "availableMac": "11.0",
     "categories": [
       "CICategoryColorAdjustment",
       "CICategoryVideo",
@@ -9237,7 +9237,7 @@
       "CICategoryStillImage",
       "CICategoryBuiltIn"
     ],
-    "description": "Produces a shaded image from a height field. The height field is defined to have greater heights with lighter shades, and lesser heights (lower areas) with darker shades. You can combine this filter with the ”Height Field From Mask” filter to produce quick shadings of masks, such as text.",
+    "description": "Produces a shaded image from a height field. The height field is defined to have greater heights with lighter shades, and lesser heights (lower areas) with darker shades. You can combine this filter with the “Height Field From Mask” filter to produce quick shadings of masks, such as text.",
     "displayName": "Shaded Material",
     "name": "CIShadedMaterial",
     "parameters": [
@@ -11179,7 +11179,7 @@
       "CICategoryStillImage",
       "CICategoryBuiltIn"
     ],
-    "description": "Apply a “XRay” style effect to an image",
+    "description": "Apply an “XRay” style effect to an image",
     "displayName": "X-Ray",
     "name": "CIXRay",
     "parameters": [
