@@ -50,7 +50,7 @@ class SceneDelegate: NSObject, UISceneDelegate {
         let navController = UINavigationController(rootViewController: filterListViewController)
         navController.navigationBar.prefersLargeTitles = true
 
-        let detailViewController = FilterDetailViewController(splitViewController: splitViewController)
+        let detailViewController = FilterDetailViewController()
         let detailNavController = UINavigationController(rootViewController: detailViewController)
         splitViewController.viewControllers = [navController, detailNavController]
         filterListViewController.didTapFilterInfo.sink { info in
