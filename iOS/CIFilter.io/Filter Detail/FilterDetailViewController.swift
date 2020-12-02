@@ -10,6 +10,8 @@ import Foundation
 import SwiftUI
 
 final class FilterDetailViewController: UIHostingController<FilterDetailSwiftUIView> {
+    private var hasAutoShownPrimaryView = false
+
     init() {
         super.init(rootView: FilterDetailSwiftUIView(filterInfo: nil, didTapTryIt: { }, didTapShare: { }))
         self.navigationItem.largeTitleDisplayMode = .never
@@ -18,12 +20,23 @@ final class FilterDetailViewController: UIHostingController<FilterDetailSwiftUIV
     @objc required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // If we're first being displayed, auto-toggle the primary view controller. This means that
+        // the sidebar will auto-show in iPad portrait orientation
+        if !self.hasAutoShownPrimaryView {
+            self.splitViewController?.toggleMasterView()
+            self.hasAutoShownPrimaryView = true
+        }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
         self.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
         self.navigationItem.leftItemsSupplementBackButton = true
+
+        super.viewDidAppear(animated)
     }
 
     func presentShareSheet(filterInfo: FilterInfo) {
