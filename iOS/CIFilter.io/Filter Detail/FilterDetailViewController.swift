@@ -10,20 +10,15 @@ import Foundation
 import SwiftUI
 
 final class FilterDetailViewController: UIHostingController<FilterDetailSwiftUIView> {
-    init() {
+    init(splitViewController: UISplitViewController) {
         super.init(rootView: FilterDetailSwiftUIView(filterInfo: nil, didTapTryIt: { }, didTapShare: { }))
+        self.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
+        self.navigationItem.leftItemsSupplementBackButton = true
         self.navigationItem.largeTitleDisplayMode = .never
     }
 
     @objc required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        self.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-        self.navigationItem.leftItemsSupplementBackButton = true
     }
 
     func presentShareSheet(filterInfo: FilterInfo) {
