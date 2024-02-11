@@ -3,50 +3,50 @@ name: CI
 on:
   push:
     branches:
-    - master
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '13.1.0'
-    - name: Setup Git Config
-      run: |
-        git config --global user.email "ci@noahgilmore.com"
-        git config --global user.name "Automated Deployment"
-    - name: Print working directory
-      run: pwd
-    - name: Print working directory contents
-      run: ls -al
-    - name: Report node version
-      run: node --version
-    - name: Report node location
-      run: which node
-    - name: Report npm location
-      run: which npm
-    - name: Report npm version
-      run: npm --version
-    - name: Clean node modules
-      run: cd web && rm -rf node_modules
-    - name: Clean gatsby cache
-      run: cd web && rm -rf .cache
-    - name: Clean npm cache
-      run: cd web && npm cache clean --force
-    - name: npm install
-      run: cd web && npm install --verbose
-    - name: npm rebuild
-      run: cd web && npm rebuild
-    - name: npm run gatsby-build
-      run: cd web && npm run gatsby-build
-    - name: Copy built artifacts to root directory
-      run: cp -r web/public ./public
-    - name: Build and Deploy
-      uses: JamesIves/github-pages-deploy-action@releases/v3
-      with:
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        BRANCH: gh-pages
-        FOLDER: public
-        CNAME: cifilter.io
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "13.1.0"
+      - name: Setup Git Config
+        run: |
+          git config --global user.email "ci@noahgilmore.com"
+          git config --global user.name "Automated Deployment"
+      - name: Print working directory
+        run: pwd
+      - name: Print working directory contents
+        run: ls -al
+      - name: Report node version
+        run: node --version
+      - name: Report node location
+        run: which node
+      - name: Report npm location
+        run: which npm
+      - name: Report npm version
+        run: npm --version
+      - name: Clean node modules
+        run: cd web && rm -rf node_modules
+      - name: Clean gatsby cache
+        run: cd web && rm -rf .cache
+      - name: Clean npm cache
+        run: cd web && npm cache clean --force
+      - name: npm install
+        run: cd web && npm install --verbose
+      - name: npm rebuild
+        run: cd web && npm rebuild
+      - name: npm run gatsby-build
+        run: cd web && npm run gatsby-build
+      - name: Copy built artifacts to root directory
+        run: cp -r web/public ./public
+      - name: Build and Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: public
+          CNAME: cifilter.app
