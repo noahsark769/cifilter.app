@@ -4171,8 +4171,8 @@ detect-port@^1.3.0:
     debug "^2.6.0"
 
 devcert@^1.0.2:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/devcert/-/devcert-1.1.3.tgz#ff8119efae52ebf2449531b7482ae0f7211542e9"
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/devcert/-/devcert-1.2.2.tgz#7ebbefeb74991e269ceafcd66f2bb78677c12652"
   dependencies:
     "@types/configstore" "^2.1.1"
     "@types/debug" "^0.0.30"
@@ -4189,6 +4189,7 @@ devcert@^1.0.2:
     eol "^0.9.1"
     get-port "^3.2.0"
     glob "^7.1.2"
+    is-valid-domain "^0.1.6"
     lodash "^4.17.4"
     mkdirp "^0.5.1"
     password-prompt "^1.0.4"
@@ -7420,6 +7421,12 @@ is-unc-path@^1.0.0:
 is-utf8@^0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/is-utf8/-/is-utf8-0.2.1.tgz#4b0da1442104d1b336340e80797e865cf39f7d72"
+
+is-valid-domain@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/is-valid-domain/-/is-valid-domain-0.1.6.tgz#3c85469d2938f170c8f82ce6e52df8ad9fca8105"
+  dependencies:
+    punycode "^2.1.1"
 
 is-valid-path@^0.1.1:
   version "0.1.1"
