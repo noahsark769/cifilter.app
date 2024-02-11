@@ -3,6 +3,8 @@
 # CIFilter.app
 CIFilter.app is a project which documents parameters and examples for every [CIFilter](https://developer.apple.com/documentation/coreimage/cifilter) available on iOS and macOS as part of [CoreImage](https://developer.apple.com/documentation/coreimage).
 
+> This project used to be called cifilter.io, but due to some shennanigans with the domain registration I had to change the URL 😅
+
 The project has two components:
 
 1. A website, [CIFilter.app](https://cifilter.app), which allows searching/filtering the CIFilters and viewing their documentation. It also provides examples of inputs and outputs for commonly used filters.
