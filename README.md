@@ -1,11 +1,11 @@
 <img src="https://github.com/noahsark769/cifilter.io/raw/master/iOS/CIFilter.io/Resources/AppIcon/icon_60pt%403x.png" height="200">
 
-# CIFilter.io
-CIFilter.io is a project which documents parameters and examples for every [CIFilter](https://developer.apple.com/documentation/coreimage/cifilter) available on iOS and macOS as part of [CoreImage](https://developer.apple.com/documentation/coreimage).
+# CIFilter.app
+CIFilter.app is a project which documents parameters and examples for every [CIFilter](https://developer.apple.com/documentation/coreimage/cifilter) available on iOS and macOS as part of [CoreImage](https://developer.apple.com/documentation/coreimage).
 
 The project has two components:
 
-1. A website, [CIFilter.io](https://cifilter.io), which allows searching/filtering the CIFilters and viewing their documentation. It also provides examples of inputs and outputs for commonly used filters.
+1. A website, [CIFilter.app](https://cifilter.app), which allows searching/filtering the CIFilters and viewing their documentation. It also provides examples of inputs and outputs for commonly used filters.
 2. An iOS app which allows you to apply each CIFilter with arbitrary parameters and save the output images.
 
 The website is publically available and free, and I intend to continue to update it as new filters are added in each new iOS and macOS release. The iOS app is available in this repo as an open source project as well. If you'd like to support this project and others like it, you can download the app from the app store 🙏
