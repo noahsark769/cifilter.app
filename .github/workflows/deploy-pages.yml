@@ -38,15 +38,6 @@ jobs:
         with:
           # Automatically injects pathPrefix in Gatsby config to be used with PREFIX_PATHS env later.
           static_site_generator: gatsby
-      - name: Restore cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            public
-            .cache
-          key: ${{ runner.os }}-gatsby-build-${{ hashFiles('public') }}
-          restore-keys: |
-            ${{ runner.os }}-gatsby-build-
       - name: Install dependencies
         run: npm ci
       - name: Build with Gatsby
