@@ -30,7 +30,7 @@ const TitleMark = (props) => {
             <LogoWrapper className="margin-right--sm">
                 <Logo />
             </LogoWrapper>
-            <Title>CIFilter.io</Title>
+            <Title>CIFilter.app</Title>
         </LogoAndTitle>
     );
 };
