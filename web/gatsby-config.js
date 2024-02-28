@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: `CIFilter.io: Core Image Filter Reference`,
-    siteUrl: `https://cifilter.io`
+    title: `CIFilter.app: Core Image Filter Reference`,
+    siteUrl: `https://cifilter.app`
   },
   plugins: [
     'gatsby-plugin-react-helmet',
