@@ -1,48 +1,47 @@
 {
-  "name": "cifilter.io",
-  "description": "A CIFilter documentation website",
+  "name": "@cifilter/web",
+  "description": "CIFilter.app documentation website",
   "version": "1.0.0",
   "author": "Noah Gilmore <noah.w.gilmore@gmail.com>",
   "dependencies": {
-    "babel-plugin-styled-components": "^1.10.0",
-    "gatsby": "^5.13.3",
-    "gatsby-image": "^2.0.15",
+    "babel-plugin-styled-components": "^1.13.3",
+    "fbjs": "^3.0.5",
+    "gatsby": "^2.32.13",
+    "gatsby-image": "^2.11.0",
     "gatsby-plugin-favicon": "^3.1.5",
-    "gatsby-plugin-force-trailing-slashes": "^1.0.4",
-    "gatsby-plugin-manifest": "^2.0.5",
+    "gatsby-plugin-force-trailing-slashes": "^1.0.6",
+    "gatsby-plugin-manifest": "^2.12.1",
     "gatsby-plugin-offline": "^2.0.11",
-    "gatsby-plugin-react-helmet": "^3.0.0",
-    "gatsby-plugin-sass": "^2.0.4",
+    "gatsby-plugin-react-helmet": "^3.10.0",
+    "gatsby-plugin-sass": "^2.8.0",
     "gatsby-plugin-sharp": "^2.14.4",
-    "gatsby-plugin-sitemap": "^2.2.3",
-    "gatsby-plugin-styled-components": "^3.0.7",
-    "gatsby-source-filesystem": "^2.0.4",
-    "gatsby-transformer-sharp": "^2.1.4",
-    "gh-pages": "^2.0.1",
+    "gatsby-plugin-sitemap": "^2.12.0",
+    "gatsby-plugin-styled-components": "^3.10.0",
+    "gatsby-source-filesystem": "^2.11.1",
+    "gatsby-transformer-sharp": "^2.12.1",
     "lodash.chunk": "^4.2.0",
-    "node-sass": "^7.0.0",
-    "react": "^16.5.1",
-    "react-dom": "^16.5.1",
+    "node-sass": "^4.14.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-ga": "^2.5.7",
     "react-helmet": "^5.2.0",
-    "react-icons": "^3.2.2",
+    "react-icons": "^3.11.0",
     "styled-components": "^4.2.0"
   },
-  "keywords": [],
   "license": "Private",
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
     "start": "npm run develop",
     "format": "prettier --write \"src/**/*.js\"",
-    "gatsby-build": "gatsby build --prefix-paths",
-    "deploy": "gatsby build --prefix-paths && cp CNAME ./public && gh-pages -d public"
+    "gatsby-build": "echo \"No longer needed (gatsby build --prefix-paths), prefixing configured at deploy.\" && exit 1",
+    "deploy": "echo \"No longer needed (gatsby build --prefix-paths && cp CNAME ./public && gh-pages -d public), deploys via workflow.\" && exit 1"
   },
   "devDependencies": {
     "prettier": "^1.14.2"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/noahsark769/cifilter.io"
+    "url": "https://github.com/noahsark769/cifilter.app"
   }
 }

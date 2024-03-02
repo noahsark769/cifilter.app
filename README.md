@@ -40,12 +40,12 @@ bundle exec pod keys set "MixpanelToken" ""
 You'll then need to open the Xcode workspace and set the signing team to your personal team. After that, you should be able to build the app.
 
 ### Web
-The website lives in the `web` folder of this repo. To start a local [Gatsby](https://www.gatsbyjs.org/) server:
+The website lives in the `web` folder of this repo. To start a local [Gatsby](https://www.gatsbyjs.org/) server (needs Node 14):
 
 ```
 cd web
 npm install
-make develop
+npm start
 ```
 
 ### Building for older devices

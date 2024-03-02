@@ -45,7 +45,7 @@ const Nav = (props) => {
             */}
                 <NavLink className="margin-right--md" href="https://itunes.apple.com/us/app/cifilter-io/id1457458557?mt=8"><IoIosAppstore size="24" /></NavLink>
                 <NavLink className="margin-right--md" href="https://twitter.com/cifilterio"><IoLogoTwitter size="24" /></NavLink>
-                <NavLink className="margin-right--md" href="https://github.com/noahsark769/cifilter.io"><IoLogoGithub size="24" /></NavLink>
+                <NavLink className="margin-right--md" href="https://github.com/noahsark769/cifilter.app"><IoLogoGithub size="24" /></NavLink>
             </Other>
         </StyledNav>
     )

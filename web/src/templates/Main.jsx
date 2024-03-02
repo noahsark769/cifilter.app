@@ -128,7 +128,7 @@ class Main extends React.Component {
             "Core Image Filter Reference";
         let numFilters = this.props.pageContext.filters.length;
         let description = selectedFilter ? selectedFilter.description :
-            `View documentation for ${numFilters} built-in Core Image CIFilter classes on CIFilter.io`
+            `View documentation for ${numFilters} built-in Core Image CIFilter classes on CIFilter.app`
         return (
             <OuterWrapper>
                 <Helmet>
@@ -138,8 +138,8 @@ class Main extends React.Component {
                     <meta name="twitter:creator" content="@cifilterio" />
                     <meta property="og:title" content={title} />
                     <meta property="og:description" content={description} />
-                    { selectedFilter && <meta property="og:url" content={`https://cifilter.io/${selectedFilter.name}/`} />}
-                    { selectedFilter && <link rel="canonical" href={`https://cifilter.io/${selectedFilter.name}/`} />}
+                    { selectedFilter && <meta property="og:url" content={`https://cifilter.app/${selectedFilter.name}/`} />}
+                    { selectedFilter && <link rel="canonical" href={`https://cifilter.app/${selectedFilter.name}/`} />}
                 </Helmet>
                 <Nav />
                 {this.renderContent()}
